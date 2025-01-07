@@ -1,0 +1,18 @@
+{
+  "newResume": "Novo Currículo",
+  "personalInfo": "Informações Pessoais",
+  "resumeName": "Nome do Currículo",
+  "resumeAbout": "Sobre o currículo",
+  "name": "Nome",
+  "title": "Título",
+  "email": "Email",
+  "phone": "Telefone",
+  "address": "Endereço",
+  "save": "Salvar",
+  "cancel": "Cancelar",
+  "edit": "Editar",
+  "delete": "Deletar",
+  "add": "Adicionar",
+  "search": "Pesquisar",
+  "next": "Próximo"
+}

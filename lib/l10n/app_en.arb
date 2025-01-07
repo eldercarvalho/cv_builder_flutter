@@ -1,0 +1,18 @@
+{
+  "newResume": "New Resume",
+  "personalInfo": "Personal Information",
+  "resumeAbout": "About the resume",
+  "resumeName": "Resume Name",
+  "name": "Name",
+  "title": "Title",
+  "email": "Email",
+  "phone": "Phone",
+  "address": "Address",
+  "save": "Save",
+  "cancel": "Cancel",
+  "edit": "Edit",
+  "delete": "Delete",
+  "add": "Add",
+  "search": "Search",
+  "next": "Next"
+}
