@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../colors.dart';
+
 class CvBuilderAppBarTheme {
   static const AppBarTheme lightTheme = AppBarTheme(
-    backgroundColor: Colors.white,
+    backgroundColor: CbColors.surfaceContainer,
     elevation: 1,
     scrolledUnderElevation: 0,
   );

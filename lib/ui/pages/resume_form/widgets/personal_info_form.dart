@@ -1,8 +1,29 @@
-import 'package:cv_builder/ui/shared/extensions/context.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../../../shared/extensions/extensions.dart';
+import '../../../shared/validators/validators.dart';
+import '../../../shared/widgets/widgets.dart';
+import '../view_model/resume_form_view_model.dart';
+import 'form_buttons.dart';
+import 'form_container.dart';
+import 'photo_picker.dart';
+import 'section_title_text_field.dart';
 
 class PersonalInfoForm extends StatefulWidget {
-  const PersonalInfoForm({super.key});
+  const PersonalInfoForm({
+    super.key,
+    required this.onSubmit,
+    this.onPrevious,
+    required this.isEditing,
+  });
+
+  final bool isEditing;
+  final void Function() onSubmit;
+  final void Function()? onPrevious;
 
   @override
   State<PersonalInfoForm> createState() => _PersonalInfoFormState();
@@ -11,39 +32,89 @@ class PersonalInfoForm extends StatefulWidget {
 class _PersonalInfoFormState extends State<PersonalInfoForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _professionController = TextEditingController();
+  final TextEditingController _birthDateController = TextEditingController();
+  late final ResumeFormViewModel _viewModel;
+
+  File? _image;
+  bool _isSubmitted = false;
 
   @override
   void initState() {
     super.initState();
-    _nameController.text = '';
-    _titleController.text = '';
+    _viewModel = context.read<ResumeFormViewModel>();
+    _nameController.text = _viewModel.resume.name;
+    _professionController.text = _viewModel.resume.profession ?? '';
+    _birthDateController.text = _viewModel.resume.birthDate != null ? _viewModel.resume.birthDate!.toSimpleDate() : '';
   }
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          spacing: 20,
-          children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: context.l10n.name,
-              ),
+      child: FormContainer(
+        fields: [
+          SectionTitleTextField(
+            text: context.l10n.personalInfo,
+            padding: 0,
+          ),
+          Center(
+            child: PhotoPicker(
+              initialValue: _viewModel.resume.photo,
+              onImagePicked: (image) => setState(() => _image = image),
             ),
-            TextFormField(
-              controller: _titleController,
-              decoration: InputDecoration(
-                labelText: context.l10n.title,
-              ),
-            ),
-          ],
+          ),
+          CbTextFormField(
+            controller: _nameController,
+            label: context.l10n.name,
+            required: true,
+            autovalidateMode: _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+            validator: MultiValidator([
+              RequiredValidator(errorText: context.l10n.requiredField),
+              MaxLengthValidator(max: 50, errorText: context.l10n.maxLenghtError(50)),
+            ]).call,
+          ),
+          CbTextFormField(
+            controller: _professionController,
+            label: context.l10n.profession,
+            validator: MultiValidator([
+              MaxLengthValidator(max: 50, errorText: context.l10n.maxLenghtError(50)),
+            ]).call,
+          ),
+          CbDatePicker(
+            controller: _birthDateController,
+            label: context.l10n.birthDate,
+          ),
+        ],
+        bottom: ListenableBuilder(
+          listenable: _viewModel.saveResume,
+          builder: (context, _) {
+            return FormButtons(
+              showIcons: true,
+              isLoading: _viewModel.saveResume.running,
+              showSaveButton: widget.isEditing,
+              nextText: context.l10n.address,
+              onNextPressed: _onSubmit,
+              previousText: context.l10n.resume,
+              onPreviousPressed: () => widget.onPrevious?.call(),
+            );
+          },
         ),
       ),
     );
+  }
+
+  void _onSubmit() {
+    if (_formKey.currentState!.validate()) {
+      _isSubmitted = true;
+      DateFormat format = DateFormat('dd/MM/yyyy');
+      _viewModel.resume = _viewModel.resume.copyWith(
+        name: _nameController.text,
+        profession: _professionController.text,
+        birthDate: _birthDateController.text.isNotEmpty ? format.parse(_birthDateController.text) : null,
+        photo: _image?.path,
+      );
+      widget.onSubmit();
+    }
   }
 }

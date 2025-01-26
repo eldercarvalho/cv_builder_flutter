@@ -40,6 +40,7 @@ class ResumeModel extends Equatable {
   final String template;
   final String createdAt;
   final String? updatedAt;
+  final String? thumbnail;
 
   const ResumeModel({
     required this.id,
@@ -56,19 +57,20 @@ class ResumeModel extends Equatable {
     this.website,
     this.email,
     this.objectiveSummary,
-    required this.socialNetworks,
-    required this.workExperience,
-    required this.education,
-    required this.projects,
-    required this.awards,
-    required this.certifications,
-    required this.skills,
-    required this.hobbies,
-    required this.languages,
-    required this.references,
+    this.socialNetworks = const [],
+    this.workExperience = const [],
+    this.education = const [],
+    this.projects = const [],
+    this.awards = const [],
+    this.certifications = const [],
+    this.skills = const [],
+    this.hobbies = const [],
+    this.languages = const [],
+    this.references = const [],
     required this.template,
     required this.createdAt,
     this.updatedAt,
+    this.thumbnail,
   });
 
   static const ResumeModel empty = ResumeModel(
@@ -76,27 +78,7 @@ class ResumeModel extends Equatable {
     isActive: true,
     resumeName: '',
     name: '',
-    profession: '',
-    birthDate: '',
-    photo: '',
-    address: '',
-    city: '',
-    zipCode: '',
-    phoneNumber: '',
-    website: '',
-    email: '',
-    socialNetworks: [],
-    objectiveSummary: '',
-    workExperience: [],
-    education: [],
-    projects: [],
-    awards: [],
-    certifications: [],
-    skills: [],
-    hobbies: [],
-    languages: [],
-    references: [],
-    template: '',
+    template: 'simple',
     createdAt: '',
   );
 
@@ -106,7 +88,7 @@ class ResumeModel extends Equatable {
       isActive: json['isActive'] as bool,
       resumeName: json['resumeName'] as String,
       name: json['name'] as String,
-      profession: json['title'] as String?,
+      profession: json['profession'] as String?,
       birthDate: json['birthDate'] as String?,
       photo: json['image'] as String?,
       address: json['address'] as String?,
@@ -136,6 +118,7 @@ class ResumeModel extends Equatable {
       template: json['model'] as String,
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String?,
+      thumbnail: json['thumbnail'] as String?,
     );
   }
 
@@ -145,7 +128,7 @@ class ResumeModel extends Equatable {
       'isActive': isActive,
       'resumeName': resumeName,
       'name': name,
-      'title': profession,
+      'profession': profession,
       'birthDate': birthDate,
       'image': photo,
       'address': address,
@@ -168,6 +151,7 @@ class ResumeModel extends Equatable {
       'model': template,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
+      'thumbnail': thumbnail,
     };
   }
 
@@ -200,6 +184,7 @@ class ResumeModel extends Equatable {
       template: ResumeTemplate.fromString(template),
       createdAt: DateTime.parse(createdAt),
       updatedAt: updatedAt != null ? DateTime.parse(updatedAt!) : null,
+      thumbnail: thumbnail,
     );
   }
 
@@ -232,6 +217,7 @@ class ResumeModel extends Equatable {
       template: resume.template.name,
       createdAt: resume.createdAt.toIso8601String(),
       updatedAt: resume.updatedAt?.toIso8601String(),
+      thumbnail: resume.thumbnail,
     );
   }
 
@@ -240,7 +226,7 @@ class ResumeModel extends Equatable {
     bool? isActive,
     String? resumeName,
     String? name,
-    String? title,
+    String? profession,
     String? birthDate,
     String? photo,
     String? address,
@@ -263,13 +249,14 @@ class ResumeModel extends Equatable {
     String? template,
     String? createdAt,
     String? updatedAt,
+    String? thumbnail,
   }) {
     return ResumeModel(
       id: id ?? this.id,
       isActive: isActive ?? this.isActive,
       resumeName: resumeName ?? this.resumeName,
       name: name ?? this.name,
-      profession: title ?? profession,
+      profession: profession ?? profession,
       birthDate: birthDate ?? this.birthDate,
       photo: photo ?? this.photo,
       address: address ?? this.address,
@@ -292,6 +279,7 @@ class ResumeModel extends Equatable {
       template: template ?? this.template,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      thumbnail: thumbnail ?? this.thumbnail,
     );
   }
 
@@ -323,5 +311,6 @@ class ResumeModel extends Equatable {
         template,
         createdAt,
         updatedAt,
+        thumbnail,
       ];
 }

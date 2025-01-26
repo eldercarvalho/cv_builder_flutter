@@ -52,19 +52,19 @@ class HomeViewModel extends ChangeNotifier {
   Future<Result<String>> _getResumes() async {
     try {
       final userId = await _localService.getGuestId();
-      List<Resume> tmpResumes = [];
+      // List<Resume> tmpResumes = [];
 
       final resumeModels = await _remoteService.getResumes(userId!);
       final resumes = resumeModels.map((e) => e.toDomain()).toList();
 
-      for (final resume in resumes) {
-        final thumbnail = await _fileService.getImage(name: 'thumbnail_${resume.id}');
-        if (thumbnail.existsSync()) {
-          tmpResumes.add(resume.copyWith(thumbnail: thumbnail.path));
-        }
-      }
+      // for (final resume in resumes) {
+      //   final thumbnail = await _fileService.getImage(name: 'thumbnail_${resume.id}');
+      //   if (thumbnail.existsSync()) {
+      //     tmpResumes.add(resume.copyWith(thumbnail: thumbnail.path));
+      //   }
+      // }
 
-      _resumes = tmpResumes;
+      _resumes = resumes;
 
       notifyListeners();
       return const Success('');

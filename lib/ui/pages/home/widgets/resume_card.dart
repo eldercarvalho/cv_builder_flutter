@@ -1,9 +1,7 @@
-import 'dart:io';
-
-import 'package:cv_builder/ui/shared/extensions/datetime.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/models/resume.dart';
+import '../../../shared/extensions/extensions.dart';
 
 class ResumeCard extends StatelessWidget {
   const ResumeCard({
@@ -23,7 +21,7 @@ class ResumeCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: context.colors.surfaceBright,
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
@@ -36,21 +34,21 @@ class ResumeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(resume.resumeName, style: const TextStyle(fontSize: 18)),
+            const SizedBox(height: 10),
             Container(
               height: 150,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(4),
-                border: Border.all(color: Colors.grey.shade300),
+                border: Border.all(color: context.colors.outline),
                 image: DecorationImage(
                   alignment: Alignment.topCenter,
-                  image: FileImage(File(resume.thumbnail!)),
+                  image: NetworkImage(resume.thumbnail!),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            Text(resume.resumeName, style: const TextStyle(fontSize: 18)),
             const SizedBox(height: 8),
             Text('Atualizado em: ${resume.createdAt.toSimpleDate()}', style: const TextStyle(fontSize: 14)),
           ],

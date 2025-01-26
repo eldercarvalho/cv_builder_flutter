@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
 
                       return ResumeCard(
                         resume: resume,
-                        onTap: () => ResumePreviewPage.push(context, resumeId: resume.id),
+                        onTap: () => ResumePreviewPage.push(context, params: ResumePreviewParams(resume: resume)),
                       );
                     },
                   ),

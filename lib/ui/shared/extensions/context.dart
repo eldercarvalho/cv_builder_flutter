@@ -10,9 +10,18 @@ extension ContextEx on BuildContext {
   double get screenHeight => MediaQuery.of(this).size.height;
   double get statusBarHeight => MediaQuery.of(this).padding.top;
   double get keyboardHeight => MediaQuery.of(this).viewInsets.bottom;
-  // Function(String) get showErrorSnackbar => (String text) => showSnackBar(
-  //       context: this,
-  //       text: text,
-  //       type: SnackBarType.error,
-  //     );
+  showSuccessSnackBar(String message) => ScaffoldMessenger.of(this).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(this).colorScheme.secondary,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+  showErrorSnackBar(String message) => ScaffoldMessenger.of(this).showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(this).colorScheme.error,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
 }

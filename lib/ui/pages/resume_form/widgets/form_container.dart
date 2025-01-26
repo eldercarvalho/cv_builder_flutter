@@ -5,24 +5,22 @@ class FormContainer extends StatelessWidget {
     super.key,
     required this.fields,
     required this.bottom,
-    required this.formKey,
   });
 
   final List<Widget> fields;
   final Widget bottom;
-  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Expanded(
-          child: Form(
-            key: formKey,
+          child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
-                spacing: 20,
+                spacing: 16,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: fields,
               ),
             ),

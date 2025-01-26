@@ -5,9 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
-class CvBuilderApp extends StatelessWidget {
+class CvBuilderApp extends StatefulWidget {
   const CvBuilderApp({super.key});
 
+  @override
+  State<CvBuilderApp> createState() => _CvBuilderAppState();
+}
+
+class _CvBuilderAppState extends State<CvBuilderApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(

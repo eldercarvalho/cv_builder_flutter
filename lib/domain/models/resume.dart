@@ -1,7 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:equatable/equatable.dart';
 import 'package:faker/faker.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../ui/shared/resume_models/simple/simple.dart';
 import 'award.dart';
 import 'certification.dart';
 import 'education.dart';
@@ -78,17 +81,17 @@ class Resume extends Equatable {
     this.phoneNumber,
     this.website,
     this.email,
-    required this.socialNetworks,
-    required this.objectiveSummary,
-    required this.workExperience,
-    required this.education,
-    required this.projects,
-    required this.awards,
-    required this.certifications,
-    required this.skills,
-    required this.hobbies,
-    required this.languages,
-    required this.references,
+    this.objectiveSummary,
+    this.socialNetworks = const [],
+    this.workExperience = const [],
+    this.education = const [],
+    this.projects = const [],
+    this.awards = const [],
+    this.certifications = const [],
+    this.skills = const [],
+    this.hobbies = const [],
+    this.languages = const [],
+    this.references = const [],
     required this.template,
     required this.createdAt,
     this.updatedAt,
@@ -100,17 +103,6 @@ class Resume extends Equatable {
         isActive: true,
         resumeName: '',
         name: '',
-        socialNetworks: const [],
-        objectiveSummary: '',
-        workExperience: const [],
-        education: const [],
-        projects: const [],
-        awards: const [],
-        certifications: const [],
-        skills: const [],
-        hobbies: const [],
-        languages: const [],
-        references: const [],
         template: ResumeTemplate.simple,
         createdAt: DateTime.now(),
       );
@@ -287,7 +279,7 @@ class Resume extends Equatable {
     bool? isActive,
     String? resumeName,
     String? name,
-    String? title,
+    String? profession,
     DateTime? birthDate,
     String? photo,
     String? address,
@@ -317,7 +309,7 @@ class Resume extends Equatable {
       isActive: isActive ?? this.isActive,
       resumeName: resumeName ?? this.resumeName,
       name: name ?? this.name,
-      profession: title ?? profession,
+      profession: profession ?? this.profession,
       birthDate: birthDate ?? this.birthDate,
       photo: photo ?? this.photo,
       address: address ?? this.address,
@@ -375,4 +367,14 @@ class Resume extends Equatable {
         updatedAt,
         thumbnail,
       ];
+}
+
+extension ToPdfExtension on Resume {
+  Future<Uint8List> toPdf() async {
+    return switch (template) {
+      ResumeTemplate.simple => SimpleResumeTemplate.generatePdf(this),
+      ResumeTemplate.elegant => SimpleResumeTemplate.generatePdf(this),
+      ResumeTemplate.modern => SimpleResumeTemplate.generatePdf(this)
+    };
+  }
 }

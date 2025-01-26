@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Logger.root.level = Level.ALL;
   timeago.setLocaleMessages('pt', timeago.PtBrMessages());

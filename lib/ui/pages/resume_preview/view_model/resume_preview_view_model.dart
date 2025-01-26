@@ -22,15 +22,19 @@ class ResumePreviewViewModel extends ChangeNotifier {
   late final RemoteService _remoteService;
   late final LocalService _localService;
   late final FileService _fileService;
-  late final Command1<String, String> getResume = Command1(_getResume);
+  late final Command1<Unit, String> getResume = Command1(_getResume);
 
   Resume? _resume;
   Resume? get resume => _resume;
+  set resume(Resume? value) {
+    _resume = value;
+    notifyListeners();
+  }
 
   File? _resumePdf;
   File? get resumePdf => _resumePdf;
 
-  Future<Result<String>> _getResume(String resumeId) async {
+  Future<Result<Unit>> _getResume(String resumeId) async {
     try {
       final userId = await _localService.getGuestId();
       final resumeFile = await _fileService.getPdf(name: resumeId);
@@ -38,7 +42,7 @@ class ResumePreviewViewModel extends ChangeNotifier {
       _resume = resumeModel.toDomain();
       _resumePdf = resumeFile;
       notifyListeners();
-      return const Success('');
+      return const Success(unit);
     } on Exception catch (e) {
       return Failure(e);
     }

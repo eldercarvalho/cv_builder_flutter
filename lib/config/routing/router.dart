@@ -1,8 +1,11 @@
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../domain/models/resume.dart';
 import '../../ui/pages/home/home.dart';
 import '../../ui/pages/resume_form/resume_form.dart';
+import '../../ui/pages/resume_form/resume_form_finished_page.dart';
+import '../../ui/pages/resume_form/view_model/resume_form_finished_view_model.dart';
 import '../../ui/pages/resume_preview/resume_preview.dart';
 import '../../ui/pages/splash/splash.dart';
 import 'routes.dart';
@@ -33,38 +36,64 @@ final router = GoRouter(
 
         return HomePage(viewModel: viewModel);
       },
-      routes: [
-        GoRoute(
-          path: Routes.resumeForm,
-          pageBuilder: (context, state) {
-            return slideTransitionPage(
-              state: state,
-              child: const ResumeFormPage(),
-            );
-          },
-        ),
-        GoRoute(
-          path: ResumePreviewPage.path,
-          pageBuilder: (context, state) {
-            final resumeId = state.pathParameters['resumeId']!;
+    ),
+    GoRoute(
+      path: ResumeFormPage.path,
+      pageBuilder: (context, state) {
+        final parms = state.extra as ResumeFormParams?;
+        final viewModel = ResumeFormViewModel(
+          localService: context.read(),
+          remoteService: context.read(),
+          fileService: context.read(),
+        );
 
-            final viewModel = ResumePreviewViewModel(
-              localService: context.read(),
-              remoteService: context.read(),
-              fileService: context.read(),
-            );
+        return slideTransitionPage(
+          state: state,
+          child: ResumeFormPage(viewModel: viewModel, params: parms),
+        );
+      },
+    ),
+    GoRoute(
+      path: ResumePreviewPage.path,
+      pageBuilder: (context, state) {
+        final resumeId = state.pathParameters['resumeId']!;
+        final params = state.extra as ResumePreviewParams;
 
-            viewModel.getResume.execute(resumeId);
+        final viewModel = ResumePreviewViewModel(
+          localService: context.read(),
+          remoteService: context.read(),
+          fileService: context.read(),
+        );
 
-            return slideTransitionPage(
-              state: state,
-              child: ResumePreviewPage(
-                viewModel: viewModel,
-              ),
-            );
-          },
-        ),
-      ],
+        viewModel.getResume.execute(resumeId);
+
+        return slideTransitionPage(
+          state: state,
+          child: ResumePreviewPage(
+            viewModel: viewModel,
+            params: params,
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      path: ResumeFormFinishedPage.path,
+      pageBuilder: (context, state) {
+        final resume = state.extra as Resume;
+        final viewModel = ResumeFormFinishedViewModel(
+          localService: context.read(),
+          remoteService: context.read(),
+          fileService: context.read(),
+        );
+
+        return slideTransitionPage(
+          state: state,
+          child: ResumeFormFinishedPage(
+            resume: resume,
+            viewModel: viewModel,
+          ),
+        );
+      },
     ),
   ],
 );

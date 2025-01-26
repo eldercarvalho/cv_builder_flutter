@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cv_builder/data/models/resume.dart';
 import 'package:cv_builder/domain/models/resume.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class RemoteService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   RemoteService();
 
@@ -60,6 +64,52 @@ class RemoteService {
       final resumesRef = _firestore.collection('users').doc(userId).collection('resumes');
       final resumeModel = ResumeModel.fromDomain(resume);
       resumesRef.doc(resume.id).set(resumeModel.toJson());
+    } on FirebaseException catch (e) {
+      if (e.code == 'permission-denied') {
+        print('Permissão negada para acessar os dados do usuário.');
+      }
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> savePicture(String userId, String resumeId, File file) async {
+    try {
+      final ref = _storage.ref().child('images/$userId/$resumeId/profile_picture');
+      final storageRef = await ref.putFile(file);
+      final url = await storageRef.ref.getDownloadURL();
+      return url;
+    } on FirebaseException catch (e) {
+      if (e.code == 'permission-denied') {
+        print('Permissão negada para acessar os dados do usuário.');
+      }
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> saveThumbnail(String userId, String resumeId, File file) async {
+    try {
+      final ref = _storage.ref().child('images/$userId/$resumeId/thumbnail');
+      final storageRef = await ref.putFile(file);
+      final url = await storageRef.ref.getDownloadURL();
+      return url;
+    } on FirebaseException catch (e) {
+      if (e.code == 'permission-denied') {
+        print('Permissão negada para acessar os dados do usuário.');
+      }
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<String> getPicture(String userId) async {
+    try {
+      final ref = _storage.ref().child('images/$userId/profile_picture');
+      return ref.getDownloadURL();
     } on FirebaseException catch (e) {
       if (e.code == 'permission-denied') {
         print('Permissão negada para acessar os dados do usuário.');
