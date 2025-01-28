@@ -74,6 +74,29 @@ class RemoteService {
     }
   }
 
+  Future<void> deleteResume(String userId, Resume resume) async {
+    try {
+      await _firestore.runTransaction((transaction) async {
+        final docRef = _firestore.collection('users').doc(userId).collection('resumes').doc(resume.id);
+        final thumbnailRef = _storage.ref().child('images/$userId/${resume.id}/thumbnail');
+        await thumbnailRef.delete();
+        transaction.delete(docRef);
+
+        if (resume.photo != null) {
+          final profilePictureRef = _storage.ref().child('images/$userId/${resume.id}/profile_picture');
+          await profilePictureRef.delete();
+        }
+      });
+    } on FirebaseException catch (e) {
+      if (e.code == 'permission-denied') {
+        print('Permissão negada para acessar os dados do usuário.');
+      }
+      rethrow;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<String> savePicture(String userId, String resumeId, File file) async {
     try {
       final ref = _storage.ref().child('images/$userId/$resumeId/profile_picture');

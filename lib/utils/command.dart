@@ -58,8 +58,12 @@ class Command1<T extends Object, A> extends Command<T> {
   Command1(this._action);
 
   final CommandAction1<T, A> _action;
+  A? _arg;
+
+  A? get argument => _arg;
 
   Future<void> execute(A argument) async {
+    _arg = argument;
     await _execute(() => _action(argument));
   }
 }

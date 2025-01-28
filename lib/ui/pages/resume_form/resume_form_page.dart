@@ -151,6 +151,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
   }
 
   void _onSubmit() {
+    FocusScope.of(context).unfocus();
     widget.viewModel.saveResume.execute();
   }
 
@@ -161,7 +162,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
         return;
       }
 
-      ResumeFormFinishedPage.push(context, widget.viewModel.resume);
+      ResumeFormFinishedPage.resplace(context, widget.viewModel.resume);
     }
 
     if (widget.viewModel.saveResume.error) {

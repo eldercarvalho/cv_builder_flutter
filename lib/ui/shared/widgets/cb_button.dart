@@ -33,7 +33,9 @@ class CbButton extends StatefulWidget {
 class _CbButtonState extends State<CbButton> {
   @override
   Widget build(BuildContext context) {
-    final child = widget.isLoading ? CircularProgressIndicator(color: context.colors.onPrimary) : _buildChild();
+    final child = widget.isLoading
+        ? SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: context.colors.onPrimary))
+        : _buildChild();
 
     return SizedBox(
       width: double.maxFinite,

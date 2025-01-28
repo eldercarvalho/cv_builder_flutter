@@ -17,15 +17,14 @@ class ResumeFormFinishedPage extends StatefulWidget {
     required this.viewModel,
   });
 
-  static const route = '/home/resume-form-finished';
-  static const path = 'resume-form-finished';
+  static const path = '/resume-form-finished';
 
   static Future<Object?> push(BuildContext context, Resume resume) async {
-    return await context.push(route, extra: resume);
+    return await context.push(path, extra: resume);
   }
 
   static Future<void> resplace(BuildContext context, Resume resume) async {
-    context.replace(route, extra: resume);
+    context.replace(path, extra: resume);
   }
 
   final Resume resume;

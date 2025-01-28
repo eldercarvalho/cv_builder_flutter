@@ -14,16 +14,18 @@ class HomeViewModel extends ChangeNotifier {
     required LocalService localService,
     required FileService fileService,
   }) {
-    getResumes = Command0(_getResumes);
     _remoteService = remoteService;
     _localService = localService;
     _fileService = fileService;
+    getResumes = Command0(_getResumes);
+    deleteResume = Command1(_deleteResume);
   }
-
-  late final Command0 getResumes;
   late final RemoteService _remoteService;
   late final LocalService _localService;
   late final FileService _fileService;
+
+  late final Command0 getResumes;
+  late final Command1<Unit, Resume> deleteResume;
 
   List<Resume> _resumes = [];
   List<Resume> get resumes => _resumes;
@@ -38,11 +40,15 @@ class HomeViewModel extends ChangeNotifier {
   Future<void> saveResume() async {
     try {
       final id = await _localService.getGuestId();
-      final resume = Resume.fake();
+      Resume resume = Resume.fake();
       final pdfBytes = await SimpleResumeTemplate.generatePdf(resume);
       final imageBytes = await SimpleResumeTemplate.generateThumbnail(pdfBytes);
-      await _remoteService.saveResume(id!, resume);
-      await _fileService.saveImage(name: 'thumbnail_${resume.id}', bytes: imageBytes);
+
+      final thumbnailFile = await _fileService.saveTempImage(name: resume.id, bytes: imageBytes);
+      final thumbnailUrl = await _remoteService.saveThumbnail(id!, resume.id, thumbnailFile);
+      resume = resume.copyWith(thumbnail: thumbnailUrl);
+
+      await _remoteService.saveResume(id, resume);
       await _fileService.savePdf(name: resume.id, bytes: pdfBytes);
     } catch (e) {
       _log.severe('Error saving resume', e);
@@ -52,22 +58,25 @@ class HomeViewModel extends ChangeNotifier {
   Future<Result<String>> _getResumes() async {
     try {
       final userId = await _localService.getGuestId();
-      // List<Resume> tmpResumes = [];
 
       final resumeModels = await _remoteService.getResumes(userId!);
       final resumes = resumeModels.map((e) => e.toDomain()).toList();
 
-      // for (final resume in resumes) {
-      //   final thumbnail = await _fileService.getImage(name: 'thumbnail_${resume.id}');
-      //   if (thumbnail.existsSync()) {
-      //     tmpResumes.add(resume.copyWith(thumbnail: thumbnail.path));
-      //   }
-      // }
-
       _resumes = resumes;
-
       notifyListeners();
       return const Success('');
+    } on Exception catch (e) {
+      return Failure(e);
+    }
+  }
+
+  AsyncResult<Unit> _deleteResume(Resume resume) async {
+    try {
+      final userId = await _localService.getGuestId();
+      await _remoteService.deleteResume(userId!, resume);
+      _resumes.removeWhere((element) => element.id == resume.id);
+      notifyListeners();
+      return const Success(unit);
     } on Exception catch (e) {
       return Failure(e);
     }

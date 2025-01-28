@@ -114,7 +114,7 @@ class Resume extends Equatable {
         name: 'Elder Amaral de Carvalho',
         profession: 'Desenvolvedor Mobile Flutter',
         birthDate: Faker().date.dateTime(),
-        photo: 'https://fastly.picsum.photos/id/237/200/200.jpg?hmac=zHUGikXUDyLCCmvyww1izLK3R3k8oRYBRiTizZEdyfI',
+        // photo: 'https://fastly.picsum.photos/id/237/200/200.jpg?hmac=zHUGikXUDyLCCmvyww1izLK3R3k8oRYBRiTizZEdyfI',
         address: 'Rua Padre Lourenço Rodrigues de Andrade, 130',
         city: 'Florianópolis',
         zipCode: '88050-400',
