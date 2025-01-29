@@ -1,4 +1,7 @@
+import 'package:cv_builder/data/repositories/auth_repository/auth_repository.dart';
+import 'package:cv_builder/data/repositories/auth_repository/auth_repository_remote.dart';
 import 'package:cv_builder/data/repositories/resume_repository/resume_repository_local.dart';
+import 'package:cv_builder/data/services/api/auth_service.dart';
 import 'package:cv_builder/data/services/api/remote_service.dart';
 import 'package:cv_builder/data/services/local/file_service.dart';
 import 'package:cv_builder/data/services/local/local_service.dart';
@@ -24,5 +27,12 @@ List<SingleChildWidget> get providers => [
         create: (context) => ResumeRepositoryLocal(
           sharedPrefService: context.read(),
         ),
+      ),
+      Provider(
+        lazy: true,
+        create: (_) => AuthService(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => AuthRepositoryRemote(authService: context.read()) as AuthRepository,
       ),
     ];

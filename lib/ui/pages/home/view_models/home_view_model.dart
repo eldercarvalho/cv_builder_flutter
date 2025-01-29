@@ -1,3 +1,4 @@
+import 'package:cv_builder/data/repositories/auth_repository/auth_repository.dart';
 import 'package:cv_builder/data/services/api/remote_service.dart';
 import 'package:cv_builder/data/services/local/file_service.dart';
 import 'package:cv_builder/data/services/local/local_service.dart';
@@ -10,16 +11,20 @@ import 'package:result_dart/result_dart.dart';
 
 class HomeViewModel extends ChangeNotifier {
   HomeViewModel({
+    required AuthRepository authRepository,
     required RemoteService remoteService,
     required LocalService localService,
     required FileService fileService,
   }) {
+    _authRepository = authRepository;
     _remoteService = remoteService;
     _localService = localService;
     _fileService = fileService;
     getResumes = Command0(_getResumes);
     deleteResume = Command1(_deleteResume);
   }
+
+  late final AuthRepository _authRepository;
   late final RemoteService _remoteService;
   late final LocalService _localService;
   late final FileService _fileService;
@@ -57,8 +62,7 @@ class HomeViewModel extends ChangeNotifier {
 
   Future<Result<String>> _getResumes() async {
     try {
-      final userId = await _localService.getGuestId();
-
+      final userId = _authRepository.currentUser?.id;
       final resumeModels = await _remoteService.getResumes(userId!);
       final resumes = resumeModels.map((e) => e.toDomain()).toList();
 
@@ -80,5 +84,13 @@ class HomeViewModel extends ChangeNotifier {
     } on Exception catch (e) {
       return Failure(e);
     }
+  }
+
+  AsyncResult<Unit> logout() async {
+    final result = await _authRepository.logout();
+    return result.fold(
+      (_) => const Success(unit),
+      (error) => Failure(error),
+    );
   }
 }

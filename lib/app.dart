@@ -1,4 +1,3 @@
-import 'package:cv_builder/config/di.dart';
 import 'package:cv_builder/config/routing/router.dart';
 import 'package:cv_builder/config/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -15,17 +14,14 @@ class CvBuilderApp extends StatefulWidget {
 class _CvBuilderAppState extends State<CvBuilderApp> {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: providers,
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        title: 'Currículo Top',
-        theme: CvBuilderTheme.lightTheme,
-        routerConfig: router,
-        locale: const Locale('pt'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-      ),
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      title: 'Currículo Top',
+      theme: CvBuilderTheme.lightTheme,
+      routerConfig: router(context.read()),
+      locale: const Locale('pt'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

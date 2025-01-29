@@ -1,0 +1,139 @@
+import 'package:cv_builder/domain/dtos/registration_data.dart';
+import 'package:cv_builder/ui/shared/extensions/extensions.dart';
+import 'package:cv_builder/ui/shared/validators/validators.dart';
+import 'package:cv_builder/ui/shared/widgets/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../login/login_page.dart';
+import 'view_model/registration_view_model.dart';
+
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key, required this.viewModel});
+
+  final RegistrationViewModel viewModel;
+
+  static const String path = '/registration';
+
+  static void replace(BuildContext context) {
+    return context.replace(path);
+  }
+
+  @override
+  State<RegistrationPage> createState() => _RegistrationPageState();
+}
+
+class _RegistrationPageState extends State<RegistrationPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  bool _isSubmitted = false;
+
+  AutovalidateMode get _autoValidateMode =>
+      _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.viewModel.register.addListener(_onListener);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          autovalidateMode: _autoValidateMode,
+          child: Column(
+            spacing: 20,
+            children: [
+              const SizedBox(height: 32),
+              const CbLogo(),
+              Text('Crie uma conta', style: context.textTheme.titleLarge),
+              CbTextFormField(
+                controller: _nameController,
+                label: context.l10n.name,
+                validator: MultiValidator([
+                  RequiredValidator(errorText: 'Campo obrigatório'),
+                  MinLengthValidator(min: 3, errorText: 'Mínimo de 3 caracteres'),
+                ]).call,
+              ),
+              CbTextFormField(
+                controller: _emailController,
+                label: context.l10n.email,
+                validator: MultiValidator([
+                  RequiredValidator(errorText: 'Campo obrigatório'),
+                  EmailValidator(errorText: 'E-mail inválido'),
+                ]).call,
+              ),
+              CbTextFormField(
+                label: 'Senha',
+                controller: _passwordController,
+                obscured: true,
+                validator: MultiValidator([
+                  RequiredValidator(errorText: 'Campo obrigatório'),
+                  MinLengthValidator(min: 6, errorText: 'Mínimo de 6 caracteres'),
+                ]).call,
+              ),
+              CbTextFormField(
+                label: 'Confirmar a senha',
+                controller: _confirmPasswordController,
+                obscured: true,
+                validator: (value) {
+                  if (value != _passwordController.text) {
+                    return 'As senhas não coincidem';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+              ListenableBuilder(
+                listenable: widget.viewModel.register,
+                builder: (context, child) {
+                  return CbButton(
+                    text: context.l10n.register,
+                    isLoading: widget.viewModel.register.running,
+                    onPressed: _onSubmit,
+                  );
+                },
+              ),
+              TextButton(
+                onPressed: () => LoginPage.replace(context),
+                child: const Text('Já tem uma conta? Faça login'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _onSubmit() {
+    setState(() {
+      _isSubmitted = true;
+    });
+    if (_formKey.currentState!.validate()) {
+      widget.viewModel.register.execute(
+        RegistrationData(
+          name: _nameController.text,
+          email: _emailController.text,
+          password: _passwordController.text,
+        ),
+      );
+    }
+  }
+
+  void _onListener() {
+    if (widget.viewModel.register.completed) {
+      LoginPage.replace(context);
+    }
+
+    if (widget.viewModel.register.error) {
+      context.showErrorSnackBar('Ocorreu um erro ao registrar');
+    }
+  }
+}

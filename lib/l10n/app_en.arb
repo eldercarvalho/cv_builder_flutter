@@ -41,5 +41,8 @@
   "finish": "Finish",
   "allDone": "All done!",
   "goBack": "Go back",
-  "profession": "Profession"
+  "profession": "Profession",
+  "register": "Cadastrar",
+  "password": "Senha",
+  "confirmPassword": "Confirmar"
 }

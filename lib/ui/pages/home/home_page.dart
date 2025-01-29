@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 
   final HomeViewModel viewModel;
 
-  static const route = '/home';
+  static const path = '/home';
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -32,9 +32,13 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Meus Currículos'),
         actions: [
+          // IconButton(
+          //   onPressed: () => widget.viewModel.clearCache(),
+          //   icon: const Icon(FeatherIcons.trash2),
+          // ),
           IconButton(
-            onPressed: () => widget.viewModel.clearCache(),
-            icon: const Icon(FeatherIcons.trash2),
+            onPressed: () => widget.viewModel.logout(),
+            icon: const Icon(FeatherIcons.logOut),
           ),
           IconButton(
             onPressed: () => widget.viewModel.saveResume(),

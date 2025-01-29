@@ -10,11 +10,12 @@ class CbTextFormField extends StatelessWidget {
     this.onTap,
     this.readOnly = false,
     this.hint,
-    this.maxLines,
+    this.maxLines = 1,
     this.minLines,
     this.suffix,
     this.prefix,
     this.required = false,
+    this.obscured = false,
     this.autovalidateMode = AutovalidateMode.disabled,
   });
 
@@ -24,11 +25,12 @@ class CbTextFormField extends StatelessWidget {
   final String? label;
   final String? hint;
   final bool readOnly;
-  final int? maxLines;
+  final int maxLines;
   final int? minLines;
   final Widget? suffix;
   final Widget? prefix;
   final bool required;
+  final bool obscured;
   final AutovalidateMode autovalidateMode;
   final Function()? onTap;
 
@@ -53,6 +55,7 @@ class CbTextFormField extends StatelessWidget {
           validator: validator,
           maxLines: maxLines,
           minLines: minLines,
+          obscureText: obscured,
           decoration: InputDecoration(
             label: label != null ? Text(label!) : null,
             hintText: hint,
