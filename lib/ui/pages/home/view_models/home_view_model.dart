@@ -36,12 +36,6 @@ class HomeViewModel extends ChangeNotifier {
   List<Resume> get resumes => _resumes;
   final _log = Logger('HomeViewModel');
 
-  Future<void> clearCache() async {
-    final id = await _localService.getGuestId();
-    _localService.clear();
-    _remoteService.deleteGuestUser(id!);
-  }
-
   Future<void> saveResume() async {
     try {
       final id = await _localService.getGuestId();
@@ -76,7 +70,7 @@ class HomeViewModel extends ChangeNotifier {
 
   AsyncResult<Unit> _deleteResume(Resume resume) async {
     try {
-      final userId = await _localService.getGuestId();
+      final userId = _authRepository.currentUser?.id;
       await _remoteService.deleteResume(userId!, resume);
       _resumes.removeWhere((element) => element.id == resume.id);
       notifyListeners();

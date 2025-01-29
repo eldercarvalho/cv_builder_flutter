@@ -1,4 +1,3 @@
-import 'package:cv_builder/ui/shared/widgets/cb_datepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
@@ -8,7 +7,7 @@ import 'package:uuid/uuid.dart';
 import '../../../../domain/models/certification.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
-import '../../../shared/widgets/cb_text_form_field.dart';
+import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
 import 'form_container.dart';
@@ -219,7 +218,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
                 RequiredValidator(errorText: context.l10n.requiredField),
               ]).call,
             ),
-            CbTextFormField(
+            CbTextAreaField(
               controller: _summaryController,
               label: 'Resumo',
               minLines: 6,

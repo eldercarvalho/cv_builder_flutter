@@ -1,4 +1,3 @@
-import 'package:cv_builder/ui/pages/login/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +6,7 @@ import '../../data/repositories/auth_repository/auth_repository.dart';
 import '../../domain/models/resume.dart';
 import '../../ui/pages/home/home.dart';
 import '../../ui/pages/login/login_page.dart';
+import '../../ui/pages/login/view_model/login_view_model.dart';
 import '../../ui/pages/registration/registration_page.dart';
 import '../../ui/pages/registration/view_model/registration_view_model.dart';
 import '../../ui/pages/resume_form/resume_form.dart';
@@ -52,7 +52,7 @@ GoRouter router(AuthRepository authRepository) {
         pageBuilder: (context, state) {
           final parms = state.extra as ResumeFormParams?;
           final viewModel = ResumeFormViewModel(
-            localService: context.read(),
+            authRepository: context.read(),
             remoteService: context.read(),
             fileService: context.read(),
           );
@@ -70,7 +70,7 @@ GoRouter router(AuthRepository authRepository) {
           final params = state.extra as ResumePreviewParams;
 
           final viewModel = ResumePreviewViewModel(
-            localService: context.read(),
+            authRepository: context.read(),
             remoteService: context.read(),
             fileService: context.read(),
           );

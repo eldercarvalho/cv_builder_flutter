@@ -7,8 +7,7 @@ import 'package:uuid/uuid.dart';
 import '../../../../domain/models/work_experience.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
-import '../../../shared/widgets/cb_datepicker.dart';
-import '../../../shared/widgets/cb_text_form_field.dart';
+import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
 import 'form_container.dart';
@@ -237,10 +236,9 @@ class _CreateItemModalState extends State<_CreateItemModal> {
               controller: _endDateController,
               label: 'Data de Término',
             ),
-            CbTextFormField(
+            CbTextAreaField(
               controller: _summaryController,
               label: 'Atividades',
-              minLines: 6,
             ),
           ],
           bottom: FormButtons(

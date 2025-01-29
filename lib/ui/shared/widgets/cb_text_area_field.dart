@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CbTextFormField extends StatelessWidget {
-  const CbTextFormField({
+class CbTextAreaField extends StatelessWidget {
+  const CbTextAreaField({
     super.key,
     this.initialValue,
     this.validator,
@@ -11,7 +11,7 @@ class CbTextFormField extends StatelessWidget {
     this.readOnly = false,
     this.hint,
     this.maxLines,
-    this.minLines = 1,
+    this.minLines = 6,
     this.suffix,
     this.prefix,
     this.required = false,
@@ -54,9 +54,12 @@ class CbTextFormField extends StatelessWidget {
           onTap: onTap,
           validator: validator,
           obscureText: obscured,
+          minLines: minLines,
+          maxLines: 8,
           decoration: InputDecoration(
-            label: label != null ? Text(label!) : null,
-            hintText: hint,
+            // label: label != null ? Text(label!) : null,
+            floatingLabelAlignment: FloatingLabelAlignment.start,
+            hintText: label,
             prefixIcon: prefix,
             suffixIcon: suffix,
           ),

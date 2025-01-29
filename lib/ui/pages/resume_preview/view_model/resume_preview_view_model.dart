@@ -5,6 +5,7 @@ import 'package:cv_builder/ui/shared/resume_models/simple/simple.dart';
 import 'package:flutter/material.dart';
 import 'package:result_dart/result_dart.dart';
 
+import '../../../../data/repositories/auth_repository/auth_repository.dart';
 import '../../../../data/services/api/remote_service.dart';
 import '../../../../data/services/local/local_service.dart';
 import '../../../../domain/models/resume.dart';
@@ -12,15 +13,15 @@ import '../../../../utils/command.dart';
 
 class ResumePreviewViewModel extends ChangeNotifier {
   ResumePreviewViewModel({
+    required AuthRepository authRepository,
     required RemoteService remoteService,
-    required LocalService localService,
     required FileService fileService,
-  })  : _remoteService = remoteService,
-        _localService = localService,
+  })  : _authRepository = authRepository,
+        _remoteService = remoteService,
         _fileService = fileService;
 
+  late final AuthRepository _authRepository;
   late final RemoteService _remoteService;
-  late final LocalService _localService;
   late final FileService _fileService;
   late final Command1<Unit, String> getResume = Command1(_getResume);
 
@@ -36,7 +37,7 @@ class ResumePreviewViewModel extends ChangeNotifier {
 
   Future<Result<Unit>> _getResume(String resumeId) async {
     try {
-      final userId = await _localService.getGuestId();
+      final userId = _authRepository.currentUser?.id;
       final resumeFile = await _fileService.getPdf(name: resumeId);
       final resumeModel = await _remoteService.getResume(userId!, resumeId);
       _resume = resumeModel.toDomain();

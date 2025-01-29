@@ -8,6 +8,8 @@ import 'package:cv_builder/data/services/local/local_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
+import '../ui/pages/home/view_models/home_view_model.dart';
+
 // Services
 List<SingleChildWidget> get providers => [
       Provider(
@@ -34,5 +36,13 @@ List<SingleChildWidget> get providers => [
       ),
       ChangeNotifierProvider(
         create: (context) => AuthRepositoryRemote(authService: context.read()) as AuthRepository,
+      ),
+      ChangeNotifierProvider(
+        create: (context) => HomeViewModel(
+          authRepository: context.read(),
+          remoteService: context.read(),
+          localService: context.read(),
+          fileService: context.read(),
+        ),
       ),
     ];

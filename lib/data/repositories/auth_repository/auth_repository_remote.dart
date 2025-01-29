@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:result_dart/result_dart.dart';
 
 import '../../../domain/dtos/authentication_data.dart';
@@ -8,7 +7,7 @@ import '../../models/user.dart';
 import '../../services/api/auth_service.dart';
 import 'auth_repository.dart';
 
-class AuthRepositoryRemote extends ChangeNotifier implements AuthRepository {
+class AuthRepositoryRemote extends AuthRepository {
   AuthRepositoryRemote({required AuthService authService}) {
     _authService = authService;
     _authService.authStateChanges.listen((UserModel? user) {

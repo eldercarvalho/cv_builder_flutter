@@ -36,9 +36,8 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
     return FormContainer(
       fields: [
         const SectionTitleTextField(text: 'Objetivo', padding: 0),
-        CbTextFormField(
+        CbTextAreaField(
           controller: _objectiveController,
-          minLines: 6,
         ),
       ],
       bottom: ListenableBuilder(

@@ -3,29 +3,28 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:result_dart/result_dart.dart';
 
+import '../../../../data/repositories/auth_repository/auth_repository.dart';
 import '../../../../data/services/api/remote_service.dart';
 import '../../../../data/services/local/file_service.dart';
-import '../../../../data/services/local/local_service.dart';
 import '../../../../domain/models/resume.dart';
 import '../../../../utils/command.dart';
 import '../../../shared/resume_models/simple/simple.dart';
 
 class ResumeFormViewModel extends ChangeNotifier {
   ResumeFormViewModel({
+    required AuthRepository authRepository,
     required RemoteService remoteService,
-    required LocalService localService,
     required FileService fileService,
   }) {
-    // _resumeRepository = resumeRepository;
+    _authRepository = authRepository;
     _remoteService = remoteService;
-    _localService = localService;
     _fileService = fileService;
     saveResume = Command0(_saveResume);
   }
 
   // late final ResumeRepository _resumeRepository;
+  late final AuthRepository _authRepository;
   late final RemoteService _remoteService;
-  late final LocalService _localService;
   late final FileService _fileService;
   late final Command0<Unit> saveResume;
 
@@ -39,7 +38,7 @@ class ResumeFormViewModel extends ChangeNotifier {
 
   AsyncResult<Unit> _saveResume() async {
     try {
-      final userId = await _localService.getGuestId();
+      final userId = _authRepository.currentUser?.id;
       String? pictureUrl = _resume.photo;
 
       if (_resume.photo != null && !_resume.photo!.startsWith('https')) {
@@ -60,7 +59,6 @@ class ResumeFormViewModel extends ChangeNotifier {
     } on Exception catch (e) {
       return Failure(e);
     } catch (e) {
-      print(e);
       return Failure(Exception('Erro ao salvar currículo.'));
     }
   }
