@@ -74,4 +74,21 @@ class AuthService {
       return Failure(e);
     }
   }
+
+  AsyncResult<UserModel> getCurrentUser() async {
+    try {
+      final User? user = _firebaseAuth.currentUser;
+      if (user != null) {
+        final userModel = UserModel(
+          id: user.uid,
+          name: user.displayName ?? '',
+          email: user.email ?? '',
+        );
+        return Success(userModel);
+      }
+      throw Exception('User not found');
+    } on FirebaseAuthException catch (e) {
+      return Failure(e);
+    }
+  }
 }

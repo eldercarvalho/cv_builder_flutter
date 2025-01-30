@@ -37,9 +37,7 @@ GoRouter router(AuthRepository authRepository) {
         builder: (context, state) {
           final viewModel = HomeViewModel(
             authRepository: context.read(),
-            remoteService: context.read(),
-            localService: context.read(),
-            fileService: context.read(),
+            resumeRepository: context.read(),
           );
 
           viewModel.getResumes.execute();
@@ -53,8 +51,7 @@ GoRouter router(AuthRepository authRepository) {
           final parms = state.extra as ResumeFormParams?;
           final viewModel = ResumeFormViewModel(
             authRepository: context.read(),
-            remoteService: context.read(),
-            fileService: context.read(),
+            resumeRepository: context.read(),
           );
 
           return slideTransitionPage(
@@ -71,8 +68,7 @@ GoRouter router(AuthRepository authRepository) {
 
           final viewModel = ResumePreviewViewModel(
             authRepository: context.read(),
-            remoteService: context.read(),
-            fileService: context.read(),
+            resumeRepository: context.read(),
           );
 
           viewModel.getResume.execute(resumeId);

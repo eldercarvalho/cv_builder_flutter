@@ -9,6 +9,7 @@ abstract class AuthRepository extends ChangeNotifier {
   AsyncResult<void> login(AuthenticationData data);
   AsyncResult<void> register(RegistrationData data);
   AsyncResult<void> logout();
+  AsyncResult<User> getCurrentUser();
   Future<bool> get isAuthenticated;
   User? get currentUser;
 }

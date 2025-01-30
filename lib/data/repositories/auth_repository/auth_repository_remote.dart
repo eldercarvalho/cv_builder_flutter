@@ -43,4 +43,9 @@ class AuthRepositoryRemote extends AuthRepository {
   AsyncResult<void> register(RegistrationData data) {
     return _authService.createUserWithEmailAndPassword(data);
   }
+
+  @override
+  AsyncResult<User> getCurrentUser() {
+    return _authService.getCurrentUser().map((user) => user.toDomain());
+  }
 }

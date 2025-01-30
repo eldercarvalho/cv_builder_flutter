@@ -1,28 +1,22 @@
 import 'dart:io';
 
-import 'package:cv_builder/data/services/local/file_service.dart';
-import 'package:cv_builder/ui/shared/resume_models/simple/simple.dart';
 import 'package:flutter/material.dart';
 import 'package:result_dart/result_dart.dart';
 
 import '../../../../data/repositories/auth_repository/auth_repository.dart';
-import '../../../../data/services/api/remote_service.dart';
-import '../../../../data/services/local/local_service.dart';
+import '../../../../data/repositories/resume_repository/resume_respository.dart';
 import '../../../../domain/models/resume.dart';
 import '../../../../utils/command.dart';
 
 class ResumePreviewViewModel extends ChangeNotifier {
   ResumePreviewViewModel({
     required AuthRepository authRepository,
-    required RemoteService remoteService,
-    required FileService fileService,
+    required ResumeRepository resumeRepository,
   })  : _authRepository = authRepository,
-        _remoteService = remoteService,
-        _fileService = fileService;
+        _resumeRepository = resumeRepository;
 
   late final AuthRepository _authRepository;
-  late final RemoteService _remoteService;
-  late final FileService _fileService;
+  late final ResumeRepository _resumeRepository;
   late final Command1<Unit, String> getResume = Command1(_getResume);
 
   Resume? _resume;
@@ -35,31 +29,24 @@ class ResumePreviewViewModel extends ChangeNotifier {
   File? _resumePdf;
   File? get resumePdf => _resumePdf;
 
-  Future<Result<Unit>> _getResume(String resumeId) async {
-    try {
-      final userId = _authRepository.currentUser?.id;
-      final resumeFile = await _fileService.getPdf(name: resumeId);
-      final resumeModel = await _remoteService.getResume(userId!, resumeId);
-      _resume = resumeModel.toDomain();
-      _resumePdf = resumeFile;
-      notifyListeners();
-      return const Success(unit);
-    } on Exception catch (e) {
-      return Failure(e);
-    }
+  AsyncResult<Unit> _getResume(String resumeId) async {
+    return _authRepository
+        .getCurrentUser()
+        .flatMap((user) => _resumeRepository.getResume(userId: user.id, resumeId: resumeId))
+        .flatMap(_onGetResume)
+        .flatMap((_) => _resumeRepository.getPdf(resumeId: resumeId))
+        .flatMap(_onGetResumePdf);
   }
 
-  Future<Result<String>> savePdfLocally() async {
-    try {
-      final pdfBytes = await SimpleResumeTemplate.generatePdf(_resume!);
-      final thumbnailBytes = await SimpleResumeTemplate.generateThumbnail(pdfBytes);
-      final pdfFile = await _fileService.savePdf(name: _resume!.id, bytes: pdfBytes);
-      await _fileService.saveImage(name: 'thumbnail_${_resume!.id}', bytes: thumbnailBytes);
-      _resumePdf = pdfFile;
-      notifyListeners();
-      return const Success('OK');
-    } on Exception catch (e) {
-      return Failure(e);
-    }
+  AsyncResult<Unit> _onGetResume(Resume resume) async {
+    _resume = resume;
+    notifyListeners();
+    return const Success(unit);
+  }
+
+  AsyncResult<Unit> _onGetResumePdf(File resumePdf) async {
+    _resumePdf = resumePdf;
+    notifyListeners();
+    return const Success(unit);
   }
 }

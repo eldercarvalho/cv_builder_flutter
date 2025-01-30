@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cv_builder/data/models/resume.dart';
 import 'package:cv_builder/domain/models/resume.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:result_dart/result_dart.dart';
 
 class RemoteService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -11,121 +12,82 @@ class RemoteService {
 
   RemoteService();
 
-  Future<void> deleteGuestUser(String id) async {
-    try {
-      _firestore.collection('users').doc(id).delete().catchError(
-            (e) => print(e),
-          );
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<void> saveGuestUser(String userId) async {
-    try {
-      final userRef = _firestore.collection('users').doc(userId);
-      await userRef.set({'name': '', 'email': ''});
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<List<ResumeModel>> getResumes(String userId) async {
+  AsyncResult<List<ResumeModel>> getResumes(String userId) async {
     try {
       final resumesRef = await _firestore.collection('users').doc(userId).collection('resumes').get();
-      return resumesRef.docs.map((e) => ResumeModel.fromJson(e.data())).toList();
+      final resumes = resumesRef.docs.map((e) => ResumeModel.fromJson(e.data())).toList();
+      return Success(resumes);
     } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        print('Permissão negada para acessar os dados do usuário.');
-      }
-      rethrow;
-    } catch (e) {
-      rethrow;
+      final exception = RemoteException(e.message, e.code);
+      return Failure(exception);
     }
   }
 
-  Future<ResumeModel> getResume(String userId, String resumeId) async {
+  AsyncResult<ResumeModel> getResume(String userId, String resumeId) async {
     try {
       final resumeRef = _firestore.collection('users').doc(userId).collection('resumes').doc(resumeId);
-      final resume = await resumeRef.get();
-      return ResumeModel.fromJson(resume.data() as Map<String, dynamic>);
+      final resumeDoc = await resumeRef.get();
+      final resumeModel = resumeDoc.data() as Map<String, dynamic>;
+      return Success(ResumeModel.fromJson(resumeModel));
     } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        print('Permissão negada para acessar os dados do usuário.');
-      }
-      rethrow;
-    } catch (e) {
-      rethrow;
+      final exception = RemoteException(e.message, e.code);
+      return Failure(exception);
     }
   }
 
-  Future<void> saveResume(String userId, Resume resume) async {
+  AsyncResult<ResumeModel> saveResume(String userId, ResumeModel resume) async {
     try {
       final resumesRef = _firestore.collection('users').doc(userId).collection('resumes');
-      final resumeModel = ResumeModel.fromDomain(resume);
-      resumesRef.doc(resume.id).set(resumeModel.toJson());
+      resumesRef.doc(resume.id).set(resume.toJson());
+      return Success(resume);
     } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        print('Permissão negada para acessar os dados do usuário.');
-      }
-      rethrow;
-    } catch (e) {
-      rethrow;
+      final exception = RemoteException(e.message, e.code);
+      return Failure(exception);
     }
   }
 
-  Future<void> deleteResume(String userId, Resume resume) async {
+  AsyncResult<Unit> deleteResume(String userId, Resume resume) async {
     try {
-      await _firestore.runTransaction((transaction) async {
+      return await _firestore.runTransaction((transaction) async {
         final docRef = _firestore.collection('users').doc(userId).collection('resumes').doc(resume.id);
         final thumbnailRef = _storage.ref().child('images/$userId/${resume.id}/thumbnail');
         await thumbnailRef.delete();
-        transaction.delete(docRef);
 
         if (resume.photo != null) {
           final profilePictureRef = _storage.ref().child('images/$userId/${resume.id}/profile_picture');
           await profilePictureRef.delete();
         }
+
+        transaction.delete(docRef);
+        return const Success(unit);
       });
     } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        print('Permissão negada para acessar os dados do usuário.');
-      }
-      rethrow;
-    } catch (e) {
-      rethrow;
+      final exception = RemoteException(e.message, e.code);
+      return Failure(exception);
     }
   }
 
-  Future<String> savePicture(String userId, String resumeId, File file) async {
+  AsyncResult<String> savePicture(String userId, String resumeId, File file) async {
     try {
       final ref = _storage.ref().child('images/$userId/$resumeId/profile_picture');
       final storageRef = await ref.putFile(file);
       final url = await storageRef.ref.getDownloadURL();
-      return url;
+      return Success(url);
     } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        print('Permissão negada para acessar os dados do usuário.');
-      }
-      rethrow;
-    } catch (e) {
-      rethrow;
+      final exception = RemoteException(e.message, e.code);
+      return Failure(exception);
     }
   }
 
-  Future<String> saveThumbnail(String userId, String resumeId, File file) async {
+  AsyncResult<String> saveThumbnail(String userId, String resumeId, File file) async {
     try {
       final ref = _storage.ref().child('images/$userId/$resumeId/thumbnail');
       final storageRef = await ref.putFile(file);
       final url = await storageRef.ref.getDownloadURL();
-      return url;
+      return Success(url);
     } on FirebaseException catch (e) {
-      if (e.code == 'permission-denied') {
-        print('Permissão negada para acessar os dados do usuário.');
-      }
-      rethrow;
-    } catch (e) {
-      rethrow;
+      final exception = RemoteException(e.message, e.code);
+      return Failure(exception);
     }
   }
 
@@ -142,4 +104,11 @@ class RemoteService {
       rethrow;
     }
   }
+}
+
+class RemoteException implements Exception {
+  final String? message;
+  final String code;
+
+  RemoteException(this.message, this.code);
 }

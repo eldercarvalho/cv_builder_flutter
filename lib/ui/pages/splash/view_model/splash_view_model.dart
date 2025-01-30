@@ -27,7 +27,7 @@ class SplashViewModel extends ChangeNotifier {
       }
 
       await _localService.saveGuestId(id);
-      await _remoteService.saveGuestUser(id);
+      // await _remoteService.saveGuestUser(id);
     } catch (e) {
       _log.severe('Error generating guest id', e);
     }
