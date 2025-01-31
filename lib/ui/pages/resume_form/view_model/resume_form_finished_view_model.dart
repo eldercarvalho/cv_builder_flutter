@@ -14,15 +14,10 @@ class ResumeFormFinishedViewModel extends ChangeNotifier {
     required FileService fileService,
   }) {
     // _resumeRepository = resumeRepository;
-    _remoteService = remoteService;
-    _localService = localService;
     _fileService = fileService;
     downloadResume = Command1(_downloadResume);
   }
 
-  // late final ResumeRepository _resumeRepository;
-  late final RemoteService _remoteService;
-  late final LocalService _localService;
   late final FileService _fileService;
   late final Command1<Unit, Resume> downloadResume;
 

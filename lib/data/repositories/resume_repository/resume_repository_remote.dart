@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:result_dart/result_dart.dart';
 
@@ -43,7 +44,7 @@ class ResumeRepositoryRemote extends ResumeRepository {
           .flatMap((thumbFile) => _remoteService.saveThumbnail(userId, resume.id, thumbFile))
           .map((thumbUrl) => resume.copyWith(thumbnail: thumbUrl))
           .flatMap((resume) => _remoteService.saveResume(userId, ResumeModel.fromDomain(resume)))
-          .flatMap((resume) => _fileService.savePdf(name: resume.id, bytes: pdfBytes))
+          // .flatMap((resume) => _fileService.savePdf(name: resume.id, bytes: pdfBytes))
           .pure(unit);
     });
   }
@@ -73,5 +74,10 @@ class ResumeRepositoryRemote extends ResumeRepository {
     return _remoteService
         .getResumes(userId) //
         .map((resumes) => resumes.map((e) => e.toDomain()).toList());
+  }
+
+  @override
+  AsyncResult<File> savePdf({required String resumeId, required Uint8List bytes}) async {
+    return _fileService.savePdf(name: resumeId, bytes: bytes);
   }
 }

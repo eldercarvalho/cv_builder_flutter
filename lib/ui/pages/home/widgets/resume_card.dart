@@ -21,6 +21,8 @@ class ResumeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final updatedAt = resume.updatedAt ?? resume.createdAt;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -94,8 +96,8 @@ class ResumeCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-            Text('Atualizado em: ${resume.createdAt.toSimpleDate()}', style: const TextStyle(fontSize: 14)),
+            const SizedBox(height: 16),
+            Text('Atualizado em: ${updatedAt.toSimpleDate()}', style: const TextStyle(fontSize: 14)),
           ],
         ),
       ),

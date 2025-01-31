@@ -1,6 +1,7 @@
 import 'package:cv_builder/domain/dtos/authentication_data.dart';
 import 'package:cv_builder/ui/pages/registration/registration_page.dart';
 import 'package:cv_builder/ui/shared/widgets/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -106,11 +107,24 @@ class _LoginPageState extends State<LoginPage> {
 
   void _onListener() {
     if (widget.viewModel.login.completed) {
-      GoRouter.of(context).go('/login');
+      LoginPage.replace(context);
     }
 
     if (widget.viewModel.login.error) {
-      context.showErrorSnackBar('Ocorreu um erro ao registrar');
+      final result = widget.viewModel.login.result;
+      result?.fold(
+        (_) {},
+        (error) {
+          if (error is FirebaseAuthException) {
+            final code = error.code;
+            if (code == 'invalid-credential') {
+              context.showErrorSnackBar('Usuário ou senha incorretos');
+            } else {
+              context.showErrorSnackBar('Erro ao fazer login');
+            }
+          }
+        },
+      );
     }
   }
 }

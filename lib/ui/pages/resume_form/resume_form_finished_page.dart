@@ -1,4 +1,3 @@
-import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,6 +7,7 @@ import 'package:printing/printing.dart';
 import '../../../domain/models/resume.dart';
 import '../../shared/resume_models/simple/simple.dart';
 import '../../shared/widgets/widgets.dart';
+import '../resume_preview/resume_preview_page.dart';
 import 'view_model/resume_form_finished_view_model.dart';
 
 class ResumeFormFinishedPage extends StatefulWidget {
@@ -35,12 +35,6 @@ class ResumeFormFinishedPage extends StatefulWidget {
 }
 
 class _ResumeFormFinishedPageState extends State<ResumeFormFinishedPage> {
-  @override
-  void initState() {
-    widget.viewModel.downloadResume.addListener(_downloadResumeListener);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,8 +68,9 @@ class _ResumeFormFinishedPageState extends State<ResumeFormFinishedPage> {
               const SizedBox(height: 16),
               CbButton(
                 prefixIcon: FeatherIcons.file,
-                onPressed: () => Navigator.of(context).pop(),
+                onPressed: () => ResumePreviewPage.replace(context, params: ResumePreviewParams(resume: widget.resume)),
                 text: 'Visualizar Currículo',
+                type: CbButtonType.outlined,
               ),
               const SizedBox(height: 16),
               CbButton(
@@ -83,19 +78,6 @@ class _ResumeFormFinishedPageState extends State<ResumeFormFinishedPage> {
                 onPressed: () => _onShare(),
                 text: 'Compartilhar',
                 type: CbButtonType.outlined,
-              ),
-              const SizedBox(height: 16),
-              ListenableBuilder(
-                listenable: widget.viewModel.downloadResume,
-                builder: (context, child) {
-                  return CbButton(
-                    prefixIcon: FeatherIcons.download,
-                    onPressed: () => _onDownload(),
-                    text: 'Download',
-                    type: CbButtonType.outlined,
-                    isLoading: widget.viewModel.downloadResume.running,
-                  );
-                },
               ),
             ],
           ),
@@ -107,15 +89,5 @@ class _ResumeFormFinishedPageState extends State<ResumeFormFinishedPage> {
   Future<void> _onShare() async {
     final resumePdf = await SimpleResumeTemplate.generatePdf(widget.resume);
     await Printing.sharePdf(bytes: resumePdf, filename: '${widget.resume.resumeName}.pdf');
-  }
-
-  Future<void> _onDownload() async {
-    widget.viewModel.downloadResume.execute(widget.resume);
-  }
-
-  void _downloadResumeListener() {
-    if (widget.viewModel.downloadResume.completed) {
-      context.showSuccessSnackBar('Currículo baixado com sucesso!');
-    }
   }
 }

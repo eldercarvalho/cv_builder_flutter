@@ -47,7 +47,8 @@ class AuthService {
       );
       return Success(userCredential.user!);
     } on FirebaseAuthException catch (e) {
-      return Failure(e);
+      final exception = AuthException(e.message, e.code);
+      return Failure(exception);
     }
   }
 
@@ -62,7 +63,8 @@ class AuthService {
 
       return Success(userCredential.user!);
     } on FirebaseAuthException catch (e) {
-      return Failure(e);
+      final exception = AuthException(e.message, e.code);
+      return Failure(exception);
     }
   }
 
@@ -71,7 +73,8 @@ class AuthService {
       await _firebaseAuth.signOut();
       return const Success(unit);
     } on FirebaseAuthException catch (e) {
-      return Failure(e);
+      final exception = AuthException(e.message, e.code);
+      return Failure(exception);
     }
   }
 
@@ -88,7 +91,15 @@ class AuthService {
       }
       throw Exception('User not found');
     } on FirebaseAuthException catch (e) {
-      return Failure(e);
+      final exception = AuthException(e.message, e.code);
+      return Failure(exception);
     }
   }
+}
+
+class AuthException implements Exception {
+  final String? message;
+  final String code;
+
+  AuthException(this.message, this.code);
 }

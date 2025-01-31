@@ -18,6 +18,7 @@ class EditDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         children: [
+          const SizedBox(height: 20),
           ListTile(
             leading: const Icon(FeatherIcons.fileText),
             title: const Text('Sobre o Currículo'),

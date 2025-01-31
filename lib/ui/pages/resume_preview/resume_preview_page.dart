@@ -31,6 +31,10 @@ class ResumePreviewPage extends StatefulWidget {
     await context.push('$route/${params.resume.id}', extra: params);
   }
 
+  static void replace(BuildContext context, {required ResumePreviewParams params}) {
+    context.replace('$route/${params.resume.id}', extra: params);
+  }
+
   @override
   State<ResumePreviewPage> createState() => _ResumePreviewPageState();
 }
@@ -100,6 +104,12 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
   }
 
   Future<void> _onGetResume() async {
-    if (_viewModel.getResume.error) {}
+    if (_viewModel.getResume.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro ao carregar currículo'),
+        ),
+      );
+    }
   }
 }

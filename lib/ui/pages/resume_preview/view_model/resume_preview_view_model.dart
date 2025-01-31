@@ -7,6 +7,7 @@ import '../../../../data/repositories/auth_repository/auth_repository.dart';
 import '../../../../data/repositories/resume_repository/resume_respository.dart';
 import '../../../../domain/models/resume.dart';
 import '../../../../utils/command.dart';
+import '../../../shared/resume_models/simple/simple.dart';
 
 class ResumePreviewViewModel extends ChangeNotifier {
   ResumePreviewViewModel({
@@ -34,14 +35,15 @@ class ResumePreviewViewModel extends ChangeNotifier {
         .getCurrentUser()
         .flatMap((user) => _resumeRepository.getResume(userId: user.id, resumeId: resumeId))
         .flatMap(_onGetResume)
-        .flatMap((_) => _resumeRepository.getPdf(resumeId: resumeId))
+        .map((resume) => SimpleResumeTemplate.generatePdf(resume))
+        .flatMap((pdfBytes) => _resumeRepository.savePdf(resumeId: resumeId, bytes: pdfBytes))
         .flatMap(_onGetResumePdf);
   }
 
-  AsyncResult<Unit> _onGetResume(Resume resume) async {
+  AsyncResult<Resume> _onGetResume(Resume resume) async {
     _resume = resume;
     notifyListeners();
-    return const Success(unit);
+    return Success(resume);
   }
 
   AsyncResult<Unit> _onGetResumePdf(File resumePdf) async {

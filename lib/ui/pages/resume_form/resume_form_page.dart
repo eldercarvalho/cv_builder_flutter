@@ -133,10 +133,11 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
 
   void _onNextPage() {
     if (_isEditing) {
-      widget.viewModel.saveResume.execute();
+      widget.viewModel.saveResume.execute(_isEditing);
       return;
     }
 
+    FocusScope.of(context).unfocus();
     _pageController.nextPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -152,7 +153,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
 
   void _onSubmit() {
     FocusScope.of(context).unfocus();
-    widget.viewModel.saveResume.execute();
+    widget.viewModel.saveResume.execute(_isEditing);
   }
 
   void _onSaveResumeListener() {
