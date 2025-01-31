@@ -1,4 +1,5 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -36,13 +37,14 @@ class _HomePageState extends State<HomePage> {
           //   onPressed: () => widget.viewModel.clearCache(),
           //   icon: const Icon(FeatherIcons.trash2),
           // ),
+          if (kDebugMode)
+            IconButton(
+              onPressed: () => widget.viewModel.saveResume(),
+              icon: const Icon(FeatherIcons.plus),
+            ),
           IconButton(
             onPressed: () => widget.viewModel.logout(),
-            icon: const Icon(FeatherIcons.logOut),
-          ),
-          IconButton(
-            onPressed: () => widget.viewModel.saveResume(),
-            icon: const Icon(FeatherIcons.plus),
+            icon: Icon(FeatherIcons.logOut, color: context.colors.primary),
           ),
         ],
       ),

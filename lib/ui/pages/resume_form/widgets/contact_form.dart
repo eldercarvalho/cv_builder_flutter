@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/extensions/extensions.dart';
@@ -45,6 +46,7 @@ class _ContactFormState extends State<ContactForm> {
           SectionTitleTextField(
             text: context.l10n.contact,
             padding: 0,
+            icon: FeatherIcons.phone,
           ),
           CbTextFormField(
             controller: _phoneController,

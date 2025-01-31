@@ -79,7 +79,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
         onPopInvokedWithResult: _onPopInvokedWithResult,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(title, style: context.textTheme.titleMedium),
+            title: Text(title),
             actions: _isEditing
                 ? null
                 : [

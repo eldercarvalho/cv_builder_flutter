@@ -1,12 +1,12 @@
+import 'package:cv_builder/ui/pages/resume_form/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
-import 'form_buttons.dart';
-import 'form_container.dart';
 
 class ResumeInfoForm extends StatefulWidget {
   const ResumeInfoForm({super.key, required this.onSubmit, this.onPrevious, required this.isEditing});
@@ -38,6 +38,11 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
       key: _formKey,
       child: FormContainer(
         fields: [
+          const SectionTitleTextField(
+            text: 'Sobre o Currículo',
+            icon: FeatherIcons.fileText,
+            padding: 0,
+          ),
           CbTextFormField(
             controller: _nameController,
             label: context.l10n.resumeName,

@@ -1,5 +1,6 @@
 import 'package:cv_builder/domain/models/language.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -38,7 +39,7 @@ class _LanguagesFormState extends State<LanguagesForm> {
     return Column(
       children: [
         const SizedBox(height: 16),
-        const SectionTitleTextField(text: 'Idiomas'),
+        const SectionTitleTextField(text: 'Idiomas', icon: FeatherIcons.flag),
         ListenableBuilder(
           listenable: _viewModel,
           builder: (context, _) {

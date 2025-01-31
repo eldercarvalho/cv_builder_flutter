@@ -24,82 +24,90 @@ class ResumeCard extends StatelessWidget {
     final updatedAt = resume.updatedAt ?? resume.createdAt;
 
     return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        margin: const EdgeInsets.only(bottom: 16),
-        decoration: BoxDecoration(
-          color: context.colors.surfaceBright,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2),
-              blurRadius: 2,
-              offset: const Offset(0, 1),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(resume.resumeName, style: const TextStyle(fontSize: 18)),
-                ),
-                PopupMenuButton<String>(
-                  onSelected: onMenuSelected,
-                  itemBuilder: (context) => [
-                    const PopupMenuItem(
-                      value: 'edit',
-                      child: Row(
-                        children: [
-                          Icon(FeatherIcons.edit),
-                          SizedBox(width: 8),
-                          Text('Editar'),
-                        ],
-                      ),
-                    ),
-                    const PopupMenuItem(
-                      value: 'delete',
-                      child: Row(
-                        children: [
-                          Icon(FeatherIcons.trash2),
-                          SizedBox(width: 8),
-                          Text('Excluir'),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: context.colors.outline),
-                    image: isLoading
-                        ? null
-                        : DecorationImage(
-                            alignment: Alignment.topCenter,
-                            image: CachedNetworkImageProvider(resume.thumbnail!),
-                            fit: BoxFit.cover,
-                          ),
+      onTap: !isLoading ? onTap : null,
+      child: Stack(
+        children: [
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 500),
+            opacity: isLoading ? 0.4 : 1,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(bottom: 16),
+              decoration: BoxDecoration(
+                color: context.colors.surfaceBright,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 2,
+                    offset: const Offset(0, 3),
                   ),
-                  child: isLoading ? const Center(child: CircularProgressIndicator()) : null,
-                ),
-              ],
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(resume.resumeName, style: const TextStyle(fontSize: 18)),
+                      ),
+                      if (!isLoading)
+                        PopupMenuButton<String>(
+                          onSelected: onMenuSelected,
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              value: 'edit',
+                              child: Row(
+                                children: [
+                                  Icon(FeatherIcons.edit, size: 20, color: context.colors.primary),
+                                  const SizedBox(width: 8),
+                                  const Text('Editar'),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 'delete',
+                              child: Row(
+                                children: [
+                                  Icon(FeatherIcons.trash2, size: 20, color: context.colors.primary),
+                                  const SizedBox(width: 8),
+                                  const Text('Excluir'),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    width: double.infinity,
+                    height: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: context.colors.outline),
+                      image: DecorationImage(
+                        alignment: Alignment.topCenter,
+                        image: CachedNetworkImageProvider(resume.thumbnail!),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text('Atualizado em: ${updatedAt.toSimpleDate()}', style: const TextStyle(fontSize: 14)),
+                ],
+              ),
             ),
-            const SizedBox(height: 16),
-            Text('Atualizado em: ${updatedAt.toSimpleDate()}', style: const TextStyle(fontSize: 14)),
-          ],
-        ),
+          ),
+          if (isLoading)
+            const Positioned.fill(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )
+        ],
       ),
     );
   }

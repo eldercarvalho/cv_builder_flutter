@@ -39,7 +39,10 @@ class _EducationFormState extends State<EducationForm> {
     return Column(
       children: [
         const SizedBox(height: 16),
-        const SectionTitleTextField(text: 'Formação'),
+        const SectionTitleTextField(
+          text: 'Formação',
+          icon: Icons.school_outlined,
+        ),
         ListenableBuilder(
           listenable: _viewModel,
           builder: (context, _) {

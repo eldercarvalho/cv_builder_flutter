@@ -20,57 +20,57 @@ class EditDrawer extends StatelessWidget {
         children: [
           const SizedBox(height: 20),
           ListTile(
-            leading: const Icon(FeatherIcons.fileText),
+            leading: Icon(FeatherIcons.fileText, color: context.colors.primary),
             title: const Text('Sobre o Currículo'),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.resumeInfo),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.user),
+            leading: Icon(FeatherIcons.user, color: context.colors.primary),
             title: Text(context.l10n.personalInfo),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.personalInfo),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.mapPin),
+            leading: Icon(FeatherIcons.mapPin, color: context.colors.primary),
             title: Text(context.l10n.address),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.address),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.phone),
+            leading: Icon(FeatherIcons.phone, color: context.colors.primary),
             title: Text(context.l10n.contact),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.contact),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.checkCircle),
+            leading: Icon(FeatherIcons.checkCircle, color: context.colors.primary),
             title: Text(context.l10n.objective),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.objective),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.share2),
+            leading: Icon(FeatherIcons.share2, color: context.colors.primary),
             title: Text(context.l10n.socialNetwork(2)),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.socialNetworks),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.barChart),
+            leading: Icon(FeatherIcons.briefcase, color: context.colors.primary),
             title: Text(context.l10n.experience),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.experience),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.award),
+            leading: Icon(FeatherIcons.award, color: context.colors.primary),
             title: Text(context.l10n.education),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.education),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.star),
+            leading: Icon(FeatherIcons.star, color: context.colors.primary),
             title: Text(context.l10n.skills),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.skills),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.flag),
+            leading: Icon(FeatherIcons.flag, color: context.colors.primary),
             title: Text(context.l10n.languages),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.languages),
           ),
           ListTile(
-            leading: const Icon(FeatherIcons.award),
+            leading: Icon(FeatherIcons.award, color: context.colors.primary),
             title: Text(context.l10n.certifications),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.certifications),
           ),

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -56,6 +57,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         fields: [
           SectionTitleTextField(
             text: context.l10n.personalInfo,
+            icon: FeatherIcons.user,
             padding: 0,
           ),
           Center(

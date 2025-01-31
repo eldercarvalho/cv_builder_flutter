@@ -40,7 +40,10 @@ class _CertificationsFormState extends State<CertificationsForm> {
     return Column(
       children: [
         const SizedBox(height: 16),
-        const SectionTitleTextField(text: 'Certificações'),
+        const SectionTitleTextField(
+          text: 'Certificações',
+          icon: FeatherIcons.award,
+        ),
         ListenableBuilder(
           listenable: _viewModel,
           builder: (context, _) {

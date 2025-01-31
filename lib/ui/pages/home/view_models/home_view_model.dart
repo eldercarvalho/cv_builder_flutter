@@ -32,21 +32,6 @@ class HomeViewModel extends ChangeNotifier {
       await _resumeRepository.saveResume(userId: user.id, resume: resume);
       return const Success(unit);
     });
-    // try {
-    //   final id = await _localService.getGuestId();
-    //   Resume resume = Resume.fake();
-    //   final pdfBytes = await SimpleResumeTemplate.generatePdf(resume);
-    //   final imageBytes = await SimpleResumeTemplate.generateThumbnail(pdfBytes);
-
-    //   final thumbnailFile = await _fileService.saveTempImage(name: resume.id, bytes: imageBytes);
-    //   final thumbnailUrl = await _remoteService.saveThumbnail(id!, resume.id, thumbnailFile);
-    //   resume = resume.copyWith(thumbnail: thumbnailUrl);
-
-    //   await _remoteService.saveResume(id, resume);
-    //   await _fileService.savePdf(name: resume.id, bytes: pdfBytes);
-    // } catch (e) {
-    //   _log.severe('Error saving resume', e);
-    // }
   }
 
   AsyncResult<List<Resume>> _getResumes() async {
@@ -65,14 +50,19 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   AsyncResult<Unit> _deleteResume(Resume resume) async {
-    final result = _authRepository //
+    return _authRepository
         .getCurrentUser()
-        .flatMap((user) => _resumeRepository.deleteResume(userId: user.id, resume: resume));
+        .flatMap((user) => _resumeRepository.deleteResume(userId: user.id, resume: resume))
+        .fold(
+          (_) => _onDeleteSuccess(resume),
+          (error) => Failure(error),
+        );
+  }
 
-    return result.fold(
-      (_) => const Success(unit),
-      (error) => Failure(error),
-    );
+  Result<Unit> _onDeleteSuccess(Resume resume) {
+    _resumes.remove(resume);
+    notifyListeners();
+    return const Success(unit);
   }
 
   AsyncResult<Unit> logout() async {

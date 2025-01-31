@@ -3,7 +3,6 @@ export 'certifications_form.dart';
 export 'contact_form.dart';
 export 'education_form.dart';
 export 'experience_form.dart';
-export 'finished_page.dart';
 export 'form_buttons.dart';
 export 'form_container.dart';
 export 'languages_form.dart';

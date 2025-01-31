@@ -1,5 +1,6 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/widgets/widgets.dart';
@@ -42,7 +43,11 @@ class _AddressFormState extends State<AddressForm> {
       key: _formKey,
       child: FormContainer(
         fields: [
-          SectionTitleTextField(text: context.l10n.address, padding: 0),
+          SectionTitleTextField(
+            text: context.l10n.address,
+            padding: 0,
+            icon: FeatherIcons.mapPin,
+          ),
           CbTextFormField(
             controller: _addressController,
             label: context.l10n.address,

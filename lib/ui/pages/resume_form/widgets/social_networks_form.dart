@@ -39,7 +39,7 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
     return Column(
       children: [
         const SizedBox(height: 16),
-        SectionTitleTextField(text: context.l10n.socialNetwork(2), padding: 16),
+        SectionTitleTextField(text: context.l10n.socialNetwork(2), padding: 16, icon: FeatherIcons.share2),
         ListenableBuilder(
           listenable: _viewModel,
           builder: (context, _) {

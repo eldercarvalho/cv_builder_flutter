@@ -1,6 +1,7 @@
-import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../shared/extensions/extensions.dart';
 import '../../../shared/widgets/cb_text_form_field.dart';
 
 class SectionTitleTextField extends StatefulWidget {
@@ -8,10 +9,12 @@ class SectionTitleTextField extends StatefulWidget {
     super.key,
     required this.text,
     this.padding = 16,
+    this.icon = FeatherIcons.fileText,
   });
 
   final String text;
   final double padding;
+  final IconData icon;
 
   @override
   State<SectionTitleTextField> createState() => _SectionTitleTextFieldState();
@@ -25,9 +28,7 @@ class _SectionTitleTextFieldState extends State<SectionTitleTextField> {
     if (_isEditing) {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: widget.padding),
-        child: const CbTextFormField(
-          label: 'Título da Seção',
-        ),
+        child: const CbTextFormField(label: 'Título da Seção'),
       );
     }
 
@@ -36,6 +37,8 @@ class _SectionTitleTextFieldState extends State<SectionTitleTextField> {
       child: Row(
         // spacing: 6,
         children: [
+          Icon(widget.icon, color: context.colors.primary, size: 26),
+          const SizedBox(width: 16),
           Text(widget.text, style: context.textTheme.titleLarge),
           // InkWell(
           //   onTap: () => setState(() => _isEditing = true),

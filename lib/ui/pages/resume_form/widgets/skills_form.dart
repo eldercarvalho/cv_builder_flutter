@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -38,7 +39,10 @@ class _SkillsFormState extends State<SkillsForm> {
     return Column(
       children: [
         const SizedBox(height: 16),
-        const SectionTitleTextField(text: 'Habilidades'),
+        const SectionTitleTextField(
+          text: 'Habilidades',
+          icon: FeatherIcons.star,
+        ),
         ListenableBuilder(
           listenable: _viewModel,
           builder: (context, _) {

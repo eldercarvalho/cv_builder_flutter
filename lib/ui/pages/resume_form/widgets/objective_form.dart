@@ -1,5 +1,6 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/widgets/widgets.dart';
@@ -35,7 +36,11 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
   Widget build(BuildContext context) {
     return FormContainer(
       fields: [
-        const SectionTitleTextField(text: 'Objetivo', padding: 0),
+        const SectionTitleTextField(
+          text: 'Objetivo',
+          padding: 0,
+          icon: FeatherIcons.checkCircle,
+        ),
         CbTextAreaField(
           controller: _objectiveController,
         ),

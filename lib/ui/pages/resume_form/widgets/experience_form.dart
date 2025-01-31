@@ -40,7 +40,10 @@ class _ExperienceFormState extends State<ExperienceForm> {
     return Column(
       children: [
         const SizedBox(height: 16),
-        const SectionTitleTextField(text: 'Experiência Profissional'),
+        const SectionTitleTextField(
+          text: 'Experiência Profissional',
+          icon: FeatherIcons.briefcase,
+        ),
         ListenableBuilder(
           listenable: _viewModel,
           builder: (context, _) {
