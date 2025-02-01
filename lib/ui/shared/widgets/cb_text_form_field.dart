@@ -1,4 +1,6 @@
+import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CbTextFormField extends StatelessWidget {
   const CbTextFormField({
@@ -55,10 +57,11 @@ class CbTextFormField extends StatelessWidget {
           validator: validator,
           obscureText: obscured,
           decoration: InputDecoration(
-            label: label != null ? Text(label!) : null,
+            label: label != null ? Text(label!, style: context.textTheme.labelMedium) : null,
             hintText: hint,
             prefixIcon: prefix,
             suffixIcon: suffix,
+            errorStyle: TextStyle(fontSize: 12.sp),
           ),
         ),
       ],

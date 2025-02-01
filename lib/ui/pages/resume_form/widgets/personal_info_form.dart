@@ -56,7 +56,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       child: FormContainer(
         fields: [
           SectionTitleTextField(
-            text: context.l10n.personalInfo,
+            text: context.l10n.profile,
             icon: FeatherIcons.user,
             padding: 0,
           ),

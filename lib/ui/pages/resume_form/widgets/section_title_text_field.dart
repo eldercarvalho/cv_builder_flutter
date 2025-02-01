@@ -37,9 +37,9 @@ class _SectionTitleTextFieldState extends State<SectionTitleTextField> {
       child: Row(
         // spacing: 6,
         children: [
-          Icon(widget.icon, color: context.colors.primary, size: 26),
-          const SizedBox(width: 16),
-          Text(widget.text, style: context.textTheme.titleLarge),
+          Icon(widget.icon, color: context.colors.primary, size: 22),
+          const SizedBox(width: 12),
+          Text(widget.text, style: context.textTheme.titleMedium),
           // InkWell(
           //   onTap: () => setState(() => _isEditing = true),
           //   child: const Icon(FeatherIcons.edit, size: 18),

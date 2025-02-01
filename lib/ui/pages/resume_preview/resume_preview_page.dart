@@ -1,3 +1,4 @@
+import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:go_router/go_router.dart';
@@ -59,14 +60,14 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
           title: ListenableBuilder(
             listenable: _viewModel,
             builder: (context, child) {
-              return Text(_viewModel.resume?.resumeName ?? "");
+              return Text(_viewModel.resume?.resumeName ?? "", style: context.textTheme.titleLarge);
             },
           ),
           actions: [
             Builder(builder: (context) {
               return IconButton(
                 onPressed: () => Scaffold.of(context).openEndDrawer(),
-                icon: const Icon(FeatherIcons.edit),
+                icon: Icon(FeatherIcons.edit, color: context.colors.primary),
               );
             }),
           ],

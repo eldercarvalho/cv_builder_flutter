@@ -1,5 +1,6 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum CbButtonType {
   filled,
@@ -66,7 +67,8 @@ class _CbButtonState extends State<CbButton> {
         Flexible(
           child: Text(
             widget.text,
-            style: const TextStyle(fontSize: 16, height: 1),
+            style: TextStyle(fontSize: 16.sp, height: 1),
+            textAlign: TextAlign.center,
           ),
         ),
         if (widget.suffixIcon != null) Icon(widget.suffixIcon!, size: 24),

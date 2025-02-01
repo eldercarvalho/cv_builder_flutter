@@ -24,6 +24,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
   final TextEditingController _nameController = TextEditingController();
 
   late final ResumeFormViewModel _viewModel;
+  bool _isSubmitted = false;
 
   @override
   void initState() {
@@ -45,6 +46,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
           ),
           CbTextFormField(
             controller: _nameController,
+            autovalidateMode: _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
             label: context.l10n.resumeName,
             validator: MultiValidator([
               RequiredValidator(errorText: context.l10n.requiredField),
@@ -59,11 +61,12 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
               showIcons: true,
               showSaveButton: widget.isEditing,
               isLoading: _viewModel.saveResume.running,
-              nextText: context.l10n.personalInfo,
+              nextText: context.l10n.profile,
               previousText: context.l10n.goBack,
               onPreviousPressed: widget.onPrevious,
               onNextPressed: () {
                 if (_formKey.currentState!.validate()) {
+                  _isSubmitted = true;
                   _viewModel.resume = _viewModel.resume.copyWith(
                     resumeName: _nameController.text,
                   );

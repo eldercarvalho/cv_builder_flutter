@@ -68,7 +68,7 @@ class _AddressFormState extends State<AddressForm> {
               showIcons: true,
               showSaveButton: widget.isEditing,
               isLoading: _viewModel.saveResume.running,
-              previousText: context.l10n.personalInfo,
+              previousText: context.l10n.profile,
               onPreviousPressed: widget.onPrevious,
               nextText: context.l10n.contact,
               onNextPressed: _onSubmit,

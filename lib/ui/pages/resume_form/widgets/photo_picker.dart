@@ -46,7 +46,7 @@ class _PhotoPickerState extends State<PhotoPicker> {
               borderRadius: BorderRadius.circular(60),
               image: decorationImage,
             ),
-            child: decorationImage == null ? const Icon(FeatherIcons.user, size: 50) : null,
+            child: decorationImage == null ? const Icon(FeatherIcons.user, size: 50, color: Colors.black38) : null,
           ),
           Positioned(
             right: 4,

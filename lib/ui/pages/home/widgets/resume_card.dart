@@ -50,17 +50,22 @@ class ResumeCard extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: Text(resume.resumeName, style: const TextStyle(fontSize: 18)),
+                        child: Text(resume.resumeName, style: context.textTheme.titleMedium),
                       ),
                       if (!isLoading)
                         PopupMenuButton<String>(
                           onSelected: onMenuSelected,
+                          child: const SizedBox(
+                            height: 26,
+                            width: 26,
+                            child: Icon(FeatherIcons.moreVertical),
+                          ),
                           itemBuilder: (context) => [
                             PopupMenuItem(
                               value: 'edit',
                               child: Row(
                                 children: [
-                                  Icon(FeatherIcons.edit, size: 20, color: context.colors.primary),
+                                  Icon(FeatherIcons.edit, size: 18, color: context.colors.primary),
                                   const SizedBox(width: 8),
                                   const Text('Editar'),
                                 ],
@@ -96,7 +101,7 @@ class ResumeCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text('Atualizado em: ${updatedAt.toSimpleDate()}', style: const TextStyle(fontSize: 14)),
+                  Text('Atualizado em: ${updatedAt.toSimpleDate()}', style: context.textTheme.bodySmall),
                 ],
               ),
             ),

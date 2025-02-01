@@ -1,9 +1,9 @@
-import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import '../../../domain/models/resume.dart';
+import '../../shared/extensions/extensions.dart';
 import '../resume_form/resume_form_page.dart';
 import '../resume_preview/resume_preview_page.dart';
 import 'view_models/home_view_model.dart';
@@ -31,12 +31,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Meus Currículos'),
+        title: Text('Meus Currículos', style: context.textTheme.titleLarge),
         actions: [
-          // IconButton(
-          //   onPressed: () => widget.viewModel.clearCache(),
-          //   icon: const Icon(FeatherIcons.trash2),
-          // ),
           if (kDebugMode)
             IconButton(
               onPressed: () => widget.viewModel.saveResume(),

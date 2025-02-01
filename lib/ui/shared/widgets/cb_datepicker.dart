@@ -1,3 +1,4 @@
+import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
@@ -59,7 +60,7 @@ class _CbDatePickerState extends State<CbDatePicker> {
       readOnly: true,
       required: widget.required,
       validator: widget.validator,
-      suffix: const Icon(FeatherIcons.calendar),
+      suffix: Icon(FeatherIcons.calendar, color: context.colors.primary),
       onTap: () => _selectDate(context),
     );
   }

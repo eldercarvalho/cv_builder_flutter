@@ -51,7 +51,7 @@ class FormButtons extends StatelessWidget {
           Visibility(
             visible: !showSaveButton,
             child: Row(
-              spacing: 20,
+              spacing: 16,
               children: [
                 if (onPreviousPressed != null)
                   Expanded(

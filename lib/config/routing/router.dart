@@ -136,6 +136,10 @@ Future<String?> _redirect(BuildContext context, GoRouterState state) async {
   final loggingIn = state.matchedLocation == LoginPage.path;
 
   if (!loggedIn) {
+    if (state.matchedLocation == RegistrationPage.path) {
+      return RegistrationPage.path;
+    }
+
     return LoginPage.path;
   }
 
