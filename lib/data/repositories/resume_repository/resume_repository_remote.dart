@@ -60,8 +60,9 @@ class ResumeRepositoryRemote extends ResumeRepository {
   }
 
   @override
-  AsyncResult<File> getPdf({required String resumeId}) {
-    return _fileService.getPdf(name: resumeId);
+  AsyncResult<File> getPdf({required Resume resume}) async {
+    final pdfBytes = await SimpleResumeTemplate.generatePdf(resume);
+    return _fileService.savePdf(name: resume.id, bytes: pdfBytes);
   }
 
   @override

@@ -1,12 +1,14 @@
-import 'package:cv_builder/domain/dtos/authentication_data.dart';
-import 'package:cv_builder/ui/pages/registration/registration_page.dart';
-import 'package:cv_builder/ui/shared/widgets/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../domain/dtos/authentication_data.dart';
 import '../../shared/extensions/context.dart';
 import '../../shared/validators/validators.dart';
+import '../../shared/widgets/widgets.dart';
+import '../registration/registration_page.dart';
 import 'view_model/login_view_model.dart';
 
 class LoginPage extends StatefulWidget {
@@ -48,19 +50,29 @@ class _LoginPageState extends State<LoginPage> {
           key: _formKey,
           autovalidateMode: _autoValidateMode,
           child: Column(
-            spacing: 20,
             children: [
-              const SizedBox(height: 32),
-              const CbLogo(),
-              Text('Faça login na sua conta', style: context.textTheme.titleLarge),
+              SizedBox(height: 40.h),
+              SvgPicture.asset(
+                'assets/images/logo_vertical.svg',
+                width: context.screenWidth - 32,
+                height: 110,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Entre na sua conta',
+                style: context.textTheme.titleLarge?.copyWith(
+                  color: context.colors.secondary,
+                ),
+              ),
+              const SizedBox(height: 20),
               CbTextFormField(
                 controller: _emailController,
                 label: context.l10n.email,
                 validator: MultiValidator([
                   RequiredValidator(errorText: 'Campo obrigatório'),
-                  MinLengthValidator(min: 3, errorText: 'Mínimo de 3 caracteres'),
                 ]).call,
               ),
+              const SizedBox(height: 20),
               CbTextFormField(
                 controller: _passwordController,
                 label: context.l10n.password,
@@ -69,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                   RequiredValidator(errorText: 'Campo obrigatório'),
                 ]).call,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 40),
               ListenableBuilder(
                 listenable: widget.viewModel.login,
                 builder: (context, child) {
@@ -80,9 +92,13 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
               ),
+              const SizedBox(height: 20),
               TextButton(
                 onPressed: () => RegistrationPage.replace(context),
-                child: const Text('Não tem uma conta? Cadastre-se'),
+                child: Text(
+                  'Não tem uma conta? Cadastre-se',
+                  style: context.textTheme.titleSmall?.copyWith(color: context.colors.primary),
+                ),
               ),
             ],
           ),
@@ -92,9 +108,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onSubmit() {
-    setState(() {
-      _isSubmitted = true;
-    });
+    setState(() => _isSubmitted = true);
+    FocusScope.of(context).unfocus();
     if (_formKey.currentState!.validate()) {
       widget.viewModel.login.execute(
         AuthenticationData(

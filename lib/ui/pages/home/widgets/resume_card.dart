@@ -5,7 +5,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../../domain/models/resume.dart';
 import '../../../shared/extensions/extensions.dart';
 
-class ResumeCard extends StatelessWidget {
+class ResumeCard extends StatefulWidget {
   const ResumeCard({
     super.key,
     required this.resume,
@@ -20,16 +20,42 @@ class ResumeCard extends StatelessWidget {
   final Function(String) onMenuSelected;
 
   @override
+  State<ResumeCard> createState() => _ResumeCardState();
+}
+
+class _ResumeCardState extends State<ResumeCard> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    )..repeat(reverse: true);
+
+    _animation = Tween<double>(begin: 1.0, end: 1.5).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Libera recursos da animação
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final updatedAt = resume.updatedAt ?? resume.createdAt;
+    final updatedAt = widget.resume.updatedAt ?? widget.resume.createdAt;
 
     return GestureDetector(
-      onTap: !isLoading ? onTap : null,
+      onTap: !widget.isLoading ? widget.onTap : null,
       child: Stack(
         children: [
           AnimatedOpacity(
             duration: const Duration(milliseconds: 500),
-            opacity: isLoading ? 0.4 : 1,
+            opacity: widget.isLoading ? 0.4 : 1,
             child: Container(
               padding: const EdgeInsets.all(16),
               margin: const EdgeInsets.only(bottom: 16),
@@ -50,11 +76,11 @@ class ResumeCard extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: Text(resume.resumeName, style: context.textTheme.titleMedium),
+                        child: Text(widget.resume.resumeName, style: context.textTheme.titleMedium),
                       ),
-                      if (!isLoading)
+                      if (!widget.isLoading)
                         PopupMenuButton<String>(
-                          onSelected: onMenuSelected,
+                          onSelected: widget.onMenuSelected,
                           child: const SizedBox(
                             height: 26,
                             width: 26,
@@ -95,7 +121,7 @@ class ResumeCard extends StatelessWidget {
                       border: Border.all(color: context.colors.outline),
                       image: DecorationImage(
                         alignment: Alignment.topCenter,
-                        image: CachedNetworkImageProvider(resume.thumbnail!),
+                        image: CachedNetworkImageProvider(widget.resume.thumbnail!),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -106,10 +132,22 @@ class ResumeCard extends StatelessWidget {
               ),
             ),
           ),
-          if (isLoading)
-            const Positioned.fill(
+          if (widget.isLoading)
+            Positioned.fill(
               child: Center(
-                child: CircularProgressIndicator(),
+                child: AnimatedBuilder(
+                  animation: _animation,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _animation.value,
+                      child: Icon(
+                        FeatherIcons.trash2,
+                        size: 40,
+                        color: context.colors.error,
+                      ),
+                    );
+                  },
+                ),
               ),
             )
         ],

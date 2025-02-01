@@ -14,8 +14,8 @@ import 'form_container.dart';
 import 'photo_picker.dart';
 import 'section_title_text_field.dart';
 
-class PersonalInfoForm extends StatefulWidget {
-  const PersonalInfoForm({
+class ProfileForm extends StatefulWidget {
+  const ProfileForm({
     super.key,
     required this.onSubmit,
     this.onPrevious,
@@ -27,15 +27,17 @@ class PersonalInfoForm extends StatefulWidget {
   final void Function()? onPrevious;
 
   @override
-  State<PersonalInfoForm> createState() => _PersonalInfoFormState();
+  State<ProfileForm> createState() => _ProfileFormState();
 }
 
-class _PersonalInfoFormState extends State<PersonalInfoForm> {
+class _ProfileFormState extends State<ProfileForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _professionController = TextEditingController();
   final TextEditingController _birthDateController = TextEditingController();
   late final ResumeFormViewModel _viewModel;
+
+  final FocusNode _nameFocus = FocusNode();
 
   File? _image;
   bool _isSubmitted = false;
@@ -47,6 +49,8 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     _nameController.text = _viewModel.resume.name;
     _professionController.text = _viewModel.resume.profession ?? '';
     _birthDateController.text = _viewModel.resume.birthDate != null ? _viewModel.resume.birthDate!.toSimpleDate() : '';
+
+    // _nameFocus.
   }
 
   @override
@@ -67,6 +71,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             ),
           ),
           CbTextFormField(
+            focusNode: _nameFocus,
             controller: _nameController,
             label: context.l10n.name,
             required: true,

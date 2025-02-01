@@ -1,10 +1,12 @@
-import 'package:cv_builder/domain/dtos/registration_data.dart';
-import 'package:cv_builder/ui/shared/extensions/extensions.dart';
-import 'package:cv_builder/ui/shared/validators/validators.dart';
-import 'package:cv_builder/ui/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../domain/dtos/registration_data.dart';
+import '../../shared/extensions/context.dart';
+import '../../shared/validators/validators.dart';
+import '../../shared/widgets/widgets.dart';
 import '../login/login_page.dart';
 import 'view_model/registration_view_model.dart';
 
@@ -49,11 +51,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
           key: _formKey,
           autovalidateMode: _autoValidateMode,
           child: Column(
-            spacing: 20,
             children: [
-              const SizedBox(height: 32),
-              const CbLogo(),
-              Text('Crie uma conta', style: context.textTheme.titleLarge),
+              SizedBox(height: 40.h),
+              SvgPicture.asset(
+                'assets/images/logo_vertical.svg',
+                width: context.screenWidth - 32,
+                height: 110,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Crie uma conta',
+                style: context.textTheme.titleLarge?.copyWith(
+                  color: context.colors.secondary,
+                ),
+              ),
+              const SizedBox(height: 20),
               CbTextFormField(
                 controller: _nameController,
                 label: context.l10n.name,
@@ -62,6 +74,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   MinLengthValidator(min: 3, errorText: 'Mínimo de 3 caracteres'),
                 ]).call,
               ),
+              const SizedBox(height: 20),
               CbTextFormField(
                 controller: _emailController,
                 label: context.l10n.email,
@@ -70,6 +83,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   EmailValidator(errorText: 'E-mail inválido'),
                 ]).call,
               ),
+              const SizedBox(height: 20),
               CbTextFormField(
                 label: 'Senha',
                 controller: _passwordController,
@@ -79,6 +93,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   MinLengthValidator(min: 6, errorText: 'Mínimo de 6 caracteres'),
                 ]).call,
               ),
+              const SizedBox(height: 20),
               CbTextFormField(
                 label: 'Confirmar a senha',
                 controller: _confirmPasswordController,
@@ -90,7 +105,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 40),
               ListenableBuilder(
                 listenable: widget.viewModel.register,
                 builder: (context, child) {
@@ -101,6 +116,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   );
                 },
               ),
+              const SizedBox(height: 20),
               TextButton(
                 onPressed: () => LoginPage.replace(context),
                 child: const Text('Já tem uma conta? Faça login'),
@@ -116,6 +132,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     setState(() {
       _isSubmitted = true;
     });
+    FocusScope.of(context).unfocus();
     if (_formKey.currentState!.validate()) {
       widget.viewModel.register.execute(
         RegistrationData(

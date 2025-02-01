@@ -34,6 +34,12 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
   }
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,

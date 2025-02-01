@@ -42,6 +42,7 @@ dependencies:
   cached_network_image: ^3.4.1
   flutter_screenutil: ^5.9.3
   google_fonts: ^6.2.1
+  flutter_native_splash: ^2.4.4
 
 dev_dependencies:
   flutter_lints: ^4.0.0
@@ -54,3 +55,10 @@ flutter:
 
   assets:
     - assets/images/
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: "assets/splash/splash.png"
+  android: true
+  ios: true
+  web: false

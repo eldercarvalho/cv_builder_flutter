@@ -19,6 +19,7 @@ class CbTextFormField extends StatelessWidget {
     this.required = false,
     this.obscured = false,
     this.autovalidateMode = AutovalidateMode.disabled,
+    this.focusNode,
   });
 
   final TextEditingController? controller;
@@ -33,6 +34,7 @@ class CbTextFormField extends StatelessWidget {
   final Widget? prefix;
   final bool required;
   final bool obscured;
+  final FocusNode? focusNode;
   final AutovalidateMode autovalidateMode;
   final Function()? onTap;
 
@@ -51,11 +53,13 @@ class CbTextFormField extends StatelessWidget {
         // const SizedBox(height: 6),
         TextFormField(
           controller: controller,
+          focusNode: focusNode,
           autovalidateMode: autovalidateMode,
           readOnly: readOnly,
           onTap: onTap,
           validator: validator,
           obscureText: obscured,
+          // onEditingComplete: ,
           decoration: InputDecoration(
             label: label != null ? Text(label!, style: context.textTheme.labelMedium) : null,
             hintText: hint,

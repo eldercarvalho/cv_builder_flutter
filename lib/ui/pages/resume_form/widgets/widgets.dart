@@ -8,7 +8,7 @@ export 'form_container.dart';
 export 'languages_form.dart';
 export 'objective_form.dart';
 export 'option_tile.dart';
-export 'personal_info_form.dart';
+export 'profile_form.dart';
 export 'photo_picker.dart';
 export 'resume_info_form.dart';
 export 'section_title_text_field.dart';
