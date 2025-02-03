@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../config/di.dart';
 import '../../../../domain/models/resume.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
@@ -34,7 +34,7 @@ class ProfileForm extends StatefulWidget {
 }
 
 class _ProfileFormState extends State<ProfileForm> {
-  final _viewModel = getIt<ResumeFormViewModel>();
+  late final ResumeFormViewModel _viewModel;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _professionController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
@@ -48,6 +48,7 @@ class _ProfileFormState extends State<ProfileForm> {
   @override
   void initState() {
     super.initState();
+    _viewModel = context.read();
     _nameController.text = _viewModel.resume.name;
     _professionController.text = _viewModel.resume.profession ?? '';
     _birthDateController.text = _viewModel.resume.birthDate != null ? _viewModel.resume.birthDate!.toSimpleDate() : '';

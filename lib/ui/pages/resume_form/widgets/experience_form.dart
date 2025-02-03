@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../config/di.dart';
 import '../../../../domain/models/work_experience.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
@@ -15,7 +15,12 @@ import 'option_tile.dart';
 import 'section_title_text_field.dart';
 
 class ExperienceForm extends StatefulWidget {
-  const ExperienceForm({super.key, required this.onSubmit, this.onPrevious, required this.isEditing});
+  const ExperienceForm({
+    super.key,
+    required this.onSubmit,
+    this.onPrevious,
+    required this.isEditing,
+  });
 
   final bool isEditing;
   final Function() onSubmit;
@@ -26,7 +31,13 @@ class ExperienceForm extends StatefulWidget {
 }
 
 class _ExperienceFormState extends State<ExperienceForm> {
-  final _viewModel = getIt<ResumeFormViewModel>();
+  late final ResumeFormViewModel _viewModel;
+
+  @override
+  void initState() {
+    _viewModel = context.read();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

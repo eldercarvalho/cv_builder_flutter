@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../config/di.dart';
 import '../../../../domain/models/certification.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
@@ -26,7 +26,13 @@ class CertificationsForm extends StatefulWidget {
 }
 
 class _CertificationsFormState extends State<CertificationsForm> {
-  final _viewModel = getIt<ResumeFormViewModel>();
+  late final ResumeFormViewModel _viewModel;
+
+  @override
+  initState() {
+    _viewModel = context.read();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

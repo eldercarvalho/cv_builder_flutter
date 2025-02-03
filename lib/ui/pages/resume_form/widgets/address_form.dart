@@ -1,8 +1,8 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../config/di.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
@@ -21,7 +21,7 @@ class AddressForm extends StatefulWidget {
 }
 
 class _AddressFormState extends State<AddressForm> {
-  final _viewModel = getIt<ResumeFormViewModel>();
+  late final ResumeFormViewModel _viewModel;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
@@ -29,6 +29,7 @@ class _AddressFormState extends State<AddressForm> {
 
   @override
   void initState() {
+    _viewModel = context.read();
     _addressController.text = _viewModel.resume.address ?? '';
     _cityController.text = _viewModel.resume.city ?? '';
     _zipCodeController.text = _viewModel.resume.zipCode ?? '';

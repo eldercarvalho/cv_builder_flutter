@@ -98,7 +98,7 @@ class ResumeModel extends Equatable {
       website: json['website'] as String?,
       email: json['email'] as String?,
       socialNetworks: List.of(json['socialNetworks']).map((e) => SocialNetworkModel.fromJson(e)).toList(),
-      objectiveSummary: json['objectiveSummary'] as String,
+      objectiveSummary: json['objectiveSummary'] as String?,
       workExperience: (json['workExperience'] as List<dynamic>)
           .map((e) => WorkExperienceModel.fromJson(e as Map<String, dynamic>))
           .toList(),

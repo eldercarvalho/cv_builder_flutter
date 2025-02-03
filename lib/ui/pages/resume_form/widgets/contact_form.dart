@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../config/di.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
@@ -10,7 +10,12 @@ import 'form_container.dart';
 import 'section_title_text_field.dart';
 
 class ContactForm extends StatefulWidget {
-  const ContactForm({super.key, required this.onSubmit, this.onPrevious, required this.isEditing});
+  const ContactForm({
+    super.key,
+    required this.onSubmit,
+    this.onPrevious,
+    required this.isEditing,
+  });
 
   final bool isEditing;
   final Function() onSubmit;
@@ -21,7 +26,7 @@ class ContactForm extends StatefulWidget {
 }
 
 class _ContactFormState extends State<ContactForm> {
-  final _viewModel = getIt<ResumeFormViewModel>();
+  late final ResumeFormViewModel _viewModel;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -29,6 +34,7 @@ class _ContactFormState extends State<ContactForm> {
 
   @override
   void initState() {
+    _viewModel = context.read();
     _phoneController.text = _viewModel.resume.phoneNumber ?? '';
     _emailController.text = _viewModel.resume.email ?? '';
     _websiteController.text = _viewModel.resume.website ?? '';

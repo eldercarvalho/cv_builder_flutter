@@ -1,8 +1,8 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../config/di.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
@@ -10,7 +10,12 @@ import 'form_container.dart';
 import 'section_title_text_field.dart';
 
 class ObjectiveForm extends StatefulWidget {
-  const ObjectiveForm({super.key, required this.onSubmit, this.onPrevious, required this.isEditing});
+  const ObjectiveForm({
+    super.key,
+    required this.onSubmit,
+    this.onPrevious,
+    required this.isEditing,
+  });
 
   final bool isEditing;
   final Function() onSubmit;
@@ -21,11 +26,12 @@ class ObjectiveForm extends StatefulWidget {
 }
 
 class _ObjectiveFormState extends State<ObjectiveForm> {
-  final _viewModel = getIt<ResumeFormViewModel>();
+  late final ResumeFormViewModel _viewModel;
   final TextEditingController _objectiveController = TextEditingController();
 
   @override
   void initState() {
+    _viewModel = context.read();
     _objectiveController.text = _viewModel.resume.objectiveSummary ?? '';
     super.initState();
   }

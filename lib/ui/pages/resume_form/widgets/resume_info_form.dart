@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 
-import '../../../../config/di.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
 import '../../../shared/widgets/widgets.dart';
@@ -11,7 +11,12 @@ import 'form_container.dart';
 import 'section_title_text_field.dart';
 
 class ResumeInfoForm extends StatefulWidget {
-  const ResumeInfoForm({super.key, required this.onSubmit, this.onPrevious, required this.isEditing});
+  const ResumeInfoForm({
+    super.key,
+    required this.onSubmit,
+    this.onPrevious,
+    required this.isEditing,
+  });
 
   final bool isEditing;
   final Function() onSubmit;
@@ -22,7 +27,7 @@ class ResumeInfoForm extends StatefulWidget {
 }
 
 class _ResumeInfoFormState extends State<ResumeInfoForm> {
-  final _viewModel = getIt<ResumeFormViewModel>();
+  late final ResumeFormViewModel _viewModel; // = getIt<ResumeFormViewModel>();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
 
@@ -30,6 +35,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
 
   @override
   void initState() {
+    _viewModel = context.read();
     _nameController.text = _viewModel.resume.resumeName;
     super.initState();
   }
@@ -72,8 +78,8 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
               previousText: context.l10n.goBack,
               onPreviousPressed: widget.onPrevious,
               onNextPressed: () {
+                _isSubmitted = true;
                 if (_formKey.currentState!.validate()) {
-                  _isSubmitted = true;
                   _viewModel.resume = _viewModel.resume.copyWith(
                     resumeName: _nameController.text,
                   );

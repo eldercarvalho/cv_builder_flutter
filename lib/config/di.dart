@@ -36,29 +36,29 @@ void setupDependencies() {
       ));
 
   // ViewModels
-  getIt.registerFactory<HomeViewModel>(() => HomeViewModel(
+  getIt.registerFactory(() => HomeViewModel(
         authRepository: getIt(),
         resumeRepository: getIt(),
       ));
-  getIt.registerFactory<ResumeFormViewModel>(() => ResumeFormViewModel(
+  getIt.registerFactory(() => ResumeFormViewModel(
         authRepository: getIt(),
         resumeRepository: getIt(),
       ));
-  getIt.registerFactory<ResumePreviewViewModel>(() => ResumePreviewViewModel(
+  getIt.registerFactory(() => ResumePreviewViewModel(
         authRepository: getIt(),
         resumeRepository: getIt(),
       ));
-  getIt.registerFactory<ResumeFormFinishedViewModel>(() => ResumeFormFinishedViewModel(
+  getIt.registerFactory(() => ResumeFormFinishedViewModel(
         authRepository: getIt(),
         resumeRepository: getIt(),
       ));
-  getIt.registerFactory<AuthViewModel>(() => AuthViewModel(
+  getIt.registerFactory(() => AuthViewModel(
         authRepository: getIt(),
       ));
-  getIt.registerFactory<LoginViewModel>(() => LoginViewModel(
+  getIt.registerFactory(() => LoginViewModel(
         authRepository: getIt(),
       ));
-  getIt.registerFactory<RegistrationViewModel>(() => RegistrationViewModel(
+  getIt.registerFactory(() => RegistrationViewModel(
         authRepository: getIt(),
       ));
   getIt.registerFactory<SplashViewModel>(() => SplashViewModel(

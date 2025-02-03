@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../config/di.dart';
@@ -81,36 +82,39 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
   Widget build(BuildContext context) {
     final title = _isEditing ? 'Editar Currículo' : 'Novo Currículo';
 
-    return PopScope(
-      canPop: false,
-      onPopInvokedWithResult: _onPopInvokedWithResult,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(title, style: context.textTheme.titleLarge),
-          // actions: [
-          //   if (!_isEditing && _currentPage != 0)
-          //     IconButton(
-          //       icon: const Icon(FeatherIcons.eye),
-          //       onPressed: () => _viewModel.generatePdf.execute(),
-          //     ),
-          // ],
-        ),
-        body: PageView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _pageController,
-          children: [
-            ResumeInfoForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _pop),
-            ProfileForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-            AddressForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-            ContactForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-            SocialNetworksForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-            ObjectiveForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-            ExperienceForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-            EducationForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-            SkillsForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-            LanguagesForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-            CertificationsForm(isEditing: _isEditing, onSubmit: _onSubmit, onPrevious: _onPreviousPage),
-          ],
+    return ChangeNotifierProvider.value(
+      value: _viewModel,
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: _onPopInvokedWithResult,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(title, style: context.textTheme.titleLarge),
+            // actions: [
+            //   if (!_isEditing && _currentPage != 0)
+            //     IconButton(
+            //       icon: const Icon(FeatherIcons.eye),
+            //       onPressed: () => _viewModel.generatePdf.execute(),
+            //     ),
+            // ],
+          ),
+          body: PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _pageController,
+            children: [
+              ResumeInfoForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _pop),
+              ProfileForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+              AddressForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+              ContactForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+              SocialNetworksForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+              ObjectiveForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+              ExperienceForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+              EducationForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+              SkillsForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+              LanguagesForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+              CertificationsForm(isEditing: _isEditing, onSubmit: _onSubmit, onPrevious: _onPreviousPage),
+            ],
+          ),
         ),
       ),
     );

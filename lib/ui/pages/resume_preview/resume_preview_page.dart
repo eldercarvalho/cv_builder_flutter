@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:printing/printing.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../config/di.dart';
@@ -43,8 +44,8 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
   @override
   void initState() {
     super.initState();
-    _viewModel.getResume.execute(widget.params.resume.id);
     _viewModel.resume = widget.params.resume;
+    _viewModel.getResume.execute(widget.params.resume.id);
     _viewModel.getResume.addListener(_onGetResume);
   }
 
@@ -56,59 +57,62 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      endDrawer: const EditDrawer(),
-      appBar: AppBar(
-        title: ListenableBuilder(
+    return ChangeNotifierProvider.value(
+      value: _viewModel,
+      child: Scaffold(
+        endDrawer: const EditDrawer(),
+        appBar: AppBar(
+          title: ListenableBuilder(
+            listenable: _viewModel,
+            builder: (context, child) {
+              return Text(_viewModel.resume?.resumeName ?? "", style: context.textTheme.titleLarge);
+            },
+          ),
+          actions: [
+            IconButton(
+              onPressed: () => Printing.sharePdf(bytes: _viewModel.resumePdf!.readAsBytesSync()),
+              icon: Icon(FeatherIcons.share2, color: context.colors.primary),
+            ),
+            Builder(builder: (context) {
+              return IconButton(
+                onPressed: () => Scaffold.of(context).openEndDrawer(),
+                icon: Icon(FeatherIcons.edit, color: context.colors.primary),
+              );
+            }),
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(1),
+            child: Divider(height: 1, color: context.colors.outline),
+          ),
+        ),
+        body: ListenableBuilder(
           listenable: _viewModel,
           builder: (context, child) {
-            return Text(_viewModel.resume?.resumeName ?? "", style: context.textTheme.titleLarge);
+            if (_viewModel.getResume.running) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            if (_viewModel.getResume.error) {
+              return Center(
+                child: Text(
+                  'Erro ao carregar currículo',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              );
+            }
+
+            if (_viewModel.getResume.completed) {
+              return SfPdfViewer.file(
+                _viewModel.resumePdf!,
+                pageSpacing: 16,
+              );
+            }
+
+            return const SizedBox();
           },
         ),
-        actions: [
-          IconButton(
-            onPressed: () => Printing.sharePdf(bytes: _viewModel.resumePdf!.readAsBytesSync()),
-            icon: Icon(FeatherIcons.share2, color: context.colors.primary),
-          ),
-          Builder(builder: (context) {
-            return IconButton(
-              onPressed: () => Scaffold.of(context).openEndDrawer(),
-              icon: Icon(FeatherIcons.edit, color: context.colors.primary),
-            );
-          }),
-        ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Divider(height: 1, color: context.colors.outline),
-        ),
-      ),
-      body: ListenableBuilder(
-        listenable: _viewModel,
-        builder: (context, child) {
-          if (_viewModel.getResume.running) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          if (_viewModel.getResume.error) {
-            return Center(
-              child: Text(
-                'Erro ao carregar currículo',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            );
-          }
-
-          if (_viewModel.getResume.completed) {
-            return SfPdfViewer.file(
-              _viewModel.resumePdf!,
-              pageSpacing: 16,
-            );
-          }
-
-          return const SizedBox();
-        },
       ),
     );
   }
