@@ -5,6 +5,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../domain/models/resume.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
 import '../../../shared/widgets/widgets.dart';
@@ -20,11 +21,13 @@ class ProfileForm extends StatefulWidget {
     required this.onSubmit,
     this.onPrevious,
     required this.isEditing,
+    this.onPreview,
   });
 
   final bool isEditing;
   final void Function() onSubmit;
   final void Function()? onPrevious;
+  final void Function(Resume)? onPreview;
 
   @override
   State<ProfileForm> createState() => _ProfileFormState();
@@ -32,10 +35,10 @@ class ProfileForm extends StatefulWidget {
 
 class _ProfileFormState extends State<ProfileForm> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _professionController = TextEditingController();
-  final TextEditingController _birthDateController = TextEditingController();
   late final ResumeFormViewModel _viewModel;
+  final TextEditingController _professionController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _birthDateController = TextEditingController();
 
   final FocusNode _nameFocus = FocusNode();
 
@@ -50,7 +53,20 @@ class _ProfileFormState extends State<ProfileForm> {
     _professionController.text = _viewModel.resume.profession ?? '';
     _birthDateController.text = _viewModel.resume.birthDate != null ? _viewModel.resume.birthDate!.toSimpleDate() : '';
 
-    // _nameFocus.
+    _nameFocus.addListener(() {
+      if (!_nameFocus.hasFocus) {
+        if (_formKey.currentState!.validate()) {}
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _professionController.dispose();
+    _birthDateController.dispose();
+    _nameFocus.dispose();
+    super.dispose();
   }
 
   @override
@@ -123,5 +139,17 @@ class _ProfileFormState extends State<ProfileForm> {
       );
       widget.onSubmit();
     }
+  }
+
+  void _onPreview() {
+    FocusScope.of(context).unfocus();
+    _viewModel.previewResume = _viewModel.resume.copyWith(
+      name: _nameController.text,
+      profession: _professionController.text,
+      birthDate:
+          _birthDateController.text.isNotEmpty ? DateFormat('dd/MM/yyyy').parse(_birthDateController.text) : null,
+      photo: _image?.path,
+    );
+    _viewModel.generatePdf.execute();
   }
 }

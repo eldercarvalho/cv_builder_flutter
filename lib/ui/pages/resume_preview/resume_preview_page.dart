@@ -1,11 +1,12 @@
-import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:go_router/go_router.dart';
+import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+import '../../../config/di.dart';
 import '../../../domain/models/resume.dart';
+import '../../shared/extensions/extensions.dart';
 import 'view_model/resume_preview_view_model.dart';
 import 'widgets/widgets.dart';
 
@@ -18,22 +19,19 @@ class ResumePreviewParams {
 class ResumePreviewPage extends StatefulWidget {
   const ResumePreviewPage({
     super.key,
-    required this.viewModel,
     required this.params,
   });
 
-  final ResumePreviewViewModel viewModel;
   final ResumePreviewParams params;
 
   static const route = '/resume-preview';
-  static const path = '/resume-preview/:resumeId';
 
   static Future<void> push(BuildContext context, {required ResumePreviewParams params}) async {
-    await context.push('$route/${params.resume.id}', extra: params);
+    await Navigator.of(context).pushNamed(route, arguments: params);
   }
 
   static void replace(BuildContext context, {required ResumePreviewParams params}) {
-    context.replace('$route/${params.resume.id}', extra: params);
+    Navigator.of(context).pushReplacementNamed(route, arguments: params);
   }
 
   @override
@@ -41,11 +39,12 @@ class ResumePreviewPage extends StatefulWidget {
 }
 
 class _ResumePreviewPageState extends State<ResumePreviewPage> {
-  ResumePreviewViewModel get _viewModel => widget.viewModel;
+  final _viewModel = getIt<ResumePreviewViewModel>();
 
   @override
   void initState() {
     super.initState();
+    _viewModel.getResume.execute(widget.params.resume.id);
     _viewModel.resume = widget.params.resume;
     _viewModel.getResume.addListener(_onGetResume);
   }
@@ -64,6 +63,10 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
             },
           ),
           actions: [
+            IconButton(
+              onPressed: () => Printing.sharePdf(bytes: _viewModel.resumePdf!.readAsBytesSync()),
+              icon: Icon(FeatherIcons.share2, color: context.colors.primary),
+            ),
             Builder(builder: (context) {
               return IconButton(
                 onPressed: () => Scaffold.of(context).openEndDrawer(),
@@ -71,6 +74,10 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
               );
             }),
           ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(1),
+            child: Divider(height: 1, color: context.colors.outline),
+          ),
         ),
         body: ListenableBuilder(
           listenable: _viewModel,

@@ -1,9 +1,9 @@
-import 'package:cv_builder/config/routing/router.dart';
-import 'package:cv_builder/config/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
+
+import 'config/routes.dart';
+import 'config/theme/theme.dart';
 
 class CvBuilderApp extends StatefulWidget {
   const CvBuilderApp({super.key});
@@ -21,14 +21,14 @@ class _CvBuilderAppState extends State<CvBuilderApp> {
       splitScreenMode: true,
       useInheritedMediaQuery: true,
       builder: (context, child) {
-        return MaterialApp.router(
+        return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Currículo Top',
           theme: CvBuilderTheme.lightTheme,
-          routerConfig: router(context.read()),
           locale: const Locale('pt'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
+          onGenerateRoute: Routes.onGenerateRoute,
         );
       },
     );

@@ -14,7 +14,12 @@ class RemoteService {
 
   AsyncResult<List<ResumeModel>> getResumes(String userId) async {
     try {
-      final resumesRef = await _firestore.collection('users').doc(userId).collection('resumes').get();
+      final resumesRef = await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('resumes')
+          .orderBy('updatedAt', descending: true)
+          .get();
       final resumes = resumesRef.docs.map((e) => ResumeModel.fromJson(e.data())).toList();
       return Success(resumes);
     } on FirebaseException catch (e) {

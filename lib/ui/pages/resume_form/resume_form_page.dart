@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+import '../../../config/di.dart';
 import '../../../domain/models/resume.dart';
 import '../../shared/extensions/extensions.dart';
 import 'resume_form_finished_page.dart';
@@ -34,11 +33,11 @@ class ResumeFormParams {
 class ResumeFormPage extends StatefulWidget {
   const ResumeFormPage({
     super.key,
-    required this.viewModel,
+    // required this.viewModel,
     this.params,
   });
 
-  final ResumeFormViewModel viewModel;
+  // final ResumeFormViewModel viewModel;
   final ResumeFormParams? params;
 
   @override
@@ -47,28 +46,30 @@ class ResumeFormPage extends StatefulWidget {
   static const path = '/resume-form';
 
   static Future<Object?> push(BuildContext context, {ResumeFormParams? params}) async {
-    return await context.push(path, extra: params);
+    return await Navigator.of(context).pushNamed(path, arguments: params);
   }
 }
 
 class _ResumeFormPageState extends State<ResumeFormPage> {
+  final _viewModel = getIt<ResumeFormViewModel>();
   late final PageController _pageController;
-  int _currentPage = 0;
 
   bool get _isEditing => widget.params != null;
 
   @override
   void initState() {
-    widget.viewModel.saveResume.addListener(_onSaveResumeListener);
-    widget.viewModel.generatePdf.addListener(_onGeneratePdfListener);
-    super.initState();
+    _viewModel.saveResume.addListener(_onSaveResumeListener);
+    _viewModel.generatePdf.addListener(_onGeneratePdfListener);
+
     final params = widget.params;
     if (params != null) {
-      widget.viewModel.resume = params.resume;
+      _viewModel.resume = params.resume;
       _pageController = PageController(initialPage: params.step.index);
     } else {
       _pageController = PageController();
     }
+
+    super.initState();
   }
 
   @override
@@ -76,25 +77,24 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
     final title = _isEditing ? 'Editar Currículo' : 'Novo Currículo';
 
     return ChangeNotifierProvider.value(
-      value: widget.viewModel,
+      value: _viewModel,
       child: PopScope(
         canPop: false,
         onPopInvokedWithResult: _onPopInvokedWithResult,
         child: Scaffold(
           appBar: AppBar(
             title: Text(title, style: context.textTheme.titleLarge),
-            actions: [
-              if (!_isEditing && _currentPage != 0)
-                IconButton(
-                  icon: const Icon(FeatherIcons.eye),
-                  onPressed: () => widget.viewModel.generatePdf.execute(),
-                ),
-            ],
+            // actions: [
+            //   if (!_isEditing && _currentPage != 0)
+            //     IconButton(
+            //       icon: const Icon(FeatherIcons.eye),
+            //       onPressed: () => _viewModel.generatePdf.execute(),
+            //     ),
+            // ],
           ),
           body: PageView(
             physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
-            onPageChanged: (index) => setState(() => _currentPage = index),
             children: [
               ResumeInfoForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _pop),
               ProfileForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
@@ -133,7 +133,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
 
   void _onNextPage() {
     if (_isEditing) {
-      widget.viewModel.saveResume.execute(_isEditing);
+      _viewModel.saveResume.execute(_isEditing);
       return;
     }
 
@@ -153,27 +153,27 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
 
   void _onSubmit() {
     FocusScope.of(context).unfocus();
-    widget.viewModel.saveResume.execute(_isEditing);
+    _viewModel.saveResume.execute(_isEditing);
   }
 
   void _onSaveResumeListener() {
-    if (widget.viewModel.saveResume.completed) {
+    if (_viewModel.saveResume.completed) {
       if (_isEditing) {
-        context.pop();
+        context.showSuccessSnackBar('Currículo atualizado!');
         return;
       }
 
-      ResumeFormFinishedPage.resplace(context, widget.viewModel.resume);
+      ResumeFormFinishedPage.resplace(context, _viewModel.resume);
     }
 
-    if (widget.viewModel.saveResume.error) {
+    if (_viewModel.saveResume.error) {
       context.showErrorSnackBar('Ocorreu um erro ao tentar salvar o currículo');
     }
   }
 
   void _onGeneratePdfListener() {
-    if (widget.viewModel.generatePdf.completed) {
-      final pdfFile = widget.viewModel.resumePdfFile;
+    if (_viewModel.generatePdf.completed) {
+      final pdfFile = _viewModel.resumePdfFile;
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => Scaffold(
@@ -186,7 +186,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
       );
     }
 
-    if (widget.viewModel.generatePdf.error) {
+    if (_viewModel.generatePdf.error) {
       context.showErrorSnackBar('Ocorreu um erro ao tentar gerar a visualização');
     }
   }

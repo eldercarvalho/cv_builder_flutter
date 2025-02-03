@@ -33,6 +33,12 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
   }
 
   @override
+  void dispose() {
+    _objectiveController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FormContainer(
       fields: [

@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cv_builder/data/services/api/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -130,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
       result?.fold(
         (_) {},
         (error) {
-          if (error is FirebaseAuthException) {
+          if (error is AuthException) {
             final code = error.code;
             if (code == 'invalid-credential') {
               context.showErrorSnackBar('Usuário ou senha incorretos');

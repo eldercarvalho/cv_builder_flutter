@@ -66,6 +66,25 @@ class Resume extends Equatable {
   final String? thumbnail;
 
   String? get age => birthDate != null ? (DateTime.now().difference(birthDate!).inDays ~/ 365).toString() : null;
+  bool get hasPhoto => photo != null;
+  bool get isNetworkPhoto => photo != null && photo!.startsWith('http');
+  String? get formattedAddress {
+    String addressString = '';
+
+    if (address != null) {
+      addressString += address!;
+    }
+
+    if (city != null) {
+      addressString += addressString.isNotEmpty ? ', $city' : city!;
+    }
+
+    if (zipCode != null) {
+      addressString += addressString.isNotEmpty ? ' - $zipCode' : zipCode!;
+    }
+
+    return null;
+  }
 
   const Resume({
     required this.id,
@@ -105,6 +124,7 @@ class Resume extends Equatable {
         name: '',
         template: ResumeTemplate.simple,
         createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
       );
 
   static Resume fake() => Resume(
@@ -113,7 +133,7 @@ class Resume extends Equatable {
         resumeName: 'Currículo 1',
         name: 'Elder Amaral de Carvalho',
         profession: 'Desenvolvedor Mobile Flutter',
-        birthDate: Faker().date.dateTime(),
+        birthDate: DateTime.now().subtract(const Duration(days: 365 * 30)),
         // photo: 'https://fastly.picsum.photos/id/237/200/200.jpg?hmac=zHUGikXUDyLCCmvyww1izLK3R3k8oRYBRiTizZEdyfI',
         address: 'Rua Padre Lourenço Rodrigues de Andrade, 130',
         city: 'Florianópolis',

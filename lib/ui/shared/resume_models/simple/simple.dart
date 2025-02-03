@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
@@ -15,7 +17,11 @@ class SimpleResumeTemplate {
     final pdf = Document();
     final config = await TemplateConfig.instance;
 
-    final photo = resume.photo != null ? await networkImage(resume.photo!) : null;
+    final photo = resume.hasPhoto
+        ? resume.isNetworkPhoto
+            ? await networkImage(resume.photo!)
+            : MemoryImage(await File(resume.photo!).readAsBytes())
+        : null;
     final birthdayText = resume.birthDate != null ? '${resume.birthDate?.toSimpleDate()} - ${resume.age} anos' : null;
 
     final List<Widget> children = [
@@ -48,7 +54,7 @@ class SimpleResumeTemplate {
 
       // Sobre
       PersonalInfo(text: birthdayText, icon: 'cake', marginTop: 0, config: config),
-      PersonalInfo(text: '${resume.address} - ${resume.city} ${resume.zipCode}', icon: 'mapmarker', config: config),
+      PersonalInfo(text: resume.formattedAddress, icon: 'mapmarker', config: config),
       PersonalInfo(text: resume.phoneNumber, icon: 'phone', config: config),
       PersonalInfo(text: resume.email, icon: 'email', config: config),
       PersonalInfo(text: resume.website, icon: 'website', config: config),

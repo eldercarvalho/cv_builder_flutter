@@ -38,6 +38,14 @@ class _ContactFormState extends State<ContactForm> {
   }
 
   @override
+  void dispose() {
+    _phoneController.dispose();
+    _emailController.dispose();
+    _websiteController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,

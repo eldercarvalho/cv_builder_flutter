@@ -5,37 +5,49 @@ import 'package:cv_builder/data/services/api/auth_service.dart';
 import 'package:cv_builder/data/services/api/remote_service.dart';
 import 'package:cv_builder/data/services/local/file_service.dart';
 import 'package:cv_builder/data/services/local/local_service.dart';
-import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
+import 'package:cv_builder/ui/pages/home/home.dart';
+import 'package:cv_builder/ui/pages/resume_form/view_model/resume_form_finished_view_model.dart';
+import 'package:cv_builder/ui/pages/resume_form/view_model/resume_form_view_model.dart';
+import 'package:cv_builder/ui/pages/resume_preview/resume_preview.dart';
+import 'package:get_it/get_it.dart';
 
 import '../data/repositories/resume_repository/resume_respository.dart';
 
+final getIt = GetIt.instance;
+
+void setupDependencies() {
+  // Services
+  getIt.registerLazySingleton<FileService>(() => FileService());
+  getIt.registerLazySingleton<LocalService>(() => LocalService());
+  getIt.registerLazySingleton<RemoteService>(() => RemoteService());
+  getIt.registerLazySingleton<AuthService>(() => AuthService());
+
+  // Repositories
+  getIt.registerLazySingleton<ResumeRepository>(() => ResumeRepositoryRemote(
+        remoteService: getIt(),
+        fileService: getIt(),
+      ));
+  getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryRemote(
+        authService: getIt(),
+      ));
+
+  // ViewModels
+  getIt.registerFactory<HomeViewModel>(() => HomeViewModel(
+        authRepository: getIt(),
+        resumeRepository: getIt(),
+      ));
+  getIt.registerFactory<ResumeFormViewModel>(() => ResumeFormViewModel(
+        authRepository: getIt(),
+        resumeRepository: getIt(),
+      ));
+  getIt.registerFactory<ResumePreviewViewModel>(() => ResumePreviewViewModel(
+        authRepository: getIt(),
+        resumeRepository: getIt(),
+      ));
+  getIt.registerFactory<ResumeFormFinishedViewModel>(() => ResumeFormFinishedViewModel(
+        authRepository: getIt(),
+        resumeRepository: getIt(),
+      ));
+}
+
 // Services
-List<SingleChildWidget> get providers => [
-      Provider(
-        lazy: true,
-        create: (_) => FileService(),
-      ),
-      Provider(
-        lazy: true,
-        create: (_) => LocalService(),
-      ),
-      Provider(
-        lazy: true,
-        create: (_) => RemoteService(),
-      ),
-      Provider(
-        lazy: true,
-        create: (context) => ResumeRepositoryRemote(
-          remoteService: context.read(),
-          fileService: context.read(),
-        ) as ResumeRepository,
-      ),
-      Provider(
-        lazy: true,
-        create: (_) => AuthService(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => AuthRepositoryRemote(authService: context.read()) as AuthRepository,
-      ),
-    ];

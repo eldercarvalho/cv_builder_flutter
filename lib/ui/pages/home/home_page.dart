@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../config/di.dart';
 import '../../../domain/models/resume.dart';
 import '../../shared/extensions/extensions.dart';
 import '../resume_form/resume_form_page.dart';
@@ -10,9 +11,12 @@ import 'view_models/home_view_model.dart';
 import 'widgets/widgest.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.viewModel});
+  const HomePage({
+    super.key,
+    // required this.viewModel,
+  });
 
-  final HomeViewModel viewModel;
+  // final HomeViewModel viewModel;
 
   static const path = '/home';
 
@@ -21,9 +25,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _viewModel = getIt<HomeViewModel>();
+
+  // HomeViewModel get _viewModel => widget.viewModel;
+
   @override
   void initState() {
-    widget.viewModel.deleteResume.addListener(_onDeleteResumeListener);
+    // _viewModel = context.read<HomeViewModel>();
+    _viewModel.getResumes.execute();
+    _viewModel.deleteResume.addListener(_onDeleteResumeListener);
     super.initState();
   }
 
@@ -35,28 +45,28 @@ class _HomePageState extends State<HomePage> {
         actions: [
           if (kDebugMode)
             IconButton(
-              onPressed: () => widget.viewModel.saveResume(),
+              onPressed: () => _viewModel.saveResume(),
               icon: const Icon(FeatherIcons.plus),
             ),
           IconButton(
-            onPressed: () => widget.viewModel.logout(),
+            onPressed: () => _viewModel.logout(),
             icon: Icon(FeatherIcons.logOut, color: context.colors.primary),
           ),
         ],
       ),
       body: ListenableBuilder(
         listenable: Listenable.merge([
-          widget.viewModel,
-          widget.viewModel.getResumes,
+          _viewModel,
+          _viewModel.getResumes,
         ]),
         builder: (context, child) {
-          if (widget.viewModel.getResumes.running) {
+          if (_viewModel.getResumes.running) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
 
-          if (widget.viewModel.getResumes.error) {
+          if (_viewModel.getResumes.error) {
             return Center(
               child: Text(
                 'Erro ao carregar currículos',
@@ -65,8 +75,8 @@ class _HomePageState extends State<HomePage> {
             );
           }
 
-          if (widget.viewModel.getResumes.completed) {
-            if (widget.viewModel.resumes.isEmpty) {
+          if (_viewModel.getResumes.completed) {
+            if (_viewModel.resumes.isEmpty) {
               return Center(
                 child: Text(
                   'Nenhum currículo encontrado',
@@ -77,20 +87,20 @@ class _HomePageState extends State<HomePage> {
 
             return RefreshIndicator(
               onRefresh: () async {
-                await widget.viewModel.getResumes.execute();
+                await _viewModel.getResumes.execute();
               },
               child: ListView.builder(
                 padding: const EdgeInsets.all(16),
-                itemCount: widget.viewModel.resumes.length,
+                itemCount: _viewModel.resumes.length,
                 itemBuilder: (context, index) {
-                  final resume = widget.viewModel.resumes[index];
+                  final resume = _viewModel.resumes[index];
 
                   return ListenableBuilder(
-                    listenable: widget.viewModel.deleteResume,
+                    listenable: _viewModel.deleteResume,
                     builder: (context, child) {
                       return ResumeCard(
                         resume: resume,
-                        isLoading: widget.viewModel.deleteResume.argument?.id == resume.id,
+                        isLoading: _viewModel.deleteResume.argument?.id == resume.id,
                         onTap: () => _navToPreview(resume),
                         onMenuSelected: (action) => _onMenuSelected(action, resume),
                       );
@@ -127,13 +137,13 @@ class _HomePageState extends State<HomePage> {
         _navToPreview(resume);
         break;
       case 'delete':
-        widget.viewModel.deleteResume.execute(resume);
+        _viewModel.deleteResume.execute(resume);
         break;
     }
   }
 
   void _onDeleteResumeListener() {
-    if (widget.viewModel.deleteResume.error) {
+    if (_viewModel.deleteResume.error) {
       context.showErrorSnackBar('Ocorreu um erro ao excluir o currículo');
     }
   }

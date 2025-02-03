@@ -1,34 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:printing/printing.dart';
 
 import '../../../domain/models/resume.dart';
 import '../../shared/resume_models/simple/simple.dart';
 import '../../shared/widgets/widgets.dart';
 import '../resume_preview/resume_preview_page.dart';
-import 'view_model/resume_form_finished_view_model.dart';
 
 class ResumeFormFinishedPage extends StatefulWidget {
   const ResumeFormFinishedPage({
     super.key,
     required this.resume,
-    required this.viewModel,
   });
 
-  static const path = '/resume-form-finished';
+  static const route = '/resume-form-finished';
 
   static Future<Object?> push(BuildContext context, Resume resume) async {
-    return await context.push(path, extra: resume);
+    return await Navigator.of(context).pushNamed(route, arguments: resume);
   }
 
   static Future<void> resplace(BuildContext context, Resume resume) async {
-    context.replace(path, extra: resume);
+    Navigator.of(context).pushReplacementNamed(route, arguments: resume);
   }
 
   final Resume resume;
-  final ResumeFormFinishedViewModel viewModel;
 
   @override
   State<ResumeFormFinishedPage> createState() => _ResumeFormFinishedPageState();
