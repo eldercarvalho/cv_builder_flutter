@@ -1,8 +1,8 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:provider/provider.dart';
 
+import '../../../../config/di.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
@@ -21,13 +21,11 @@ class ObjectiveForm extends StatefulWidget {
 }
 
 class _ObjectiveFormState extends State<ObjectiveForm> {
+  final _viewModel = getIt<ResumeFormViewModel>();
   final TextEditingController _objectiveController = TextEditingController();
-
-  late final ResumeFormViewModel _viewModel;
 
   @override
   void initState() {
-    _viewModel = context.read<ResumeFormViewModel>();
     _objectiveController.text = _viewModel.resume.objectiveSummary ?? '';
     super.initState();
   }

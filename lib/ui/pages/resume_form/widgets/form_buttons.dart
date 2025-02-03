@@ -34,9 +34,20 @@ class FormButtons extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: context.colors.surface,
-        border: Border(
-          top: BorderSide(color: context.colors.outline),
+        // border: Border(
+        //   top: BorderSide(color: context.colors.outline),
+        // ),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: context.colors.shadow.withValues(alpha: 0.2),
+            offset: const Offset(0, -2),
+            blurRadius: 4,
+          ),
+        ],
       ),
       child: Column(
         children: [

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -15,16 +17,24 @@ class HomeViewModel extends ChangeNotifier {
     _resumeRepository = resumeRepository;
     getResumes = Command0(_getResumes);
     deleteResume = Command1(_deleteResume);
+    _authSubscription = authRepository.authStateChanges.listen((user) {
+      _isUserAuthenticated = user != null;
+      notifyListeners();
+    });
   }
 
   late final AuthRepository _authRepository;
   late final ResumeRepository _resumeRepository;
+  late final StreamSubscription _authSubscription;
 
   late final Command0 getResumes;
   late final Command1<Unit, Resume> deleteResume;
 
   List<Resume> _resumes = [];
   List<Resume> get resumes => _resumes;
+
+  bool _isUserAuthenticated = false;
+  bool get isUserAuthenticated => _isUserAuthenticated;
 
   Future<void> saveResume() async {
     await _authRepository.getCurrentUser().flatMap((user) async {
@@ -71,5 +81,11 @@ class HomeViewModel extends ChangeNotifier {
       (_) => const Success(unit),
       (error) => Failure(error),
     );
+  }
+
+  @override
+  void dispose() {
+    _authSubscription.cancel();
+    super.dispose();
   }
 }

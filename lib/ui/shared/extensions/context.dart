@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+typedef PushFunction = Future<T?> Function<T extends Object?>(String, {Object? arguments});
+typedef ReplaceFunction = Future<T?> Function<T extends Object?, TO extends Object?>(String,
+    {Object? arguments, TO? result});
+
 extension ContextEx on BuildContext {
   ThemeData get theme => Theme.of(this);
   TextTheme get textTheme => theme.textTheme;
   ColorScheme get colors => theme.colorScheme;
+  PushFunction get pushNamed => Navigator.of(this).pushNamed;
+  ReplaceFunction get replaceNamed => Navigator.of(this).pushReplacementNamed;
   AppLocalizations get l10n => AppLocalizations.of(this)!;
   double get screenWidth => MediaQuery.of(this).size.width;
   double get screenHeight => MediaQuery.of(this).size.height;
@@ -13,7 +19,7 @@ extension ContextEx on BuildContext {
   showSuccessSnackBar(String message) => ScaffoldMessenger.of(this).showSnackBar(
         SnackBar(
           content: Text(message),
-          backgroundColor: Theme.of(this).colorScheme.secondary,
+          backgroundColor: Colors.green,
           behavior: SnackBarBehavior.floating,
         ),
       );

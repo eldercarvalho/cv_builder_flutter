@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../config/di.dart';
@@ -33,20 +32,18 @@ class ResumeFormParams {
 class ResumeFormPage extends StatefulWidget {
   const ResumeFormPage({
     super.key,
-    // required this.viewModel,
     this.params,
   });
 
-  // final ResumeFormViewModel viewModel;
   final ResumeFormParams? params;
 
   @override
   State<ResumeFormPage> createState() => _ResumeFormPageState();
 
-  static const path = '/resume-form';
+  static const route = '/resume-form';
 
   static Future<Object?> push(BuildContext context, {ResumeFormParams? params}) async {
-    return await Navigator.of(context).pushNamed(path, arguments: params);
+    return await Navigator.of(context).pushNamed(route, arguments: params);
   }
 }
 
@@ -73,42 +70,47 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
   }
 
   @override
+  void dispose() {
+    _viewModel.saveResume.removeListener(_onSaveResumeListener);
+    _viewModel.generatePdf.removeListener(_onGeneratePdfListener);
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final title = _isEditing ? 'Editar Currículo' : 'Novo Currículo';
 
-    return ChangeNotifierProvider.value(
-      value: _viewModel,
-      child: PopScope(
-        canPop: false,
-        onPopInvokedWithResult: _onPopInvokedWithResult,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(title, style: context.textTheme.titleLarge),
-            // actions: [
-            //   if (!_isEditing && _currentPage != 0)
-            //     IconButton(
-            //       icon: const Icon(FeatherIcons.eye),
-            //       onPressed: () => _viewModel.generatePdf.execute(),
-            //     ),
-            // ],
-          ),
-          body: PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            children: [
-              ResumeInfoForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _pop),
-              ProfileForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-              AddressForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-              ContactForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-              SocialNetworksForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-              ObjectiveForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-              ExperienceForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-              EducationForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-              SkillsForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-              LanguagesForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
-              CertificationsForm(isEditing: _isEditing, onSubmit: _onSubmit, onPrevious: _onPreviousPage),
-            ],
-          ),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: _onPopInvokedWithResult,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(title, style: context.textTheme.titleLarge),
+          // actions: [
+          //   if (!_isEditing && _currentPage != 0)
+          //     IconButton(
+          //       icon: const Icon(FeatherIcons.eye),
+          //       onPressed: () => _viewModel.generatePdf.execute(),
+          //     ),
+          // ],
+        ),
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: _pageController,
+          children: [
+            ResumeInfoForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _pop),
+            ProfileForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+            AddressForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+            ContactForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+            SocialNetworksForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+            ObjectiveForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+            ExperienceForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+            EducationForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+            SkillsForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+            LanguagesForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
+            CertificationsForm(isEditing: _isEditing, onSubmit: _onSubmit, onPrevious: _onPreviousPage),
+          ],
         ),
       ),
     );
@@ -133,6 +135,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
 
   void _onNextPage() {
     if (_isEditing) {
+      FocusScope.of(context).unfocus();
       _viewModel.saveResume.execute(_isEditing);
       return;
     }

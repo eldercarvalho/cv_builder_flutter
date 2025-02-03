@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../config/di.dart';
 import '../../../../domain/models/social_network.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
@@ -25,14 +25,7 @@ class SocialNetworksForm extends StatefulWidget {
 }
 
 class _SocialNetworksFormState extends State<SocialNetworksForm> {
-  late final ResumeFormViewModel _viewModel;
-
-  @override
-  void initState() {
-    _viewModel = context.read<ResumeFormViewModel>();
-
-    super.initState();
-  }
+  final _viewModel = getIt<ResumeFormViewModel>();
 
   @override
   Widget build(BuildContext context) {

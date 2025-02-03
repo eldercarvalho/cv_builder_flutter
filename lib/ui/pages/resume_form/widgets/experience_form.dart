@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../config/di.dart';
 import '../../../../domain/models/work_experience.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
@@ -26,14 +26,7 @@ class ExperienceForm extends StatefulWidget {
 }
 
 class _ExperienceFormState extends State<ExperienceForm> {
-  late final ResumeFormViewModel _viewModel;
-
-  @override
-  void initState() {
-    _viewModel = context.read<ResumeFormViewModel>();
-
-    super.initState();
-  }
+  final _viewModel = getIt<ResumeFormViewModel>();
 
   @override
   Widget build(BuildContext context) {

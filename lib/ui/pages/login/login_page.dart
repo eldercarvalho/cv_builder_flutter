@@ -2,24 +2,23 @@ import 'package:cv_builder/data/services/api/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../../config/di.dart';
 import '../../../domain/dtos/authentication_data.dart';
 import '../../shared/extensions/context.dart';
 import '../../shared/validators/validators.dart';
 import '../../shared/widgets/widgets.dart';
+import '../home/home_page.dart';
 import '../registration/registration_page.dart';
 import 'view_model/login_view_model.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key, required this.viewModel});
+  const LoginPage({super.key});
 
-  final LoginViewModel viewModel;
-
-  static const String path = '/login';
+  static const String route = '/login';
 
   static void replace(BuildContext context) {
-    return context.replace(path);
+    Navigator.of(context).pushReplacementNamed(route);
   }
 
   @override
@@ -27,6 +26,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _viewModel = getIt<LoginViewModel>();
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    widget.viewModel.login.addListener(_onListener);
+    _viewModel.login.addListener(_onListener);
   }
 
   @override
@@ -83,11 +83,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 40),
               ListenableBuilder(
-                listenable: widget.viewModel.login,
+                listenable: _viewModel.login,
                 builder: (context, child) {
                   return CbButton(
                     text: 'Entrar',
-                    isLoading: widget.viewModel.login.running,
+                    isLoading: _viewModel.login.running,
                     onPressed: _onSubmit,
                   );
                 },
@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => _isSubmitted = true);
     FocusScope.of(context).unfocus();
     if (_formKey.currentState!.validate()) {
-      widget.viewModel.login.execute(
+      _viewModel.login.execute(
         AuthenticationData(
           email: _emailController.text,
           password: _passwordController.text,
@@ -121,12 +121,12 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _onListener() {
-    if (widget.viewModel.login.completed) {
-      LoginPage.replace(context);
+    if (_viewModel.login.completed) {
+      HomePage.replace(context);
     }
 
-    if (widget.viewModel.login.error) {
-      final result = widget.viewModel.login.result;
+    if (_viewModel.login.error) {
+      final result = _viewModel.login.result;
       result?.fold(
         (_) {},
         (error) {

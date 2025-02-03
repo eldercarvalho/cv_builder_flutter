@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../../config/di.dart';
 import '../../../domain/dtos/registration_data.dart';
 import '../../shared/extensions/context.dart';
 import '../../shared/validators/validators.dart';
@@ -11,14 +11,12 @@ import '../login/login_page.dart';
 import 'view_model/registration_view_model.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({super.key, required this.viewModel});
+  const RegistrationPage({super.key, required});
 
-  final RegistrationViewModel viewModel;
-
-  static const String path = '/registration';
+  static const String route = '/registration';
 
   static void replace(BuildContext context) {
-    return context.replace(path);
+    Navigator.of(context).pushReplacementNamed(route);
   }
 
   @override
@@ -26,6 +24,7 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  final _viewModel = getIt<RegistrationViewModel>();
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -39,7 +38,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   void initState() {
     super.initState();
-    widget.viewModel.register.addListener(_onListener);
+    _viewModel.register.addListener(_onListener);
   }
 
   @override
@@ -107,11 +106,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
               const SizedBox(height: 40),
               ListenableBuilder(
-                listenable: widget.viewModel.register,
+                listenable: _viewModel.register,
                 builder: (context, child) {
                   return CbButton(
                     text: context.l10n.register,
-                    isLoading: widget.viewModel.register.running,
+                    isLoading: _viewModel.register.running,
                     onPressed: _onSubmit,
                   );
                 },
@@ -134,7 +133,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
     FocusScope.of(context).unfocus();
     if (_formKey.currentState!.validate()) {
-      widget.viewModel.register.execute(
+      _viewModel.register.execute(
         RegistrationData(
           name: _nameController.text,
           email: _emailController.text,
@@ -145,11 +144,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   void _onListener() {
-    if (widget.viewModel.register.completed) {
+    if (_viewModel.register.completed) {
       LoginPage.replace(context);
     }
 
-    if (widget.viewModel.register.error) {
+    if (_viewModel.register.error) {
       context.showErrorSnackBar('Ocorreu um erro ao registrar');
     }
   }

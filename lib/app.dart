@@ -28,6 +28,7 @@ class _CvBuilderAppState extends State<CvBuilderApp> {
           locale: const Locale('pt'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
+          // home: AuthPage(),
           onGenerateRoute: Routes.onGenerateRoute,
         );
       },

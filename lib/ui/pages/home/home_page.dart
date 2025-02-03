@@ -5,6 +5,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../config/di.dart';
 import '../../../domain/models/resume.dart';
 import '../../shared/extensions/extensions.dart';
+import '../login/login_page.dart';
 import '../resume_form/resume_form_page.dart';
 import '../resume_preview/resume_preview_page.dart';
 import 'view_models/home_view_model.dart';
@@ -13,12 +14,13 @@ import 'widgets/widgest.dart';
 class HomePage extends StatefulWidget {
   const HomePage({
     super.key,
-    // required this.viewModel,
   });
 
-  // final HomeViewModel viewModel;
+  static const route = '/home';
 
-  static const path = '/home';
+  static Future<void> replace(BuildContext context) async {
+    await context.replaceNamed(route);
+  }
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -27,14 +29,26 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _viewModel = getIt<HomeViewModel>();
 
-  // HomeViewModel get _viewModel => widget.viewModel;
-
   @override
   void initState() {
-    // _viewModel = context.read<HomeViewModel>();
+    _viewModel.addListener(_onAuthListener);
     _viewModel.getResumes.execute();
     _viewModel.deleteResume.addListener(_onDeleteResumeListener);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _viewModel.removeListener(_onAuthListener);
+    _viewModel.deleteResume.removeListener(_onDeleteResumeListener);
+    _viewModel.dispose();
+    super.dispose();
+  }
+
+  void _onAuthListener() {
+    if (!_viewModel.isUserAuthenticated) {
+      LoginPage.replace(context);
+    }
   }
 
   @override

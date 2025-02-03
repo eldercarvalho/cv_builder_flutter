@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../config/di.dart';
 import '../../../../domain/models/education.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
@@ -25,14 +25,7 @@ class EducationForm extends StatefulWidget {
 }
 
 class _EducationFormState extends State<EducationForm> {
-  late final ResumeFormViewModel _viewModel;
-
-  @override
-  void initState() {
-    _viewModel = context.read<ResumeFormViewModel>();
-
-    super.initState();
-  }
+  final _viewModel = getIt<ResumeFormViewModel>();
 
   @override
   Widget build(BuildContext context) {

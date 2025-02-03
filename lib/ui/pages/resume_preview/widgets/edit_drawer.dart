@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:provider/provider.dart';
 
+import '../../../../config/di.dart';
 import '../../../../domain/models/resume.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../resume_form/resume_form_page.dart';
@@ -12,7 +12,7 @@ class EditDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<ResumePreviewViewModel>();
+    final viewModel = getIt<ResumePreviewViewModel>();
     final resume = viewModel.resume;
 
     return Drawer(

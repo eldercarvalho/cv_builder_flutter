@@ -1,12 +1,14 @@
-import 'package:cv_builder/ui/pages/resume_form/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:provider/provider.dart';
 
+import '../../../../config/di.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
+import 'form_buttons.dart';
+import 'form_container.dart';
+import 'section_title_text_field.dart';
 
 class ResumeInfoForm extends StatefulWidget {
   const ResumeInfoForm({super.key, required this.onSubmit, this.onPrevious, required this.isEditing});
@@ -20,15 +22,14 @@ class ResumeInfoForm extends StatefulWidget {
 }
 
 class _ResumeInfoFormState extends State<ResumeInfoForm> {
+  final _viewModel = getIt<ResumeFormViewModel>();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
 
-  late final ResumeFormViewModel _viewModel;
   bool _isSubmitted = false;
 
   @override
   void initState() {
-    _viewModel = context.read<ResumeFormViewModel>();
     _nameController.text = _viewModel.resume.resumeName;
     super.initState();
   }

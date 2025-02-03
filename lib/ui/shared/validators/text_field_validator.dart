@@ -3,7 +3,7 @@ import 'field_validator.dart';
 abstract class TextFieldValidator extends FieldValidator<String?> {
   final bool? validateIf;
 
-  TextFieldValidator(String errorText, this.validateIf) : super(errorText);
+  TextFieldValidator(super.errorText, this.validateIf);
 
   bool get ignoreEmptyValues => true;
 

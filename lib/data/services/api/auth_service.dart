@@ -9,23 +9,16 @@ import 'package:result_dart/result_dart.dart';
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  AuthService() {
-    _firebaseAuth.authStateChanges().listen((User? user) {
-      if (user != null) {
-        _authStateController.add(UserModel(
-          id: user.uid,
-          name: user.displayName ?? '',
-          email: user.email ?? '',
-        ));
-      } else {
-        _authStateController.add(null);
-      }
-    });
-  }
-
-  final _authStateController = StreamController<UserModel?>();
-
-  Stream<UserModel?> get authStateChanges => _authStateController.stream;
+  Stream<UserModel?> get authStateChanges => _firebaseAuth.authStateChanges().map((user) {
+        if (user != null) {
+          return UserModel(
+            id: user.uid,
+            name: user.displayName ?? '',
+            email: user.email ?? '',
+          );
+        }
+        return null;
+      });
 
   UserModel? get currentUser {
     final User? user = _firebaseAuth.currentUser;
@@ -36,7 +29,7 @@ class AuthService {
         email: user.email ?? '',
       );
     }
-    throw Exception('User not found');
+    return null;
   }
 
   AsyncResult<User> signInWithEmailAndPassword(AuthenticationData data) async {

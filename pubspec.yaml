@@ -26,14 +26,12 @@ dependencies:
   faker: ^2.2.0
   flutter_feather_icons: ^2.0.0
   flutter_svg: ^2.0.16
-  go_router: ^14.6.2
   image_picker: ^1.1.2
   intl: any
   logging: ^1.3.0
   path_provider: ^2.1.5
   pdf: ^3.11.1
   printing: ^5.13.4
-  provider: ^6.1.2
   result_dart: ^2.0.0
   shared_preferences: ^2.3.4
   syncfusion_flutter_pdfviewer: ^28.1.37

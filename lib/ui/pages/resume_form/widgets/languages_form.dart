@@ -1,9 +1,9 @@
 import 'package:cv_builder/domain/models/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
-import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../config/di.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
 import '../../../shared/widgets/cb_text_form_field.dart';
@@ -25,14 +25,7 @@ class LanguagesForm extends StatefulWidget {
 }
 
 class _LanguagesFormState extends State<LanguagesForm> {
-  late final ResumeFormViewModel _viewModel;
-
-  @override
-  void initState() {
-    _viewModel = context.read<ResumeFormViewModel>();
-
-    super.initState();
-  }
+  final _viewModel = getIt<ResumeFormViewModel>();
 
   @override
   Widget build(BuildContext context) {
