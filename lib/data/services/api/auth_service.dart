@@ -61,6 +61,16 @@ class AuthService {
     }
   }
 
+  AsyncResult<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return const Success(unit);
+    } on FirebaseAuthException catch (e) {
+      final exception = AuthException(e.message, e.code);
+      return Failure(exception);
+    }
+  }
+
   AsyncResult<void> logout() async {
     try {
       await _firebaseAuth.signOut();

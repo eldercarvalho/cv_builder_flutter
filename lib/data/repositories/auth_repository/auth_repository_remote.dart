@@ -38,6 +38,11 @@ class AuthRepositoryRemote extends AuthRepository {
   }
 
   @override
+  AsyncResult<void> resetPassword(String email) {
+    return _authService.sendPasswordResetEmail(email);
+  }
+
+  @override
   AsyncResult<User> getCurrentUser() {
     return _authService.getCurrentUser().map((user) => user.toDomain());
   }

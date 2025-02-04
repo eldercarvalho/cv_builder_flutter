@@ -8,6 +8,7 @@ import '../../../domain/models/user.dart';
 abstract class AuthRepository extends ChangeNotifier {
   AsyncResult<void> login(AuthenticationData data);
   AsyncResult<void> register(RegistrationData data);
+  AsyncResult<void> resetPassword(String email);
   AsyncResult<void> logout();
   AsyncResult<User> getCurrentUser();
   bool get isAuthenticated;

@@ -14,6 +14,7 @@ import 'package:get_it/get_it.dart';
 
 import '../data/repositories/resume_repository/resume_respository.dart';
 import '../ui/pages/login/view_model/login_view_model.dart';
+import '../ui/pages/recover_password/recover_password_view_model.dart';
 import '../ui/pages/registration/view_model/registration_view_model.dart';
 import '../ui/pages/splash/view_model/splash_view_model.dart';
 
@@ -61,7 +62,10 @@ void setupDependencies() {
   getIt.registerFactory(() => RegistrationViewModel(
         authRepository: getIt(),
       ));
-  getIt.registerFactory<SplashViewModel>(() => SplashViewModel(
+  getIt.registerFactory(() => SplashViewModel(
+        authRepository: getIt(),
+      ));
+  getIt.registerFactory(() => RecoverPasswordViewModel(
         authRepository: getIt(),
       ));
 }

@@ -1,14 +1,15 @@
-import 'package:cv_builder/data/services/api/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../config/di.dart';
+import '../../../data/services/api/auth_service.dart';
 import '../../../domain/dtos/authentication_data.dart';
 import '../../shared/extensions/context.dart';
 import '../../shared/validators/validators.dart';
 import '../../shared/widgets/widgets.dart';
 import '../home/home_page.dart';
+import '../recover_password/recover_password_page.dart';
 import '../registration/registration_page.dart';
 import 'view_model/login_view_model.dart';
 
@@ -73,13 +74,25 @@ class _LoginPageState extends State<LoginPage> {
                 ]).call,
               ),
               const SizedBox(height: 20),
-              CbTextFormField(
-                controller: _passwordController,
-                label: context.l10n.password,
-                obscured: true,
-                validator: MultiValidator([
-                  RequiredValidator(errorText: 'Campo obrigatório'),
-                ]).call,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CbTextFormField(
+                    controller: _passwordController,
+                    label: context.l10n.password,
+                    obscured: true,
+                    validator: MultiValidator([
+                      RequiredValidator(errorText: 'Campo obrigatório'),
+                    ]).call,
+                  ),
+                  TextButton(
+                    onPressed: () => RecoverPasswordPage.push(context),
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+                    ),
+                    child: const Text('Esqueceu a senha?'),
+                  ),
+                ],
               ),
               const SizedBox(height: 40),
               ListenableBuilder(
@@ -95,10 +108,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () => RegistrationPage.replace(context),
-                child: Text(
-                  'Não tem uma conta? Cadastre-se',
-                  style: context.textTheme.titleSmall?.copyWith(color: context.colors.primary),
-                ),
+                child: const Text('Não tem uma conta?'),
               ),
             ],
           ),
