@@ -61,7 +61,7 @@ class CbTextFormField extends StatelessWidget {
           obscureText: obscured,
           // onEditingComplete: ,
           decoration: InputDecoration(
-            label: label != null ? Text(label!, style: context.textTheme.labelMedium) : null,
+            label: label != null ? Text(label!, style: context.textTheme.labelMedium?.copyWith(fontSize: 16)) : null,
             hintText: hint,
             prefixIcon: prefix,
             suffixIcon: suffix,

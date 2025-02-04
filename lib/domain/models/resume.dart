@@ -392,9 +392,9 @@ class Resume extends Equatable {
 extension ToPdfExtension on Resume {
   Future<Uint8List> toPdf() async {
     return switch (template) {
-      ResumeTemplate.simple => SimpleResumeTemplate.generatePdf(this),
-      ResumeTemplate.elegant => SimpleResumeTemplate.generatePdf(this),
-      ResumeTemplate.modern => SimpleResumeTemplate.generatePdf(this)
+      ResumeTemplate.simple => BasicResumeTemplate.generatePdf(this),
+      ResumeTemplate.elegant => BasicResumeTemplate.generatePdf(this),
+      ResumeTemplate.modern => BasicResumeTemplate.generatePdf(this)
     };
   }
 }

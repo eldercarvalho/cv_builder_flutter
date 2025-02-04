@@ -35,7 +35,7 @@ class ResumePreviewViewModel extends ChangeNotifier {
         .getCurrentUser()
         .flatMap((user) => _resumeRepository.getResume(userId: user.id, resumeId: resumeId))
         .flatMap(_onGetResume)
-        .map((resume) => SimpleResumeTemplate.generatePdf(resume))
+        .map((resume) => BasicResumeTemplate.generatePdf(resume))
         .flatMap((pdfBytes) => _resumeRepository.savePdf(resumeId: resumeId, bytes: pdfBytes))
         .flatMap(_onGetResumePdf);
   }

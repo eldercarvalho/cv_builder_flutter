@@ -35,39 +35,22 @@ class ResumeRepositoryRemote extends ResumeRepository {
     required String userId,
     required Resume resume,
   }) async {
-    return await _saveUserPicture(userId, resume).flatMap((resume) async {
-      final pdfBytes = await SimpleResumeTemplate.generatePdf(resume);
-      final thumbnailBytes = await SimpleResumeTemplate.generateThumbnail(pdfBytes);
-
-      return await _fileService
-          .saveTempImage(name: resume.id, bytes: thumbnailBytes)
-          .flatMap((thumbFile) => _remoteService.saveThumbnail(userId, resume.id, thumbFile))
-          .map((thumbUrl) => resume.copyWith(thumbnail: thumbUrl))
-          .flatMap((resume) => _remoteService.saveResume(userId, ResumeModel.fromDomain(resume)))
-          // .flatMap((resume) => _fileService.savePdf(name: resume.id, bytes: pdfBytes))
-          .pure(unit);
-    });
-  }
-
-  AsyncResult<Resume> _saveUserPicture(String userId, Resume resume) async {
-    if (resume.photo != null && !resume.photo!.startsWith('https')) {
-      return _remoteService
-          .savePicture(userId, resume.id, File(resume.photo!))
-          .map((url) => resume.copyWith(photo: url));
-    }
-
-    return Success(resume);
+    final thumbnailBytes = await BasicResumeTemplate.generateThumbnail(resume);
+    return await _fileService
+        .saveTempImage(name: resume.id, bytes: thumbnailBytes)
+        .flatMap((thumbFile) => _remoteService.saveResume(userId, ResumeModel.fromDomain(resume), thumbFile))
+        .pure(unit);
   }
 
   @override
   AsyncResult<File> getPdf({required Resume resume}) async {
-    final pdfBytes = await SimpleResumeTemplate.generatePdf(resume);
+    final pdfBytes = await BasicResumeTemplate.generatePdf(resume);
     return _fileService.savePdf(name: resume.id, bytes: pdfBytes);
   }
 
   @override
   AsyncResult<Unit> deleteResume({required String userId, required Resume resume}) {
-    return _remoteService.deleteResume(userId, resume);
+    return _remoteService.deleteResume(userId, ResumeModel.fromDomain(resume));
   }
 
   @override

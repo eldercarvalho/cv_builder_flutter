@@ -10,7 +10,7 @@ class FileService {
     required Uint8List bytes,
   }) async {
     try {
-      final dir = await getApplicationDocumentsDirectory();
+      final dir = await getTemporaryDirectory();
       final file = File('${dir.path}/$name.pdf');
       await file.writeAsBytes(bytes);
       return Success(file);
@@ -21,7 +21,7 @@ class FileService {
 
   AsyncResult<File> getPdf({required String name}) async {
     try {
-      final dir = await getApplicationDocumentsDirectory();
+      final dir = await getTemporaryDirectory();
       final file = File('${dir.path}/$name.pdf');
       return Success(file);
     } on Exception catch (e) {

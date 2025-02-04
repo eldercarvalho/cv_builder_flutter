@@ -12,7 +12,7 @@ import 'widgets/persoal_info.dart';
 import 'widgets/section_title.dart';
 import 'widgets/social_network.dart';
 
-class SimpleResumeTemplate {
+class BasicResumeTemplate {
   static Future<Uint8List> generatePdf(Resume resume) async {
     final pdf = Document();
     final config = await TemplateConfig.instance;
@@ -275,8 +275,10 @@ class SimpleResumeTemplate {
     return pdf.save();
   }
 
-  static Future<Uint8List> generateThumbnail(Uint8List pdfBytes) async {
+  static Future<Uint8List> generateThumbnail(Resume resume) async {
     late PdfRaster raster;
+    final pdfBytes = await generatePdf(resume);
+
     await for (final image in Printing.raster(pdfBytes, pages: const [0])) {
       raster = image;
     }
