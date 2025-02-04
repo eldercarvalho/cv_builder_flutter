@@ -5,6 +5,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import '../../../config/di.dart';
 import '../../../domain/models/resume.dart';
 import '../../shared/extensions/extensions.dart';
+import '../../shared/widgets/widgets.dart';
 import '../login/login_page.dart';
 import '../resume_form/resume_form_page.dart';
 import '../resume_preview/resume_preview_page.dart';
@@ -91,11 +92,14 @@ class _HomePageState extends State<HomePage> {
 
           if (_viewModel.getResumes.completed) {
             if (_viewModel.resumes.isEmpty) {
-              return Center(
-                child: Text(
-                  'Nenhum currículo encontrado',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+              return CbEmptyState(
+                message: 'Crie seu primeiro Currículo Top!',
+                imagePath: 'assets/images/mascot.svg',
+                buttonText: 'Criar Currículo',
+                onPressed: () async {
+                  await ResumeFormPage.push(context);
+                  _viewModel.getResumes.execute();
+                },
               );
             }
 
@@ -128,14 +132,23 @@ class _HomePageState extends State<HomePage> {
           return const SizedBox();
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () => ResumeFormPage.push(context),
-        child: const Icon(
-          FeatherIcons.plus,
-          color: Colors.white,
-        ),
+      floatingActionButton: ListenableBuilder(
+        listenable: _viewModel,
+        builder: (context, child) {
+          if (_viewModel.resumes.isEmpty) {
+            return const SizedBox.shrink();
+          }
+
+          return FloatingActionButton(
+            shape: const CircleBorder(),
+            backgroundColor: Theme.of(context).primaryColor,
+            onPressed: () => ResumeFormPage.push(context),
+            child: const Icon(
+              FeatherIcons.plus,
+              color: Colors.white,
+            ),
+          );
+        },
       ),
     );
   }

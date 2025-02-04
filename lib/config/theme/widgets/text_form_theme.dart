@@ -9,7 +9,7 @@ abstract class CvBuilderTextFormFieldTheme {
     ),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
-      borderSide: BorderSide(color: CbColors.border, width: 2),
+      borderSide: BorderSide(color: CbColors.secondary, width: 2),
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.all(Radius.circular(10)),
