@@ -29,6 +29,19 @@
         }
       },
       {
+        "key": 1738765296248,
+        "children": [],
+        "todo": {
+          "content": "Adicionar stepper do tipo 1/10 no form",
+          "id": 1738765296248,
+          "level": "default",
+          "done": true,
+          "start": 1738765296249,
+          "focus": false,
+          "end": 1738766579389
+        }
+      },
+      {
         "key": 1738675820505,
         "children": [],
         "todo": {
@@ -45,20 +58,9 @@
         "todo": {
           "content": "Adicionar icone de olho para campos senha",
           "id": 1738762718430,
-          "level": "default",
+          "level": "warning",
           "done": false,
           "start": 1738762718430
-        }
-      },
-      {
-        "key": 1738765296248,
-        "children": [],
-        "todo": {
-          "content": "Adicionar stepper do tipo 1/10 no form",
-          "id": 1738765296248,
-          "level": "default",
-          "done": false,
-          "start": 1738765296249
         }
       },
       {
@@ -261,6 +263,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1738765780826"
+    "version": "1738766591123"
   }
 }

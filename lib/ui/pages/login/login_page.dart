@@ -39,7 +39,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _viewModel.login.addListener(_onListener);
+    _viewModel.login.addListener(_onLoginListener);
+    _viewModel.loginWithGoogle.addListener(_onLoginWithListener);
   }
 
   @override
@@ -105,10 +106,48 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               TextButton(
                 onPressed: () => RegistrationPage.replace(context),
                 child: const Text('Não tem uma conta? Crie uma'),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 1,
+                      color: context.colors.outline,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text('ou', style: context.textTheme.bodyLarge),
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 1,
+                      color: context.colors.outline,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+              ListenableBuilder(
+                listenable: _viewModel.loginWithGoogle,
+                builder: (context, child) {
+                  return CbButton(
+                    onPressed: () => _viewModel.loginWithGoogle.execute(),
+                    text: 'Entrar com Google',
+                    type: CbButtonType.outlined,
+                    isLoading: _viewModel.loginWithGoogle.running,
+                    prefixIcon: SvgPicture.asset(
+                      'assets/images/google.svg',
+                      width: 24,
+                      height: 24,
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -130,8 +169,31 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _onListener() {
+  void _onLoginListener() {
     if (_viewModel.login.completed) {
+      HomePage.replace(context);
+    }
+
+    if (_viewModel.login.error) {
+      final result = _viewModel.login.result;
+      result?.fold(
+        (_) {},
+        (error) {
+          if (error is AuthException) {
+            final code = error.code;
+            if (code == 'invalid-credential') {
+              context.showErrorSnackBar('Usuário ou senha incorretos');
+            } else {
+              context.showErrorSnackBar('Erro ao fazer login');
+            }
+          }
+        },
+      );
+    }
+  }
+
+  void _onLoginWithListener() {
+    if (_viewModel.loginWithGoogle.completed) {
       HomePage.replace(context);
     }
 

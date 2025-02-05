@@ -1,6 +1,7 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 enum CbButtonType {
   filled,
@@ -21,8 +22,8 @@ class CbButton extends StatefulWidget {
 
   final Function() onPressed;
   final String text;
-  final IconData? suffixIcon;
-  final IconData? prefixIcon;
+  final dynamic suffixIcon;
+  final dynamic prefixIcon;
   final CbButtonType type;
   final bool isLoading;
   final bool disabled;
@@ -32,13 +33,15 @@ class CbButton extends StatefulWidget {
 }
 
 class _CbButtonState extends State<CbButton> {
+  Color get _loadingColor => widget.type == CbButtonType.filled ? context.colors.onPrimary : context.colors.primary;
+
   @override
   Widget build(BuildContext context) {
     final child = widget.isLoading
         ? SizedBox(
             width: 26,
             height: 26,
-            child: CircularProgressIndicator(color: context.colors.onPrimary, strokeWidth: 2),
+            child: CircularProgressIndicator(color: _loadingColor, strokeWidth: 2),
           )
         : _buildChild();
 
@@ -61,9 +64,10 @@ class _CbButtonState extends State<CbButton> {
   Widget _buildChild() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 6,
+      spacing: 8,
       children: [
-        if (widget.prefixIcon != null) Icon(widget.prefixIcon!, size: 24),
+        if (widget.prefixIcon != null && widget.prefixIcon is SvgPicture) widget.prefixIcon!,
+        if (widget.prefixIcon != null && widget.prefixIcon is IconData) Icon(widget.prefixIcon!, size: 24),
         Flexible(
           child: Text(
             widget.text,
@@ -73,7 +77,7 @@ class _CbButtonState extends State<CbButton> {
             maxLines: 1,
           ),
         ),
-        if (widget.suffixIcon != null) Icon(widget.suffixIcon!, size: 24),
+        if (widget.suffixIcon != null && widget.prefixIcon is IconData) Icon(widget.suffixIcon!, size: 24),
       ],
     );
   }

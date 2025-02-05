@@ -46,4 +46,9 @@ class AuthRepositoryRemote extends AuthRepository {
   AsyncResult<User> getCurrentUser() {
     return _authService.getCurrentUser().map((user) => user.toDomain());
   }
+
+  @override
+  AsyncResult<void> loginWithGoogle() {
+    return _authService.signInWithGoogle();
+  }
 }
