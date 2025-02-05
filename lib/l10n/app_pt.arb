@@ -45,5 +45,13 @@
   "profession": "Profissão",
   "register": "Cadastrar",
   "password": "Senha",
-  "confirmPassword": "Confirmar"
+  "confirmPassword": "Confirmar",
+  "loginTitle": "Entre na sua conta",
+  "loginForgotPassword": "Esqueceu a senha?",
+  "loginLogin": "Log In",
+  "loginNoAccount": "Não tem uma conta? Crie uma",
+  "loginOr": "ou",
+  "loginLoginWithGoogle": "Entrar com Google",
+  "loginUnauthorizedError": "Usuário ou senha inválidos",  
+  "loginGenericError": "Ocorreu um erro ao tentar fazer login"  
 }

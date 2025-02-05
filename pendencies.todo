@@ -42,6 +42,30 @@
         }
       },
       {
+        "key": 1738675807703,
+        "children": [],
+        "todo": {
+          "content": "Login Google",
+          "id": 1738675807703,
+          "level": "default",
+          "done": true,
+          "start": 1738675807703,
+          "focus": false,
+          "end": 1738777603056
+        }
+      },
+      {
+        "key": 1738676063530,
+        "children": [],
+        "todo": {
+          "content": "Adicionar traduções faltantes",
+          "id": 1738676063530,
+          "level": "default",
+          "done": false,
+          "start": 1738676063530
+        }
+      },
+      {
         "key": 1738675820505,
         "children": [],
         "todo": {
@@ -58,7 +82,7 @@
         "todo": {
           "content": "Adicionar icone de olho para campos senha",
           "id": 1738762718430,
-          "level": "warning",
+          "level": "default",
           "done": false,
           "start": 1738762718430
         }
@@ -94,17 +118,6 @@
           "level": "default",
           "done": false,
           "start": 1738675655442
-        }
-      },
-      {
-        "key": 1738675807703,
-        "children": [],
-        "todo": {
-          "content": "Login Google",
-          "id": 1738675807703,
-          "level": "default",
-          "done": false,
-          "start": 1738675807703
         }
       },
       {
@@ -207,17 +220,6 @@
         }
       },
       {
-        "key": 1738676063530,
-        "children": [],
-        "todo": {
-          "content": "Adicionar traduções faltantes",
-          "id": 1738676063530,
-          "level": "default",
-          "done": false,
-          "start": 1738676063530
-        }
-      },
-      {
         "key": 1738676074789,
         "children": [],
         "todo": {
@@ -263,6 +265,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1738766591123"
+    "version": "1738777605400"
   }
 }

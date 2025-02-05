@@ -102,10 +102,21 @@ class FormButtons extends StatelessWidget {
         Visibility(
           visible: step != null,
           child: Transform.translate(
-            offset: const Offset(0, -32),
+            offset: const Offset(0, -46),
             child: Padding(
               padding: const EdgeInsets.only(bottom: 6, left: 16),
-              child: Text('$step/11', style: context.textTheme.labelLarge),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                decoration:
+                    BoxDecoration(color: context.colors.surface, borderRadius: BorderRadius.circular(20), boxShadow: [
+                  BoxShadow(
+                    color: context.colors.shadow.withValues(alpha: 0.2),
+                    offset: const Offset(0, 1),
+                    blurRadius: 4,
+                  ),
+                ]),
+                child: Text('$step/11', style: context.textTheme.labelLarge),
+              ),
             ),
           ),
         ),

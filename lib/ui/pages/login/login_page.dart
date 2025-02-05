@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Entre na sua conta',
+                context.l10n.loginTitle,
                 style: context.textTheme.titleLarge?.copyWith(
                   color: context.colors.secondary,
                 ),
@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                 controller: _emailController,
                 label: context.l10n.email,
                 validator: MultiValidator([
-                  RequiredValidator(errorText: 'Campo obrigatório'),
+                  RequiredValidator(errorText: context.l10n.requiredField),
                 ]).call,
               ),
               const SizedBox(height: 20),
@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     label: context.l10n.password,
                     obscured: true,
                     validator: MultiValidator([
-                      RequiredValidator(errorText: 'Campo obrigatório'),
+                      RequiredValidator(errorText: context.l10n.requiredField),
                     ]).call,
                   ),
                   TextButton(
@@ -91,16 +91,16 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
                     ),
-                    child: const Text('Esqueceu a senha?'),
+                    child: Text(context.l10n.loginForgotPassword),
                   ),
                 ],
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 20),
               ListenableBuilder(
                 listenable: _viewModel.login,
                 builder: (context, child) {
                   return CbButton(
-                    text: 'Entrar',
+                    text: context.l10n.loginLogin,
                     isLoading: _viewModel.login.running,
                     onPressed: _onSubmit,
                   );
@@ -109,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () => RegistrationPage.replace(context),
-                child: const Text('Não tem uma conta? Crie uma'),
+                child: Text(context.l10n.loginNoAccount),
               ),
               const SizedBox(height: 16),
               Row(
@@ -122,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text('ou', style: context.textTheme.bodyLarge),
+                    child: Text(context.l10n.loginOr, style: context.textTheme.bodyLarge),
                   ),
                   Expanded(
                     child: Container(
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                 builder: (context, child) {
                   return CbButton(
                     onPressed: () => _viewModel.loginWithGoogle.execute(),
-                    text: 'Entrar com Google',
+                    text: context.l10n.loginLoginWithGoogle,
                     type: CbButtonType.outlined,
                     isLoading: _viewModel.loginWithGoogle.running,
                     prefixIcon: SvgPicture.asset(
@@ -182,9 +182,9 @@ class _LoginPageState extends State<LoginPage> {
           if (error is AuthException) {
             final code = error.code;
             if (code == 'invalid-credential') {
-              context.showErrorSnackBar('Usuário ou senha incorretos');
+              context.showErrorSnackBar(context.l10n.loginUnauthorizedError);
             } else {
-              context.showErrorSnackBar('Erro ao fazer login');
+              context.showErrorSnackBar(context.l10n.loginGenericError);
             }
           }
         },
@@ -203,12 +203,7 @@ class _LoginPageState extends State<LoginPage> {
         (_) {},
         (error) {
           if (error is AuthException) {
-            final code = error.code;
-            if (code == 'invalid-credential') {
-              context.showErrorSnackBar('Usuário ou senha incorretos');
-            } else {
-              context.showErrorSnackBar('Erro ao fazer login');
-            }
+            context.showErrorSnackBar('Erro ao fazer login');
           }
         },
       );

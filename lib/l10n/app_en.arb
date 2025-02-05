@@ -45,5 +45,13 @@
   "profession": "Profession",
   "register": "Cadastrar",
   "password": "Senha",
-  "confirmPassword": "Confirmar"
+  "confirmPassword": "Confirmar",
+  "loginTitle": "Login to your account",
+  "loginForgotPassword": "Forgot password?",
+  "loginLogin": "Log In",
+  "loginNoAccount": "Don't have an account? Create one",
+  "loginOr": "ou",
+  "loginLoginWithGoogle": "Login with Google",
+  "loginUnauthorizedError": "Invalid username or password",  
+  "loginGenericError": "An error occurred while trying to login"  
 }
