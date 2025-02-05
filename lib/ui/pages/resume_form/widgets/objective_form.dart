@@ -45,6 +45,8 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
   @override
   Widget build(BuildContext context) {
     return FormContainer(
+      showPreviewButton: !widget.isEditing,
+      onPreviewButtonPressed: _onPreview,
       fields: [
         const SectionTitleTextField(
           text: 'Objetivo',
@@ -75,5 +77,13 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
         },
       ),
     );
+  }
+
+  void _onPreview() {
+    FocusScope.of(context).unfocus();
+    _viewModel.previewResume = _viewModel.resume.copyWith(
+      objectiveSummary: _objectiveController.text,
+    );
+    _viewModel.generatePdf.execute();
   }
 }

@@ -36,8 +36,11 @@ class _CertificationsFormState extends State<CertificationsForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    return FormContainer(
+      showPreviewButton: !widget.isEditing,
+      onPreviewButtonPressed: _onPreview,
+      spacing: 0,
+      fields: [
         const SizedBox(height: 16),
         const SectionTitleTextField(
           text: 'Certificações',
@@ -80,26 +83,30 @@ class _CertificationsFormState extends State<CertificationsForm> {
           label: const Text('Adicionar Certificação'),
           icon: const Icon(Icons.add),
         ),
-        const Spacer(),
-        ListenableBuilder(
-          listenable: _viewModel.saveResume,
-          builder: (context, child) {
-            return FormButtons(
-              showIcons: true,
-              showSaveButton: widget.isEditing,
-              isLoading: _viewModel.saveResume.running,
-              onPreviousPressed: widget.onPrevious,
-              previousText: context.l10n.skills,
-              nextText: context.l10n.finish,
-              nextIcon: FeatherIcons.checkCircle,
-              onNextPressed: () {
-                widget.onSubmit();
-              },
-            );
-          },
-        ),
       ],
+      bottom: ListenableBuilder(
+        listenable: _viewModel.saveResume,
+        builder: (context, child) {
+          return FormButtons(
+            showIcons: true,
+            showSaveButton: widget.isEditing,
+            isLoading: _viewModel.saveResume.running,
+            onPreviousPressed: widget.onPrevious,
+            previousText: context.l10n.skills,
+            nextText: context.l10n.finish,
+            nextIcon: FeatherIcons.checkCircle,
+            onNextPressed: () {
+              widget.onSubmit();
+            },
+          );
+        },
+      ),
     );
+  }
+
+  void _onPreview() {
+    _viewModel.previewResume = _viewModel.resume;
+    _viewModel.generatePdf.execute();
   }
 
   void _onAddButtonPressed({Certification? itemToEdit}) async {

@@ -65,7 +65,7 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
           title: ListenableBuilder(
             listenable: _viewModel,
             builder: (context, child) {
-              return Text(_viewModel.resume?.resumeName ?? "", style: context.textTheme.titleLarge);
+              return Text(_viewModel.resume?.resumeName ?? "");
             },
           ),
           actions: [

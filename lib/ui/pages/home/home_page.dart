@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Meus Currículos', style: context.textTheme.titleLarge),
+        title: const Text('Meus Currículos'),
         actions: [
           if (kDebugMode)
             IconButton(

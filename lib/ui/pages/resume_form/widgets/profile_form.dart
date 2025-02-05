@@ -40,8 +40,6 @@ class _ProfileFormState extends State<ProfileForm> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthDateController = TextEditingController();
 
-  final FocusNode _nameFocus = FocusNode();
-
   File? _image;
   bool _isSubmitted = false;
 
@@ -52,12 +50,6 @@ class _ProfileFormState extends State<ProfileForm> {
     _nameController.text = _viewModel.resume.name;
     _professionController.text = _viewModel.resume.profession ?? '';
     _birthDateController.text = _viewModel.resume.birthDate != null ? _viewModel.resume.birthDate!.toSimpleDate() : '';
-
-    _nameFocus.addListener(() {
-      if (!_nameFocus.hasFocus) {
-        if (_formKey.currentState!.validate()) {}
-      }
-    });
   }
 
   @override
@@ -65,7 +57,6 @@ class _ProfileFormState extends State<ProfileForm> {
     _nameController.dispose();
     _professionController.dispose();
     _birthDateController.dispose();
-    _nameFocus.dispose();
     super.dispose();
   }
 
@@ -74,6 +65,8 @@ class _ProfileFormState extends State<ProfileForm> {
     return Form(
       key: _formKey,
       child: FormContainer(
+        showPreviewButton: !widget.isEditing,
+        onPreviewButtonPressed: _onPreview,
         fields: [
           SectionTitleTextField(
             text: context.l10n.profile,
@@ -87,7 +80,6 @@ class _ProfileFormState extends State<ProfileForm> {
             ),
           ),
           CbTextFormField(
-            focusNode: _nameFocus,
             controller: _nameController,
             label: context.l10n.name,
             required: true,

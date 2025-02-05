@@ -41,12 +41,15 @@ class _ExperienceFormState extends State<ExperienceForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 16),
+    return FormContainer(
+      showPreviewButton: !widget.isEditing,
+      onPreviewButtonPressed: _onPreview,
+      spacing: 0,
+      fields: [
         const SectionTitleTextField(
           text: 'Experiência Profissional',
           icon: FeatherIcons.briefcase,
+          padding: 0,
         ),
         ListenableBuilder(
           listenable: _viewModel,
@@ -85,25 +88,29 @@ class _ExperienceFormState extends State<ExperienceForm> {
           label: const Text('Adicionar Experiência'),
           icon: const Icon(Icons.add),
         ),
-        const Spacer(),
-        ListenableBuilder(
-          listenable: _viewModel.saveResume,
-          builder: (context, _) {
-            return FormButtons(
-              showIcons: true,
-              showSaveButton: widget.isEditing,
-              isLoading: _viewModel.saveResume.running,
-              previousText: context.l10n.objective,
-              onPreviousPressed: widget.onPrevious,
-              nextText: context.l10n.education,
-              onNextPressed: () {
-                widget.onSubmit();
-              },
-            );
-          },
-        ),
       ],
+      bottom: ListenableBuilder(
+        listenable: _viewModel.saveResume,
+        builder: (context, _) {
+          return FormButtons(
+            showIcons: true,
+            showSaveButton: widget.isEditing,
+            isLoading: _viewModel.saveResume.running,
+            previousText: context.l10n.objective,
+            onPreviousPressed: widget.onPrevious,
+            nextText: context.l10n.education,
+            onNextPressed: () {
+              widget.onSubmit();
+            },
+          );
+        },
+      ),
     );
+  }
+
+  void _onPreview() {
+    _viewModel.previewResume = _viewModel.resume;
+    _viewModel.generatePdf.execute();
   }
 
   void _onAddButtonPressed({WorkExperience? itemToEdit}) async {

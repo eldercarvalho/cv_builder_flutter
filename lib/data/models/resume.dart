@@ -256,7 +256,7 @@ class ResumeModel extends Equatable {
       isActive: isActive ?? this.isActive,
       resumeName: resumeName ?? this.resumeName,
       name: name ?? this.name,
-      profession: profession ?? profession,
+      profession: profession ?? this.profession,
       birthDate: birthDate ?? this.birthDate,
       photo: photo ?? this.photo,
       address: address ?? this.address,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../config/di.dart';
 import '../../../../domain/models/skill.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
@@ -14,7 +14,12 @@ import 'option_tile.dart';
 import 'section_title_text_field.dart';
 
 class SkillsForm extends StatefulWidget {
-  const SkillsForm({super.key, required this.onSubmit, this.onPrevious, required this.isEditing});
+  const SkillsForm({
+    super.key,
+    required this.onSubmit,
+    this.onPrevious,
+    required this.isEditing,
+  });
 
   final bool isEditing;
   final Function() onSubmit;
@@ -25,16 +30,25 @@ class SkillsForm extends StatefulWidget {
 }
 
 class _SkillsFormState extends State<SkillsForm> {
-  final _viewModel = getIt<ResumeFormViewModel>();
+  late final ResumeFormViewModel _viewModel;
+
+  @override
+  initState() {
+    _viewModel = context.read();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 16),
+    return FormContainer(
+      spacing: 0,
+      showPreviewButton: !widget.isEditing,
+      onPreviewButtonPressed: _onPreview,
+      fields: [
         const SectionTitleTextField(
           text: 'Habilidades',
           icon: FeatherIcons.star,
+          padding: 0,
         ),
         ListenableBuilder(
           listenable: _viewModel,
@@ -49,7 +63,6 @@ class _SkillsFormState extends State<SkillsForm> {
             }
 
             return ReorderableListView.builder(
-              padding: const EdgeInsets.all(16),
               shrinkWrap: true,
               onReorder: _onReorder,
               itemCount: _viewModel.resume.skills.length,
@@ -73,25 +86,29 @@ class _SkillsFormState extends State<SkillsForm> {
           label: const Text('Adicionar Habilidade'),
           icon: const Icon(Icons.add),
         ),
-        const Spacer(),
-        ListenableBuilder(
-          listenable: _viewModel.saveResume,
-          builder: (context, _) {
-            return FormButtons(
-              showIcons: true,
-              showSaveButton: widget.isEditing,
-              isLoading: _viewModel.saveResume.running,
-              previousText: context.l10n.experience,
-              onPreviousPressed: widget.onPrevious,
-              nextText: context.l10n.languages,
-              onNextPressed: () {
-                widget.onSubmit();
-              },
-            );
-          },
-        ),
       ],
+      bottom: ListenableBuilder(
+        listenable: _viewModel.saveResume,
+        builder: (context, _) {
+          return FormButtons(
+            showIcons: true,
+            showSaveButton: widget.isEditing,
+            isLoading: _viewModel.saveResume.running,
+            previousText: context.l10n.experience,
+            onPreviousPressed: widget.onPrevious,
+            nextText: context.l10n.languages,
+            onNextPressed: () {
+              widget.onSubmit();
+            },
+          );
+        },
+      ),
     );
+  }
+
+  void _onPreview() {
+    _viewModel.previewResume = _viewModel.resume;
+    _viewModel.generatePdf.execute();
   }
 
   void _onAddButtonPressed({Skill? itemToEdit}) async {

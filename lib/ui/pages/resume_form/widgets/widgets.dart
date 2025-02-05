@@ -11,6 +11,7 @@ export 'option_tile.dart';
 export 'photo_picker.dart';
 export 'profile_form.dart';
 export 'resume_info_form.dart';
+export 'resume_preview.dart';
 export 'section_title_text_field.dart';
 export 'skills_form.dart';
 export 'social_networks_form.dart';

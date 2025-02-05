@@ -26,8 +26,12 @@ class _PhotoPickerState extends State<PhotoPicker> {
   Widget build(BuildContext context) {
     DecorationImage? decorationImage;
 
-    if (widget.initialValue != null) {
+    if (widget.initialValue != null && widget.initialValue!.startsWith('https')) {
       decorationImage = DecorationImage(image: NetworkImage(widget.initialValue!), fit: BoxFit.cover);
+    }
+
+    if (widget.initialValue != null && !widget.initialValue!.startsWith('https')) {
+      decorationImage = DecorationImage(image: FileImage(File(widget.initialValue!)), fit: BoxFit.cover);
     }
 
     if (_image != null) {

@@ -32,7 +32,7 @@ class ResumeFormViewModel extends ChangeNotifier {
   }
 
   Resume _previewResume = Resume.empty();
-  Resume get previreResume => _previewResume;
+  Resume get previewResume => _previewResume;
   set previewResume(Resume value) {
     _previewResume = value;
     notifyListeners();

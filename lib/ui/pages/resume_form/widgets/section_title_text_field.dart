@@ -33,11 +33,23 @@ class _SectionTitleTextFieldState extends State<SectionTitleTextField> {
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: widget.padding),
+      padding: EdgeInsets.symmetric(horizontal: widget.padding).copyWith(bottom: 10),
       child: Row(
         // spacing: 6,
         children: [
-          Icon(widget.icon, color: context.colors.primary, size: 22),
+          Container(
+            width: 28,
+            height: 28,
+            decoration: BoxDecoration(
+              color: context.colors.primary,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              widget.icon,
+              color: Colors.white,
+              size: 18,
+            ),
+          ),
           const SizedBox(width: 12),
           Text(widget.text, style: context.textTheme.titleMedium),
           // InkWell(

@@ -64,6 +64,7 @@ class Resume extends Equatable {
   final DateTime createdAt;
   final DateTime? updatedAt;
   final String? thumbnail;
+  final bool isDraft;
 
   String? get age => birthDate != null ? (DateTime.now().difference(birthDate!).inDays ~/ 365).toString() : null;
   bool get hasPhoto => photo != null;
@@ -115,6 +116,7 @@ class Resume extends Equatable {
     required this.createdAt,
     this.updatedAt,
     this.thumbnail,
+    this.isDraft = false,
   });
 
   static Resume empty() => Resume(
@@ -125,6 +127,7 @@ class Resume extends Equatable {
         template: ResumeTemplate.simple,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
+        isDraft: true,
       );
 
   static Resume fake() => Resume(
@@ -323,6 +326,7 @@ class Resume extends Equatable {
     DateTime? createdAt,
     DateTime? updatedAt,
     String? thumbnail,
+    bool? isDraft,
   }) {
     return Resume(
       id: id ?? this.id,
@@ -353,6 +357,7 @@ class Resume extends Equatable {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       thumbnail: thumbnail ?? this.thumbnail,
+      isDraft: isDraft ?? this.isDraft,
     );
   }
 
@@ -386,6 +391,7 @@ class Resume extends Equatable {
         createdAt,
         updatedAt,
         thumbnail,
+        isDraft,
       ];
 }
 

@@ -1,9 +1,9 @@
-import 'package:cv_builder/domain/models/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../../domain/models/language.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
 import '../../../shared/widgets/cb_text_form_field.dart';
@@ -35,10 +35,16 @@ class _LanguagesFormState extends State<LanguagesForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 16),
-        const SectionTitleTextField(text: 'Idiomas', icon: FeatherIcons.flag),
+    return FormContainer(
+      spacing: 0,
+      showPreviewButton: !widget.isEditing,
+      onPreviewButtonPressed: _onPreview,
+      fields: [
+        const SectionTitleTextField(
+          text: 'Idiomas',
+          icon: FeatherIcons.flag,
+          padding: 0,
+        ),
         ListenableBuilder(
           listenable: _viewModel,
           builder: (context, _) {
@@ -52,7 +58,7 @@ class _LanguagesFormState extends State<LanguagesForm> {
             }
 
             return ReorderableListView.builder(
-              padding: const EdgeInsets.all(16),
+              // padding: const EdgeInsets.all(16),
               shrinkWrap: true,
               onReorder: _onReorder,
               itemCount: _viewModel.resume.languages.length,
@@ -76,25 +82,29 @@ class _LanguagesFormState extends State<LanguagesForm> {
           label: const Text('Adicionar Idioma'),
           icon: const Icon(Icons.add),
         ),
-        const Spacer(),
-        ListenableBuilder(
-          listenable: _viewModel.saveResume,
-          builder: (context, _) {
-            return FormButtons(
-              showIcons: true,
-              showSaveButton: widget.isEditing,
-              isLoading: _viewModel.saveResume.running,
-              previousText: context.l10n.skills,
-              onPreviousPressed: widget.onPrevious,
-              nextText: context.l10n.certifications,
-              onNextPressed: () {
-                widget.onSubmit();
-              },
-            );
-          },
-        ),
       ],
+      bottom: ListenableBuilder(
+        listenable: _viewModel.saveResume,
+        builder: (context, _) {
+          return FormButtons(
+            showIcons: true,
+            showSaveButton: widget.isEditing,
+            isLoading: _viewModel.saveResume.running,
+            previousText: context.l10n.skills,
+            onPreviousPressed: widget.onPrevious,
+            nextText: context.l10n.certifications,
+            onNextPressed: () {
+              widget.onSubmit();
+            },
+          );
+        },
+      ),
     );
+  }
+
+  void _onPreview() {
+    _viewModel.previewResume = _viewModel.resume;
+    _viewModel.generatePdf.execute();
   }
 
   void _onAddButtonPressed({Language? itemToEdit}) async {
@@ -177,7 +187,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isEditing ? 'Editar Habilidade' : 'Adicionar Habilidade',
+          _isEditing ? 'Editar Idioma' : 'Adicionar Idioma',
           style: context.textTheme.titleLarge,
         ),
       ),

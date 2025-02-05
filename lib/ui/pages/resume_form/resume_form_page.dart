@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../config/di.dart';
 import '../../../domain/models/resume.dart';
@@ -89,14 +88,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
         onPopInvokedWithResult: _onPopInvokedWithResult,
         child: Scaffold(
           appBar: AppBar(
-            title: Text(title, style: context.textTheme.titleLarge),
-            // actions: [
-            //   if (!_isEditing && _currentPage != 0)
-            //     IconButton(
-            //       icon: const Icon(FeatherIcons.eye),
-            //       onPressed: () => _viewModel.generatePdf.execute(),
-            //     ),
-            // ],
+            title: Text(title),
           ),
           body: PageView(
             physics: const NeverScrollableScrollPhysics(),
@@ -181,14 +173,13 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
   void _onGeneratePdfListener() {
     if (_viewModel.generatePdf.completed) {
       final pdfFile = _viewModel.resumePdfFile;
+      // ResumePreviewPage.push(
+      //   context,
+      //   params: ResumePreviewParams(resume: _viewModel.previewResume),
+      // );
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (_) => Scaffold(
-            appBar: AppBar(
-              title: const Text('Pré-visualização'),
-            ),
-            body: SfPdfViewer.file(pdfFile!),
-          ),
+          builder: (_) => ResumePreview(pdfFile: pdfFile!),
         ),
       );
     }

@@ -6,6 +6,7 @@ import '../../../../domain/models/resume.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../resume_form/resume_form_page.dart';
 import '../view_model/resume_preview_view_model.dart';
+import 'edit_drawer_item.dart';
 
 class EditDrawer extends StatelessWidget {
   const EditDrawer({super.key});
@@ -19,70 +20,76 @@ class EditDrawer extends StatelessWidget {
       child: ListView(
         children: [
           const SizedBox(height: 20),
-          ListTile(
-            leading: Icon(FeatherIcons.fileText, color: context.colors.primary),
-            title: Text('Sobre o Currículo', style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.resumeInfo),
+          EditDrawerItem(
+            icon: FeatherIcons.fileText,
+            title: 'Sobre o Currículo',
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.resumeInfo, viewModel),
           ),
-          ListTile(
-            leading: Icon(FeatherIcons.user, color: context.colors.primary),
-            title: Text(context.l10n.profile, style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.personalInfo),
+          EditDrawerItem(
+            icon: FeatherIcons.user,
+            title: context.l10n.profile,
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.personalInfo, viewModel),
           ),
-          ListTile(
-            leading: Icon(FeatherIcons.mapPin, color: context.colors.primary),
-            title: Text(context.l10n.address, style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.address),
+          EditDrawerItem(
+            icon: FeatherIcons.mapPin,
+            title: context.l10n.address,
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.address, viewModel),
           ),
-          ListTile(
-            leading: Icon(FeatherIcons.phone, color: context.colors.primary),
-            title: Text(context.l10n.contact, style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.contact),
+          EditDrawerItem(
+            icon: FeatherIcons.phone,
+            title: context.l10n.contact,
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.contact, viewModel),
           ),
-          ListTile(
-            leading: Icon(FeatherIcons.checkCircle, color: context.colors.primary),
-            title: Text(context.l10n.objective, style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.objective),
+          EditDrawerItem(
+            icon: FeatherIcons.checkCircle,
+            title: context.l10n.objective,
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.objective, viewModel),
           ),
-          ListTile(
-            leading: Icon(FeatherIcons.share2, color: context.colors.primary),
-            title: Text(context.l10n.socialNetwork(2), style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.socialNetworks),
+          EditDrawerItem(
+            icon: FeatherIcons.share2,
+            title: context.l10n.socialNetwork(2),
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.socialNetworks, viewModel),
           ),
-          ListTile(
-            leading: Icon(FeatherIcons.briefcase, color: context.colors.primary),
-            title: Text(context.l10n.experience, style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.experience),
+          EditDrawerItem(
+            icon: FeatherIcons.briefcase,
+            title: context.l10n.experience,
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.experience, viewModel),
           ),
-          ListTile(
-            leading: Icon(FeatherIcons.award, color: context.colors.primary),
-            title: Text(context.l10n.education, style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.education),
+          EditDrawerItem(
+            icon: FeatherIcons.award,
+            title: context.l10n.education,
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.education, viewModel),
           ),
-          ListTile(
-            leading: Icon(FeatherIcons.star, color: context.colors.primary),
-            title: Text(context.l10n.skills, style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.skills),
+          EditDrawerItem(
+            icon: FeatherIcons.star,
+            title: context.l10n.skills,
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.skills, viewModel),
           ),
-          ListTile(
-            leading: Icon(FeatherIcons.flag, color: context.colors.primary),
-            title: Text(context.l10n.languages, style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.languages),
+          EditDrawerItem(
+            icon: FeatherIcons.flag,
+            title: context.l10n.languages,
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.languages, viewModel),
           ),
-          ListTile(
-            leading: Icon(FeatherIcons.award, color: context.colors.primary),
-            title: Text(context.l10n.certifications, style: context.textTheme.labelLarge),
-            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.certifications),
+          EditDrawerItem(
+            icon: FeatherIcons.award,
+            title: context.l10n.certifications,
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.certifications, viewModel),
           ),
         ],
       ),
     );
   }
 
-  void _navToForm(BuildContext context, Resume resume, ResumeFormPageStep step) {
-    ResumeFormPage.push(
+  void _navToForm(
+    BuildContext context,
+    Resume resume,
+    ResumeFormPageStep step,
+    ResumePreviewViewModel viewModel,
+  ) async {
+    await ResumeFormPage.push(
       context,
       params: ResumeFormParams(resume: resume, step: step),
     );
+    viewModel.getResume.execute(resume.id);
   }
 }

@@ -41,6 +41,8 @@ class _AddressFormState extends State<AddressForm> {
     return Form(
       key: _formKey,
       child: FormContainer(
+        showPreviewButton: !widget.isEditing,
+        onPreviewButtonPressed: _onPreview,
         fields: [
           SectionTitleTextField(
             text: context.l10n.address,
@@ -76,6 +78,16 @@ class _AddressFormState extends State<AddressForm> {
         ),
       ),
     );
+  }
+
+  void _onPreview() {
+    FocusScope.of(context).unfocus();
+    _viewModel.previewResume = _viewModel.resume.copyWith(
+      address: _addressController.text,
+      city: _cityController.text,
+      zipCode: _zipCodeController.text,
+    );
+    _viewModel.generatePdf.execute();
   }
 
   void _onSubmit() {

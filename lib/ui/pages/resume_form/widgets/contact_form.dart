@@ -54,6 +54,8 @@ class _ContactFormState extends State<ContactForm> {
     return Form(
       key: _formKey,
       child: FormContainer(
+        showPreviewButton: !widget.isEditing,
+        onPreviewButtonPressed: _onPreview,
         fields: [
           SectionTitleTextField(
             text: context.l10n.contact,
@@ -96,5 +98,15 @@ class _ContactFormState extends State<ContactForm> {
         ),
       ),
     );
+  }
+
+  void _onPreview() {
+    FocusScope.of(context).unfocus();
+    _viewModel.previewResume = _viewModel.resume.copyWith(
+      phoneNumber: _phoneController.text,
+      email: _emailController.text,
+      website: _websiteController.text,
+    );
+    _viewModel.generatePdf.execute();
   }
 }

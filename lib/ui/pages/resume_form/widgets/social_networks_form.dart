@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../config/di.dart';
 import '../../../../domain/models/social_network.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
@@ -14,7 +14,12 @@ import 'option_tile.dart';
 import 'section_title_text_field.dart';
 
 class SocialNetworksForm extends StatefulWidget {
-  const SocialNetworksForm({super.key, required this.onSubmit, this.onPrevious, required this.isEditing});
+  const SocialNetworksForm({
+    super.key,
+    required this.onSubmit,
+    this.onPrevious,
+    required this.isEditing,
+  });
 
   final bool isEditing;
   final Function() onSubmit;
@@ -25,14 +30,26 @@ class SocialNetworksForm extends StatefulWidget {
 }
 
 class _SocialNetworksFormState extends State<SocialNetworksForm> {
-  final _viewModel = getIt<ResumeFormViewModel>();
+  late final ResumeFormViewModel _viewModel;
+
+  @override
+  void initState() {
+    _viewModel = context.read();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 16),
-        SectionTitleTextField(text: context.l10n.socialNetwork(2), padding: 16, icon: FeatherIcons.share2),
+    return FormContainer(
+      spacing: 0,
+      showPreviewButton: !widget.isEditing,
+      onPreviewButtonPressed: _onPreview,
+      fields: [
+        SectionTitleTextField(
+          text: context.l10n.socialNetwork(2),
+          padding: 0,
+          icon: FeatherIcons.share2,
+        ),
         ListenableBuilder(
           listenable: _viewModel,
           builder: (context, _) {
@@ -46,7 +63,7 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
             }
 
             return ReorderableListView.builder(
-              padding: const EdgeInsets.all(16),
+              // padding: const EdgeInsets.all(16),
               shrinkWrap: true,
               onReorder: _onReorder,
               itemCount: _viewModel.resume.socialNetworks.length,
@@ -70,23 +87,27 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
           label: const Text('Adicionar Rede Social'),
           icon: const Icon(Icons.add),
         ),
-        const Spacer(),
-        ListenableBuilder(
-          listenable: _viewModel.saveResume,
-          builder: (context, _) {
-            return FormButtons(
-              showIcons: true,
-              showSaveButton: widget.isEditing,
-              isLoading: _viewModel.saveResume.running,
-              previousText: context.l10n.contact,
-              onPreviousPressed: widget.onPrevious,
-              nextText: context.l10n.objective,
-              onNextPressed: widget.onSubmit,
-            );
-          },
-        ),
       ],
+      bottom: ListenableBuilder(
+        listenable: _viewModel.saveResume,
+        builder: (context, _) {
+          return FormButtons(
+            showIcons: true,
+            showSaveButton: widget.isEditing,
+            isLoading: _viewModel.saveResume.running,
+            previousText: context.l10n.contact,
+            onPreviousPressed: widget.onPrevious,
+            nextText: context.l10n.objective,
+            onNextPressed: widget.onSubmit,
+          );
+        },
+      ),
     );
+  }
+
+  void _onPreview() {
+    _viewModel.previewResume = _viewModel.resume;
+    _viewModel.generatePdf.execute();
   }
 
   void _onAddButtonPressed({SocialNetwork? itemToEdit}) async {
