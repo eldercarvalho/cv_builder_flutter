@@ -59,7 +59,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Crie uma conta',
+                context.l10n.registrationTitle,
                 style: context.textTheme.titleLarge?.copyWith(
                   color: context.colors.secondary,
                 ),
@@ -69,8 +69,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 controller: _nameController,
                 label: context.l10n.name,
                 validator: MultiValidator([
-                  RequiredValidator(errorText: 'Campo obrigatório'),
-                  MinLengthValidator(min: 3, errorText: 'Mínimo de 3 caracteres'),
+                  RequiredValidator(errorText: context.l10n.requiredField),
+                  MinLengthValidator(min: 3, errorText: context.l10n.minLenghtError(3)),
                 ]).call,
               ),
               const SizedBox(height: 20),
@@ -78,28 +78,28 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 controller: _emailController,
                 label: context.l10n.email,
                 validator: MultiValidator([
-                  RequiredValidator(errorText: 'Campo obrigatório'),
-                  EmailValidator(errorText: 'E-mail inválido'),
+                  RequiredValidator(errorText: context.l10n.requiredField),
+                  EmailValidator(errorText: context.l10n.invalidEmailError),
                 ]).call,
               ),
               const SizedBox(height: 20),
               CbTextFormField(
-                label: 'Senha',
+                label: context.l10n.password,
                 controller: _passwordController,
                 obscured: true,
                 validator: MultiValidator([
-                  RequiredValidator(errorText: 'Campo obrigatório'),
-                  MinLengthValidator(min: 6, errorText: 'Mínimo de 6 caracteres'),
+                  RequiredValidator(errorText: context.l10n.requiredField),
+                  MinLengthValidator(min: 6, errorText: context.l10n.minLenghtError(6)),
                 ]).call,
               ),
               const SizedBox(height: 20),
               CbTextFormField(
-                label: 'Confirmar a senha',
+                label: context.l10n.confirmPassword,
                 controller: _confirmPasswordController,
                 obscured: true,
                 validator: (value) {
                   if (value != _passwordController.text) {
-                    return 'As senhas não coincidem';
+                    return context.l10n.passwordsDoesntMatch;
                   }
                   return null;
                 },
@@ -118,7 +118,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () => LoginPage.replace(context),
-                child: const Text('Já tem uma conta? Faça login'),
+                child: Text(context.l10n.registrationAlreadyHaveAccount),
               ),
             ],
           ),

@@ -19,6 +19,9 @@
   "birthDate": "Data de Nascimento",
   "requiredField": "Campo obrigatório",
   "maxLenghtError": "O campo deve ter no máximo {max} caracteres",
+  "minLenghtError": "O campo deve ter no mínimo {min} caracteres",
+  "invalidEmailError": "Email inválido",
+  "passwordsDoesntMatch": "As senhas não são iguais",
   "resumeInfo": "Informações do Currículo",
   "education": "Formação",
   "socialNetworks": "Redes Sociais",
@@ -45,7 +48,7 @@
   "profession": "Profissão",
   "register": "Cadastrar",
   "password": "Senha",
-  "confirmPassword": "Confirmar",
+  "confirmPassword": "Confirmar Senha",
   "loginTitle": "Entre na sua conta",
   "loginForgotPassword": "Esqueceu a senha?",
   "loginLogin": "Log In",
@@ -53,5 +56,8 @@
   "loginOr": "ou",
   "loginLoginWithGoogle": "Entrar com Google",
   "loginUnauthorizedError": "Usuário ou senha inválidos",  
-  "loginGenericError": "Ocorreu um erro ao tentar fazer login"  
+  "loginGenericError": "Ocorreu um erro ao tentar fazer login",
+  "registrationTitle": "Crie sua conta",
+  "registrationAlreadyHaveAccount": "Já tem uma conta? Faça login",
+  "registrationGenericError": "Ocorreu um erro ao tentar se registrar"
 }

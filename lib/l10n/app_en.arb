@@ -20,6 +20,9 @@
   "birthDate": "Birth Date",
   "requiredField": "Required Field",
   "maxLenghtError": "The field must have a maximum of {max} characters",
+  "minLenghtError": "The field must have a minimum of {min} characters",
+  "invalidEmailError": "Invalid Email",
+  "passwordsDoesntMatch": "Passwords doesn't match",
   "resumeInfo": "Resume Information",
   "education": "Education",
   "socialNetwork": "{count, plural, =0{No Social Networks} =1{Social Network} other{Social Networks}}",
@@ -53,5 +56,8 @@
   "loginOr": "ou",
   "loginLoginWithGoogle": "Login with Google",
   "loginUnauthorizedError": "Invalid username or password",  
-  "loginGenericError": "An error occurred while trying to login"  
+  "loginGenericError": "An error occurred while trying to login",
+  "registrationTitle": "Create your account",
+  "registrationAlreadyHaveAccount": "Already have an account? Log in",
+  "registrationGenericError": "An error occurred while trying to register"
 }
