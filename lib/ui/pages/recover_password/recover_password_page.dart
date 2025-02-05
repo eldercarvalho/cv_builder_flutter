@@ -42,7 +42,7 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Recuperar Senha'),
+        title: Text(context.l10n.recoverPasswordTitle),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -53,30 +53,31 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
             children: [
               const SizedBox(height: 16),
               Text(
-                'Insira seu email da conta para recuperar a senha',
+                context.l10n.recoverPasswordMessage,
                 style: context.textTheme.bodyLarge,
                 textAlign: TextAlign.left,
               ),
               const SizedBox(height: 20),
               CbTextFormField(
                 controller: _emailController,
-                label: 'Email',
+                label: context.l10n.email,
                 validator: MultiValidator([
                   RequiredValidator(errorText: context.l10n.requiredField),
-                  EmailValidator(errorText: 'Email inválido'),
+                  EmailValidator(errorText: context.l10n.invalidEmailError),
                 ]).call,
               ),
               const SizedBox(height: 20),
               ListenableBuilder(
-                  listenable: _viewModel.resetPassword,
-                  builder: (context, child) {
-                    return CbButton(
-                      onPressed: _onSubmit,
-                      text: 'Enviar',
-                      isLoading: _viewModel.resetPassword.running,
-                      disabled: _viewModel.resetPassword.running,
-                    );
-                  }),
+                listenable: _viewModel.resetPassword,
+                builder: (context, child) {
+                  return CbButton(
+                    onPressed: _onSubmit,
+                    text: context.l10n.recoverPasswordSend,
+                    isLoading: _viewModel.resetPassword.running,
+                    disabled: _viewModel.resetPassword.running,
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -94,11 +95,11 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
     if (_viewModel.resetPassword.completed) {
       FocusScope.of(context).unfocus();
       _emailController.clear();
-      context.showSuccessSnackBar('Email enviado com sucesso');
+      context.showSuccessSnackBar(context.l10n.recoverPasswordSuccess);
     }
 
     if (_viewModel.resetPassword.error) {
-      context.showSuccessSnackBar('Ocorreu um erro ao enviar o email');
+      context.showSuccessSnackBar(context.l10n.recoverPasswordGenericError);
     }
   }
 }

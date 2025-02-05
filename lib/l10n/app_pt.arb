@@ -59,5 +59,10 @@
   "loginGenericError": "Ocorreu um erro ao tentar fazer login",
   "registrationTitle": "Crie sua conta",
   "registrationAlreadyHaveAccount": "Já tem uma conta? Faça login",
-  "registrationGenericError": "Ocorreu um erro ao tentar se registrar"
+  "registrationGenericError": "Ocorreu um erro ao tentar se registrar",
+  "recoverPasswordTitle": "Recuperar Senha",
+  "recoverPasswordMessage": "Insira seu email da conta. Um link será enviado para você redefinir sua senha",
+  "recoverPasswordSend": "Enviar",
+  "recoverPasswordGenericError": "Ocorreu um erro ao tentar recuperar a senha",
+  "recoverPasswordSuccess": "Email enviado com sucesso"
 }

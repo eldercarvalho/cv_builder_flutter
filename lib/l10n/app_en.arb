@@ -59,5 +59,10 @@
   "loginGenericError": "An error occurred while trying to login",
   "registrationTitle": "Create your account",
   "registrationAlreadyHaveAccount": "Already have an account? Log in",
-  "registrationGenericError": "An error occurred while trying to register"
+  "registrationGenericError": "An error occurred while trying to register",
+  "recoverPasswordTitle": "Recover your password",
+  "recoverPasswordMessage": "Enter your email to receive instructions on how to recover your password",
+  "recoverPasswordSend": "Send",
+  "recoverPasswordGenericError": "An error occurred while trying to recover your password",
+  "recoverPasswordSuccess": "Email sent successfully"
 }
