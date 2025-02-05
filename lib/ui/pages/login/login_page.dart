@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () => RegistrationPage.replace(context),
-                child: const Text('Não tem uma conta?'),
+                child: const Text('Não tem uma conta? Crie uma'),
               ),
             ],
           ),

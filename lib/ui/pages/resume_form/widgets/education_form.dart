@@ -92,6 +92,7 @@ class _EducationFormState extends State<EducationForm> {
         listenable: _viewModel.saveResume,
         builder: (context, _) {
           return FormButtons(
+            step: 8,
             showIcons: true,
             showSaveButton: widget.isEditing,
             isLoading: _viewModel.saveResume.running,

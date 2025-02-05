@@ -88,6 +88,7 @@ class _CertificationsFormState extends State<CertificationsForm> {
         listenable: _viewModel.saveResume,
         builder: (context, child) {
           return FormButtons(
+            step: 11,
             showIcons: true,
             showSaveButton: widget.isEditing,
             isLoading: _viewModel.saveResume.running,

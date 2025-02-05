@@ -105,6 +105,7 @@ class _ProfileFormState extends State<ProfileForm> {
           listenable: _viewModel.saveResume,
           builder: (context, _) {
             return FormButtons(
+              step: 2,
               showIcons: true,
               isLoading: _viewModel.saveResume.running,
               showSaveButton: widget.isEditing,

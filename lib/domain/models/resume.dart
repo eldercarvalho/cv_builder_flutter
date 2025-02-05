@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:faker/faker.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../ui/shared/resume_models/simple/simple.dart';
+import '../../ui/shared/resume_models/basic/basic.dart';
 import 'award.dart';
 import 'certification.dart';
 import 'education.dart';

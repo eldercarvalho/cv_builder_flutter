@@ -92,6 +92,7 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
         listenable: _viewModel.saveResume,
         builder: (context, _) {
           return FormButtons(
+            step: 5,
             showIcons: true,
             showSaveButton: widget.isEditing,
             isLoading: _viewModel.saveResume.running,

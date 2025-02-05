@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:printing/printing.dart';
 
 import '../../../domain/models/resume.dart';
-import '../../shared/resume_models/simple/simple.dart';
+import '../../shared/resume_models/basic/basic.dart';
 import '../../shared/widgets/widgets.dart';
 import '../resume_preview/resume_preview_page.dart';
 

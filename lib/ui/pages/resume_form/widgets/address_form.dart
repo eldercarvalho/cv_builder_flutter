@@ -66,6 +66,7 @@ class _AddressFormState extends State<AddressForm> {
           listenable: _viewModel.saveResume,
           builder: (context, _) {
             return FormButtons(
+              step: 3,
               showIcons: true,
               showSaveButton: widget.isEditing,
               isLoading: _viewModel.saveResume.running,

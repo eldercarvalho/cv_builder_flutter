@@ -21,9 +21,66 @@
           "content": "Preview do Currículo",
           "id": 1738675635118,
           "level": "default",
-          "done": false,
+          "done": true,
           "start": 1738675635118,
-          "tip": "Muito doida"
+          "tip": "Muito doida",
+          "focus": false,
+          "end": 1738720869208
+        }
+      },
+      {
+        "key": 1738675820505,
+        "children": [],
+        "todo": {
+          "content": "Consertar template Basic",
+          "id": 1738675820505,
+          "level": "default",
+          "done": false,
+          "start": 1738675820505
+        }
+      },
+      {
+        "key": 1738762718430,
+        "children": [],
+        "todo": {
+          "content": "Adicionar icone de olho para campos senha",
+          "id": 1738762718430,
+          "level": "default",
+          "done": false,
+          "start": 1738762718430
+        }
+      },
+      {
+        "key": 1738765296248,
+        "children": [],
+        "todo": {
+          "content": "Adicionar stepper do tipo 1/10 no form",
+          "id": 1738765296248,
+          "level": "default",
+          "done": false,
+          "start": 1738765296249
+        }
+      },
+      {
+        "key": 1738675853667,
+        "children": [],
+        "todo": {
+          "content": "Salvar currículo para a tela de finalização",
+          "id": 1738675853667,
+          "level": "default",
+          "done": false,
+          "start": 1738675853667
+        }
+      },
+      {
+        "key": 1738765767900,
+        "children": [],
+        "todo": {
+          "content": "Importar dados de um currículo",
+          "id": 1738765767900,
+          "level": "default",
+          "done": false,
+          "start": 1738765767900
         }
       },
       {
@@ -35,6 +92,28 @@
           "level": "default",
           "done": false,
           "start": 1738675655442
+        }
+      },
+      {
+        "key": 1738675807703,
+        "children": [],
+        "todo": {
+          "content": "Login Google",
+          "id": 1738675807703,
+          "level": "default",
+          "done": false,
+          "start": 1738675807703
+        }
+      },
+      {
+        "key": 1738675841014,
+        "children": [],
+        "todo": {
+          "content": "Implementar novo template Modern",
+          "id": 1738675841014,
+          "level": "default",
+          "done": false,
+          "start": 1738675841014
         }
       },
       {
@@ -90,50 +169,6 @@
           "level": "default",
           "done": false,
           "start": 1738675723804
-        }
-      },
-      {
-        "key": 1738675807703,
-        "children": [],
-        "todo": {
-          "content": "Login Google",
-          "id": 1738675807703,
-          "level": "default",
-          "done": false,
-          "start": 1738675807703
-        }
-      },
-      {
-        "key": 1738675820505,
-        "children": [],
-        "todo": {
-          "content": "Consertar template Basic",
-          "id": 1738675820505,
-          "level": "default",
-          "done": false,
-          "start": 1738675820505
-        }
-      },
-      {
-        "key": 1738675841014,
-        "children": [],
-        "todo": {
-          "content": "Implementar novo template Modern",
-          "id": 1738675841014,
-          "level": "default",
-          "done": false,
-          "start": 1738675841014
-        }
-      },
-      {
-        "key": 1738675853667,
-        "children": [],
-        "todo": {
-          "content": "Salvar currículo para a tela de finalização",
-          "id": 1738675853667,
-          "level": "default",
-          "done": false,
-          "start": 1738675853667
         }
       },
       {
@@ -201,6 +236,17 @@
           "done": false,
           "start": 1738676083296
         }
+      },
+      {
+        "key": 1738763088684,
+        "children": [],
+        "todo": {
+          "content": "Importar currículo",
+          "id": 1738763088684,
+          "level": "default",
+          "done": false,
+          "start": 1738763088684
+        }
       }
     ],
     "expandKeys": [],
@@ -215,6 +261,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1738709557112"
+    "version": "1738765780826"
   }
 }

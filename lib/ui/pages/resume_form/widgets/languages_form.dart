@@ -87,6 +87,7 @@ class _LanguagesFormState extends State<LanguagesForm> {
         listenable: _viewModel.saveResume,
         builder: (context, _) {
           return FormButtons(
+            step: 10,
             showIcons: true,
             showSaveButton: widget.isEditing,
             isLoading: _viewModel.saveResume.running,

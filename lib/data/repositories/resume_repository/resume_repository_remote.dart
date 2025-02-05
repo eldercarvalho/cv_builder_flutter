@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:result_dart/result_dart.dart';
 
 import '../../../domain/models/resume.dart';
-import '../../../ui/shared/resume_models/simple/simple.dart';
+import '../../../ui/shared/resume_models/basic/basic.dart';
 import '../../models/resume.dart';
 import '../../services/api/remote_service.dart';
 import '../../services/local/file_service.dart';

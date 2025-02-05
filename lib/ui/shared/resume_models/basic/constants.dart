@@ -38,10 +38,6 @@ class TemplateConfig {
   static Future<TemplateConfig> get instance async {
     final interBold = await PdfGoogleFonts.interBold();
     final interRegular = await PdfGoogleFonts.interRegular();
-    // final faRegular400FontDataByte = await rootBundle.load('assets/fonts/fa-regular-400.otf');
-    // final faBrand400FontDataByte = await rootBundle.load('assets/fonts/fa-regular-400.otf');
-    // final faRegular400Font = Font.ttf(faRegular400FontDataByte);
-    // final faBrand400Font = Font.ttf(faBrand400FontDataByte);
 
     return TemplateConfig._(
       titleLargeTextStyle: TextStyle(font: interBold, fontSize: 22),

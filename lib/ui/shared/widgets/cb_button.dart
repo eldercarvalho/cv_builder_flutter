@@ -69,6 +69,8 @@ class _CbButtonState extends State<CbButton> {
             widget.text,
             style: TextStyle(fontSize: 16.sp, height: 1),
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
         ),
         if (widget.suffixIcon != null) Icon(widget.suffixIcon!, size: 24),

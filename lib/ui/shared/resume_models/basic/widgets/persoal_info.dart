@@ -22,7 +22,7 @@ class PersonalInfo extends StatelessWidget {
 
   @override
   Widget build(Context context) {
-    if (text == null) return SizedBox.shrink();
+    if (text == null || (text != null && text!.isEmpty)) return SizedBox.shrink();
 
     return Padding(
       padding: EdgeInsets.only(top: marginTop),

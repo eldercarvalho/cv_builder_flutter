@@ -16,6 +16,7 @@ class FormButtons extends StatelessWidget {
     this.nextIcon,
     this.isLoading = false,
     this.showSaveButton = false,
+    this.step,
   });
 
   final Function() onNextPressed;
@@ -27,73 +28,88 @@ class FormButtons extends StatelessWidget {
   final IconData? nextIcon;
   final bool isLoading;
   final bool showSaveButton;
+  final int? step;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: context.colors.surface,
-        // border: Border(
-        //   top: BorderSide(color: context.colors.outline),
-        // ),
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: context.colors.shadow.withValues(alpha: 0.2),
-            offset: const Offset(0, -2),
-            blurRadius: 4,
-          ),
-        ],
-      ),
-      child: Column(
-        children: [
-          Visibility(
-            visible: showSaveButton,
-            child: CbButton(
-              onPressed: onNextPressed,
-              text: context.l10n.save,
-              isLoading: isLoading,
+    return Stack(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: context.colors.surface,
+            // border: Border(
+            //   top: BorderSide(color: context.colors.outline),
+            // ),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
             ),
+            boxShadow: [
+              BoxShadow(
+                color: context.colors.shadow.withValues(alpha: 0.2),
+                offset: const Offset(0, -2),
+                blurRadius: 4,
+              ),
+            ],
           ),
-          Visibility(
-            visible: !showSaveButton,
-            child: Row(
-              spacing: 16,
-              children: [
-                if (onPreviousPressed != null)
-                  Expanded(
-                    child: CbButton(
-                      onPressed: onPreviousPressed!,
-                      text: previousText ?? context.l10n.cancel,
-                      prefixIcon: showIcons ? FeatherIcons.chevronLeft : null,
-                      type: CbButtonType.outlined,
+          child: Column(
+            children: [
+              Visibility(
+                visible: showSaveButton,
+                child: CbButton(
+                  onPressed: onNextPressed,
+                  text: context.l10n.save,
+                  isLoading: isLoading,
+                ),
+              ),
+              Visibility(
+                visible: !showSaveButton,
+                child: Row(
+                  spacing: 16,
+                  children: [
+                    if (onPreviousPressed != null)
+                      Expanded(
+                        child: CbButton(
+                          onPressed: onPreviousPressed!,
+                          text: previousText ?? context.l10n.cancel,
+                          prefixIcon: showIcons ? FeatherIcons.chevronLeft : null,
+                          type: CbButtonType.outlined,
+                        ),
+                      ),
+                    Expanded(
+                      child: CbButton(
+                        onPressed: onNextPressed,
+                        text: nextText ?? context.l10n.next,
+                        suffixIcon: showIcons ? nextIcon ?? FeatherIcons.chevronRight : null,
+                        isLoading: isLoading,
+                      ),
                     ),
-                  ),
-                Expanded(
-                  child: CbButton(
-                    onPressed: onNextPressed,
-                    text: nextText ?? context.l10n.next,
-                    suffixIcon: showIcons ? nextIcon ?? FeatherIcons.chevronRight : null,
-                    isLoading: isLoading,
+                  ],
+                ),
+              ),
+              if (onPassPressed != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: TextButton(
+                    onPressed: onPassPressed,
+                    child: const Text('Pular'),
                   ),
                 ),
-              ],
+            ],
+          ),
+        ),
+        Visibility(
+          visible: step != null,
+          child: Transform.translate(
+            offset: const Offset(0, -32),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 6, left: 16),
+              child: Text('$step/11', style: context.textTheme.labelLarge),
             ),
           ),
-          if (onPassPressed != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 6),
-              child: TextButton(
-                onPressed: onPassPressed,
-                child: const Text('Pular'),
-              ),
-            ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

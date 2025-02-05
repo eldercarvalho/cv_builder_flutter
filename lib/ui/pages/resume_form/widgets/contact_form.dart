@@ -79,6 +79,7 @@ class _ContactFormState extends State<ContactForm> {
           listenable: _viewModel,
           builder: (context, child) {
             return FormButtons(
+              step: 4,
               showIcons: true,
               showSaveButton: widget.isEditing,
               isLoading: _viewModel.saveResume.running,

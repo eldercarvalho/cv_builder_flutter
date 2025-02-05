@@ -61,6 +61,7 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
         listenable: _viewModel.saveResume,
         builder: (context, _) {
           return FormButtons(
+            step: 6,
             showIcons: true,
             showSaveButton: widget.isEditing,
             isLoading: _viewModel.saveResume.running,

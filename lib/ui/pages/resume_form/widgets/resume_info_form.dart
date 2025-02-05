@@ -71,6 +71,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
           listenable: _viewModel.saveResume,
           builder: (context, child) {
             return FormButtons(
+              step: 1,
               showIcons: true,
               showSaveButton: widget.isEditing,
               isLoading: _viewModel.saveResume.running,
