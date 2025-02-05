@@ -93,7 +93,7 @@ class _ResumeCardState extends State<ResumeCard> with SingleTickerProviderStateM
                                 children: [
                                   Icon(FeatherIcons.edit, size: 18, color: context.colors.primary),
                                   const SizedBox(width: 8),
-                                  const Text('Editar'),
+                                  Text(context.l10n.edit),
                                 ],
                               ),
                             ),
@@ -103,7 +103,7 @@ class _ResumeCardState extends State<ResumeCard> with SingleTickerProviderStateM
                                 children: [
                                   Icon(FeatherIcons.trash2, size: 20, color: context.colors.primary),
                                   const SizedBox(width: 8),
-                                  const Text('Excluir'),
+                                  Text(context.l10n.delete),
                                 ],
                               ),
                             ),
@@ -127,7 +127,10 @@ class _ResumeCardState extends State<ResumeCard> with SingleTickerProviderStateM
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text('Atualizado em: ${updatedAt.toSimpleDate()}', style: context.textTheme.bodySmall),
+                  Text(
+                    context.l10n.homeResumeCardUpdatedAt(updatedAt.toSimpleDate()),
+                    style: context.textTheme.bodySmall,
+                  ),
                 ],
               ),
             ),

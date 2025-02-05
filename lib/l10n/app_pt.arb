@@ -12,7 +12,7 @@
   "save": "Salvar",
   "cancel": "Cancelar",
   "edit": "Editar",
-  "delete": "Deletar",
+  "delete": "Exluir",
   "add": "Adicionar",
   "search": "Pesquisar",
   "next": "Próximo",
@@ -64,5 +64,10 @@
   "recoverPasswordMessage": "Insira seu email da conta. Um link será enviado para você redefinir sua senha",
   "recoverPasswordSend": "Enviar",
   "recoverPasswordGenericError": "Ocorreu um erro ao tentar recuperar a senha",
-  "recoverPasswordSuccess": "Email enviado com sucesso"
+  "recoverPasswordSuccess": "Email enviado com sucesso",
+  "homeTitle": "Meus Currículos",
+  "homeCreateNewResumeTitle": "Crie seu primeiro Currículo Top!",
+  "homeCreateNewResumeButton": "Criar Currículo",
+  "homeGenericError": "Ocorreu um erro ao excluir o currículo",
+  "homeResumeCardUpdatedAt": "Atualizado em {date}"
 }

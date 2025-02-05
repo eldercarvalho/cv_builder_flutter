@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Meus Currículos'),
+        title: Text(context.l10n.homeTitle),
         actions: [
           if (kDebugMode)
             IconButton(
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
           if (_viewModel.getResumes.error) {
             return Center(
               child: Text(
-                'Erro ao carregar currículos',
+                context.l10n.homeGenericError,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             );
@@ -93,9 +93,9 @@ class _HomePageState extends State<HomePage> {
           if (_viewModel.getResumes.completed) {
             if (_viewModel.resumes.isEmpty) {
               return CbEmptyState(
-                message: 'Crie seu primeiro Currículo Top!',
+                message: context.l10n.homeCreateNewResumeTitle,
                 imagePath: 'assets/images/mascot.svg',
-                buttonText: 'Criar Currículo',
+                buttonText: context.l10n.homeCreateNewResumeButton,
                 onPressed: () async {
                   await ResumeFormPage.push(context);
                   _viewModel.getResumes.execute();
@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onDeleteResumeListener() {
     if (_viewModel.deleteResume.error) {
-      context.showErrorSnackBar('Ocorreu um erro ao excluir o currículo');
+      context.showErrorSnackBar(context.l10n.homeGenericError);
     }
   }
 }

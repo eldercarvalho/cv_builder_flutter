@@ -64,5 +64,10 @@
   "recoverPasswordMessage": "Enter your email to receive instructions on how to recover your password",
   "recoverPasswordSend": "Send",
   "recoverPasswordGenericError": "An error occurred while trying to recover your password",
-  "recoverPasswordSuccess": "Email sent successfully"
+  "recoverPasswordSuccess": "Email sent successfully",
+  "homeTitle": "Your Resumes",
+  "homeCreateNewResumeTitle": "Create your first resume",
+  "homeCreateNewResumeButton": "Create new resume",
+  "homeGenericError": "An error occurred while trying to load your resumes",
+  "homeResumeCardUpdatedAt": "Updated at {date}"
 }
