@@ -7,7 +7,7 @@ import '../../../../data/repositories/auth_repository/auth_repository.dart';
 import '../../../../data/repositories/resume_repository/resume_respository.dart';
 import '../../../../domain/models/resume.dart';
 import '../../../../utils/command.dart';
-import '../../../shared/resume_models/basic/basic.dart';
+import '../../../../domain/templates/basic/basic.dart';
 
 class ResumePreviewViewModel extends ChangeNotifier {
   ResumePreviewViewModel({

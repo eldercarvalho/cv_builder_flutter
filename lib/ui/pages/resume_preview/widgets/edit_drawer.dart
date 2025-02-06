@@ -22,7 +22,7 @@ class EditDrawer extends StatelessWidget {
           const SizedBox(height: 20),
           EditDrawerItem(
             icon: FeatherIcons.fileText,
-            title: 'Sobre o Currículo',
+            title: context.l10n.resumeAbout,
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.resumeInfo, viewModel),
           ),
           EditDrawerItem(
@@ -41,7 +41,7 @@ class EditDrawer extends StatelessWidget {
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.contact, viewModel),
           ),
           EditDrawerItem(
-            icon: FeatherIcons.checkCircle,
+            icon: FeatherIcons.target,
             title: context.l10n.objective,
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.objective, viewModel),
           ),

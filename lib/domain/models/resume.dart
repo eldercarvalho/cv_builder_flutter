@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:faker/faker.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../ui/shared/resume_models/basic/basic.dart';
+import '../templates/basic/basic.dart';
 import 'award.dart';
 import 'certification.dart';
 import 'education.dart';
@@ -17,20 +17,37 @@ import 'social_network.dart';
 import 'work_experience.dart';
 
 enum ResumeTemplate {
-  simple,
-  elegant,
-  modern;
+  basic('basic'),
+  elegant('elegant'),
+  modern('modern');
+
+  final String value;
+  const ResumeTemplate(this.value);
 
   static ResumeTemplate fromString(String value) {
     switch (value) {
-      case 'simple':
-        return ResumeTemplate.simple;
+      case 'basic':
+        return ResumeTemplate.basic;
       case 'elegant':
         return ResumeTemplate.elegant;
       case 'modern':
         return ResumeTemplate.modern;
       default:
-        return ResumeTemplate.simple;
+        return ResumeTemplate.basic;
+    }
+  }
+}
+
+enum ResumeLanguage {
+  pt,
+  en;
+
+  static ResumeLanguage fromString(String value) {
+    switch (value) {
+      case 'en':
+        return ResumeLanguage.en;
+      default:
+        return ResumeLanguage.pt;
     }
   }
 }
@@ -39,6 +56,7 @@ class Resume extends Equatable {
   final String id;
   final bool isActive;
   final String resumeName;
+  final ResumeLanguage? resumeLanguage;
   final String name;
   final String? profession;
   final String? photo;
@@ -91,6 +109,7 @@ class Resume extends Equatable {
     required this.id,
     required this.isActive,
     required this.resumeName,
+    this.resumeLanguage,
     required this.name,
     this.profession,
     this.birthDate,
@@ -124,7 +143,7 @@ class Resume extends Equatable {
         isActive: true,
         resumeName: '',
         name: '',
-        template: ResumeTemplate.simple,
+        template: ResumeTemplate.basic,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         isDraft: true,
@@ -293,7 +312,7 @@ class Resume extends Equatable {
             summary: Faker().lorem.sentences(2).join(' '),
           ),
         ],
-        template: ResumeTemplate.simple,
+        template: ResumeTemplate.basic,
         createdAt: DateTime.now(),
       );
 
@@ -301,6 +320,7 @@ class Resume extends Equatable {
     String? id,
     bool? isActive,
     String? resumeName,
+    ResumeLanguage? resumeLanguage,
     String? name,
     String? profession,
     DateTime? birthDate,
@@ -332,6 +352,7 @@ class Resume extends Equatable {
       id: id ?? this.id,
       isActive: isActive ?? this.isActive,
       resumeName: resumeName ?? this.resumeName,
+      resumeLanguage: resumeLanguage ?? this.resumeLanguage,
       name: name ?? this.name,
       profession: profession ?? this.profession,
       birthDate: birthDate ?? this.birthDate,
@@ -366,6 +387,7 @@ class Resume extends Equatable {
         id,
         isActive,
         resumeName,
+        resumeLanguage,
         name,
         profession,
         birthDate,
@@ -398,7 +420,7 @@ class Resume extends Equatable {
 extension ToPdfExtension on Resume {
   Future<Uint8List> toPdf() async {
     return switch (template) {
-      ResumeTemplate.simple => BasicResumeTemplate.generatePdf(this),
+      ResumeTemplate.basic => BasicResumeTemplate.generatePdf(this),
       ResumeTemplate.elegant => BasicResumeTemplate.generatePdf(this),
       ResumeTemplate.modern => BasicResumeTemplate.generatePdf(this)
     };

@@ -46,7 +46,6 @@ class _CertificationsFormState extends State<CertificationsForm> {
       onPreviewButtonPressed: _onPreview,
       spacing: 0,
       fields: [
-        const SizedBox(height: 16),
         SectionTitleTextField(
           text: context.l10n.certifications(2),
           icon: FeatherIcons.award,

@@ -142,7 +142,10 @@ class _HomePageState extends State<HomePage> {
           return FloatingActionButton(
             shape: const CircleBorder(),
             backgroundColor: Theme.of(context).primaryColor,
-            onPressed: () => ResumeFormPage.push(context),
+            onPressed: () async {
+              await ResumeFormPage.push(context);
+              _viewModel.getResumes.execute();
+            },
             child: const Icon(
               FeatherIcons.plus,
               color: Colors.white,

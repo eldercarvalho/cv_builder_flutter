@@ -5,7 +5,7 @@ import 'package:printing/printing.dart';
 
 import '../../../domain/models/resume.dart';
 import '../../shared/extensions/extensions.dart';
-import '../../shared/resume_models/basic/basic.dart';
+import '../../../domain/templates/basic/basic.dart';
 import '../../shared/widgets/widgets.dart';
 import '../resume_preview/resume_preview_page.dart';
 

@@ -1,7 +1,7 @@
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
-import '../../../../../domain/models/social_network.dart';
+import '../../../models/social_network.dart';
 import '../constants.dart';
 
 class SocialNetworkInfo extends StatelessWidget {

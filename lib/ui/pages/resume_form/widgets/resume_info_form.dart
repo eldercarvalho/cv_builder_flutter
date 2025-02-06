@@ -1,3 +1,4 @@
+import 'package:cv_builder/domain/models/resume.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +31,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
   late final ResumeFormViewModel _viewModel; // = getIt<ResumeFormViewModel>();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
-
+  String _resumeLanguage = 'pt';
   bool _isSubmitted = false;
 
   @override
@@ -38,6 +39,9 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
     _viewModel = context.read();
     _nameController.text = _viewModel.resume.resumeName;
     super.initState();
+    Future.microtask(() {
+      _setLanguage();
+    });
   }
 
   @override
@@ -66,6 +70,16 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
               MaxLengthValidator(max: 50, errorText: context.l10n.maxLenghtError(50)),
             ]).call,
           ),
+          CbDropdown(
+            initialValue: _resumeLanguage,
+            labelText: 'Idioma do Currículo',
+            options: [
+              Option(value: 'pt', text: 'Português'),
+              Option(value: 'en', text: 'English'),
+            ],
+            hintText: 'Seleciona o idioma do currículo',
+            onChanged: (value) => setState(() => _resumeLanguage = value),
+          ),
         ],
         bottom: ListenableBuilder(
           listenable: _viewModel.saveResume,
@@ -83,6 +97,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
                 if (_formKey.currentState!.validate()) {
                   _viewModel.resume = _viewModel.resume.copyWith(
                     resumeName: _nameController.text,
+                    resumeLanguage: ResumeLanguage.fromString(_resumeLanguage),
                   );
                   widget.onSubmit();
                 }
@@ -92,5 +107,13 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
         ),
       ),
     );
+  }
+
+  void _setLanguage() {
+    final deviceLocale = Localizations.localeOf(context);
+    setState(() {
+      _resumeLanguage =
+          _viewModel.resume.resumeLanguage != null ? _viewModel.resume.resumeLanguage!.name : deviceLocale.languageCode;
+    });
   }
 }

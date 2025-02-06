@@ -16,6 +16,7 @@ class ResumeModel extends Equatable {
   final String id;
   final bool isActive;
   final String resumeName;
+  final String resumeLanguage;
   final String name;
   final String? profession;
   final String? birthDate;
@@ -46,6 +47,7 @@ class ResumeModel extends Equatable {
     required this.id,
     required this.isActive,
     required this.resumeName,
+    required this.resumeLanguage,
     required this.name,
     this.profession,
     this.birthDate,
@@ -77,6 +79,7 @@ class ResumeModel extends Equatable {
     id: '',
     isActive: true,
     resumeName: '',
+    resumeLanguage: '',
     name: '',
     template: 'simple',
     createdAt: '',
@@ -87,6 +90,7 @@ class ResumeModel extends Equatable {
       id: json['id'] as String,
       isActive: json['isActive'] as bool,
       resumeName: json['resumeName'] as String,
+      resumeLanguage: json['resumeLanguage'] as String,
       name: json['name'] as String,
       profession: json['profession'] as String?,
       birthDate: json['birthDate'] as String?,
@@ -127,6 +131,7 @@ class ResumeModel extends Equatable {
       'id': id,
       'isActive': isActive,
       'resumeName': resumeName,
+      'resumeLanguage': resumeLanguage,
       'name': name,
       'profession': profession,
       'birthDate': birthDate,
@@ -160,6 +165,7 @@ class ResumeModel extends Equatable {
       id: id,
       isActive: isActive,
       resumeName: resumeName,
+      resumeLanguage: ResumeLanguage.fromString(resumeLanguage),
       name: name,
       profession: profession,
       birthDate: birthDate != null ? DateTime.parse(birthDate!) : null,
@@ -193,6 +199,7 @@ class ResumeModel extends Equatable {
       id: resume.id,
       isActive: resume.isActive,
       resumeName: resume.resumeName,
+      resumeLanguage: resume.resumeLanguage != null ? resume.resumeLanguage!.name : '',
       name: resume.name,
       photo: resume.photo,
       profession: resume.profession,
@@ -225,6 +232,7 @@ class ResumeModel extends Equatable {
     String? id,
     bool? isActive,
     String? resumeName,
+    String? resumeLanguage,
     String? name,
     String? profession,
     String? birthDate,
@@ -255,6 +263,7 @@ class ResumeModel extends Equatable {
       id: id ?? this.id,
       isActive: isActive ?? this.isActive,
       resumeName: resumeName ?? this.resumeName,
+      resumeLanguage: resumeLanguage ?? this.resumeLanguage,
       name: name ?? this.name,
       profession: profession ?? this.profession,
       birthDate: birthDate ?? this.birthDate,
@@ -288,6 +297,7 @@ class ResumeModel extends Equatable {
         id,
         isActive,
         resumeName,
+        resumeLanguage,
         name,
         profession,
         birthDate,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 
+import '../../../shared/validators/validators.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
@@ -51,10 +52,13 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
         SectionTitleTextField(
           text: context.l10n.objective,
           padding: 0,
-          icon: FeatherIcons.checkCircle,
+          icon: FeatherIcons.target,
         ),
         CbTextAreaField(
           controller: _objectiveController,
+          validator: MultiValidator([
+            MaxLengthValidator(max: 500, errorText: context.l10n.maxLenghtError(500)),
+          ]).call,
         ),
       ],
       bottom: ListenableBuilder(
@@ -83,7 +87,7 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
   void _onPreview() {
     FocusScope.of(context).unfocus();
     _viewModel.previewResume = _viewModel.resume.copyWith(
-      objectiveSummary: _objectiveController.text,
+      objectiveSummary: _objectiveController.text.trim(),
     );
     _viewModel.generatePdf.execute();
   }

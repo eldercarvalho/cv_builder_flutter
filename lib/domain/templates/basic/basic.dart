@@ -5,9 +5,10 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:printing/printing.dart';
 
-import '../../../../domain/models/resume.dart';
-import '../../extensions/datetime.dart';
+import '../../../ui/shared/extensions/datetime.dart';
+import '../../models/resume.dart';
 import 'constants.dart';
+import 'texts.dart';
 import 'widgets/persoal_info.dart';
 import 'widgets/section_title.dart';
 import 'widgets/social_network.dart';
@@ -16,13 +17,15 @@ class BasicResumeTemplate {
   static Future<Uint8List> generatePdf(Resume resume) async {
     final pdf = Document();
     final config = await TemplateConfig.instance;
+    final texts = getTexts(resume.resumeLanguage!);
 
     final photo = resume.hasPhoto
         ? resume.isNetworkPhoto
             ? await networkImage(resume.photo!)
             : MemoryImage(await File(resume.photo!).readAsBytes())
         : null;
-    final birthdayText = resume.birthDate != null ? '${resume.birthDate?.toSimpleDate()} - ${resume.age} anos' : null;
+    final birthdayText =
+        resume.birthDate != null ? '${resume.birthDate?.toSimpleDate()} - ${resume.age} ${texts.years}' : null;
 
     final List<Widget> children = [
       // Cabeçalho
@@ -71,9 +74,9 @@ class BasicResumeTemplate {
         ),
 
       // Objetivo
-      if (resume.objectiveSummary != null) ...[
+      if (resume.objectiveSummary != null && resume.objectiveSummary!.isNotEmpty) ...[
         SizedBox(height: sectionSpace),
-        SectionTitle(text: 'Objetivo', config: config),
+        SectionTitle(text: texts.objective, config: config),
         SizedBox(height: titleSpace),
         Text(resume.objectiveSummary!, style: config.paragraphTextStyle),
       ],
@@ -81,7 +84,7 @@ class BasicResumeTemplate {
       // Experiência
       if (resume.workExperience.isNotEmpty) ...[
         SizedBox(height: sectionSpace),
-        SectionTitle(text: 'Experiência', config: config),
+        SectionTitle(text: texts.experience, config: config),
         SizedBox(height: titleSpace),
         ListView.separated(
           itemBuilder: (context, index) {
@@ -101,7 +104,7 @@ class BasicResumeTemplate {
                 ]),
                 if (experience.summary != null) ...[
                   SizedBox(height: lineSpace),
-                  Text('Atividades:', style: config.bodySmallTextStyle),
+                  Text(texts.responsibilities, style: config.bodySmallTextStyle),
                   SizedBox(height: lineSpace),
                   Text(experience.summary!, style: config.paragraphTextStyle),
                 ],
@@ -116,7 +119,7 @@ class BasicResumeTemplate {
       // Habilidades
       if (resume.skills.isNotEmpty) ...[
         SizedBox(height: sectionSpace),
-        SectionTitle(text: 'Habilidades', config: config),
+        SectionTitle(text: texts.skills, config: config),
         SizedBox(height: titleSpace),
         ListView.separated(
           itemCount: resume.skills.length,
@@ -137,7 +140,7 @@ class BasicResumeTemplate {
       // Formação
       if (resume.education.isNotEmpty) ...[
         SizedBox(height: sectionSpace),
-        SectionTitle(text: 'Formação', config: config),
+        SectionTitle(text: texts.education, config: config),
         SizedBox(height: titleSpace),
         ListView.separated(
           itemBuilder: (context, index) {
@@ -153,7 +156,7 @@ class BasicResumeTemplate {
                   Text(education.startDate.toShortDate(), style: config.bodyMediumTextStyle),
                   if (education.endDate != null)
                     Text('- ${education.endDate!.toShortDate()}', style: config.bodyMediumTextStyle),
-                  if (education.endDate == null) Text('- Atual', style: config.bodyMediumTextStyle),
+                  if (education.endDate == null) Text('- ${texts.current}', style: config.bodyMediumTextStyle),
                 ]),
                 if (education.summary != null) ...[
                   SizedBox(height: lineSpace),
@@ -170,7 +173,7 @@ class BasicResumeTemplate {
       // Idiomas
       if (resume.languages.isNotEmpty) ...[
         SizedBox(height: sectionSpace),
-        SectionTitle(text: 'Idiomas', config: config),
+        SectionTitle(text: texts.languages, config: config),
         SizedBox(height: titleSpace),
         ListView.separated(
           itemBuilder: (context, index) {
@@ -187,10 +190,29 @@ class BasicResumeTemplate {
         )
       ],
 
+      if (resume.certifications.isNotEmpty) ...[
+        SizedBox(height: sectionSpace),
+        SectionTitle(text: texts.certifications, config: config),
+        SizedBox(height: titleSpace),
+        ListView.separated(
+          itemBuilder: (context, index) {
+            final certification = resume.certifications[index];
+            return Row(
+              children: [
+                Text(certification.title, style: config.titleSmallTextStyle),
+                // if (certification.fluency != null) Text(' - ${language.fluency}', style: config.bodyMediumTextStyle),
+              ],
+            );
+          },
+          separatorBuilder: (context, index) => SizedBox(height: lineSpace),
+          itemCount: resume.certifications.length,
+        )
+      ],
+
       // Projetos
       if (resume.projects.isNotEmpty) ...[
         SizedBox(height: sectionSpace),
-        SectionTitle(text: 'Projetos', config: config),
+        SectionTitle(text: texts.projects, config: config),
         SizedBox(height: titleSpace),
         ListView.separated(
           itemCount: resume.projects.length,
@@ -218,7 +240,7 @@ class BasicResumeTemplate {
 
       if (resume.references.isNotEmpty) ...[
         SizedBox(height: sectionSpace),
-        SectionTitle(text: 'Referências', config: config),
+        SectionTitle(text: texts.references, config: config),
         SizedBox(height: titleSpace),
         ListView.separated(
           itemCount: resume.references.length,
@@ -250,7 +272,7 @@ class BasicResumeTemplate {
       // Hobbies
       if (resume.hobbies.isNotEmpty) ...[
         SizedBox(height: sectionSpace),
-        SectionTitle(text: 'Interesses', config: config),
+        SectionTitle(text: texts.hobbies, config: config),
         SizedBox(height: titleSpace),
         ListView.separated(
           itemCount: resume.hobbies.length,
@@ -283,5 +305,40 @@ class BasicResumeTemplate {
       raster = image;
     }
     return raster.toPng();
+  }
+
+  static TemplateTexts getTexts(ResumeLanguage language) {
+    return switch (language) {
+      ResumeLanguage.pt => TemplateTexts(
+          years: 'anos',
+          contact: 'Contato',
+          objective: 'Objetivo',
+          experience: 'Experiência',
+          skills: 'Habilidades',
+          education: 'Educação',
+          languages: 'Idiomas',
+          certifications: 'Certificações',
+          projects: 'Projetos',
+          references: 'Referências',
+          hobbies: 'Interesses',
+          responsibilities: 'Responsabilidades',
+          current: 'Atual',
+        ),
+      ResumeLanguage.en => TemplateTexts(
+          years: 'years',
+          contact: 'Contact',
+          objective: 'Objective',
+          experience: 'Experience',
+          skills: 'Skills',
+          education: 'Education',
+          languages: 'Languages',
+          certifications: 'Certifications',
+          projects: 'Projects',
+          references: 'References',
+          hobbies: 'Hobbies',
+          responsibilities: 'Responsibilities',
+          current: 'Current',
+        ),
+    };
   }
 }
