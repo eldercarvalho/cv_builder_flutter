@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import '../../../../domain/models/skill.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
+import '../../../shared/widgets/cb_empty_state.dart';
 import '../../../shared/widgets/cb_text_form_field.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
@@ -45,8 +46,8 @@ class _SkillsFormState extends State<SkillsForm> {
       showPreviewButton: !widget.isEditing,
       onPreviewButtonPressed: _onPreview,
       fields: [
-        const SectionTitleTextField(
-          text: 'Habilidades',
+        SectionTitleTextField(
+          text: context.l10n.skills(2),
           icon: FeatherIcons.star,
           padding: 0,
         ),
@@ -54,10 +55,13 @@ class _SkillsFormState extends State<SkillsForm> {
           listenable: _viewModel,
           builder: (context, _) {
             if (_viewModel.resume.skills.isEmpty) {
-              return const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Center(
-                  child: Text('Nenhuma habilidade adicionada'),
+              return Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: CbEmptyState(
+                  imagePath: 'assets/images/empty.svg',
+                  message: context.l10n.noItemAdded('female', context.l10n.skills(1)),
+                  buttonText: context.l10n.addSkill,
+                  onPressed: _onAddButtonPressed,
                 ),
               );
             }
@@ -80,11 +84,16 @@ class _SkillsFormState extends State<SkillsForm> {
             );
           },
         ),
-        const SizedBox(height: 20),
-        OutlinedButton.icon(
-          onPressed: () => _onAddButtonPressed(),
-          label: const Text('Adicionar Habilidade'),
-          icon: const Icon(Icons.add),
+        Visibility(
+          visible: _viewModel.resume.skills.isNotEmpty,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: OutlinedButton.icon(
+              onPressed: () => _onAddButtonPressed(),
+              label: Text(context.l10n.addSkill),
+              icon: const Icon(Icons.add),
+            ),
+          ),
         ),
       ],
       bottom: ListenableBuilder(
@@ -95,9 +104,9 @@ class _SkillsFormState extends State<SkillsForm> {
             showIcons: true,
             showSaveButton: widget.isEditing,
             isLoading: _viewModel.saveResume.running,
-            previousText: context.l10n.experience,
+            previousText: context.l10n.experience(1),
             onPreviousPressed: widget.onPrevious,
-            nextText: context.l10n.languages,
+            nextText: context.l10n.languages(1),
             onNextPressed: () {
               widget.onSubmit();
             },
@@ -192,7 +201,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isEditing ? 'Editar Habilidade' : 'Adicionar Habilidade',
+          _isEditing ? context.l10n.editSkill : context.l10n.addSkill,
           style: context.textTheme.titleLarge,
         ),
       ),
@@ -202,7 +211,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
           fields: [
             CbTextFormField(
               controller: _nameController,
-              label: 'Nome',
+              label: context.l10n.name,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -210,14 +219,14 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbTextFormField(
               controller: _levelController,
-              label: 'Nível',
+              label: context.l10n.level,
             )
           ],
           bottom: FormButtons(
             onPreviousPressed: () {
               Navigator.of(context).pop();
             },
-            nextText: _isEditing ? 'Salvar' : 'Adicionar',
+            nextText: _isEditing ? context.l10n.edit : context.l10n.add,
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
                 final education = Skill(

@@ -15,7 +15,12 @@ import 'option_tile.dart';
 import 'section_title_text_field.dart';
 
 class CertificationsForm extends StatefulWidget {
-  const CertificationsForm({super.key, required this.onSubmit, this.onPrevious, required this.isEditing});
+  const CertificationsForm({
+    super.key,
+    required this.onSubmit,
+    this.onPrevious,
+    required this.isEditing,
+  });
 
   final bool isEditing;
   final Function() onSubmit;
@@ -42,24 +47,27 @@ class _CertificationsFormState extends State<CertificationsForm> {
       spacing: 0,
       fields: [
         const SizedBox(height: 16),
-        const SectionTitleTextField(
-          text: 'Certificações',
+        SectionTitleTextField(
+          text: context.l10n.certifications(2),
           icon: FeatherIcons.award,
+          padding: 0,
         ),
         ListenableBuilder(
           listenable: _viewModel,
           builder: (context, _) {
             if (_viewModel.resume.certifications.isEmpty) {
-              return const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Center(
-                  child: Text('Nenhuma certificação adicionada'),
+              return Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: CbEmptyState(
+                  imagePath: 'assets/images/empty.svg',
+                  message: context.l10n.noItemAdded('female', context.l10n.certifications(1)),
+                  buttonText: context.l10n.addCertification,
+                  onPressed: _onAddButtonPressed,
                 ),
               );
             }
 
             return ReorderableListView.builder(
-              padding: const EdgeInsets.all(16),
               shrinkWrap: true,
               onReorder: _onReorder,
               itemCount: _viewModel.resume.certifications.length,
@@ -77,11 +85,16 @@ class _CertificationsFormState extends State<CertificationsForm> {
             );
           },
         ),
-        const SizedBox(height: 20),
-        OutlinedButton.icon(
-          onPressed: () => _onAddButtonPressed(),
-          label: const Text('Adicionar Certificação'),
-          icon: const Icon(Icons.add),
+        Visibility(
+          visible: _viewModel.resume.certifications.isNotEmpty,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: OutlinedButton.icon(
+              onPressed: () => _onAddButtonPressed(),
+              label: Text(context.l10n.addCertification),
+              icon: const Icon(Icons.add),
+            ),
+          ),
         ),
       ],
       bottom: ListenableBuilder(
@@ -93,7 +106,7 @@ class _CertificationsFormState extends State<CertificationsForm> {
             showSaveButton: widget.isEditing,
             isLoading: _viewModel.saveResume.running,
             onPreviousPressed: widget.onPrevious,
-            previousText: context.l10n.skills,
+            previousText: context.l10n.skills(2),
             nextText: context.l10n.finish,
             nextIcon: FeatherIcons.checkCircle,
             onNextPressed: () {
@@ -196,7 +209,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isEditing ? 'Editar Certificação' : 'Adicionar Certificação',
+          _isEditing ? context.l10n.editCertification : context.l10n.addCertification,
           style: context.textTheme.titleLarge,
         ),
       ),
@@ -206,7 +219,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
           fields: [
             CbTextFormField(
               controller: _titleController,
-              label: 'Título',
+              label: context.l10n.title,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -214,7 +227,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbTextFormField(
               controller: _issuerController,
-              label: 'Emissor',
+              label: context.l10n.issuer,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -222,7 +235,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbDatePicker(
               controller: _dateController,
-              label: 'Data',
+              label: context.l10n.date,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -230,7 +243,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbTextAreaField(
               controller: _summaryController,
-              label: 'Resumo',
+              label: context.l10n.summary,
               minLines: 6,
             ),
           ],
@@ -238,7 +251,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             onPreviousPressed: () {
               Navigator.of(context).pop();
             },
-            nextText: _isEditing ? 'Salvar' : 'Adicionar',
+            nextText: _isEditing ? context.l10n.edit : context.l10n.add,
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
                 final format = DateFormat('dd/MM/yyyy');

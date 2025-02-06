@@ -52,27 +52,27 @@ class EditDrawer extends StatelessWidget {
           ),
           EditDrawerItem(
             icon: FeatherIcons.briefcase,
-            title: context.l10n.experience,
+            title: context.l10n.experience(1),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.experience, viewModel),
           ),
           EditDrawerItem(
             icon: FeatherIcons.award,
-            title: context.l10n.education,
+            title: context.l10n.education(1),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.education, viewModel),
           ),
           EditDrawerItem(
             icon: FeatherIcons.star,
-            title: context.l10n.skills,
+            title: context.l10n.skills(2),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.skills, viewModel),
           ),
           EditDrawerItem(
             icon: FeatherIcons.flag,
-            title: context.l10n.languages,
+            title: context.l10n.languages(2),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.languages, viewModel),
           ),
           EditDrawerItem(
             icon: FeatherIcons.award,
-            title: context.l10n.certifications,
+            title: context.l10n.certifications(2),
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.certifications, viewModel),
           ),
         ],

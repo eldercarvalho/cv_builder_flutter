@@ -45,8 +45,8 @@ class _EducationFormState extends State<EducationForm> {
       onPreviewButtonPressed: _onPreview,
       spacing: 0,
       fields: [
-        const SectionTitleTextField(
-          text: 'Formação',
+        SectionTitleTextField(
+          text: context.l10n.education(1),
           icon: Icons.school_outlined,
           padding: 0,
         ),
@@ -54,10 +54,13 @@ class _EducationFormState extends State<EducationForm> {
           listenable: _viewModel,
           builder: (context, _) {
             if (_viewModel.resume.education.isEmpty) {
-              return const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Center(
-                  child: Text('Nenhuma formação adicionada'),
+              return Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: CbEmptyState(
+                  imagePath: 'assets/images/empty.svg',
+                  message: context.l10n.noItemAdded('female', context.l10n.education(1)),
+                  buttonText: context.l10n.addEducation,
+                  onPressed: _onAddButtonPressed,
                 ),
               );
             }
@@ -81,11 +84,16 @@ class _EducationFormState extends State<EducationForm> {
             );
           },
         ),
-        const SizedBox(height: 20),
-        OutlinedButton.icon(
-          onPressed: () => _onAddButtonPressed(),
-          label: const Text('Adicionar Formação'),
-          icon: const Icon(Icons.add),
+        Visibility(
+          visible: _viewModel.resume.education.isNotEmpty,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: OutlinedButton.icon(
+              onPressed: () => _onAddButtonPressed(),
+              label: Text(context.l10n.addEducation),
+              icon: const Icon(Icons.add),
+            ),
+          ),
         ),
       ],
       bottom: ListenableBuilder(
@@ -98,7 +106,7 @@ class _EducationFormState extends State<EducationForm> {
             isLoading: _viewModel.saveResume.running,
             previousText: context.l10n.objective,
             onPreviousPressed: widget.onPrevious,
-            nextText: context.l10n.skills,
+            nextText: context.l10n.skills(2),
             onNextPressed: () {
               widget.onSubmit();
             },
@@ -208,7 +216,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isEditing ? 'Editar Formação' : 'Adicionar Formação',
+          _isEditing ? context.l10n.editEducation : context.l10n.addEducation,
           style: context.textTheme.titleLarge,
         ),
       ),
@@ -218,7 +226,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
           fields: [
             CbTextFormField(
               controller: _institutionController,
-              label: 'Instituição',
+              label: context.l10n.institution,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -226,7 +234,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbTextFormField(
               controller: _fieldOfStudyController,
-              label: 'Curso',
+              label: context.l10n.course,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -234,11 +242,11 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbTextFormField(
               controller: _typeOfDegreeController,
-              label: 'Tipo de Curso',
+              label: context.l10n.typeOfDegree,
             ),
             CbDatePicker(
               controller: _startDateController,
-              label: 'Data de Início',
+              label: context.l10n.startDate,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -246,11 +254,11 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbDatePicker(
               controller: _endDateController,
-              label: 'Data de Término',
+              label: context.l10n.endDate,
             ),
             CbTextAreaField(
               controller: _summaryController,
-              label: 'Resumo',
+              label: context.l10n.summary,
               minLines: 6,
             ),
           ],
@@ -258,7 +266,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             onPreviousPressed: () {
               Navigator.of(context).pop();
             },
-            nextText: _isEditing ? 'Salvar' : 'Adicionar',
+            nextText: _isEditing ? context.l10n.edit : context.l10n.add,
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
                 final format = DateFormat('dd/MM/yyyy');

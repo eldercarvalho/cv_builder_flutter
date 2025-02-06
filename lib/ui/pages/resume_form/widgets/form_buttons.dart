@@ -88,14 +88,6 @@ class FormButtons extends StatelessWidget {
                   ],
                 ),
               ),
-              if (onPassPressed != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 6),
-                  child: TextButton(
-                    onPressed: onPassPressed,
-                    child: const Text('Pular'),
-                  ),
-                ),
             ],
           ),
         ),

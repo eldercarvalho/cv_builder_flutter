@@ -1,3 +1,4 @@
+import 'package:cv_builder/ui/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +7,6 @@ import 'package:uuid/uuid.dart';
 import '../../../../domain/models/social_network.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
-import '../../../shared/widgets/cb_text_form_field.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
 import 'form_container.dart';
@@ -55,9 +55,12 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
           builder: (context, _) {
             if (_viewModel.resume.socialNetworks.isEmpty) {
               return Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: Center(
-                  child: Text(context.l10n.noItemAdded('female', context.l10n.socialNetwork(1))),
+                padding: const EdgeInsets.only(top: 40),
+                child: CbEmptyState(
+                  imagePath: 'assets/images/empty.svg',
+                  message: context.l10n.noItemAdded('female', context.l10n.socialNetwork(1)),
+                  buttonText: context.l10n.addSocialNetwork,
+                  onPressed: _onAddButtonPressed,
                 ),
               );
             }
@@ -81,11 +84,16 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
             );
           },
         ),
-        const SizedBox(height: 20),
-        OutlinedButton.icon(
-          onPressed: () => _onAddButtonPressed(),
-          label: const Text('Adicionar Rede Social'),
-          icon: const Icon(Icons.add),
+        Visibility(
+          visible: _viewModel.resume.socialNetworks.isNotEmpty,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: OutlinedButton.icon(
+              onPressed: () => _onAddButtonPressed(),
+              label: Text(context.l10n.addSocialNetwork),
+              icon: const Icon(Icons.add),
+            ),
+          ),
         ),
       ],
       bottom: ListenableBuilder(
@@ -193,10 +201,13 @@ class _CreateItemModalState extends State<_CreateItemModal> {
 
   @override
   Widget build(BuildContext context) {
+    final addtitle = '${context.l10n.add} ${context.l10n.socialNetwork(1)}';
+    final editTitle = '${context.l10n.edit} ${context.l10n.socialNetwork(1)}';
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isEditing ? 'Editar Rede Social' : 'Adicionar Rede Social',
+          _isEditing ? editTitle : addtitle,
           style: context.textTheme.titleLarge,
         ),
       ),
@@ -206,14 +217,14 @@ class _CreateItemModalState extends State<_CreateItemModal> {
           fields: [
             CbTextFormField(
               controller: _nameController,
-              label: 'Rede Social',
+              label: context.l10n.name,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
               ]).call,
             ),
             CbTextFormField(
               controller: _usernameController,
-              label: 'Usuário',
+              label: context.l10n.username,
             ),
             CbTextFormField(
               controller: _linkController,
@@ -225,7 +236,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             onPreviousPressed: () {
               Navigator.of(context).pop();
             },
-            nextText: _isEditing ? 'Salvar' : 'Adicionar',
+            nextText: _isEditing ? context.l10n.save : context.l10n.add,
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
                 Navigator.of(context).pop(SocialNetwork(

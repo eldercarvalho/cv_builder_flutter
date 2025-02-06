@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import '../../../../domain/models/language.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
+import '../../../shared/widgets/cb_empty_state.dart';
 import '../../../shared/widgets/cb_text_form_field.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
@@ -40,8 +41,8 @@ class _LanguagesFormState extends State<LanguagesForm> {
       showPreviewButton: !widget.isEditing,
       onPreviewButtonPressed: _onPreview,
       fields: [
-        const SectionTitleTextField(
-          text: 'Idiomas',
+        SectionTitleTextField(
+          text: context.l10n.languages(2),
           icon: FeatherIcons.flag,
           padding: 0,
         ),
@@ -49,10 +50,13 @@ class _LanguagesFormState extends State<LanguagesForm> {
           listenable: _viewModel,
           builder: (context, _) {
             if (_viewModel.resume.languages.isEmpty) {
-              return const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Center(
-                  child: Text('Nenhum idioma adicionado'),
+              return Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: CbEmptyState(
+                  imagePath: 'assets/images/empty.svg',
+                  message: context.l10n.noItemAdded('female', context.l10n.languages(1)),
+                  buttonText: context.l10n.addLanguage,
+                  onPressed: _onAddButtonPressed,
                 ),
               );
             }
@@ -76,11 +80,16 @@ class _LanguagesFormState extends State<LanguagesForm> {
             );
           },
         ),
-        const SizedBox(height: 20),
-        OutlinedButton.icon(
-          onPressed: () => _onAddButtonPressed(),
-          label: const Text('Adicionar Idioma'),
-          icon: const Icon(Icons.add),
+        Visibility(
+          visible: _viewModel.resume.languages.isNotEmpty,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: OutlinedButton.icon(
+              onPressed: () => _onAddButtonPressed(),
+              label: Text(context.l10n.addLanguage),
+              icon: const Icon(Icons.add),
+            ),
+          ),
         ),
       ],
       bottom: ListenableBuilder(
@@ -91,9 +100,9 @@ class _LanguagesFormState extends State<LanguagesForm> {
             showIcons: true,
             showSaveButton: widget.isEditing,
             isLoading: _viewModel.saveResume.running,
-            previousText: context.l10n.skills,
+            previousText: context.l10n.skills(2),
             onPreviousPressed: widget.onPrevious,
-            nextText: context.l10n.certifications,
+            nextText: context.l10n.certifications(2),
             onNextPressed: () {
               widget.onSubmit();
             },
@@ -188,7 +197,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isEditing ? 'Editar Idioma' : 'Adicionar Idioma',
+          _isEditing ? context.l10n.editLanguage : context.l10n.addLanguage,
           style: context.textTheme.titleLarge,
         ),
       ),
@@ -198,7 +207,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
           fields: [
             CbTextFormField(
               controller: _nameController,
-              label: 'Nome',
+              label: context.l10n.name,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -206,14 +215,14 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbTextFormField(
               controller: _fluencyController,
-              label: 'Fluência',
+              label: context.l10n.fluency,
             )
           ],
           bottom: FormButtons(
             onPreviousPressed: () {
               Navigator.of(context).pop();
             },
-            nextText: _isEditing ? 'Salvar' : 'Adicionar',
+            nextText: _isEditing ? context.l10n.edit : context.l10n.add,
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
                 final education = Language(

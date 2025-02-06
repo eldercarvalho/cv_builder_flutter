@@ -25,7 +25,7 @@ class _CvBuilderAppState extends State<CvBuilderApp> {
           debugShowCheckedModeBanner: false,
           title: 'Currículo Top',
           theme: CvBuilderTheme.lightTheme,
-          locale: const Locale('pt'),
+          // locale: const Locale('pt'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           // home: AuthPage(),

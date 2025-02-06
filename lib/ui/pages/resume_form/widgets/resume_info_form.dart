@@ -52,8 +52,8 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
       key: _formKey,
       child: FormContainer(
         fields: [
-          const SectionTitleTextField(
-            text: 'Sobre o Currículo',
+          SectionTitleTextField(
+            text: context.l10n.resumeInfo,
             icon: FeatherIcons.fileText,
             padding: 0,
           ),

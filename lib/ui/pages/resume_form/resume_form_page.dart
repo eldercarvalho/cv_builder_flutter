@@ -79,7 +79,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
 
   @override
   Widget build(BuildContext context) {
-    final title = _isEditing ? 'Editar Currículo' : 'Novo Currículo';
+    final title = _isEditing ? context.l10n.resumeFormEditTitle : context.l10n.resumeFormNewTitle;
 
     return ChangeNotifierProvider.value(
       value: _viewModel,
@@ -158,7 +158,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
   void _onSaveResumeListener() {
     if (_viewModel.saveResume.completed) {
       if (_isEditing) {
-        context.showSuccessSnackBar('Currículo atualizado!');
+        context.showSuccessSnackBar(context.l10n.resumeFormEditSuccess);
         return;
       }
 
@@ -166,7 +166,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
     }
 
     if (_viewModel.saveResume.error) {
-      context.showErrorSnackBar('Ocorreu um erro ao tentar salvar o currículo');
+      context.showErrorSnackBar(context.l10n.resumeFormEditError);
     }
   }
 

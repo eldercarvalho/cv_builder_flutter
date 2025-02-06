@@ -41,13 +41,14 @@ class _ExperienceFormState extends State<ExperienceForm> {
 
   @override
   Widget build(BuildContext context) {
+    final test = context.l10n.experience(1);
     return FormContainer(
       showPreviewButton: !widget.isEditing,
       onPreviewButtonPressed: _onPreview,
       spacing: 0,
       fields: [
-        const SectionTitleTextField(
-          text: 'Experiência Profissional',
+        SectionTitleTextField(
+          text: context.l10n.professionalExperience,
           icon: FeatherIcons.briefcase,
           padding: 0,
         ),
@@ -55,10 +56,13 @@ class _ExperienceFormState extends State<ExperienceForm> {
           listenable: _viewModel,
           builder: (context, _) {
             if (_viewModel.resume.workExperience.isEmpty) {
-              return const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Center(
-                  child: Text('Nenhuma experiência adicionada'),
+              return Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: CbEmptyState(
+                  imagePath: 'assets/images/empty.svg',
+                  message: context.l10n.noItemAdded('female', context.l10n.experience(1)),
+                  buttonText: context.l10n.addExperience,
+                  onPressed: _onAddButtonPressed,
                 ),
               );
             }
@@ -82,11 +86,16 @@ class _ExperienceFormState extends State<ExperienceForm> {
             );
           },
         ),
-        const SizedBox(height: 20),
-        OutlinedButton.icon(
-          onPressed: () => _onAddButtonPressed(),
-          label: const Text('Adicionar Experiência'),
-          icon: const Icon(Icons.add),
+        Visibility(
+          visible: _viewModel.resume.workExperience.isNotEmpty,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: OutlinedButton.icon(
+              onPressed: () => _onAddButtonPressed(),
+              label: Text(context.l10n.addExperience),
+              icon: const Icon(Icons.add),
+            ),
+          ),
         ),
       ],
       bottom: ListenableBuilder(
@@ -99,7 +108,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
             isLoading: _viewModel.saveResume.running,
             previousText: context.l10n.objective,
             onPreviousPressed: widget.onPrevious,
-            nextText: context.l10n.education,
+            nextText: context.l10n.education(1),
             onNextPressed: () {
               widget.onSubmit();
             },
@@ -210,7 +219,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _isEditing ? 'Editar Experiência' : 'Adicionar Experiência',
+          _isEditing ? context.l10n.editExperience : context.l10n.addExperience,
           style: context.textTheme.titleLarge,
         ),
       ),
@@ -220,7 +229,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
           fields: [
             CbTextFormField(
               controller: _companyController,
-              label: 'Empresa',
+              label: context.l10n.company,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -228,7 +237,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbTextFormField(
               controller: _positionController,
-              label: 'Cargo',
+              label: context.l10n.position,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -236,12 +245,12 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbTextFormField(
               controller: _websiteController,
-              label: 'Site da Empresa',
+              label: context.l10n.website,
               suffix: const Icon(FeatherIcons.link),
             ),
             CbDatePicker(
               controller: _startDateController,
-              label: 'Data de Início',
+              label: context.l10n.startDate,
               required: true,
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
@@ -249,18 +258,18 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             ),
             CbDatePicker(
               controller: _endDateController,
-              label: 'Data de Término',
+              label: context.l10n.endDate,
             ),
             CbTextAreaField(
               controller: _summaryController,
-              label: 'Atividades',
+              label: context.l10n.summary,
             ),
           ],
           bottom: FormButtons(
             onPreviousPressed: () {
               Navigator.of(context).pop();
             },
-            nextText: _isEditing ? 'Salvar' : 'Adicionar',
+            nextText: _isEditing ? context.l10n.edit : context.l10n.add,
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
                 final format = DateFormat('dd/MM/yyyy');

@@ -48,8 +48,8 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
       showPreviewButton: !widget.isEditing,
       onPreviewButtonPressed: _onPreview,
       fields: [
-        const SectionTitleTextField(
-          text: 'Objetivo',
+        SectionTitleTextField(
+          text: context.l10n.objective,
           padding: 0,
           icon: FeatherIcons.checkCircle,
         ),
@@ -67,7 +67,7 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
             isLoading: _viewModel.saveResume.running,
             previousText: context.l10n.socialNetwork(2),
             onPreviousPressed: widget.onPrevious,
-            nextText: context.l10n.experience,
+            nextText: context.l10n.experience(1),
             onNextPressed: () {
               _viewModel.resume = _viewModel.resume.copyWith(
                 objectiveSummary: _objectiveController.text,
