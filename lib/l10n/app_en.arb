@@ -103,5 +103,10 @@
   "resumeFormEditTitle": "Edit Resume",
   "resumeFormEditSuccess": "Resume updated successfully",
   "resumeFormEditError": "An error occurred while trying to update the resume",
-  "resumeFormGeneratePdfError": "An error occurred while trying to generate the preview"
+  "resumeFormGeneratePdfError": "An error occurred while trying to generate the preview",
+  "finishedFormTitle": "Your new resume is TOP!",
+  "finishedFormMessage": "Now you can share your resume with the world",
+  "finishedFormGoToHome": "Back to Home",
+  "finishedFormGoToResume": "Go to Resume",
+  "finishedFormShare": "Share"
 }

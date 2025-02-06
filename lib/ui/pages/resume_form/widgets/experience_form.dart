@@ -41,7 +41,6 @@ class _ExperienceFormState extends State<ExperienceForm> {
 
   @override
   Widget build(BuildContext context) {
-    final test = context.l10n.experience(1);
     return FormContainer(
       showPreviewButton: !widget.isEditing,
       onPreviewButtonPressed: _onPreview,

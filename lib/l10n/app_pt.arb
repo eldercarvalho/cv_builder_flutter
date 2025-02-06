@@ -103,5 +103,10 @@
   "resumeFormEditTitle": "Editar Currículo",
   "resumeFormEditSuccess": "Currículo atualizado!",
   "resumeFormEditError": "Ocorreu um erro ao atualizar o currículo",
-  "resumeFormGeneratePdfError": "Ocorreu um erro ao tentar gerar a visualização"
+  "resumeFormGeneratePdfError": "Ocorreu um erro ao tentar gerar a visualização",
+  "finishedFormTitle": "Seu novo currículo está TOP!",
+  "finishedFormMessage": "Agora você pode visualizar, editar e compartilhar seu currículo",
+  "finishedFormGoToHome": "Ir para Meus Currículos",
+  "finishedFormGoToResume": "Visualizar Currículo",
+  "finishedFormShare": "Compartilhar"
 }

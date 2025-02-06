@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:printing/printing.dart';
 
 import '../../../domain/models/resume.dart';
+import '../../shared/extensions/extensions.dart';
 import '../../shared/resume_models/basic/basic.dart';
 import '../../shared/widgets/widgets.dart';
 import '../resume_preview/resume_preview_page.dart';
@@ -46,33 +47,33 @@ class _ResumeFormFinishedPageState extends State<ResumeFormFinishedPage> {
               ),
               const SizedBox(height: 20),
               Text(
-                'Seu novo currículo está TOP!',
+                context.l10n.finishedFormTitle,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 16),
               Text(
-                'Você pode editar as informações na tela de visualização do currículo.',
-                style: Theme.of(context).textTheme.bodyMedium,
+                context.l10n.finishedFormMessage,
+                style: Theme.of(context).textTheme.bodyLarge,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 30),
               CbButton(
                 prefixIcon: FeatherIcons.home,
                 onPressed: () => Navigator.of(context).pop(),
-                text: 'Ir para tela inicial',
+                text: context.l10n.finishedFormGoToHome,
               ),
               const SizedBox(height: 16),
               CbButton(
                 prefixIcon: FeatherIcons.file,
                 onPressed: () => ResumePreviewPage.replace(context, params: ResumePreviewParams(resume: widget.resume)),
-                text: 'Visualizar Currículo',
+                text: context.l10n.finishedFormGoToResume,
                 type: CbButtonType.outlined,
               ),
               const SizedBox(height: 16),
               CbButton(
                 prefixIcon: FeatherIcons.share2,
                 onPressed: () => _onShare(),
-                text: 'Compartilhar',
+                text: context.l10n.finishedFormShare,
                 type: CbButtonType.outlined,
               ),
             ],
