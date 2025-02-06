@@ -6,8 +6,8 @@ import 'package:result_dart/result_dart.dart';
 import '../../../../data/repositories/auth_repository/auth_repository.dart';
 import '../../../../data/repositories/resume_repository/resume_respository.dart';
 import '../../../../domain/models/resume.dart';
-import '../../../../utils/command.dart';
 import '../../../../domain/templates/basic/basic.dart';
+import '../../../../utils/command.dart';
 
 class ResumePreviewViewModel extends ChangeNotifier {
   ResumePreviewViewModel({
@@ -19,6 +19,7 @@ class ResumePreviewViewModel extends ChangeNotifier {
   late final AuthRepository _authRepository;
   late final ResumeRepository _resumeRepository;
   late final Command1<Unit, String> getResume = Command1(_getResume);
+  late final Command0<Unit> deleteResume = Command0(_deleteResume);
 
   Resume? _resume;
   Resume? get resume => _resume;
@@ -38,6 +39,13 @@ class ResumePreviewViewModel extends ChangeNotifier {
         .map((resume) => BasicResumeTemplate.generatePdf(resume))
         .flatMap((pdfBytes) => _resumeRepository.savePdf(resumeId: resumeId, bytes: pdfBytes))
         .flatMap(_onGetResumePdf);
+  }
+
+  AsyncResult<Unit> _deleteResume() async {
+    return _authRepository
+        .getCurrentUser()
+        .flatMap((user) => _resumeRepository.deleteResume(userId: user.id, resume: _resume!))
+        .fold((_) => const Success(unit), (error) => Failure(error));
   }
 
   AsyncResult<Resume> _onGetResume(Resume resume) async {

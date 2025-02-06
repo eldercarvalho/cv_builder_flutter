@@ -108,5 +108,9 @@
   "finishedFormMessage": "Now you can share your resume with the world",
   "finishedFormGoToHome": "Back to Home",
   "finishedFormGoToResume": "Go to Resume",
-  "finishedFormShare": "Share"
+  "finishedFormShare": "Share",
+  "previewDeleteAlertTitle": "Delete Resume",
+  "previewDeleteAlertMessage": "Are you sure you want to delete this resume?",
+  "previewDeleteAlertConfirm": "Yes, delete",
+  "previewDeleteAlertCancel": "No"
 }

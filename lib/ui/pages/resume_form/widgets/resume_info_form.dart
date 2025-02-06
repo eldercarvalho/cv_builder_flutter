@@ -72,7 +72,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
           ),
           CbDropdown(
             initialValue: _resumeLanguage,
-            labelText: 'Idioma do Currículo',
+            labelText: context.l10n.languages(1),
             options: [
               Option(value: 'pt', text: 'Português'),
               Option(value: 'en', text: 'English'),

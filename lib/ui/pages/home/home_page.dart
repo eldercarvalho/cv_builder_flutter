@@ -156,10 +156,16 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _navToPreview(Resume resume) => ResumePreviewPage.push(
-        context,
-        params: ResumePreviewParams(resume: resume),
-      );
+  void _navToPreview(Resume resume) {
+    ResumePreviewPage.push(
+      context,
+      params: ResumePreviewParams(resume: resume),
+    ).then((value) {
+      if (value != null) {
+        _viewModel.getResumes.execute();
+      }
+    });
+  }
 
   void _onMenuSelected(String value, Resume resume) {
     switch (value) {

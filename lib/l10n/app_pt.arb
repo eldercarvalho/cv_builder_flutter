@@ -108,5 +108,9 @@
   "finishedFormMessage": "Agora você pode visualizar, editar e compartilhar seu currículo",
   "finishedFormGoToHome": "Ir para Meus Currículos",
   "finishedFormGoToResume": "Visualizar Currículo",
-  "finishedFormShare": "Compartilhar"
+  "finishedFormShare": "Compartilhar",
+  "previewDeleteAlertTitle": "Excluir Currículo",
+  "previewDeleteAlertMessage": "Você tem certeza que deseja excluir este currículo?",
+  "previewDeleteAlertConfirm": "Sim, excluir",
+  "previewDeleteAlertCancel": "Não"
 }

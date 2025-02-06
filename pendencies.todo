@@ -61,8 +61,10 @@
           "content": "Adicionar traduções faltantes",
           "id": 1738676063530,
           "level": "default",
-          "done": false,
-          "start": 1738676063530
+          "done": true,
+          "start": 1738676063530,
+          "focus": false,
+          "end": 1738810626769
         }
       },
       {
@@ -116,8 +118,10 @@
           "content": "Criar Empty State",
           "id": 1738675655442,
           "level": "default",
-          "done": false,
-          "start": 1738675655442
+          "done": true,
+          "start": 1738675655442,
+          "focus": false,
+          "end": 1738810637082
         }
       },
       {
@@ -215,8 +219,10 @@
           "content": "Trocar plugin de calendário",
           "id": 1738676003208,
           "level": "default",
-          "done": false,
-          "start": 1738676003208
+          "done": true,
+          "start": 1738676003208,
+          "focus": false,
+          "end": 1738810650755
         }
       },
       {
@@ -265,6 +271,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1738777605400"
+    "version": "1738810650823"
   }
 }

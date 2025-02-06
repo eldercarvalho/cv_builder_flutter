@@ -26,8 +26,8 @@ class ResumePreviewPage extends StatefulWidget {
 
   static const route = '/resume-preview';
 
-  static Future<void> push(BuildContext context, {required ResumePreviewParams params}) async {
-    await Navigator.of(context).pushNamed(route, arguments: params);
+  static Future<Object?> push(BuildContext context, {required ResumePreviewParams params}) async {
+    return await Navigator.of(context).pushNamed(route, arguments: params);
   }
 
   static void replace(BuildContext context, {required ResumePreviewParams params}) {
@@ -48,11 +48,13 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
     _viewModel.resume = widget.params.resume;
     _viewModel.getResume.execute(widget.params.resume.id);
     _viewModel.getResume.addListener(_onGetResume);
+    _viewModel.deleteResume.addListener(_onDeleteResume);
   }
 
   @override
   void dispose() {
     _viewModel.getResume.removeListener(_onGetResume);
+    _viewModel.deleteResume.removeListener(_onDeleteResume);
     super.dispose();
   }
 
@@ -76,9 +78,12 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
           ),
         ),
         body: ListenableBuilder(
-          listenable: _viewModel,
+          listenable: Listenable.merge([
+            _viewModel.getResume,
+            _viewModel.deleteResume,
+          ]),
           builder: (context, child) {
-            if (_viewModel.getResume.running) {
+            if (_viewModel.getResume.running || _viewModel.deleteResume.running) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
@@ -152,7 +157,7 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
                             color: context.colors.outline,
                           ),
                           IconButton(
-                            onPressed: () => _pdfViewerController.zoomLevel -= 0.5,
+                            onPressed: _showDeleteDialog,
                             icon: Icon(FeatherIcons.trash2, size: 26, color: context.colors.error),
                           ),
                         ],
@@ -178,5 +183,44 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
         ),
       );
     }
+  }
+
+  Future<void> _onDeleteResume() async {
+    if (_viewModel.deleteResume.completed) {
+      context.showSuccessSnackBar('Currículo excluído com sucesso');
+      Navigator.of(context).pop(true);
+    }
+
+    if (_viewModel.deleteResume.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro ao deletar o currículo'),
+        ),
+      );
+    }
+  }
+
+  void _showDeleteDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.previewDeleteAlertTitle, style: context.textTheme.titleLarge),
+        content: Text(context.l10n.previewDeleteAlertMessage, style: context.textTheme.bodyLarge),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(context.l10n.previewDeleteAlertCancel),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _viewModel.deleteResume.execute();
+            },
+            child: Text(context.l10n.previewDeleteAlertConfirm,
+                style: context.textTheme.labelLarge?.copyWith(color: context.colors.error)),
+          ),
+        ],
+      ),
+    );
   }
 }
