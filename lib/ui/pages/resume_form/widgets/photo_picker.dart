@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PhotoPicker extends StatefulWidget {
@@ -39,7 +40,7 @@ class _PhotoPickerState extends State<PhotoPicker> {
     }
 
     return GestureDetector(
-      onTap: _pickImage,
+      onTap: _pickAndCropImage,
       child: Stack(
         children: [
           Container(
@@ -74,13 +75,43 @@ class _PhotoPickerState extends State<PhotoPicker> {
     );
   }
 
-  void _pickImage() async {
-    final imagePicker = ImagePicker();
-    final XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
+  Future<void> _pickAndCropImage() async {
+    final picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    if (file != null) {
-      _image = File(file.path);
+    if (pickedFile != null) {
+      File? croppedFile = await _cropImage(File(pickedFile.path));
+      setState(() {
+        _image = croppedFile;
+      });
       widget.onImagePicked?.call(_image!);
     }
+  }
+
+  Future<File?> _cropImage(File imageFile) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: imageFile.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+      uiSettings: [
+        AndroidUiSettings(
+            toolbarTitle: context.l10n.cropImageTitle,
+            toolbarColor: Colors.white,
+            toolbarWidgetColor: context.colors.secondary,
+            hideBottomControls: false,
+            lockAspectRatio: true, // Permite ajuste livre
+            aspectRatioPresets: [
+              CropAspectRatioPreset.square,
+            ]),
+        IOSUiSettings(
+          title: context.l10n.cropImageTitle,
+          aspectRatioLockEnabled: true, // Permite ajustes livres
+          aspectRatioPresets: [
+            CropAspectRatioPreset.square,
+          ],
+        ),
+      ],
+    );
+
+    return croppedFile != null ? File(croppedFile.path) : null;
   }
 }

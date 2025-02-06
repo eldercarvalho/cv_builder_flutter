@@ -65,6 +65,7 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
         listenable: _viewModel.saveResume,
         builder: (context, _) {
           return FormButtons(
+            isEditing: widget.isEditing,
             step: 6,
             showIcons: true,
             showSaveButton: widget.isEditing,
@@ -74,7 +75,7 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
             nextText: context.l10n.experience(1),
             onNextPressed: () {
               _viewModel.resume = _viewModel.resume.copyWith(
-                objectiveSummary: _objectiveController.text,
+                objectiveSummary: _objectiveController.text.trim(),
               );
               widget.onSubmit();
             },

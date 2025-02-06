@@ -112,5 +112,6 @@
   "previewDeleteAlertTitle": "Excluir Currículo",
   "previewDeleteAlertMessage": "Você tem certeza que deseja excluir este currículo?",
   "previewDeleteAlertConfirm": "Sim, excluir",
-  "previewDeleteAlertCancel": "Não"
+  "previewDeleteAlertCancel": "Não",
+  "cropImageTitle": "Cortar Imagem"
 }

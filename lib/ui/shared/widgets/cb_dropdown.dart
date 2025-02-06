@@ -75,7 +75,7 @@ class _CbDropdownState extends State<CbDropdown> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
             child: DropdownButton(
-              hint: Text(widget.hintText, style: context.textTheme.labelMedium),
+              hint: Text(widget.hintText, style: context.textTheme.labelLarge),
               items: List.generate(widget.options.length, (index) {
                 final option = widget.options[index];
                 return DropdownMenuItem(

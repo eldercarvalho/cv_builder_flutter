@@ -190,6 +190,7 @@ class BasicResumeTemplate {
         )
       ],
 
+      // Certificações
       if (resume.certifications.isNotEmpty) ...[
         SizedBox(height: sectionSpace),
         SectionTitle(text: texts.certifications, config: config),
@@ -197,10 +198,16 @@ class BasicResumeTemplate {
         ListView.separated(
           itemBuilder: (context, index) {
             final certification = resume.certifications[index];
-            return Row(
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(certification.title, style: config.titleSmallTextStyle),
-                // if (certification.fluency != null) Text(' - ${language.fluency}', style: config.bodyMediumTextStyle),
+                Text(certification.issuer, style: config.bodyMediumTextStyle),
+                Text(certification.date.toShortDate(), style: config.bodyMediumTextStyle),
+                if (certification.summary != null) ...[
+                  SizedBox(height: lineSpace),
+                  Text(certification.summary!, style: config.paragraphTextStyle),
+                ],
               ],
             );
           },

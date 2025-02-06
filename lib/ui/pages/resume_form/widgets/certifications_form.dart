@@ -100,6 +100,7 @@ class _CertificationsFormState extends State<CertificationsForm> {
         listenable: _viewModel.saveResume,
         builder: (context, child) {
           return FormButtons(
+            isEditing: widget.isEditing,
             step: 11,
             showIcons: true,
             showSaveButton: widget.isEditing,
@@ -256,10 +257,10 @@ class _CreateItemModalState extends State<_CreateItemModal> {
                 final format = DateFormat('dd/MM/yyyy');
                 final education = Certification(
                   id: _isEditing ? widget.certification!.id : const Uuid().v4(),
-                  title: _titleController.text,
-                  issuer: _issuerController.text,
+                  title: _titleController.text.trim(),
+                  issuer: _issuerController.text.trim(),
                   date: format.parse(_dateController.text),
-                  summary: _summaryController.text,
+                  summary: _summaryController.text.trim(),
                 );
                 Navigator.of(context).pop(education);
               }

@@ -77,7 +77,7 @@ class _CbButtonState extends State<CbButton> {
             maxLines: 1,
           ),
         ),
-        if (widget.suffixIcon != null && widget.prefixIcon is IconData) Icon(widget.suffixIcon!, size: 24),
+        if (widget.suffixIcon != null && widget.suffixIcon is IconData) Icon(widget.suffixIcon!, size: 24),
       ],
     );
   }

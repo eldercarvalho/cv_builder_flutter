@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/extensions/extensions.dart';
@@ -53,50 +54,47 @@ class _ContactFormState extends State<ContactForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: FormContainer(
-        showPreviewButton: !widget.isEditing,
-        onPreviewButtonPressed: _onPreview,
-        fields: [
-          SectionTitleTextField(
-            text: context.l10n.contact,
-            padding: 0,
-            icon: FeatherIcons.phone,
-          ),
-          CbTextFormField(
-            controller: _phoneController,
-            label: context.l10n.phone,
-          ),
-          CbTextFormField(
-            controller: _emailController,
-            label: context.l10n.email,
-          ),
-          CbTextFormField(
-            controller: _websiteController,
-            label: context.l10n.website,
-          ),
-        ],
-        bottom: ListenableBuilder(
-          listenable: _viewModel,
-          builder: (context, child) {
-            return FormButtons(
-              step: 4,
-              showIcons: true,
-              showSaveButton: widget.isEditing,
-              isLoading: _viewModel.saveResume.running,
-              previousText: context.l10n.address,
-              onPreviousPressed: widget.onPrevious,
-              nextText: context.l10n.socialNetwork(2),
-              onNextPressed: () {
-                _viewModel.resume = _viewModel.resume.copyWith(
-                  phoneNumber: _phoneController.text,
-                  email: _emailController.text,
-                  website: _websiteController.text,
+      child: KeyboardVisibilityBuilder(
+        builder: (context, isKeyboardVisible) {
+          return FormContainer(
+            showPreviewButton: !widget.isEditing && !isKeyboardVisible,
+            onPreviewButtonPressed: _onPreview,
+            fields: [
+              SectionTitleTextField(
+                text: context.l10n.contact,
+                padding: 0,
+                icon: FeatherIcons.phone,
+              ),
+              CbTextFormField(
+                controller: _phoneController,
+                label: context.l10n.phone,
+              ),
+              CbTextFormField(
+                controller: _emailController,
+                label: context.l10n.email,
+              ),
+              CbTextFormField(
+                controller: _websiteController,
+                label: context.l10n.website,
+              ),
+            ],
+            bottom: ListenableBuilder(
+              listenable: _viewModel,
+              builder: (context, child) {
+                return FormButtons(
+                  step: !isKeyboardVisible ? 4 : null,
+                  showIcons: true,
+                  showSaveButton: widget.isEditing,
+                  isLoading: _viewModel.saveResume.running,
+                  previousText: context.l10n.address,
+                  onPreviousPressed: widget.onPrevious,
+                  nextText: context.l10n.socialNetwork(2),
+                  onNextPressed: _onNext,
                 );
-                widget.onSubmit();
               },
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -109,5 +107,14 @@ class _ContactFormState extends State<ContactForm> {
       website: _websiteController.text,
     );
     _viewModel.generatePdf.execute();
+  }
+
+  void _onNext() {
+    _viewModel.resume = _viewModel.resume.copyWith(
+      phoneNumber: _phoneController.text.trim(),
+      email: _emailController.text.trim(),
+      website: _websiteController.text.trim(),
+    );
+    widget.onSubmit();
   }
 }

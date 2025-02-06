@@ -15,6 +15,7 @@ class FormButtons extends StatelessWidget {
     this.previousText,
     this.nextIcon,
     this.isLoading = false,
+    this.isEditing = false,
     this.showSaveButton = false,
     this.step,
   });
@@ -27,6 +28,7 @@ class FormButtons extends StatelessWidget {
   final bool showIcons;
   final IconData? nextIcon;
   final bool isLoading;
+  final bool isEditing;
   final bool showSaveButton;
   final int? step;
 
@@ -92,7 +94,7 @@ class FormButtons extends StatelessWidget {
           ),
         ),
         Visibility(
-          visible: step != null,
+          visible: step != null && !isEditing,
           child: Transform.translate(
             offset: const Offset(0, -46),
             child: Padding(

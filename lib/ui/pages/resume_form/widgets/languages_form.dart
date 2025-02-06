@@ -96,6 +96,7 @@ class _LanguagesFormState extends State<LanguagesForm> {
         listenable: _viewModel.saveResume,
         builder: (context, _) {
           return FormButtons(
+            isEditing: widget.isEditing,
             step: 10,
             showIcons: true,
             showSaveButton: widget.isEditing,
@@ -227,8 +228,8 @@ class _CreateItemModalState extends State<_CreateItemModal> {
               if (_formKey.currentState!.validate()) {
                 final education = Language(
                   id: _isEditing ? widget.language!.id : const Uuid().v4(),
-                  name: _nameController.text,
-                  fluency: _fluencyController.text,
+                  name: _nameController.text.trim(),
+                  fluency: _fluencyController.text.trim(),
                 );
                 Navigator.of(context).pop(education);
               }

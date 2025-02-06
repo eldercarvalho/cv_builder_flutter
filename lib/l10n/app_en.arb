@@ -112,5 +112,6 @@
   "previewDeleteAlertTitle": "Delete Resume",
   "previewDeleteAlertMessage": "Are you sure you want to delete this resume?",
   "previewDeleteAlertConfirm": "Yes, delete",
-  "previewDeleteAlertCancel": "No"
+  "previewDeleteAlertCancel": "No",
+  "cropImageTitle": "Crop Image"
 }

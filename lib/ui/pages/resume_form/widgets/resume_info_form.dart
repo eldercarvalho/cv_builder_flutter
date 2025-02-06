@@ -92,11 +92,12 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
               nextText: context.l10n.profile,
               previousText: context.l10n.goBack,
               onPreviousPressed: widget.onPrevious,
+              isEditing: widget.isEditing,
               onNextPressed: () {
                 _isSubmitted = true;
                 if (_formKey.currentState!.validate()) {
                   _viewModel.resume = _viewModel.resume.copyWith(
-                    resumeName: _nameController.text,
+                    resumeName: _nameController.text.trim(),
                     resumeLanguage: ResumeLanguage.fromString(_resumeLanguage),
                   );
                   widget.onSubmit();

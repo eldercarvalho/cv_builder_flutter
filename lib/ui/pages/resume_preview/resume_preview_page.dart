@@ -135,7 +135,9 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
                             );
                           }),
                           IconButton(
-                            onPressed: () => Printing.sharePdf(bytes: _viewModel.resumePdf!.readAsBytesSync()),
+                            onPressed: () => Printing.sharePdf(
+                                bytes: _viewModel.resumePdf!.readAsBytesSync(),
+                                filename: '${_viewModel.resume!.resumeName}.pdf'),
                             icon: Icon(FeatherIcons.share2, color: context.colors.primary),
                           ),
                           Container(

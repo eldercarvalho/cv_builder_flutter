@@ -100,6 +100,7 @@ class _EducationFormState extends State<EducationForm> {
         listenable: _viewModel.saveResume,
         builder: (context, _) {
           return FormButtons(
+            isEditing: widget.isEditing,
             step: 8,
             showIcons: true,
             showSaveButton: widget.isEditing,
@@ -272,12 +273,12 @@ class _CreateItemModalState extends State<_CreateItemModal> {
                 final format = DateFormat('dd/MM/yyyy');
                 final education = Education(
                   id: _isEditing ? widget.education!.id : const Uuid().v4(),
-                  institution: _institutionController.text,
-                  fieldOfStudy: _fieldOfStudyController.text,
-                  typeOfDegree: _typeOfDegreeController.text,
+                  institution: _institutionController.text.trim(),
+                  fieldOfStudy: _fieldOfStudyController.text.trim(),
+                  typeOfDegree: _typeOfDegreeController.text.trim(),
                   startDate: format.parse(_startDateController.text),
                   endDate: _endDateController.text.isNotEmpty ? format.parse(_endDateController.text) : null,
-                  summary: _summaryController.text,
+                  summary: _summaryController.text.trim(),
                 );
                 Navigator.of(context).pop(education);
               }

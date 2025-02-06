@@ -100,6 +100,7 @@ class _SkillsFormState extends State<SkillsForm> {
         listenable: _viewModel.saveResume,
         builder: (context, _) {
           return FormButtons(
+            isEditing: widget.isEditing,
             step: 9,
             showIcons: true,
             showSaveButton: widget.isEditing,
@@ -231,8 +232,8 @@ class _CreateItemModalState extends State<_CreateItemModal> {
               if (_formKey.currentState!.validate()) {
                 final education = Skill(
                   id: _isEditing ? widget.skill!.id : const Uuid().v4(),
-                  name: _nameController.text,
-                  level: _levelController.text,
+                  name: _nameController.text.trim(),
+                  level: _levelController.text.trim(),
                 );
                 Navigator.of(context).pop(education);
               }

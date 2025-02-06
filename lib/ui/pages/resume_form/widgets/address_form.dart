@@ -1,6 +1,7 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/widgets/widgets.dart';
@@ -40,53 +41,56 @@ class _AddressFormState extends State<AddressForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: FormContainer(
-        showPreviewButton: !widget.isEditing,
-        onPreviewButtonPressed: _onPreview,
-        fields: [
-          SectionTitleTextField(
-            text: context.l10n.address,
-            padding: 0,
-            icon: FeatherIcons.mapPin,
+      child: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+        return FormContainer(
+          showPreviewButton: !widget.isEditing && !isKeyboardVisible,
+          onPreviewButtonPressed: _onPreview,
+          fields: [
+            SectionTitleTextField(
+              text: context.l10n.address,
+              padding: 0,
+              icon: FeatherIcons.mapPin,
+            ),
+            CbTextFormField(
+              controller: _addressController,
+              label: context.l10n.address,
+            ),
+            CbTextFormField(
+              controller: _cityController,
+              label: context.l10n.city,
+            ),
+            CbTextFormField(
+              controller: _zipCodeController,
+              label: context.l10n.zipCode,
+            ),
+          ],
+          bottom: ListenableBuilder(
+            listenable: _viewModel.saveResume,
+            builder: (context, _) {
+              return FormButtons(
+                isEditing: widget.isEditing,
+                step: !isKeyboardVisible ? 3 : null,
+                showIcons: true,
+                showSaveButton: widget.isEditing,
+                isLoading: _viewModel.saveResume.running,
+                previousText: context.l10n.profile,
+                onPreviousPressed: widget.onPrevious,
+                nextText: context.l10n.contact,
+                onNextPressed: _onSubmit,
+              );
+            },
           ),
-          CbTextFormField(
-            controller: _addressController,
-            label: context.l10n.address,
-          ),
-          CbTextFormField(
-            controller: _cityController,
-            label: context.l10n.city,
-          ),
-          CbTextFormField(
-            controller: _zipCodeController,
-            label: context.l10n.zipCode,
-          ),
-        ],
-        bottom: ListenableBuilder(
-          listenable: _viewModel.saveResume,
-          builder: (context, _) {
-            return FormButtons(
-              step: 3,
-              showIcons: true,
-              showSaveButton: widget.isEditing,
-              isLoading: _viewModel.saveResume.running,
-              previousText: context.l10n.profile,
-              onPreviousPressed: widget.onPrevious,
-              nextText: context.l10n.contact,
-              onNextPressed: _onSubmit,
-            );
-          },
-        ),
-      ),
+        );
+      }),
     );
   }
 
   void _onPreview() {
     FocusScope.of(context).unfocus();
     _viewModel.previewResume = _viewModel.resume.copyWith(
-      address: _addressController.text,
-      city: _cityController.text,
-      zipCode: _zipCodeController.text,
+      address: _addressController.text.trim(),
+      city: _cityController.text.trim(),
+      zipCode: _zipCodeController.text.trim(),
     );
     _viewModel.generatePdf.execute();
   }
@@ -94,9 +98,9 @@ class _AddressFormState extends State<AddressForm> {
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
       _viewModel.resume = _viewModel.resume.copyWith(
-        address: _addressController.text,
-        city: _cityController.text,
-        zipCode: _zipCodeController.text,
+        address: _addressController.text.trim(),
+        city: _cityController.text.trim(),
+        zipCode: _zipCodeController.text.trim(),
       );
       widget.onSubmit();
     }

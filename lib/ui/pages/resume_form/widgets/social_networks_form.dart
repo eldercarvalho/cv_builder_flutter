@@ -100,6 +100,7 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
         listenable: _viewModel.saveResume,
         builder: (context, _) {
           return FormButtons(
+            isEditing: widget.isEditing,
             step: 5,
             showIcons: true,
             showSaveButton: widget.isEditing,
@@ -241,9 +242,9 @@ class _CreateItemModalState extends State<_CreateItemModal> {
               if (_formKey.currentState!.validate()) {
                 Navigator.of(context).pop(SocialNetwork(
                   id: _isEditing ? widget.socialNetwork!.id : const Uuid().v4(),
-                  name: _nameController.text,
-                  username: _usernameController.text,
-                  url: _linkController.text,
+                  name: _nameController.text.trim(),
+                  username: _usernameController.text.trim(),
+                  url: _linkController.text.trim(),
                 ));
               }
             },

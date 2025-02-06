@@ -68,6 +68,19 @@
         }
       },
       {
+        "key": 1738675655442,
+        "children": [],
+        "todo": {
+          "content": "Criar Empty State",
+          "id": 1738675655442,
+          "level": "default",
+          "done": true,
+          "start": 1738675655442,
+          "focus": false,
+          "end": 1738810637082
+        }
+      },
+      {
         "key": 1738675820505,
         "children": [],
         "todo": {
@@ -109,19 +122,6 @@
           "level": "default",
           "done": false,
           "start": 1738765767900
-        }
-      },
-      {
-        "key": 1738675655442,
-        "children": [],
-        "todo": {
-          "content": "Criar Empty State",
-          "id": 1738675655442,
-          "level": "default",
-          "done": true,
-          "start": 1738675655442,
-          "focus": false,
-          "end": 1738810637082
         }
       },
       {
@@ -271,6 +271,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1738810650823"
+    "version": "1738819553925"
   }
 }

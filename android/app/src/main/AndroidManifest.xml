@@ -7,6 +7,12 @@
         android:label="Currículo Top"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Ucrop.CropTheme"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

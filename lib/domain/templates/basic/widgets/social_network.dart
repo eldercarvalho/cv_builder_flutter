@@ -26,8 +26,9 @@ class SocialNetworkInfo extends StatelessWidget {
           SvgImage(svg: getIconSvg(socialNetwork.name), colorFilter: PdfColors.black, width: 16),
           SizedBox(width: 8),
           Text(socialNetwork.name, style: config.bodyMediumTextStyle),
-          if (socialNetwork.username != null) Text(' - @${socialNetwork.username}', style: config.bodyMediumTextStyle),
-          if (socialNetwork.url != null)
+          if (socialNetwork.username != null && socialNetwork.username!.isNotEmpty)
+            Text(' - @${socialNetwork.username}', style: config.bodyMediumTextStyle),
+          if (socialNetwork.url != null && socialNetwork.url!.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: UrlLink(

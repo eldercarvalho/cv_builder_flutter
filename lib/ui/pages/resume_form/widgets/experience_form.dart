@@ -101,6 +101,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
         listenable: _viewModel.saveResume,
         builder: (context, _) {
           return FormButtons(
+            isEditing: widget.isEditing,
             step: 7,
             showIcons: true,
             showSaveButton: widget.isEditing,
@@ -274,12 +275,12 @@ class _CreateItemModalState extends State<_CreateItemModal> {
                 final format = DateFormat('dd/MM/yyyy');
                 Navigator.of(context).pop(WorkExperience(
                   id: _isEditing ? widget.workExperience!.id : const Uuid().v4(),
-                  company: _companyController.text,
-                  position: _positionController.text,
-                  website: _websiteController.text,
+                  company: _companyController.text.trim(),
+                  position: _positionController.text.trim(),
+                  website: _websiteController.text.trim(),
                   startDate: format.parse(_startDateController.text),
                   endDate: _endDateController.text.isNotEmpty ? format.parse(_endDateController.text) : null,
-                  summary: _summaryController.text,
+                  summary: _summaryController.text.trim(),
                 ));
               }
             },

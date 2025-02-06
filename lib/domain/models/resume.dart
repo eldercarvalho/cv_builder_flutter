@@ -90,19 +90,19 @@ class Resume extends Equatable {
   String? get formattedAddress {
     String addressString = '';
 
-    if (address != null) {
+    if (address != null && address!.isNotEmpty) {
       addressString += address!;
     }
 
-    if (city != null) {
+    if (city != null && city!.isNotEmpty) {
       addressString += addressString.isNotEmpty ? ', $city' : city!;
     }
 
-    if (zipCode != null) {
+    if (zipCode != null && zipCode!.isNotEmpty) {
       addressString += addressString.isNotEmpty ? ' - $zipCode' : zipCode!;
     }
 
-    return null;
+    return addressString;
   }
 
   const Resume({
