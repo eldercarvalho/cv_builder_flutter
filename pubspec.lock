@@ -390,14 +390,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0+1"
-  flutter_image_cropper:
-    dependency: "direct main"
-    description:
-      name: flutter_image_cropper
-      sha256: "5175fa4f717efe97522d5cb0f0c22ca803e115e5962cc3afc0b610485da20725"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   flutter_keyboard_visibility:
     dependency: "direct main"
     description:

@@ -3,6 +3,7 @@ import 'package:result_dart/result_dart.dart';
 import '../../../domain/dtos/authentication_data.dart';
 import '../../../domain/dtos/registration_data.dart';
 import '../../../domain/models/user.dart';
+import '../../models/user.dart';
 import '../../services/api/auth_service.dart';
 import 'auth_repository.dart';
 
@@ -50,5 +51,20 @@ class AuthRepositoryRemote extends AuthRepository {
   @override
   AsyncResult<void> loginWithGoogle() {
     return _authService.signInWithGoogle();
+  }
+  
+  @override
+  AsyncResult<Unit> deleteAccount() {
+    return _authService.deleteAccount();
+  }
+  
+  @override
+  AsyncResult<void> updatePassword(String password) {
+    return _authService.updatePassword(password);
+  }
+  
+  @override
+  AsyncResult<void> updateProfile(User user) {
+    return _authService.updateProfile(UserModel.fromDomain(user));
   }
 }

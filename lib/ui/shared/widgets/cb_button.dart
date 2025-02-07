@@ -18,6 +18,7 @@ class CbButton extends StatefulWidget {
     this.type = CbButtonType.filled,
     this.isLoading = false,
     this.disabled = false,
+    this.themeColor,
   });
 
   final Function() onPressed;
@@ -27,13 +28,15 @@ class CbButton extends StatefulWidget {
   final CbButtonType type;
   final bool isLoading;
   final bool disabled;
+  final Color? themeColor;
 
   @override
   State<CbButton> createState() => _CbButtonState();
 }
 
 class _CbButtonState extends State<CbButton> {
-  Color get _loadingColor => widget.type == CbButtonType.filled ? context.colors.onPrimary : context.colors.primary;
+  Color get _loadingColor =>
+      widget.type == CbButtonType.filled ? context.colors.onPrimary : widget.themeColor ?? context.colors.primary;
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +54,20 @@ class _CbButtonState extends State<CbButton> {
       child: switch (widget.type) {
         CbButtonType.filled => FilledButton(
             onPressed: widget.disabled ? null : widget.onPressed,
+            style: widget.themeColor != null
+                ? ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(context.colors.error),
+                  )
+                : null,
             child: child,
           ),
         CbButtonType.outlined => OutlinedButton(
             onPressed: widget.disabled ? null : widget.onPressed,
+            style: widget.themeColor != null
+                ? OutlinedButton.styleFrom(
+                    side: BorderSide(color: context.colors.error, width: 2),
+                  )
+                : null,
             child: child,
           ),
       },
@@ -67,17 +80,19 @@ class _CbButtonState extends State<CbButton> {
       spacing: 8,
       children: [
         if (widget.prefixIcon != null && widget.prefixIcon is SvgPicture) widget.prefixIcon!,
-        if (widget.prefixIcon != null && widget.prefixIcon is IconData) Icon(widget.prefixIcon!, size: 24),
+        if (widget.prefixIcon != null && widget.prefixIcon is IconData)
+          Icon(widget.prefixIcon!, size: 24, color: widget.themeColor),
         Flexible(
           child: Text(
             widget.text,
-            style: TextStyle(fontSize: 16.sp, height: 1),
+            style: TextStyle(fontSize: 16.sp, height: 1, color: widget.themeColor),
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
           ),
         ),
-        if (widget.suffixIcon != null && widget.suffixIcon is IconData) Icon(widget.suffixIcon!, size: 24),
+        if (widget.suffixIcon != null && widget.suffixIcon is IconData)
+          Icon(widget.suffixIcon!, size: 24, color: widget.themeColor),
       ],
     );
   }

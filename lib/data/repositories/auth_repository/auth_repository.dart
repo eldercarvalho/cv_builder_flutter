@@ -11,6 +11,9 @@ abstract class AuthRepository extends ChangeNotifier {
   AsyncResult<void> register(RegistrationData data);
   AsyncResult<void> resetPassword(String email);
   AsyncResult<void> logout();
+  AsyncResult<Unit> deleteAccount();
+  AsyncResult<void> updateProfile(User user);
+  AsyncResult<void> updatePassword(String password);
   AsyncResult<User> getCurrentUser();
   bool get isAuthenticated;
   User? get currentUser;

@@ -128,6 +128,49 @@ class AuthService {
       return Failure(exception);
     }
   }
+
+  AsyncResult<void> updateProfile(UserModel user) async {
+    try {
+      final User? firebaseUser = _firebaseAuth.currentUser;
+      if (firebaseUser != null) {
+        await firebaseUser.updateDisplayName(user.name);
+        await firebaseUser.verifyBeforeUpdateEmail(user.email);
+        return const Success(unit);
+      }
+      throw Exception('User not found');
+    } on FirebaseAuthException catch (e) {
+      final exception = AuthException(e.message, e.code);
+      return Failure(exception);
+    }
+  }
+
+  AsyncResult<void> updatePassword(String password) async {
+    try {
+      final User? firebaseUser = _firebaseAuth.currentUser;
+      if (firebaseUser != null) {
+        await firebaseUser.updatePassword(password);
+        return const Success(unit);
+      }
+      throw Exception('User not found');
+    } on FirebaseAuthException catch (e) {
+      final exception = AuthException(e.message, e.code);
+      return Failure(exception);
+    }
+  }
+
+  AsyncResult<Unit> deleteAccount() async {
+    try {
+      final User? firebaseUser = _firebaseAuth.currentUser;
+      if (firebaseUser != null) {
+        await firebaseUser.delete();
+        return const Success(unit);
+      }
+      throw Exception('User not found');
+    } on FirebaseAuthException catch (e) {
+      final exception = AuthException(e.message, e.code);
+      return Failure(exception);
+    }
+  }
 }
 
 class AuthException implements Exception {

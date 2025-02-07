@@ -76,6 +76,7 @@ class _AddressFormState extends State<AddressForm> {
                 previousText: context.l10n.profile,
                 onPreviousPressed: widget.onPrevious,
                 nextText: context.l10n.contact,
+                shrink: isKeyboardVisible,
                 onNextPressed: _onSubmit,
               );
             },

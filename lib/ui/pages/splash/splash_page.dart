@@ -38,10 +38,12 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> _checkUserIsAuthenticated() async {
     Future.delayed(const Duration(seconds: 2), () {
-      if (_viewModel.isAuthenticated) {
-        HomePage.replace(context);
-      } else {
-        LoginPage.replace(context);
+      if (mounted) {
+        if (_viewModel.isAuthenticated) {
+          HomePage.replace(context);
+        } else {
+          LoginPage.replace(context);
+        }
       }
     });
   }

@@ -67,7 +67,6 @@ class _ExperienceFormState extends State<ExperienceForm> {
             }
 
             return ReorderableListView.builder(
-              padding: const EdgeInsets.all(16),
               shrinkWrap: true,
               onReorder: _onReorder,
               itemCount: _viewModel.resume.workExperience.length,

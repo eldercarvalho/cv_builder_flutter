@@ -21,6 +21,14 @@ class UserModel extends Equatable {
     );
   }
 
+  static UserModel fromDomain(User user) {
+    return UserModel(
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    );
+  }
+
   @override
   List<Object?> get props => [id, name, email];
 }

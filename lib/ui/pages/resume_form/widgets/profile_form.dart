@@ -116,6 +116,7 @@ class _ProfileFormState extends State<ProfileForm> {
                   nextText: context.l10n.address,
                   onNextPressed: _onSubmit,
                   previousText: context.l10n.resume,
+                  shrink: isKeyboardVisible,
                   onPreviousPressed: () => widget.onPrevious?.call(),
                 );
               },

@@ -31,8 +31,8 @@ abstract class Routes {
       RegistrationPage.route: (BuildContext context) {
         return const RegistrationPage();
       },
-      RecoverPasswordPage.route: (BuildContext context) {
-        return const RecoverPasswordPage();
+      AccountPage.route: (BuildContext context) {
+        return const AccountPage();
       },
     };
   }

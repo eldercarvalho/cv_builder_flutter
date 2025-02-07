@@ -10,5 +10,6 @@ abstract class ResumeRepository {
   AsyncResult<Unit> saveResume({required String userId, required Resume resume});
   AsyncResult<File> getPdf({required Resume resume});
   AsyncResult<Unit> deleteResume({required String userId, required Resume resume});
+  AsyncResult<Unit> deleteResumes({required String userId});
   AsyncResult<File> savePdf({required String resumeId, required Uint8List bytes});
 }

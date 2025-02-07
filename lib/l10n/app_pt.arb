@@ -1,4 +1,5 @@
 {
+  "@@locale": "pt",
   "newResume": "Novo Currículo",
   "profile": "Perfil",
   "resumeDefaultName": "Meu Currículo Top",
@@ -17,6 +18,7 @@
   "add": "Adicionar",
   "search": "Pesquisar",
   "next": "Próximo",
+  "resumePreview": "Pré-visualização",
   "birthDate": "Data de Nascimento",
   "requiredField": "Campo obrigatório",
   "maxLenghtError": "O campo deve ter no máximo {max} caracteres",
@@ -113,5 +115,19 @@
   "previewDeleteAlertMessage": "Você tem certeza que deseja excluir este currículo?",
   "previewDeleteAlertConfirm": "Sim, excluir",
   "previewDeleteAlertCancel": "Não",
-  "cropImageTitle": "Cortar Imagem"
+  "cropImageTitle": "Cortar Imagem",
+  "outOf": "de",
+  "account": "Conta",
+  "logout": "Sair",
+  "deleteAccount": "Excluir Conta",
+  "accountYourInfo": "Suas Informações",
+  "accountChangePassword": "Trocar Senha",
+  "accountUpdateSuccess": "Informações atualizadas com sucesso",
+  "accountUpdateError": "Ocorreu um erro ao tentar atualizar suas informações",
+  "accountDeleteSuccess": "Sua conta foi excluída com sucesso",
+  "accountDeleteError": "Ocorreu um erro ao tentar excluir sua conta",
+  "accountDeleteAlertTitle": "Excluir Conta",
+  "accountDeleteAlertMessage": "Você tem certeza que deseja excluir sua conta? Todos os currículos serão excluídos permanentemente",
+  "accountDeleteAlertConfirm": "Sim, excluir",
+  "accountDeleteAlertCancel": "Cancelar"
 }

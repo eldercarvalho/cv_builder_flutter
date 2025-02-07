@@ -17,6 +17,7 @@ class FormButtons extends StatelessWidget {
     this.isLoading = false,
     this.isEditing = false,
     this.showSaveButton = false,
+    this.shrink = false,
     this.step,
   });
 
@@ -30,14 +31,16 @@ class FormButtons extends StatelessWidget {
   final bool isLoading;
   final bool isEditing;
   final bool showSaveButton;
+  final bool shrink;
   final int? step;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          padding: const EdgeInsets.all(16),
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          padding: shrink ? const EdgeInsets.symmetric(horizontal: 16, vertical: 6) : const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: context.colors.surface,
             // border: Border(
@@ -101,15 +104,21 @@ class FormButtons extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 6, left: 16),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                decoration:
-                    BoxDecoration(color: context.colors.surface, borderRadius: BorderRadius.circular(20), boxShadow: [
-                  BoxShadow(
-                    color: context.colors.shadow.withValues(alpha: 0.2),
-                    offset: const Offset(0, 1),
-                    blurRadius: 4,
-                  ),
-                ]),
-                child: Text('$step/11', style: context.textTheme.labelLarge),
+                decoration: BoxDecoration(
+                  color: context.colors.surface,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: context.colors.shadow.withValues(alpha: 0.2),
+                      offset: const Offset(0, 1),
+                      blurRadius: 4,
+                    ),
+                  ],
+                ),
+                child: Text(
+                  '$step ${context.l10n.outOf} 11',
+                  style: context.textTheme.labelLarge?.copyWith(color: context.colors.secondary),
+                ),
               ),
             ),
           ),

@@ -53,7 +53,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             children: [
               SizedBox(height: 40.h),
               SvgPicture.asset(
-                'assets/images/logo_vertical.svg',
+                'assets/images/horizontal_logo.svg',
                 width: context.screenWidth - 32,
                 height: 110,
               ),
@@ -89,7 +89,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 obscured: true,
                 validator: MultiValidator([
                   RequiredValidator(errorText: context.l10n.requiredField),
-                  MinLengthValidator(min: 6, errorText: context.l10n.minLenghtError(6)),
+                  MinLengthValidator(min: 8, errorText: context.l10n.minLenghtError(8)),
                 ]).call,
               ),
               const SizedBox(height: 20),

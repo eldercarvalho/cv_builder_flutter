@@ -18,8 +18,10 @@ icons:
 	@echo "Done."
 
 l10n:
-	@echo "Generating l10n..."
+	@echo "Generating localization files..."
 	@flutter gen-l10n
+	# @echo "Copying generated files to project..."
+	# @cp -r .dart_tool/flutter_gen/gen_l10n/ lib/l10n/
 	@echo "Done."
 
 appbundle:

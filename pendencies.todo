@@ -2,6 +2,173 @@
   "todotree": {
     "tree": [
       {
+        "key": 1738899693515,
+        "children": [],
+        "todo": {
+          "content": "Tratamento de Erros",
+          "id": 1738899693515,
+          "level": "default",
+          "done": false,
+          "start": 1738899693516
+        }
+      },
+      {
+        "key": 1738675671455,
+        "children": [],
+        "todo": {
+          "content": "Criar tela Perfil",
+          "id": 1738675671455,
+          "level": "default",
+          "done": false,
+          "start": 1738675671455
+        }
+      },
+      {
+        "key": 1738675820505,
+        "children": [],
+        "todo": {
+          "content": "Consertar template Basic",
+          "id": 1738675820505,
+          "level": "default",
+          "done": false,
+          "start": 1738675820505
+        }
+      },
+      {
+        "key": 1738675853667,
+        "children": [],
+        "todo": {
+          "content": "Salvar currículo para a tela de finalização",
+          "id": 1738675853667,
+          "level": "default",
+          "done": false,
+          "start": 1738675853667
+        }
+      },
+      {
+        "key": 1738765767900,
+        "children": [],
+        "todo": {
+          "content": "Importar dados de um currículo",
+          "id": 1738765767900,
+          "level": "default",
+          "done": false,
+          "start": 1738765767900
+        }
+      },
+      {
+        "key": 1738675841014,
+        "children": [],
+        "todo": {
+          "content": "Implementar novo template Modern",
+          "id": 1738675841014,
+          "level": "default",
+          "done": false,
+          "start": 1738675841014
+        }
+      },
+      {
+        "key": 1738675682527,
+        "children": [],
+        "todo": {
+          "content": "Criar tela Configurtações",
+          "id": 1738675682527,
+          "level": "default",
+          "done": false,
+          "start": 1738675682527
+        }
+      },
+      {
+        "key": 1738675694889,
+        "children": [],
+        "todo": {
+          "content": "Criar Tema Escuro",
+          "id": 1738675694889,
+          "level": "default",
+          "done": false,
+          "start": 1738675694889
+        }
+      },
+      {
+        "key": 1738675723804,
+        "children": [],
+        "todo": {
+          "content": "Integrar IA",
+          "id": 1738675723804,
+          "level": "default",
+          "done": false,
+          "start": 1738675723804
+        }
+      },
+      {
+        "key": 1738675949189,
+        "children": [],
+        "todo": {
+          "content": "Melhorar a busca de endereço",
+          "id": 1738675949189,
+          "level": "default",
+          "done": false,
+          "start": 1738675949189
+        }
+      },
+      {
+        "key": 1738675971721,
+        "children": [],
+        "todo": {
+          "content": "Fornecer redes sociais como opções",
+          "id": 1738675971721,
+          "level": "default",
+          "done": false,
+          "start": 1738675971721
+        }
+      },
+      {
+        "key": 1738676074789,
+        "children": [],
+        "todo": {
+          "content": "Integrar Analytics",
+          "id": 1738676074789,
+          "level": "default",
+          "done": false,
+          "start": 1738676074789
+        }
+      },
+      {
+        "key": 1738676083296,
+        "children": [],
+        "todo": {
+          "content": "Integrar Crashlytics",
+          "id": 1738676083296,
+          "level": "default",
+          "done": false,
+          "start": 1738676083296
+        }
+      },
+      {
+        "key": 1738763088684,
+        "children": [],
+        "todo": {
+          "content": "Importar currículo",
+          "id": 1738763088684,
+          "level": "default",
+          "done": false,
+          "start": 1738763088684
+        }
+      },
+      {
+        "key": 1738675703587,
+        "children": [],
+        "todo": {
+          "content": "Recortar e Redimensionar Foto",
+          "id": 1738675703587,
+          "level": "default",
+          "done": true,
+          "start": 1738675703587,
+          "focus": false,
+          "end": 1738899677348
+        }
+      },
+      {
         "key": 1738675644672,
         "children": [],
         "todo": {
@@ -81,135 +248,16 @@
         }
       },
       {
-        "key": 1738675820505,
-        "children": [],
-        "todo": {
-          "content": "Consertar template Basic",
-          "id": 1738675820505,
-          "level": "default",
-          "done": false,
-          "start": 1738675820505
-        }
-      },
-      {
         "key": 1738762718430,
         "children": [],
         "todo": {
           "content": "Adicionar icone de olho para campos senha",
           "id": 1738762718430,
           "level": "default",
-          "done": false,
-          "start": 1738762718430
-        }
-      },
-      {
-        "key": 1738675853667,
-        "children": [],
-        "todo": {
-          "content": "Salvar currículo para a tela de finalização",
-          "id": 1738675853667,
-          "level": "default",
-          "done": false,
-          "start": 1738675853667
-        }
-      },
-      {
-        "key": 1738765767900,
-        "children": [],
-        "todo": {
-          "content": "Importar dados de um currículo",
-          "id": 1738765767900,
-          "level": "default",
-          "done": false,
-          "start": 1738765767900
-        }
-      },
-      {
-        "key": 1738675841014,
-        "children": [],
-        "todo": {
-          "content": "Implementar novo template Modern",
-          "id": 1738675841014,
-          "level": "default",
-          "done": false,
-          "start": 1738675841014
-        }
-      },
-      {
-        "key": 1738675671455,
-        "children": [],
-        "todo": {
-          "content": "Criar tela Perfil",
-          "id": 1738675671455,
-          "level": "default",
-          "done": false,
-          "start": 1738675671455
-        }
-      },
-      {
-        "key": 1738675682527,
-        "children": [],
-        "todo": {
-          "content": "Criar tela Configurtações",
-          "id": 1738675682527,
-          "level": "default",
-          "done": false,
-          "start": 1738675682527
-        }
-      },
-      {
-        "key": 1738675694889,
-        "children": [],
-        "todo": {
-          "content": "Criar Tema Escuro",
-          "id": 1738675694889,
-          "level": "default",
-          "done": false,
-          "start": 1738675694889
-        }
-      },
-      {
-        "key": 1738675703587,
-        "children": [],
-        "todo": {
-          "content": "Recortar e Redimensionar Foto",
-          "id": 1738675703587,
-          "level": "default",
-          "done": false,
-          "start": 1738675703587
-        }
-      },
-      {
-        "key": 1738675723804,
-        "children": [],
-        "todo": {
-          "content": "Integrar IA",
-          "id": 1738675723804,
-          "level": "default",
-          "done": false,
-          "start": 1738675723804
-        }
-      },
-      {
-        "key": 1738675949189,
-        "children": [],
-        "todo": {
-          "content": "Melhorar a busca de endereço",
-          "id": 1738675949189,
-          "level": "default",
-          "done": false,
-          "start": 1738675949189
-        }
-      },
-      {
-        "key": 1738675971721,
-        "children": [],
-        "todo": {
-          "content": "Fornecer redes sociais como opções",
-          "id": 1738675971721,
-          "level": "default",
-          "done": false,
-          "start": 1738675971721
+          "done": true,
+          "start": 1738762718430,
+          "focus": false,
+          "end": 1738898306377
         }
       },
       {
@@ -224,53 +272,23 @@
           "focus": false,
           "end": 1738810650755
         }
-      },
-      {
-        "key": 1738676074789,
-        "children": [],
-        "todo": {
-          "content": "Integrar Analytics",
-          "id": 1738676074789,
-          "level": "default",
-          "done": false,
-          "start": 1738676074789
-        }
-      },
-      {
-        "key": 1738676083296,
-        "children": [],
-        "todo": {
-          "content": "Integrar Crashlytics",
-          "id": 1738676083296,
-          "level": "default",
-          "done": false,
-          "start": 1738676083296
-        }
-      },
-      {
-        "key": 1738763088684,
-        "children": [],
-        "todo": {
-          "content": "Importar currículo",
-          "id": 1738763088684,
-          "level": "default",
-          "done": false,
-          "start": 1738763088684
-        }
       }
     ],
-    "expandKeys": [],
+    "expandKeys": [
+      1738675671455
+    ],
     "schema": "https://github.com/Saber2pr/vsc-ext-todolist/blob/master/src/api/type.ts#L3",
-    "add_mode": "bottom",
+    "add_mode": "top",
     "virtual": false,
     "timelines": [],
     "showLine": false,
+    "restDays": [],
     "playFontSize": 24,
     "title": "pendencies",
     "autoSort": false,
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1738819553925"
+    "version": "1738899698425"
   }
 }

@@ -95,6 +95,31 @@ class RemoteService {
       return Failure(exception);
     }
   }
+
+  AsyncResult<Unit> deleteResumes(String userId) async {
+    try {
+      return await _firestore.runTransaction((transaction) async {
+        final resumesRef = _firestore.collection('users').doc(userId).collection('resumes');
+        final resumes = await resumesRef.get();
+        for (final doc in resumes.docs) {
+          final resume = ResumeModel.fromJson(doc.data());
+          final thumbnailRef = _storage.ref().child('images/$userId/${resume.id}/thumbnail');
+          await thumbnailRef.delete();
+
+          if (resume.photo != null) {
+            final profilePictureRef = _storage.ref().child('images/$userId/${resume.id}/profile_picture');
+            await profilePictureRef.delete();
+          }
+
+          transaction.delete(doc.reference);
+        }
+        return const Success(unit);
+      });
+    } on FirebaseException catch (e) {
+      final exception = RemoteException(e.message, e.code);
+      return Failure(exception);
+    }
+  }
 }
 
 class RemoteException implements Exception {

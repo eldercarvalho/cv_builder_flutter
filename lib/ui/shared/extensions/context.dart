@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 typedef PushFunction = Future<T?> Function<T extends Object?>(String, {Object? arguments});
@@ -18,14 +19,22 @@ extension ContextEx on BuildContext {
   double get keyboardHeight => MediaQuery.of(this).viewInsets.bottom;
   showSuccessSnackBar(String message) => ScaffoldMessenger.of(this).showSnackBar(
         SnackBar(
-          content: Text(message),
+          content: Row(children: [
+            const Icon(FeatherIcons.checkCircle, color: Colors.white),
+            const SizedBox(width: 16),
+            Text(message, style: textTheme.bodyLarge?.copyWith(color: Colors.white))
+          ]),
           backgroundColor: Colors.green,
           behavior: SnackBarBehavior.floating,
         ),
       );
   showErrorSnackBar(String message) => ScaffoldMessenger.of(this).showSnackBar(
         SnackBar(
-          content: Text(message),
+          content: Row(children: [
+            const Icon(FeatherIcons.checkCircle, color: Colors.white),
+            const SizedBox(width: 16),
+            Text(message, style: textTheme.bodyLarge?.copyWith(color: Colors.white))
+          ]),
           backgroundColor: Theme.of(this).colorScheme.error,
           behavior: SnackBarBehavior.floating,
         ),

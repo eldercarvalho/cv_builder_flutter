@@ -89,6 +89,7 @@ class _ContactFormState extends State<ContactForm> {
                   previousText: context.l10n.address,
                   onPreviousPressed: widget.onPrevious,
                   nextText: context.l10n.socialNetwork(2),
+                  shrink: isKeyboardVisible,
                   onNextPressed: _onNext,
                 );
               },

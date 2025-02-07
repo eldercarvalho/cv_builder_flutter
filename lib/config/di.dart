@@ -5,6 +5,7 @@ import 'package:cv_builder/data/services/api/auth_service.dart';
 import 'package:cv_builder/data/services/api/remote_service.dart';
 import 'package:cv_builder/data/services/local/file_service.dart';
 import 'package:cv_builder/data/services/local/local_service.dart';
+import 'package:cv_builder/ui/pages/account/view_model/account_view_model.dart';
 import 'package:cv_builder/ui/pages/auth/auth_view_model.dart';
 import 'package:cv_builder/ui/pages/home/home.dart';
 import 'package:cv_builder/ui/pages/resume_form/view_model/resume_form_finished_view_model.dart';
@@ -67,6 +68,10 @@ void setupDependencies() {
       ));
   getIt.registerFactory(() => RecoverPasswordViewModel(
         authRepository: getIt(),
+      ));
+  getIt.registerFactory(() => AccountViewModel(
+        authRepository: getIt(),
+        resumeRepository: getIt(),
       ));
 }
 

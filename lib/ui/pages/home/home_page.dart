@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:provider/provider.dart';
 
 import '../../../config/di.dart';
 import '../../../domain/models/resume.dart';
@@ -10,7 +11,7 @@ import '../login/login_page.dart';
 import '../resume_form/resume_form_page.dart';
 import '../resume_preview/resume_preview_page.dart';
 import 'view_models/home_view_model.dart';
-import 'widgets/widgest.dart';
+import 'widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -54,104 +55,114 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.homeTitle),
-        actions: [
-          if (kDebugMode)
-            IconButton(
-              onPressed: () => _viewModel.saveResume(),
-              icon: const Icon(FeatherIcons.plus),
-            ),
-          IconButton(
-            onPressed: () => _viewModel.logout(),
-            icon: Icon(FeatherIcons.logOut, color: context.colors.primary),
-          ),
-        ],
-      ),
-      body: ListenableBuilder(
-        listenable: Listenable.merge([
-          _viewModel,
-          _viewModel.getResumes,
-        ]),
-        builder: (context, child) {
-          if (_viewModel.getResumes.running) {
-            return const Center(
-              child: CircularProgressIndicator(),
+    return ChangeNotifierProvider.value(
+      value: _viewModel,
+      child: Scaffold(
+        drawer: const MainDrawer(),
+        appBar: AppBar(
+          leading: Builder(builder: (context) {
+            return IconButton(
+              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: const Icon(FeatherIcons.menu),
             );
-          }
-
-          if (_viewModel.getResumes.error) {
-            return Center(
-              child: Text(
-                context.l10n.homeGenericError,
-                style: Theme.of(context).textTheme.titleLarge,
+          }),
+          title: Text(context.l10n.homeTitle),
+          actions: [
+            if (kDebugMode)
+              IconButton(
+                onPressed: () => _viewModel.saveResume(),
+                icon: const Icon(FeatherIcons.plus),
               ),
-            );
-          }
-
-          if (_viewModel.getResumes.completed) {
-            if (_viewModel.resumes.isEmpty) {
-              return CbEmptyState(
-                message: context.l10n.homeCreateNewResumeTitle,
-                imagePath: 'assets/images/mascot.svg',
-                buttonText: context.l10n.homeCreateNewResumeButton,
-                onPressed: () async {
-                  await ResumeFormPage.push(context);
-                  _viewModel.getResumes.execute();
-                },
+            // IconButton(
+            //   onPressed: () => _viewModel.logout(),
+            //   icon: Icon(FeatherIcons.logOut, color: context.colors.primary),
+            // ),
+          ],
+        ),
+        body: ListenableBuilder(
+          listenable: Listenable.merge([
+            _viewModel,
+            _viewModel.getResumes,
+          ]),
+          builder: (context, child) {
+            if (_viewModel.getResumes.running) {
+              return const Center(
+                child: CircularProgressIndicator(),
               );
             }
 
-            return RefreshIndicator(
-              onRefresh: () async {
-                await _viewModel.getResumes.execute();
-              },
-              child: ListView.builder(
-                padding: const EdgeInsets.all(16),
-                itemCount: _viewModel.resumes.length,
-                itemBuilder: (context, index) {
-                  final resume = _viewModel.resumes[index];
+            if (_viewModel.getResumes.error) {
+              return Center(
+                child: Text(
+                  context.l10n.homeGenericError,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              );
+            }
 
-                  return ListenableBuilder(
-                    listenable: _viewModel.deleteResume,
-                    builder: (context, child) {
-                      return ResumeCard(
-                        resume: resume,
-                        isLoading: _viewModel.deleteResume.argument?.id == resume.id,
-                        onTap: () => _navToPreview(resume),
-                        onMenuSelected: (action) => _onMenuSelected(action, resume),
-                      );
-                    },
-                  );
+            if (_viewModel.getResumes.completed) {
+              if (_viewModel.resumes.isEmpty) {
+                return CbEmptyState(
+                  message: context.l10n.homeCreateNewResumeTitle,
+                  imagePath: 'assets/images/mascot.svg',
+                  buttonText: context.l10n.homeCreateNewResumeButton,
+                  onPressed: () async {
+                    await ResumeFormPage.push(context);
+                    _viewModel.getResumes.execute();
+                  },
+                );
+              }
+
+              return RefreshIndicator(
+                onRefresh: () async {
+                  await _viewModel.getResumes.execute();
                 },
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(16),
+                  itemCount: _viewModel.resumes.length,
+                  itemBuilder: (context, index) {
+                    final resume = _viewModel.resumes[index];
+
+                    return ListenableBuilder(
+                      listenable: _viewModel.deleteResume,
+                      builder: (context, child) {
+                        return ResumeCard(
+                          resume: resume,
+                          isLoading: _viewModel.deleteResume.argument?.id == resume.id,
+                          onTap: () => _navToPreview(resume),
+                          onMenuSelected: (action) => _onMenuSelected(action, resume),
+                        );
+                      },
+                    );
+                  },
+                ),
+              );
+            }
+
+            return const SizedBox();
+          },
+        ),
+        floatingActionButton: ListenableBuilder(
+          listenable: _viewModel,
+          builder: (context, child) {
+            if (_viewModel.resumes.isEmpty) {
+              return const SizedBox.shrink();
+            }
+
+            return FloatingActionButton(
+              shape: const CircleBorder(),
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () async {
+                await ResumeFormPage.push(context);
+                _viewModel.getResumes.execute();
+              },
+              child: const Icon(
+                FeatherIcons.plus,
+                color: Colors.white,
               ),
             );
-          }
-
-          return const SizedBox();
-        },
-      ),
-      floatingActionButton: ListenableBuilder(
-        listenable: _viewModel,
-        builder: (context, child) {
-          if (_viewModel.resumes.isEmpty) {
-            return const SizedBox.shrink();
-          }
-
-          return FloatingActionButton(
-            shape: const CircleBorder(),
-            backgroundColor: Theme.of(context).primaryColor,
-            onPressed: () async {
-              await ResumeFormPage.push(context);
-              _viewModel.getResumes.execute();
-            },
-            child: const Icon(
-              FeatherIcons.plus,
-              color: Colors.white,
-            ),
-          );
-        },
+          },
+        ),
       ),
     );
   }

@@ -64,4 +64,9 @@ class ResumeRepositoryRemote extends ResumeRepository {
   AsyncResult<File> savePdf({required String resumeId, required Uint8List bytes}) async {
     return _fileService.savePdf(name: resumeId, bytes: bytes);
   }
+
+  @override
+  AsyncResult<Unit> deleteResumes({required String userId}) {
+    return _remoteService.deleteResumes(userId);
+  }
 }
