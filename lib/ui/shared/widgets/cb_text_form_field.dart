@@ -1,8 +1,9 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CbTextFormField extends StatelessWidget {
+class CbTextFormField extends StatefulWidget {
   const CbTextFormField({
     super.key,
     this.initialValue,
@@ -39,6 +40,19 @@ class CbTextFormField extends StatelessWidget {
   final Function()? onTap;
 
   @override
+  State<CbTextFormField> createState() => _CbTextFormFieldState();
+}
+
+class _CbTextFormFieldState extends State<CbTextFormField> {
+  bool _isObscured = false;
+
+  @override
+  void initState() {
+    _isObscured = widget.obscured;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -52,19 +66,43 @@ class CbTextFormField extends StatelessWidget {
         //   ),
         // const SizedBox(height: 6),
         TextFormField(
-          controller: controller,
-          focusNode: focusNode,
-          autovalidateMode: autovalidateMode,
-          readOnly: readOnly,
-          onTap: onTap,
-          validator: validator,
-          obscureText: obscured,
+          controller: widget.controller,
+          focusNode: widget.focusNode,
+          autovalidateMode: widget.autovalidateMode,
+          readOnly: widget.readOnly,
+          onTap: widget.onTap,
+          validator: widget.validator,
+          obscureText: _isObscured,
           // onEditingComplete: ,
           decoration: InputDecoration(
-            label: label != null ? Text(label!, style: context.textTheme.labelMedium?.copyWith(fontSize: 16)) : null,
-            hintText: hint,
-            prefixIcon: prefix,
-            suffixIcon: suffix,
+            label: widget.label != null
+                ? Text(widget.label!, style: context.textTheme.labelMedium?.copyWith(fontSize: 16))
+                : null,
+            hintText: widget.hint,
+            prefixIcon: widget.prefix,
+            suffixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.prefix != null) widget.prefix!,
+                Visibility(
+                  visible: widget.obscured,
+                  child: GestureDetector(
+                    onTap: () => setState(() => _isObscured = !_isObscured),
+                    child: _isObscured
+                        ? Icon(
+                            FeatherIcons.eye,
+                            size: 24.sp,
+                            color: context.colors.primary,
+                          )
+                        : Icon(
+                            FeatherIcons.eyeOff,
+                            size: 24.sp,
+                            color: context.colors.primary,
+                          ),
+                  ),
+                ),
+              ],
+            ),
             errorStyle: TextStyle(fontSize: 12.sp),
           ),
         ),
