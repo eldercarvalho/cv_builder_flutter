@@ -10,7 +10,7 @@ extension DateTimeExtension on DateTime {
     return timeago.format(this, locale: 'pt');
   }
 
-  String toShortDate() {
-    return DateFormat('MMM yyyy').format(this);
+  String toShortDate({String locale = 'pt'}) {
+    return DateFormat('MMM yyyy', locale).format(this);
   }
 }

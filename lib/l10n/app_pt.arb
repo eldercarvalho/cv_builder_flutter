@@ -86,11 +86,12 @@
   "loginNoAccount": "Não tem uma conta? Crie uma",
   "loginOr": "ou",
   "loginLoginWithGoogle": "Entrar com Google",
-  "loginUnauthorizedError": "Usuário ou senha inválidos",  
-  "loginGenericError": "Ocorreu um erro ao tentar fazer login",
+  "loginUnauthorizedError": "Email ou senha incorretos",  
+  "loginGenericError": "Ocorreu um erro ao tentar entrar na conta",
   "registrationTitle": "Crie sua conta",
   "registrationAlreadyHaveAccount": "Já tem uma conta? Faça login",
   "registrationGenericError": "Ocorreu um erro ao tentar se registrar",
+  "registrationSuccess": "Conta criada com sucesso! Faça login para continuar",
   "recoverPasswordTitle": "Recuperar Senha",
   "recoverPasswordMessage": "Insira seu email da conta. Um link será enviado para você redefinir sua senha",
   "recoverPasswordSend": "Enviar",
@@ -129,5 +130,9 @@
   "accountDeleteAlertTitle": "Excluir Conta",
   "accountDeleteAlertMessage": "Você tem certeza que deseja excluir sua conta? Todos os currículos serão excluídos permanentemente",
   "accountDeleteAlertConfirm": "Sim, excluir",
-  "accountDeleteAlertCancel": "Cancelar"
+  "accountDeleteAlertCancel": "Cancelar",
+  "noNetworkError": "Sem conexão com a internet",
+  "emailAlreadyInUseError": "O email informado já está vinculado a uma conta",
+  "weakPasswordError": "A senha informada é muito fraca"
+
 }

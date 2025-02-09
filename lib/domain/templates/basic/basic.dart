@@ -17,6 +17,7 @@ class BasicResumeTemplate {
   static Future<Uint8List> generatePdf(Resume resume) async {
     final pdf = Document();
     final config = await TemplateConfig.instance;
+    final resumeLanguage = resume.resumeLanguage!.name;
     final texts = getTexts(resume.resumeLanguage!);
 
     final photo = resume.hasPhoto
@@ -97,12 +98,13 @@ class BasicResumeTemplate {
                 Text(experience.company, style: config.bodyMediumTextStyle),
                 SizedBox(height: lineSpace),
                 Row(children: [
-                  Text(experience.startDate.toShortDate(), style: config.bodyMediumTextStyle),
+                  Text(experience.startDate.toShortDate(locale: resumeLanguage), style: config.bodyMediumTextStyle),
                   if (experience.endDate != null)
-                    Text(' - ${experience.endDate!.toShortDate()}', style: config.bodyMediumTextStyle),
+                    Text(' - ${experience.endDate!.toShortDate(locale: resumeLanguage)}',
+                        style: config.bodyMediumTextStyle),
                   if (experience.endDate == null) Text(' - Atual', style: config.bodyMediumTextStyle),
                 ]),
-                if (experience.summary != null) ...[
+                if (experience.summary != null && experience.summary!.isNotEmpty) ...[
                   SizedBox(height: lineSpace),
                   Text(texts.responsibilities, style: config.bodySmallTextStyle),
                   SizedBox(height: lineSpace),
@@ -153,9 +155,10 @@ class BasicResumeTemplate {
                 Text(education.institution, style: config.bodyMediumTextStyle),
                 SizedBox(height: lineSpace),
                 Row(children: [
-                  Text(education.startDate.toShortDate(), style: config.bodyMediumTextStyle),
+                  Text(education.startDate.toShortDate(locale: resumeLanguage), style: config.bodyMediumTextStyle),
                   if (education.endDate != null)
-                    Text('- ${education.endDate!.toShortDate()}', style: config.bodyMediumTextStyle),
+                    Text('- ${education.endDate!.toShortDate(locale: resumeLanguage)}',
+                        style: config.bodyMediumTextStyle),
                   if (education.endDate == null) Text('- ${texts.current}', style: config.bodyMediumTextStyle),
                 ]),
                 if (education.summary != null) ...[
@@ -203,7 +206,8 @@ class BasicResumeTemplate {
               children: [
                 Text(certification.title, style: config.titleSmallTextStyle),
                 Text(certification.issuer, style: config.bodyMediumTextStyle),
-                Text(certification.date.toShortDate(), style: config.bodyMediumTextStyle),
+                Text(certification.date.toShortDate(locale: resume.resumeLanguage!.name),
+                    style: config.bodyMediumTextStyle),
                 if (certification.summary != null) ...[
                   SizedBox(height: lineSpace),
                   Text(certification.summary!, style: config.paragraphTextStyle),
@@ -230,9 +234,11 @@ class BasicResumeTemplate {
                 children: [
                   Text(project.title, style: config.titleSmallTextStyle),
                   if (project.startDate != null)
-                    Text(' - ${project.startDate!.toShortDate()}', style: config.bodyMediumTextStyle),
+                    Text(' - ${project.startDate!.toShortDate(locale: resumeLanguage)}',
+                        style: config.bodyMediumTextStyle),
                   if (project.endDate != null)
-                    Text(' - ${project.endDate!.toShortDate()}', style: config.bodyMediumTextStyle),
+                    Text(' - ${project.endDate!.toShortDate(locale: resumeLanguage)}',
+                        style: config.bodyMediumTextStyle),
                 ],
               ),
               if (project.summary != null) ...[
@@ -295,7 +301,7 @@ class BasicResumeTemplate {
     pdf.addPage(
       MultiPage(
         pageFormat: PdfPageFormat.a4,
-        margin: const EdgeInsets.all(margin),
+        margin: const EdgeInsets.symmetric(horizontal: horizontalMargin, vertical: verticalMargin),
         crossAxisAlignment: CrossAxisAlignment.stretch,
         build: (context) => children,
       ),
@@ -320,15 +326,15 @@ class BasicResumeTemplate {
           years: 'anos',
           contact: 'Contato',
           objective: 'Objetivo',
-          experience: 'Experiência',
+          experience: 'Experiência Profissional',
           skills: 'Habilidades',
-          education: 'Educação',
+          education: 'Formação',
           languages: 'Idiomas',
           certifications: 'Certificações',
           projects: 'Projetos',
           references: 'Referências',
           hobbies: 'Interesses',
-          responsibilities: 'Responsabilidades',
+          responsibilities: 'Atividades:',
           current: 'Atual',
         ),
       ResumeLanguage.en => TemplateTexts(
@@ -343,7 +349,7 @@ class BasicResumeTemplate {
           projects: 'Projects',
           references: 'References',
           hobbies: 'Hobbies',
-          responsibilities: 'Responsibilities',
+          responsibilities: 'Activities:',
           current: 'Current',
         ),
     };

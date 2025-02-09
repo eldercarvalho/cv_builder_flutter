@@ -85,11 +85,12 @@
   "loginNoAccount": "Don't have an account? Sign Up",
   "loginOr": "or",
   "loginLoginWithGoogle": "Login with Google",
-  "loginUnauthorizedError": "Invalid username or password",  
+  "loginUnauthorizedError": "Invalid email or password",  
   "loginGenericError": "An error occurred while trying to login",
   "registrationTitle": "Create your account",
   "registrationAlreadyHaveAccount": "Already have an account? Log in",
   "registrationGenericError": "An error occurred while trying to register",
+  "registrationSuccess": "Account created successfully",
   "recoverPasswordTitle": "Recover your password",
   "recoverPasswordMessage": "Enter your email to receive instructions on how to recover your password",
   "recoverPasswordSend": "Send",
@@ -128,5 +129,8 @@
   "accountDeleteAlertTitle": "Delete Account",
   "accountDeleteAlertMessage": "Are you sure you want to delete your account? All resumes will be permanently deleted",
   "accountDeleteAlertConfirm": "Yes, delete",
-  "accountDeleteAlertCancel": "Cancel"
+  "accountDeleteAlertCancel": "Cancel",
+  "noNetworkError": "No internet connection",
+  "emailAlreadyInUseError": "The email is already in use",
+  "weakPasswordError": "The password is too weak"
 }

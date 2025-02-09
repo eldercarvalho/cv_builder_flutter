@@ -53,7 +53,8 @@ class TemplateConfig {
 }
 
 // Page Config
-const margin = 60.0;
+const horizontalMargin = 60.0;
+const verticalMargin = 40.0;
 
 // Image
 const imageSize = 50.0;
@@ -65,9 +66,9 @@ const innerSpace = 14.0;
 const lineSpace = 4.0;
 
 // TextStyles
-final titleLargeTextStyle = TextStyle(font: Font.courierBold(), fontSize: 22);
-final titleMediumTextStyle = TextStyle(font: Font.courierBold(), fontSize: 18);
-final titleSmallTextStyle = TextStyle(font: Font.courierBold(), fontSize: 16);
+final titleLargeTextStyle = TextStyle(font: Font.courierBold(), fontSize: 20);
+final titleMediumTextStyle = TextStyle(font: Font.courierBold(), fontSize: 16);
+final titleSmallTextStyle = TextStyle(font: Font.courierBold(), fontSize: 14);
 
 final bodyLargeTextStyle = TextStyle(font: Font.courier(), fontSize: 16);
 final bodyMediumTextStyle = TextStyle(font: Font.courier(), fontSize: 14);

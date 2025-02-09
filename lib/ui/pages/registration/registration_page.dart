@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../config/di.dart';
+import '../../../data/services/api/exceptions.dart';
 import '../../../domain/dtos/registration_data.dart';
 import '../../shared/extensions/context.dart';
 import '../../shared/validators/validators.dart';
@@ -146,10 +147,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
   void _onListener() {
     if (_viewModel.register.completed) {
       LoginPage.replace(context);
+      context.showSuccessSnackBar(context.l10n.registrationSuccess);
     }
 
     if (_viewModel.register.error) {
-      context.showErrorSnackBar('Ocorreu um erro ao registrar');
+      final error = _viewModel.register.result?.exceptionOrNull();
+      if (error is AuthException) {
+        String errorMessage = '';
+        errorMessage = switch (error.code) {
+          AuthErrorCode.emailAlreadyInUse => context.l10n.emailAlreadyInUseError,
+          AuthErrorCode.weakPassword => context.l10n.weakPasswordError,
+          AuthErrorCode.networkRequestFailed => context.l10n.noNetworkError,
+          _ => context.l10n.registrationGenericError,
+        };
+        context.showErrorSnackBar(errorMessage);
+      }
     }
   }
 }

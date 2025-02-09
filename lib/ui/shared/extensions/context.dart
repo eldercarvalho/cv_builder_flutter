@@ -25,17 +25,19 @@ extension ContextEx on BuildContext {
             Text(message, style: textTheme.bodyLarge?.copyWith(color: Colors.white))
           ]),
           backgroundColor: Colors.green,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           behavior: SnackBarBehavior.floating,
         ),
       );
   showErrorSnackBar(String message) => ScaffoldMessenger.of(this).showSnackBar(
         SnackBar(
           content: Row(children: [
-            const Icon(FeatherIcons.checkCircle, color: Colors.white),
+            const Icon(FeatherIcons.alertCircle, color: Colors.white),
             const SizedBox(width: 16),
             Text(message, style: textTheme.bodyLarge?.copyWith(color: Colors.white))
           ]),
           backgroundColor: Theme.of(this).colorScheme.error,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           behavior: SnackBarBehavior.floating,
         ),
       );

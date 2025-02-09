@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../config/di.dart';
-import '../../../data/services/api/auth_service.dart';
+import '../../../data/services/api/exceptions.dart';
 import '../../../domain/dtos/authentication_data.dart';
 import '../../shared/extensions/context.dart';
 import '../../shared/validators/validators.dart';
@@ -175,20 +175,16 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     if (_viewModel.login.error) {
-      final result = _viewModel.login.result;
-      result?.fold(
-        (_) {},
-        (error) {
-          if (error is AuthException) {
-            final code = error.code;
-            if (code == 'invalid-credential') {
-              context.showErrorSnackBar(context.l10n.loginUnauthorizedError);
-            } else {
-              context.showErrorSnackBar(context.l10n.loginGenericError);
-            }
-          }
-        },
-      );
+      final error = _viewModel.login.result?.exceptionOrNull();
+      if (error is AuthException) {
+        String errorMessage = '';
+        errorMessage = switch (error.code) {
+          AuthErrorCode.invalidCredential => context.l10n.loginUnauthorizedError,
+          AuthErrorCode.networkRequestFailed => context.l10n.noNetworkError,
+          _ => context.l10n.loginGenericError,
+        };
+        context.showErrorSnackBar(errorMessage);
+      }
     }
   }
 

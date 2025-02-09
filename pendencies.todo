@@ -13,14 +13,49 @@
         }
       },
       {
+        "key": 1739031800644,
+        "children": [],
+        "todo": {
+          "content": "Criar rascunho de currículo",
+          "id": 1739031800644,
+          "level": "default",
+          "done": false,
+          "start": 1739031800644
+        }
+      },
+      {
+        "key": 1739031781437,
+        "children": [],
+        "todo": {
+          "content": "Não está trocando email",
+          "id": 1739031781437,
+          "level": "default",
+          "done": false,
+          "start": 1739031781438
+        }
+      },
+      {
+        "key": 1738935229208,
+        "children": [],
+        "todo": {
+          "content": "Atribuir data inicial no calendário",
+          "id": 1738935229208,
+          "level": "default",
+          "done": false,
+          "start": 1738935229208
+        }
+      },
+      {
         "key": 1738675671455,
         "children": [],
         "todo": {
           "content": "Criar tela Perfil",
           "id": 1738675671455,
           "level": "default",
-          "done": false,
-          "start": 1738675671455
+          "done": true,
+          "start": 1738675671455,
+          "focus": false,
+          "end": 1738909075965
         }
       },
       {
@@ -289,6 +324,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1738899698425"
+    "version": "1739047923488"
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cv_builder/data/models/user.dart';
+import 'package:cv_builder/data/services/api/exceptions.dart';
 import 'package:cv_builder/domain/dtos/authentication_data.dart';
 import 'package:cv_builder/domain/dtos/registration_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,7 +43,7 @@ class AuthService {
       );
       return Success(userCredential.user!);
     } on FirebaseAuthException catch (e) {
-      final exception = AuthException(e.message, e.code);
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
   }
@@ -54,7 +55,7 @@ class AuthService {
 
       if (googleUser == null) {
         // O usuário cancelou o login
-        return Failure(AuthException('Login canceled', 'login-canceled'));
+        return Failure(AuthException('Login canceled', AuthErrorCode.loginCanceled));
       }
 
       // Obtém os detalhes de autenticação do Google
@@ -70,7 +71,7 @@ class AuthService {
       final UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
       return Success(userCredential.user!);
     } on FirebaseAuthException catch (e) {
-      final exception = AuthException(e.message, e.code);
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
   }
@@ -86,7 +87,7 @@ class AuthService {
 
       return Success(userCredential.user!);
     } on FirebaseAuthException catch (e) {
-      final exception = AuthException(e.message, e.code);
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
   }
@@ -96,7 +97,7 @@ class AuthService {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
       return const Success(unit);
     } on FirebaseAuthException catch (e) {
-      final exception = AuthException(e.message, e.code);
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
   }
@@ -106,7 +107,7 @@ class AuthService {
       await _firebaseAuth.signOut();
       return const Success(unit);
     } on FirebaseAuthException catch (e) {
-      final exception = AuthException(e.message, e.code);
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
   }
@@ -124,7 +125,7 @@ class AuthService {
       }
       throw Exception('User not found');
     } on FirebaseAuthException catch (e) {
-      final exception = AuthException(e.message, e.code);
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
   }
@@ -139,7 +140,7 @@ class AuthService {
       }
       throw Exception('User not found');
     } on FirebaseAuthException catch (e) {
-      final exception = AuthException(e.message, e.code);
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
   }
@@ -153,7 +154,7 @@ class AuthService {
       }
       throw Exception('User not found');
     } on FirebaseAuthException catch (e) {
-      final exception = AuthException(e.message, e.code);
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
   }
@@ -167,15 +168,8 @@ class AuthService {
       }
       throw Exception('User not found');
     } on FirebaseAuthException catch (e) {
-      final exception = AuthException(e.message, e.code);
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
   }
-}
-
-class AuthException implements Exception {
-  final String? message;
-  final String code;
-
-  AuthException(this.message, this.code);
 }

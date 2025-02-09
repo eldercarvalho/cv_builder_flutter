@@ -10,7 +10,7 @@ class PersonalInfo extends StatelessWidget {
     this.iconColor = PdfColors.black,
     required this.config,
     this.marginTop = 6,
-    this.iconSize = 16,
+    this.iconSize = 14,
   });
 
   final String? text;
@@ -31,7 +31,7 @@ class PersonalInfo extends StatelessWidget {
         children: [
           SvgImage(svg: getIconSvg(icon), colorFilter: PdfColors.black, width: iconSize),
           SizedBox(width: 8),
-          Expanded(child: Text(text!, style: config.bodyMediumTextStyle)),
+          Expanded(child: Text(text!, style: config.bodySmallTextStyle)),
         ],
       ),
     );
