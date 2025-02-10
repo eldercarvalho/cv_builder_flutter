@@ -31,6 +31,9 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
 
+    - name: Generate translations
+      run: flutter gen-l10n
+
     - name: Analyze project
       run: flutter analyze
 
