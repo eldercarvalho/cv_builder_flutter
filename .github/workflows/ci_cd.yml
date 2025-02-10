@@ -39,7 +39,7 @@ jobs:
     - name: Decode Keystore
       run: |
         echo "${{ secrets.UPLOAD_KEYSTORE }}" > upload-keystore.jks.base64
-        base64 -d upload-keystore.jks.base64 > android/app/upload-keystore.jks
+        base64 -d upload-keystore.jks.base64 > android/upload-keystore.jks
     
     - name: Install dependencies
       run: flutter pub get
