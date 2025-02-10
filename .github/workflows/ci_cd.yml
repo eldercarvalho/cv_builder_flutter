@@ -1,0 +1,73 @@
+name: Build and Testing CI
+
+on:
+  push:
+    # tags:
+    #   - 'v*.*.*'
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build:
+    name: Analize, Test and Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+    
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.27.0'
+        channel: 'stable'
+        cache: true
+    
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Generate translations
+      run: flutter gen-l10n
+
+    - name: Analyze project
+      run: flutter analyze
+
+    - name: Run Tests
+      run: flutter test
+
+    - name: Build Appbundle
+      run: flutter build appbundle
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: appbundle
+        path: build/app/outputs/bundle/release/app-release.aab
+
+  deploy:
+    name: Build
+    needs: build
+    # if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: appbundle
+
+        # Upload para Play Store (exemplo)
+      - name: Upload to Play Store
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
+          packageName: com.carvalhodev.cvbuilder.cv_builder
+          releaseFiles: appbundle
+          track: internal
+          
