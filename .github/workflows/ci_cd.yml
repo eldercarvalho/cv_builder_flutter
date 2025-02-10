@@ -26,6 +26,20 @@ jobs:
       with:
         flutter-version: '3.27.0'
         cache: true
+
+    # Criar key.properties
+    - name: Create key.properties
+      run: |
+        echo "storePassword=${{ secrets.KEY_STORE_PASSWORD }}" >> android/key.properties
+        echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+        echo "keyAlias=upload" >> android/key.properties
+        echo "storeFile=../upload-keystore.jks" >> android/key.properties
+    
+    # Decodificar o keystore Base64
+    - name: Decode Keystore
+      run: |
+        echo "${{ secrets.UPLOAD_KEYSTORE }}" > upload-keystore.jks.base64
+        base64 -d upload-keystore.jks.base64 > android/app/upload-keystore.jks
     
     - name: Install dependencies
       run: flutter pub get
@@ -42,10 +56,10 @@ jobs:
     - name: Build Appbundle
       run: flutter build appbundle
 
-    - name: Upload build artifact
+    - name: Upload AAB
       uses: actions/upload-artifact@v4
       with:
-        name: appbundle
+        name: release-aab
         path: build/app/outputs/bundle/release/app-release.aab
 
   deploy:
@@ -55,10 +69,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download build artifact
+      - name: Download AAB
         uses: actions/download-artifact@v4
         with:
-          name: appbundle
+          name: release-aab
 
         # Upload para Play Store (exemplo)
       - name: Upload to Play Store
@@ -66,6 +80,6 @@ jobs:
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAYSTORE_ACCOUNT_KEY }}
           packageName: com.carvalhodev.cvbuilder.cv_builder
-          releaseFiles: appbundle
+          releaseFiles: app-release.aab
           track: internal
           
