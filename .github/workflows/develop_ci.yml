@@ -1,0 +1,41 @@
+name: Build and Testing CI
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+    
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.27.0'
+        channel: 'stable'
+        cache: true
+    
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Verify formatting
+      run: flutter format --set-exit-if-changed .
+
+    - name: Analyze project
+      run: flutter analyze
+
+    - name: Run Tests
+      run: flutter test
+
+    - name: Build APK
+      run: flutter build apk
