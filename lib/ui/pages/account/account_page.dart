@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import '../../../config/di.dart';
+import '../../../data/services/api/exceptions.dart';
 import '../../shared/extensions/extensions.dart';
 import '../../shared/validators/validators.dart';
 import '../../shared/widgets/widgets.dart';
@@ -75,15 +76,19 @@ class _AccountPageState extends State<AccountPage> {
                           ]).call,
                         ),
                         const SizedBox(height: 24),
-                        CbTextFormField(
-                          controller: _emailController,
-                          autovalidateMode:
-                              _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
-                          label: context.l10n.email,
-                          validator: MultiValidator([
-                            RequiredValidator(errorText: context.l10n.requiredField),
-                            EmailValidator(errorText: context.l10n.invalidEmailError),
-                          ]).call,
+                        Opacity(
+                          opacity: 0.6,
+                          child: CbTextFormField(
+                            readOnly: true,
+                            controller: _emailController,
+                            autovalidateMode:
+                                _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+                            label: context.l10n.email,
+                            validator: MultiValidator([
+                              RequiredValidator(errorText: context.l10n.requiredField),
+                              EmailValidator(errorText: context.l10n.invalidEmailError),
+                            ]).call,
+                          ),
                         ),
                         const SizedBox(height: 24),
                         SectionTitle(text: context.l10n.accountChangePassword),
@@ -184,7 +189,17 @@ class _AccountPageState extends State<AccountPage> {
     }
 
     if (_viewModel.updateAccount.error) {
-      context.showErrorSnackBar(context.l10n.accountUpdateError);
+      final error = _viewModel.updateAccount.result?.exceptionOrNull();
+
+      if (error is AuthException) {
+        String errorMessage = '';
+        errorMessage = switch (error.code) {
+          AuthErrorCode.emailAlreadyInUse => context.l10n.emailAlreadyInUseError,
+          AuthErrorCode.networkRequestFailed => context.l10n.noNetworkError,
+          _ => context.l10n.loginGenericError,
+        };
+        context.showErrorSnackBar(errorMessage);
+      }
     }
   }
 

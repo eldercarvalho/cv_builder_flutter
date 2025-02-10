@@ -9,8 +9,8 @@ class PersonalInfo extends StatelessWidget {
     required this.icon,
     this.iconColor = PdfColors.black,
     required this.config,
-    this.marginTop = 6,
-    this.iconSize = 14,
+    this.marginTop = 4,
+    this.iconSize = 12,
   });
 
   final String? text;

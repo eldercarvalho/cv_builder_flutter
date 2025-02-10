@@ -135,7 +135,7 @@ class AuthService {
       final User? firebaseUser = _firebaseAuth.currentUser;
       if (firebaseUser != null) {
         await firebaseUser.updateDisplayName(user.name);
-        await firebaseUser.verifyBeforeUpdateEmail(user.email);
+        // await firebaseUser.verifyBeforeUpdateEmail(user.email);
         return const Success(unit);
       }
       throw Exception('User not found');

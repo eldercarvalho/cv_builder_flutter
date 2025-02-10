@@ -7,6 +7,7 @@ class TemplateConfig {
     required this.titleLargeTextStyle,
     required this.titleMediumTextStyle,
     required this.titleSmallTextStyle,
+    required this.titleXSmallTextStyle,
     required this.bodyLargeTextStyle,
     required this.bodyMediumTextStyle,
     required this.bodySmallTextStyle,
@@ -14,20 +15,22 @@ class TemplateConfig {
     // required this.iconTextStyle,
   });
 
-  final margin = 60.0;
+  final horizontalMargin = 50.0;
+  final verticalMargin = 40.0;
 
 // Image
   final imageSize = 50.0;
 
 // Spacing
-  final sectionSpace = 24.0;
-  final titleSpace = 16.0;
-  final innerSpace = 14.0;
-  final lineSpace = 4.0;
+  final sectionSpace = 18.0;
+  final titleSpace = 12.0;
+  final innerSpace = 12.0;
+  final lineSpace = 3.0;
 
   final TextStyle titleLargeTextStyle;
   final TextStyle titleMediumTextStyle;
   final TextStyle titleSmallTextStyle;
+  final TextStyle titleXSmallTextStyle;
 
   final TextStyle bodyLargeTextStyle;
   final TextStyle bodyMediumTextStyle;
@@ -40,40 +43,41 @@ class TemplateConfig {
     final interRegular = await PdfGoogleFonts.interRegular();
 
     return TemplateConfig._(
-      titleLargeTextStyle: TextStyle(font: interBold, fontSize: 22),
-      titleMediumTextStyle: TextStyle(font: interBold, fontSize: 18),
-      titleSmallTextStyle: TextStyle(font: interBold, fontSize: 16),
-      bodyLargeTextStyle: TextStyle(font: interRegular, fontSize: 16),
-      bodyMediumTextStyle: TextStyle(font: interRegular, fontSize: 14),
-      bodySmallTextStyle: TextStyle(font: interRegular, fontSize: 12),
-      paragraphTextStyle: TextStyle(font: interRegular, fontSize: 12, lineSpacing: 4),
+      titleLargeTextStyle: TextStyle(font: interBold, fontSize: 20),
+      titleMediumTextStyle: TextStyle(font: interBold, fontSize: 16),
+      titleSmallTextStyle: TextStyle(font: interBold, fontSize: 14),
+      titleXSmallTextStyle: TextStyle(font: interBold, fontSize: 12),
+      bodyLargeTextStyle: TextStyle(font: interRegular, fontSize: 14),
+      bodyMediumTextStyle: TextStyle(font: interRegular, fontSize: 12),
+      bodySmallTextStyle: TextStyle(font: interRegular, fontSize: 10),
+      paragraphTextStyle: TextStyle(font: interRegular, fontSize: 10, lineSpacing: 3),
       // iconTextStyle: TextStyle(font: faRegular400Font),
     );
   }
 }
 
-// Page Config
+// // Page Config
 const horizontalMargin = 60.0;
 const verticalMargin = 40.0;
 
-// Image
-const imageSize = 50.0;
+// // Image
+// const imageSize = 50.0;
 
-// Spacing
-const sectionSpace = 24.0;
-const titleSpace = 16.0;
-const innerSpace = 14.0;
-const lineSpace = 4.0;
+// // Spacing
+// const sectionSpace = 24.0;
+// const titleSpace = 16.0;
+// const innerSpace = 14.0;
+// const lineSpace = 4.0;
 
-// TextStyles
-final titleLargeTextStyle = TextStyle(font: Font.courierBold(), fontSize: 20);
-final titleMediumTextStyle = TextStyle(font: Font.courierBold(), fontSize: 16);
-final titleSmallTextStyle = TextStyle(font: Font.courierBold(), fontSize: 14);
+// // TextStyles
+// final titleLargeTextStyle = TextStyle(font: Font.courierBold(), fontSize: 20);
+// final titleMediumTextStyle = TextStyle(font: Font.courierBold(), fontSize: 16);
+// final titleSmallTextStyle = TextStyle(font: Font.courierBold(), fontSize: 14);
 
-final bodyLargeTextStyle = TextStyle(font: Font.courier(), fontSize: 16);
-final bodyMediumTextStyle = TextStyle(font: Font.courier(), fontSize: 14);
-final bodySmallTextStyle = TextStyle(font: Font.courier(), fontSize: 12);
-final paragraphTextStyle = TextStyle(font: Font.courier(), fontSize: 12, lineSpacing: lineSpace);
+// final bodyLargeTextStyle = TextStyle(font: Font.courier(), fontSize: 16);
+// final bodyMediumTextStyle = TextStyle(font: Font.courier(), fontSize: 14);
+// final bodySmallTextStyle = TextStyle(font: Font.courier(), fontSize: 12);
+// final paragraphTextStyle = TextStyle(font: Font.courier(), fontSize: 12, lineSpacing: lineSpace);
 
 String getIconSvg(String name) {
   switch (name.toLowerCase()) {
