@@ -27,19 +27,19 @@ jobs:
         flutter-version: '3.27.0'
         cache: true
 
+     # Decodificar o keystore Base64
+    - name: Decode Keystore
+      run: |
+        echo "${{ secrets.UPLOAD_KEYSTORE }}" > upload-keystore.jks.base64
+        base64 -d upload-keystore.jks.base64 > android/app/upload-keystore.jks
+
     # Criar key.properties
     - name: Create key.properties
       run: |
         echo "storePassword=${{ secrets.KEY_STORE_PASSWORD }}" >> android/key.properties
         echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
         echo "keyAlias=upload" >> android/key.properties
-        echo "storeFile=../upload-keystore.jks" >> android/key.properties
-    
-    # Decodificar o keystore Base64
-    - name: Decode Keystore
-      run: |
-        echo "${{ secrets.UPLOAD_KEYSTORE }}" > upload-keystore.jks.base64
-        base64 -d upload-keystore.jks.base64 > android/upload-keystore.jks
+        echo "storeFile=upload-keystore.jks" >> android/key.properties
     
     - name: Install dependencies
       run: flutter pub get
