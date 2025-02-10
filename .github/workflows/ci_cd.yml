@@ -78,6 +78,9 @@ jobs:
           name: release-aab
 
         # Upload para Play Store (exemplo)
+        # Criar Projeto e Conta de Serviço no Google Cloud Console, adicionar perfil de "Editor"
+        # Criar permissão e chave, baixar JSON e colar no GitHub Repository Secrets
+        # Ativar a Google Play Android Developer API
       - name: Upload to Play Store
         uses: r0adkll/upload-google-play@v1
         with:
