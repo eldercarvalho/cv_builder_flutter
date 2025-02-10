@@ -10,11 +10,13 @@ on:
 
 jobs:
   build:
-    name: Analize, Test and Build
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Increase file watch limit
+      run: echo "fs.inotify.max_user_watches=524288" | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
     - name: Set up Java
       uses: actions/setup-java@v3
