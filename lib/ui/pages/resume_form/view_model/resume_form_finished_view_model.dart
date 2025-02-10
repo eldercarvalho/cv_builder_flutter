@@ -21,6 +21,8 @@ class ResumeFormFinishedViewModel extends ChangeNotifier {
   late final Command1<Unit, Resume> downloadResume;
 
   AsyncResult<Unit> _downloadResume(Resume resume) async {
+    _authRepository.currentUser;
+    _resumeRepository.saveResume(userId: '1', resume: resume);
     // final bytes = await resume.toPdf();
     // await _fileService.savePdf(name: resume.id, bytes: bytes);
     return const Success(unit);
