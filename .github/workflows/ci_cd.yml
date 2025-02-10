@@ -31,14 +31,14 @@ jobs:
     - name: Decode Keystore
       run: |
         echo "${{ secrets.UPLOAD_KEYSTORE }}" > upload-keystore.jks.base64
-        base64 -d upload-keystore.jks.base64 > android/app/upload-keystore.jks
+        base64 -d upload-keystore.jks.base64 > android/upload-keystore.jks
 
     # Criar key.properties
     - name: Create key.properties
       run: |
         echo "storePassword=${{ secrets.KEY_STORE_PASSWORD }}" >> android/key.properties
         echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
-        echo "keyAlias=upload" >> android/key.properties
+        echo "keyAlias=cvbuilderupload" >> android/key.properties
         echo "storeFile=upload-keystore.jks" >> android/key.properties
     
     - name: Install dependencies
@@ -53,8 +53,11 @@ jobs:
     - name: Run Tests
       run: flutter test
 
+    # - name: Build APK
+    #   run: flutter build apk --release
+
     - name: Build Appbundle
-      run: flutter build appbundle
+      run: flutter build appbundle --release
 
     - name: Upload AAB
       uses: actions/upload-artifact@v4
