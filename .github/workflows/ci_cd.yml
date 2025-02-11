@@ -78,8 +78,8 @@ jobs:
 
         # Upload para Play Store (exemplo)
         # Criar Projeto e Conta de Serviço no Google Cloud Console, adicionar perfil de "Editor"
-        # Adicionar email da Conta de Serviço no Google Play Console > Usuários e Permissões > Convidar novos usuários
         # Criar permissão e chave, baixar JSON e colar no GitHub Repository Secrets
+        # Adicionar email da Conta de Serviço no Google Play Console > Usuários e Permissões > Convidar novos usuários
         # Ativar a Google Play Android Developer API
       - name: Upload to Play Store
         uses: r0adkll/upload-google-play@v1
@@ -88,4 +88,5 @@ jobs:
           packageName: com.carvalhodev.cvbuilder.cv_builder
           releaseFiles: app-release.aab
           track: internal
+          status: draft
           
