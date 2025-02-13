@@ -33,6 +33,7 @@ class _CbDatePickerState extends State<CbDatePicker> {
   initState() {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
+    _selectedDate = _controller.text.isNotEmpty ? DateFormat('dd/MM/yyyy').parse(_controller.text) : null;
   }
 
   void _showDialog(Widget child) {

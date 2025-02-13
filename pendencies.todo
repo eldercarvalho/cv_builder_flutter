@@ -2,6 +2,17 @@
   "todotree": {
     "tree": [
       {
+        "key": 1739413098282,
+        "children": [],
+        "todo": {
+          "content": "Validar campos de link",
+          "id": 1739413098282,
+          "level": "default",
+          "done": false,
+          "start": 1739413098283
+        }
+      },
+      {
         "key": 1738899693515,
         "children": [],
         "todo": {
@@ -24,19 +35,6 @@
         }
       },
       {
-        "key": 1739031781437,
-        "children": [],
-        "todo": {
-          "content": "Não está trocando email",
-          "id": 1739031781437,
-          "level": "default",
-          "done": true,
-          "start": 1739031781438,
-          "focus": false,
-          "end": 1739406490641
-        }
-      },
-      {
         "key": 1738935229208,
         "children": [],
         "todo": {
@@ -45,43 +43,6 @@
           "level": "default",
           "done": false,
           "start": 1738935229208
-        }
-      },
-      {
-        "key": 1738675671455,
-        "children": [],
-        "todo": {
-          "content": "Criar tela Perfil",
-          "id": 1738675671455,
-          "level": "default",
-          "done": true,
-          "start": 1738675671455,
-          "focus": false,
-          "end": 1738909075965
-        }
-      },
-      {
-        "key": 1738675820505,
-        "children": [],
-        "todo": {
-          "content": "Consertar template Basic",
-          "id": 1738675820505,
-          "level": "default",
-          "done": true,
-          "start": 1738675820505,
-          "focus": false,
-          "end": 1739406497726
-        }
-      },
-      {
-        "key": 1738675853667,
-        "children": [],
-        "todo": {
-          "content": "Salvar currículo para a tela de finalização",
-          "id": 1738675853667,
-          "level": "default",
-          "done": false,
-          "start": 1738675853667
         }
       },
       {
@@ -104,17 +65,6 @@
           "level": "default",
           "done": false,
           "start": 1738675841014
-        }
-      },
-      {
-        "key": 1738675682527,
-        "children": [],
-        "todo": {
-          "content": "Criar tela Configurtações",
-          "id": 1738675682527,
-          "level": "default",
-          "done": false,
-          "start": 1738675682527
         }
       },
       {
@@ -192,6 +142,69 @@
           "level": "default",
           "done": false,
           "start": 1738763088684
+        }
+      },
+      {
+        "key": 1738675682527,
+        "children": [],
+        "todo": {
+          "content": "Criar tela Configurtações",
+          "id": 1738675682527,
+          "level": "default",
+          "done": false,
+          "start": 1738675682527
+        }
+      },
+      {
+        "key": 1739031781437,
+        "children": [],
+        "todo": {
+          "content": "Não está trocando email",
+          "id": 1739031781437,
+          "level": "default",
+          "done": true,
+          "start": 1739031781438,
+          "focus": false,
+          "end": 1739406490641
+        }
+      },
+      {
+        "key": 1738675671455,
+        "children": [],
+        "todo": {
+          "content": "Criar tela Perfil",
+          "id": 1738675671455,
+          "level": "default",
+          "done": true,
+          "start": 1738675671455,
+          "focus": false,
+          "end": 1738909075965
+        }
+      },
+      {
+        "key": 1738675820505,
+        "children": [],
+        "todo": {
+          "content": "Consertar template Basic",
+          "id": 1738675820505,
+          "level": "default",
+          "done": true,
+          "start": 1738675820505,
+          "focus": false,
+          "end": 1739406497726
+        }
+      },
+      {
+        "key": 1738675853667,
+        "children": [],
+        "todo": {
+          "content": "Salvar currículo para a tela de finalização",
+          "id": 1738675853667,
+          "level": "default",
+          "done": true,
+          "start": 1738675853667,
+          "focus": false,
+          "end": 1739412905287
         }
       },
       {
@@ -328,6 +341,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1739406497777"
+    "version": "1739413102945"
   }
 }
