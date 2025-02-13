@@ -27,6 +27,10 @@ class ResumeFormFinishedPage extends StatefulWidget {
     Navigator.of(context).pushReplacementNamed(route, arguments: resume);
   }
 
+  static Future<Object?> pushNamedAndRemoveUntil(BuildContext context, Resume resume) async {
+    return Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => route.isFirst, arguments: resume);
+  }
+
   final Resume resume;
 
   @override
@@ -89,14 +93,14 @@ class _ResumeFormFinishedPageState extends State<ResumeFormFinishedPage> {
                   const SizedBox(height: 30),
                   CbButton(
                     prefixIcon: FeatherIcons.home,
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () => Navigator.of(context).pop(true),
                     text: context.l10n.finishedFormGoToHome,
                   ),
                   const SizedBox(height: 16),
                   CbButton(
                     prefixIcon: FeatherIcons.file,
-                    onPressed: () =>
-                        ResumePreviewPage.replace(context, params: ResumePreviewParams(resume: widget.resume)),
+                    onPressed: () => ResumePreviewPage.pushNamedAndRemoveUntil(context,
+                        params: ResumePreviewParams(resume: widget.resume)),
                     text: context.l10n.finishedFormGoToResume,
                     type: CbButtonType.outlined,
                   ),

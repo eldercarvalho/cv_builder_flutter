@@ -150,10 +150,10 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
     );
   }
 
-  void _onSubmit() {
+  void _onSubmit() async {
     FocusScope.of(context).unfocus();
-    // _viewModel.saveResume.execute(_isEditing);
-    ResumeFormFinishedPage.resplace(context, _viewModel.resume);
+    await ResumeFormFinishedPage.push(context, _viewModel.resume);
+    if (mounted) Navigator.of(context).pop(true);
   }
 
   void _onSaveResumeListener() {
@@ -174,10 +174,6 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
   void _onGeneratePdfListener() {
     if (_viewModel.generatePdf.completed) {
       final pdfFile = _viewModel.resumePdfFile;
-      // ResumePreviewPage.push(
-      //   context,
-      //   params: ResumePreviewParams(resume: _viewModel.previewResume),
-      // );
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => ResumePreview(pdfFile: pdfFile!),

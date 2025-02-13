@@ -152,10 +152,7 @@ class _HomePageState extends State<HomePage> {
             return FloatingActionButton(
               shape: const CircleBorder(),
               backgroundColor: Theme.of(context).primaryColor,
-              onPressed: () async {
-                await ResumeFormPage.push(context);
-                _viewModel.getResumes.execute();
-              },
+              onPressed: _navToResumeForm,
               child: const Icon(
                 FeatherIcons.plus,
                 color: Colors.white,
@@ -165,6 +162,14 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  void _navToResumeForm() {
+    ResumeFormPage.push(context).then((value) {
+      if (value != null) {
+        _viewModel.getResumes.execute();
+      }
+    });
   }
 
   void _navToPreview(Resume resume) {
