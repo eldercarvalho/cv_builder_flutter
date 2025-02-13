@@ -57,9 +57,11 @@ jobs:
     #   run: flutter build apk --release
 
     - name: Build Appbundle
+      if: github.ref == 'refs/heads/main'
       run: flutter build appbundle --release
 
     - name: Upload AAB
+      if: github.ref == 'refs/heads/main'
       uses: actions/upload-artifact@v4
       with:
         name: release-aab
@@ -67,7 +69,7 @@ jobs:
 
   deploy:
     needs: build
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:

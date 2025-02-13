@@ -152,7 +152,8 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
 
   void _onSubmit() {
     FocusScope.of(context).unfocus();
-    _viewModel.saveResume.execute(_isEditing);
+    // _viewModel.saveResume.execute(_isEditing);
+    ResumeFormFinishedPage.resplace(context, _viewModel.resume);
   }
 
   void _onSaveResumeListener() {

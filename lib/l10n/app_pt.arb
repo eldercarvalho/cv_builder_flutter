@@ -133,6 +133,6 @@
   "accountDeleteAlertCancel": "Cancelar",
   "noNetworkError": "Sem conexão com a internet",
   "emailAlreadyInUseError": "O email informado já está vinculado a uma conta",
-  "weakPasswordError": "A senha informada é muito fraca"
-
+  "weakPasswordError": "A senha informada é muito fraca",
+  "creatingResume": "Criando Currículo..."
 }
