@@ -150,7 +150,7 @@ class _SkillsFormState extends State<SkillsForm> {
 
   void _onRemove(String id) {
     _viewModel.resume = _viewModel.resume.copyWith(
-      workExperience: _viewModel.resume.workExperience.where((e) => e.id != id).toList(),
+      skills: _viewModel.resume.skills.where((e) => e.id != id).toList(),
     );
   }
 
@@ -158,10 +158,10 @@ class _SkillsFormState extends State<SkillsForm> {
     if (index > oldIndex) {
       index -= 1;
     }
-    final experiences = _viewModel.resume.workExperience;
-    final experience = experiences.removeAt(oldIndex);
-    experiences.insert(index, experience);
-    _viewModel.resume = _viewModel.resume.copyWith(workExperience: experiences);
+    final skills = _viewModel.resume.skills;
+    final skill = skills.removeAt(oldIndex);
+    skills.insert(index, skill);
+    _viewModel.resume = _viewModel.resume.copyWith(skills: skills);
   }
 }
 
