@@ -2,6 +2,61 @@
   "todotree": {
     "tree": [
       {
+        "key": 1739838592908,
+        "children": [],
+        "todo": {
+          "content": "Reordenar itens error",
+          "id": 1739838592908,
+          "level": "default",
+          "done": false,
+          "start": 1739838592908
+        }
+      },
+      {
+        "key": 1739836830766,
+        "children": [],
+        "todo": {
+          "content": "Erro co google sign in android 14",
+          "id": 1739836830766,
+          "level": "default",
+          "done": false,
+          "start": 1739836830766
+        }
+      },
+      {
+        "key": 1739836815743,
+        "children": [],
+        "todo": {
+          "content": "Corrigir lista de habilidades não scrollando",
+          "id": 1739836815743,
+          "level": "default",
+          "done": false,
+          "start": 1739836815743
+        }
+      },
+      {
+        "key": 1738675723804,
+        "children": [],
+        "todo": {
+          "content": "Integrar IA",
+          "id": 1738675723804,
+          "level": "warning",
+          "done": false,
+          "start": 1738675723804
+        }
+      },
+      {
+        "key": 1738675841014,
+        "children": [],
+        "todo": {
+          "content": "Implementar novo template Modern",
+          "id": 1738675841014,
+          "level": "warning",
+          "done": false,
+          "start": 1738675841014
+        }
+      },
+      {
         "key": 1739413098282,
         "children": [],
         "todo": {
@@ -10,17 +65,6 @@
           "level": "default",
           "done": false,
           "start": 1739413098283
-        }
-      },
-      {
-        "key": 1738899693515,
-        "children": [],
-        "todo": {
-          "content": "Tratamento de Erros",
-          "id": 1738899693515,
-          "level": "default",
-          "done": false,
-          "start": 1738899693516
         }
       },
       {
@@ -41,8 +85,10 @@
           "content": "Atribuir data inicial no calendário",
           "id": 1738935229208,
           "level": "default",
-          "done": false,
-          "start": 1738935229208
+          "done": true,
+          "start": 1738935229208,
+          "focus": false,
+          "end": 1739413417788
         }
       },
       {
@@ -57,17 +103,6 @@
         }
       },
       {
-        "key": 1738675841014,
-        "children": [],
-        "todo": {
-          "content": "Implementar novo template Modern",
-          "id": 1738675841014,
-          "level": "default",
-          "done": false,
-          "start": 1738675841014
-        }
-      },
-      {
         "key": 1738675694889,
         "children": [],
         "todo": {
@@ -76,17 +111,6 @@
           "level": "default",
           "done": false,
           "start": 1738675694889
-        }
-      },
-      {
-        "key": 1738675723804,
-        "children": [],
-        "todo": {
-          "content": "Integrar IA",
-          "id": 1738675723804,
-          "level": "default",
-          "done": false,
-          "start": 1738675723804
         }
       },
       {
@@ -153,6 +177,17 @@
           "level": "default",
           "done": false,
           "start": 1738675682527
+        }
+      },
+      {
+        "key": 1738899693515,
+        "children": [],
+        "todo": {
+          "content": "Tratamento de Erros",
+          "id": 1738899693515,
+          "level": "default",
+          "done": false,
+          "start": 1738899693516
         }
       },
       {
@@ -341,6 +376,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1739413102945"
+    "version": "1739838604743"
   }
 }
