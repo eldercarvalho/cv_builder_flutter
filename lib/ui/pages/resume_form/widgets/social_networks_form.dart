@@ -1,4 +1,3 @@
-import 'package:cv_builder/ui/shared/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +6,7 @@ import 'package:uuid/uuid.dart';
 import '../../../../domain/models/social_network.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
+import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
 import 'form_container.dart';
@@ -40,78 +40,75 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
 
   @override
   Widget build(BuildContext context) {
-    return FormContainer(
-      spacing: 0,
-      showPreviewButton: !widget.isEditing,
-      onPreviewButtonPressed: _onPreview,
-      fields: [
-        SectionTitleTextField(
-          text: context.l10n.socialNetwork(2),
-          padding: 0,
-          icon: FeatherIcons.share2,
-        ),
-        ListenableBuilder(
-          listenable: _viewModel,
-          builder: (context, _) {
-            if (_viewModel.resume.socialNetworks.isEmpty) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: CbEmptyState(
-                  imagePath: 'assets/images/empty.svg',
-                  message: context.l10n.noItemAdded('female', context.l10n.socialNetwork(1)),
-                  buttonText: context.l10n.addSocialNetwork,
-                  onPressed: _onAddButtonPressed,
-                ),
-              );
-            }
+    return ListenableBuilder(
+      listenable: _viewModel,
+      builder: (context, child) {
+        return FormContainer(
+          spacing: 0,
+          showPreviewButton: !widget.isEditing,
+          onPreviewButtonPressed: _onPreview,
+          showAddButton: _viewModel.resume.socialNetworks.isNotEmpty,
+          onAddPressed: _onAddButtonPressed,
+          title: SectionTitleTextField(
+            text: context.l10n.socialNetwork(2),
+            padding: 0,
+            icon: FeatherIcons.share2,
+          ),
+          fields: [
+            ListenableBuilder(
+              listenable: _viewModel,
+              builder: (context, _) {
+                if (_viewModel.resume.socialNetworks.isEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: CbEmptyState(
+                      imagePath: 'assets/images/empty.svg',
+                      message: context.l10n.noItemAdded('female', context.l10n.socialNetwork(1)),
+                      buttonText: context.l10n.addSocialNetwork,
+                      onPressed: _onAddButtonPressed,
+                    ),
+                  );
+                }
 
-            return ReorderableListView.builder(
-              // padding: const EdgeInsets.all(16),
-              shrinkWrap: true,
-              onReorder: _onReorder,
-              itemCount: _viewModel.resume.socialNetworks.length,
-              itemBuilder: (context, index) {
-                final socialNetwork = _viewModel.resume.socialNetworks[index];
-                return OptionTile(
-                  key: ValueKey(socialNetwork.id),
-                  title: socialNetwork.name,
-                  subtitle: socialNetwork.username,
-                  onTap: () => _onAddButtonPressed(itemToEdit: socialNetwork),
-                  onDeleteTap: () => _onRemove(socialNetwork.id),
-                  isLastItem: index == _viewModel.resume.socialNetworks.length - 1,
+                return ReorderableListView.builder(
+                  padding: const EdgeInsets.only(bottom: 60),
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  onReorder: _onReorder,
+                  itemCount: _viewModel.resume.socialNetworks.length,
+                  itemBuilder: (context, index) {
+                    final socialNetwork = _viewModel.resume.socialNetworks[index];
+                    return OptionTile(
+                      key: ValueKey(socialNetwork.id),
+                      title: socialNetwork.name,
+                      subtitle: socialNetwork.username,
+                      onTap: () => _onAddButtonPressed(itemToEdit: socialNetwork),
+                      onDeleteTap: () => _onRemove(socialNetwork.id),
+                      isLastItem: index == _viewModel.resume.socialNetworks.length - 1,
+                    );
+                  },
                 );
               },
-            );
-          },
-        ),
-        Visibility(
-          visible: _viewModel.resume.socialNetworks.isNotEmpty,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: OutlinedButton.icon(
-              onPressed: () => _onAddButtonPressed(),
-              label: Text(context.l10n.addSocialNetwork),
-              icon: const Icon(Icons.add),
             ),
+          ],
+          bottom: ListenableBuilder(
+            listenable: _viewModel.saveResume,
+            builder: (context, _) {
+              return FormButtons(
+                isEditing: widget.isEditing,
+                step: 5,
+                showIcons: true,
+                showSaveButton: widget.isEditing,
+                isLoading: _viewModel.saveResume.running,
+                previousText: context.l10n.contact,
+                onPreviousPressed: widget.onPrevious,
+                nextText: context.l10n.objective,
+                onNextPressed: widget.onSubmit,
+              );
+            },
           ),
-        ),
-      ],
-      bottom: ListenableBuilder(
-        listenable: _viewModel.saveResume,
-        builder: (context, _) {
-          return FormButtons(
-            isEditing: widget.isEditing,
-            step: 5,
-            showIcons: true,
-            showSaveButton: widget.isEditing,
-            isLoading: _viewModel.saveResume.running,
-            previousText: context.l10n.contact,
-            onPreviousPressed: widget.onPrevious,
-            nextText: context.l10n.objective,
-            onNextPressed: widget.onSubmit,
-          );
-        },
-      ),
+        );
+      },
     );
   }
 
