@@ -68,14 +68,14 @@ class _ProfileFormState extends State<ProfileForm> {
       child: KeyboardVisibilityBuilder(
         builder: (context, isKeyboardVisible) {
           return FormContainer(
-            showPreviewButton: !widget.isEditing && !isKeyboardVisible,
+            showPreviewButton: !widget.isEditing,
             onPreviewButtonPressed: _onPreview,
+            title: SectionTitleTextField(
+              text: context.l10n.profile,
+              icon: FeatherIcons.user,
+              padding: 0,
+            ),
             fields: [
-              SectionTitleTextField(
-                text: context.l10n.profile,
-                icon: FeatherIcons.user,
-                padding: 0,
-              ),
               Center(
                 child: PhotoPicker(
                   initialValue: _viewModel.resume.photo,

@@ -36,21 +36,24 @@ class _LanguagesFormState extends State<LanguagesForm> {
 
   @override
   Widget build(BuildContext context) {
-    return FormContainer(
-      spacing: 0,
-      showPreviewButton: !widget.isEditing,
-      onPreviewButtonPressed: _onPreview,
-      fields: [
-        SectionTitleTextField(
-          text: context.l10n.languages(2),
-          icon: FeatherIcons.flag,
-          padding: 0,
-        ),
-        ListenableBuilder(
-          listenable: _viewModel,
-          builder: (context, _) {
-            if (_viewModel.resume.languages.isEmpty) {
-              return Padding(
+    return ListenableBuilder(
+      listenable: _viewModel,
+      builder: (context, _) {
+        return FormContainer(
+          spacing: 0,
+          showPreviewButton: !widget.isEditing,
+          onPreviewButtonPressed: _onPreview,
+          showAddButton: _viewModel.resume.languages.isNotEmpty,
+          onAddPressed: _onAddButtonPressed,
+          title: SectionTitleTextField(
+            text: context.l10n.languages(2),
+            icon: FeatherIcons.flag,
+            padding: 0,
+          ),
+          fields: [
+            Visibility(
+              visible: _viewModel.resume.languages.isNotEmpty,
+              replacement: Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: CbEmptyState(
                   imagePath: 'assets/images/empty.svg',
@@ -58,58 +61,46 @@ class _LanguagesFormState extends State<LanguagesForm> {
                   buttonText: context.l10n.addLanguage,
                   onPressed: _onAddButtonPressed,
                 ),
-              );
-            }
-
-            return ReorderableListView.builder(
-              // padding: const EdgeInsets.all(16),
-              shrinkWrap: true,
-              onReorder: _onReorder,
-              itemCount: _viewModel.resume.languages.length,
-              itemBuilder: (context, index) {
-                final language = _viewModel.resume.languages[index];
-                return OptionTile(
-                  key: ValueKey(language.id),
-                  title: language.name,
-                  subtitle: language.fluency,
-                  onTap: () => _onAddButtonPressed(itemToEdit: language),
-                  onDeleteTap: () => _onRemove(language.id),
-                  isLastItem: index == _viewModel.resume.languages.length - 1,
-                );
-              },
-            );
-          },
-        ),
-        Visibility(
-          visible: _viewModel.resume.languages.isNotEmpty,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: OutlinedButton.icon(
-              onPressed: () => _onAddButtonPressed(),
-              label: Text(context.l10n.addLanguage),
-              icon: const Icon(Icons.add),
+              ),
+              child: ReorderableListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                onReorder: _onReorder,
+                itemCount: _viewModel.resume.languages.length,
+                itemBuilder: (context, index) {
+                  final language = _viewModel.resume.languages[index];
+                  return OptionTile(
+                    key: ValueKey(language.id),
+                    title: language.name,
+                    subtitle: language.fluency,
+                    onTap: () => _onAddButtonPressed(itemToEdit: language),
+                    onDeleteTap: () => _onRemove(language.id),
+                    isLastItem: index == _viewModel.resume.languages.length - 1,
+                  );
+                },
+              ),
             ),
-          ),
-        ),
-      ],
-      bottom: ListenableBuilder(
-        listenable: _viewModel.saveResume,
-        builder: (context, _) {
-          return FormButtons(
-            isEditing: widget.isEditing,
-            step: 10,
-            showIcons: true,
-            showSaveButton: widget.isEditing,
-            isLoading: _viewModel.saveResume.running,
-            previousText: context.l10n.skills(2),
-            onPreviousPressed: widget.onPrevious,
-            nextText: context.l10n.certifications(2),
-            onNextPressed: () {
-              widget.onSubmit();
+          ],
+          bottom: ListenableBuilder(
+            listenable: _viewModel.saveResume,
+            builder: (context, _) {
+              return FormButtons(
+                isEditing: widget.isEditing,
+                step: 10,
+                showIcons: true,
+                showSaveButton: widget.isEditing,
+                isLoading: _viewModel.saveResume.running,
+                previousText: context.l10n.skills(2),
+                onPreviousPressed: widget.onPrevious,
+                nextText: context.l10n.certifications(2),
+                onNextPressed: () {
+                  widget.onSubmit();
+                },
+              );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

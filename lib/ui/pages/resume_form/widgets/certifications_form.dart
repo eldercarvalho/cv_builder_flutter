@@ -45,54 +45,41 @@ class _CertificationsFormState extends State<CertificationsForm> {
       showPreviewButton: !widget.isEditing,
       onPreviewButtonPressed: _onPreview,
       spacing: 0,
+      showAddButton: _viewModel.resume.certifications.isNotEmpty,
+      onAddPressed: _onAddButtonPressed,
+      title: SectionTitleTextField(
+        text: context.l10n.certifications(2),
+        icon: FeatherIcons.award,
+        padding: 0,
+      ),
       fields: [
-        SectionTitleTextField(
-          text: context.l10n.certifications(2),
-          icon: FeatherIcons.award,
-          padding: 0,
-        ),
-        ListenableBuilder(
-          listenable: _viewModel,
-          builder: (context, _) {
-            if (_viewModel.resume.certifications.isEmpty) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 40),
-                child: CbEmptyState(
-                  imagePath: 'assets/images/empty.svg',
-                  message: context.l10n.noItemAdded('female', context.l10n.certifications(1)),
-                  buttonText: context.l10n.addCertification,
-                  onPressed: _onAddButtonPressed,
-                ),
-              );
-            }
-
-            return ReorderableListView.builder(
-              shrinkWrap: true,
-              onReorder: _onReorder,
-              itemCount: _viewModel.resume.certifications.length,
-              itemBuilder: (context, index) {
-                final certification = _viewModel.resume.certifications[index];
-                return OptionTile(
-                  key: ValueKey(certification.id),
-                  title: certification.title,
-                  subtitle: certification.issuer,
-                  onTap: () => _onAddButtonPressed(itemToEdit: certification),
-                  onDeleteTap: () => _onRemove(certification.id),
-                  isLastItem: index == _viewModel.resume.certifications.length - 1,
-                );
-              },
-            );
-          },
-        ),
         Visibility(
           visible: _viewModel.resume.certifications.isNotEmpty,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: OutlinedButton.icon(
-              onPressed: () => _onAddButtonPressed(),
-              label: Text(context.l10n.addCertification),
-              icon: const Icon(Icons.add),
+          replacement: Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: CbEmptyState(
+              imagePath: 'assets/images/empty.svg',
+              message: context.l10n.noItemAdded('female', context.l10n.certifications(1)),
+              buttonText: context.l10n.addCertification,
+              onPressed: _onAddButtonPressed,
             ),
+          ),
+          child: ReorderableListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            onReorder: _onReorder,
+            itemCount: _viewModel.resume.certifications.length,
+            itemBuilder: (context, index) {
+              final certification = _viewModel.resume.certifications[index];
+              return OptionTile(
+                key: ValueKey(certification.id),
+                title: certification.title,
+                subtitle: certification.issuer,
+                onTap: () => _onAddButtonPressed(itemToEdit: certification),
+                onDeleteTap: () => _onRemove(certification.id),
+                isLastItem: index == _viewModel.resume.certifications.length - 1,
+              );
+            },
           ),
         ),
       ],

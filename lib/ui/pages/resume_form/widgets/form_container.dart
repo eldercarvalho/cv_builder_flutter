@@ -42,7 +42,7 @@ class FormContainer extends StatelessWidget {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 10, bottom: 60),
                         child: Column(
                           spacing: spacing,
                           // crossAxisAlignment: CrossAxisAlignment.stretch,

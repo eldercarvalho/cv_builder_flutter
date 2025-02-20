@@ -41,21 +41,24 @@ class _ExperienceFormState extends State<ExperienceForm> {
 
   @override
   Widget build(BuildContext context) {
-    return FormContainer(
-      showPreviewButton: !widget.isEditing,
-      onPreviewButtonPressed: _onPreview,
-      spacing: 0,
-      fields: [
-        SectionTitleTextField(
-          text: context.l10n.professionalExperience,
-          icon: FeatherIcons.briefcase,
-          padding: 0,
-        ),
-        ListenableBuilder(
-          listenable: _viewModel,
-          builder: (context, _) {
-            if (_viewModel.resume.workExperience.isEmpty) {
-              return Padding(
+    return ListenableBuilder(
+      listenable: _viewModel,
+      builder: (context, child) {
+        return FormContainer(
+          showPreviewButton: !widget.isEditing,
+          onPreviewButtonPressed: _onPreview,
+          showAddButton: _viewModel.resume.workExperience.isNotEmpty,
+          onAddPressed: _onAddButtonPressed,
+          spacing: 0,
+          title: SectionTitleTextField(
+            text: context.l10n.professionalExperience,
+            icon: FeatherIcons.briefcase,
+            padding: 0,
+          ),
+          fields: [
+            Visibility(
+              visible: _viewModel.resume.workExperience.isNotEmpty,
+              replacement: Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: CbEmptyState(
                   imagePath: 'assets/images/empty.svg',
@@ -63,57 +66,46 @@ class _ExperienceFormState extends State<ExperienceForm> {
                   buttonText: context.l10n.addExperience,
                   onPressed: _onAddButtonPressed,
                 ),
-              );
-            }
-
-            return ReorderableListView.builder(
-              shrinkWrap: true,
-              onReorder: _onReorder,
-              itemCount: _viewModel.resume.workExperience.length,
-              itemBuilder: (context, index) {
-                final experience = _viewModel.resume.workExperience[index];
-                return OptionTile(
-                  key: ValueKey(experience.id),
-                  title: experience.company,
-                  subtitle: experience.position,
-                  onTap: () => _onAddButtonPressed(itemToEdit: experience),
-                  onDeleteTap: () => _onRemove(experience.id),
-                  isLastItem: index == _viewModel.resume.workExperience.length - 1,
-                );
-              },
-            );
-          },
-        ),
-        Visibility(
-          visible: _viewModel.resume.workExperience.isNotEmpty,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: OutlinedButton.icon(
-              onPressed: () => _onAddButtonPressed(),
-              label: Text(context.l10n.addExperience),
-              icon: const Icon(Icons.add),
+              ),
+              child: ReorderableListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                onReorder: _onReorder,
+                itemCount: _viewModel.resume.workExperience.length,
+                itemBuilder: (context, index) {
+                  final experience = _viewModel.resume.workExperience[index];
+                  return OptionTile(
+                    key: ValueKey(experience.id),
+                    title: experience.company,
+                    subtitle: experience.position,
+                    onTap: () => _onAddButtonPressed(itemToEdit: experience),
+                    onDeleteTap: () => _onRemove(experience.id),
+                    isLastItem: index == _viewModel.resume.workExperience.length - 1,
+                  );
+                },
+              ),
             ),
-          ),
-        ),
-      ],
-      bottom: ListenableBuilder(
-        listenable: _viewModel.saveResume,
-        builder: (context, _) {
-          return FormButtons(
-            isEditing: widget.isEditing,
-            step: 7,
-            showIcons: true,
-            showSaveButton: widget.isEditing,
-            isLoading: _viewModel.saveResume.running,
-            previousText: context.l10n.objective,
-            onPreviousPressed: widget.onPrevious,
-            nextText: context.l10n.education(1),
-            onNextPressed: () {
-              widget.onSubmit();
+          ],
+          bottom: ListenableBuilder(
+            listenable: _viewModel.saveResume,
+            builder: (context, _) {
+              return FormButtons(
+                isEditing: widget.isEditing,
+                step: 7,
+                showIcons: true,
+                showSaveButton: widget.isEditing,
+                isLoading: _viewModel.saveResume.running,
+                previousText: context.l10n.objective,
+                onPreviousPressed: widget.onPrevious,
+                nextText: context.l10n.education(1),
+                onNextPressed: () {
+                  widget.onSubmit();
+                },
+              );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

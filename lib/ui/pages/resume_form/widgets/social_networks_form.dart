@@ -55,40 +55,34 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
             icon: FeatherIcons.share2,
           ),
           fields: [
-            ListenableBuilder(
-              listenable: _viewModel,
-              builder: (context, _) {
-                if (_viewModel.resume.socialNetworks.isEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 40),
-                    child: CbEmptyState(
-                      imagePath: 'assets/images/empty.svg',
-                      message: context.l10n.noItemAdded('female', context.l10n.socialNetwork(1)),
-                      buttonText: context.l10n.addSocialNetwork,
-                      onPressed: _onAddButtonPressed,
-                    ),
+            Visibility(
+              visible: _viewModel.resume.socialNetworks.isNotEmpty,
+              replacement: Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: CbEmptyState(
+                  imagePath: 'assets/images/empty.svg',
+                  message: context.l10n.noItemAdded('female', context.l10n.socialNetwork(1)),
+                  buttonText: context.l10n.addSocialNetwork,
+                  onPressed: _onAddButtonPressed,
+                ),
+              ),
+              child: ReorderableListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                onReorder: _onReorder,
+                itemCount: _viewModel.resume.socialNetworks.length,
+                itemBuilder: (context, index) {
+                  final socialNetwork = _viewModel.resume.socialNetworks[index];
+                  return OptionTile(
+                    key: ValueKey(socialNetwork.id),
+                    title: socialNetwork.name,
+                    subtitle: socialNetwork.username,
+                    onTap: () => _onAddButtonPressed(itemToEdit: socialNetwork),
+                    onDeleteTap: () => _onRemove(socialNetwork.id),
+                    isLastItem: index == _viewModel.resume.socialNetworks.length - 1,
                   );
-                }
-
-                return ReorderableListView.builder(
-                  padding: const EdgeInsets.only(bottom: 60),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  onReorder: _onReorder,
-                  itemCount: _viewModel.resume.socialNetworks.length,
-                  itemBuilder: (context, index) {
-                    final socialNetwork = _viewModel.resume.socialNetworks[index];
-                    return OptionTile(
-                      key: ValueKey(socialNetwork.id),
-                      title: socialNetwork.name,
-                      subtitle: socialNetwork.username,
-                      onTap: () => _onAddButtonPressed(itemToEdit: socialNetwork),
-                      onDeleteTap: () => _onRemove(socialNetwork.id),
-                      isLastItem: index == _viewModel.resume.socialNetworks.length - 1,
-                    );
-                  },
-                );
-              },
+                },
+              ),
             ),
           ],
           bottom: ListenableBuilder(

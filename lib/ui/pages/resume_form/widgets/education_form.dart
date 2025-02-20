@@ -40,21 +40,24 @@ class _EducationFormState extends State<EducationForm> {
 
   @override
   Widget build(BuildContext context) {
-    return FormContainer(
-      showPreviewButton: !widget.isEditing,
-      onPreviewButtonPressed: _onPreview,
-      spacing: 0,
-      fields: [
-        SectionTitleTextField(
-          text: context.l10n.education(1),
-          icon: Icons.school_outlined,
-          padding: 0,
-        ),
-        ListenableBuilder(
-          listenable: _viewModel,
-          builder: (context, _) {
-            if (_viewModel.resume.education.isEmpty) {
-              return Padding(
+    return ListenableBuilder(
+      listenable: _viewModel,
+      builder: (context, child) {
+        return FormContainer(
+          showPreviewButton: !widget.isEditing,
+          onPreviewButtonPressed: _onPreview,
+          spacing: 0,
+          showAddButton: _viewModel.resume.education.isNotEmpty,
+          onAddPressed: _onAddButtonPressed,
+          title: SectionTitleTextField(
+            text: context.l10n.education(1),
+            icon: Icons.school_outlined,
+            padding: 0,
+          ),
+          fields: [
+            Visibility(
+              visible: _viewModel.resume.education.isNotEmpty,
+              replacement: Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: CbEmptyState(
                   imagePath: 'assets/images/empty.svg',
@@ -62,58 +65,44 @@ class _EducationFormState extends State<EducationForm> {
                   buttonText: context.l10n.addEducation,
                   onPressed: _onAddButtonPressed,
                 ),
+              ),
+              child: ReorderableListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                onReorder: _onReorder,
+                itemCount: _viewModel.resume.education.length,
+                itemBuilder: (context, index) {
+                  final education = _viewModel.resume.education[index];
+                  return OptionTile(
+                    key: ValueKey(education.id),
+                    title: education.fieldOfStudy,
+                    subtitle: education.institution,
+                    onTap: () => _onAddButtonPressed(itemToEdit: education),
+                    onDeleteTap: () => _onRemove(education.id),
+                    isLastItem: index == _viewModel.resume.education.length - 1,
+                  );
+                },
+              ),
+            )
+          ],
+          bottom: ListenableBuilder(
+            listenable: _viewModel.saveResume,
+            builder: (context, _) {
+              return FormButtons(
+                isEditing: widget.isEditing,
+                step: 8,
+                showIcons: true,
+                showSaveButton: widget.isEditing,
+                isLoading: _viewModel.saveResume.running,
+                previousText: context.l10n.objective,
+                onPreviousPressed: widget.onPrevious,
+                nextText: context.l10n.skills(2),
+                onNextPressed: widget.onSubmit,
               );
-            }
-
-            return ReorderableListView.builder(
-              // padding: const EdgeInsets.all(16),
-              shrinkWrap: true,
-              onReorder: _onReorder,
-              itemCount: _viewModel.resume.education.length,
-              itemBuilder: (context, index) {
-                final education = _viewModel.resume.education[index];
-                return OptionTile(
-                  key: ValueKey(education.id),
-                  title: education.fieldOfStudy,
-                  subtitle: education.institution,
-                  onTap: () => _onAddButtonPressed(itemToEdit: education),
-                  onDeleteTap: () => _onRemove(education.id),
-                  isLastItem: index == _viewModel.resume.education.length - 1,
-                );
-              },
-            );
-          },
-        ),
-        Visibility(
-          visible: _viewModel.resume.education.isNotEmpty,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: OutlinedButton.icon(
-              onPressed: () => _onAddButtonPressed(),
-              label: Text(context.l10n.addEducation),
-              icon: const Icon(Icons.add),
-            ),
-          ),
-        ),
-      ],
-      bottom: ListenableBuilder(
-        listenable: _viewModel.saveResume,
-        builder: (context, _) {
-          return FormButtons(
-            isEditing: widget.isEditing,
-            step: 8,
-            showIcons: true,
-            showSaveButton: widget.isEditing,
-            isLoading: _viewModel.saveResume.running,
-            previousText: context.l10n.objective,
-            onPreviousPressed: widget.onPrevious,
-            nextText: context.l10n.skills(2),
-            onNextPressed: () {
-              widget.onSubmit();
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

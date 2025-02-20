@@ -59,12 +59,12 @@ class _ContactFormState extends State<ContactForm> {
           return FormContainer(
             showPreviewButton: !widget.isEditing && !isKeyboardVisible,
             onPreviewButtonPressed: _onPreview,
+            title: SectionTitleTextField(
+              text: context.l10n.contact,
+              padding: 0,
+              icon: FeatherIcons.phone,
+            ),
             fields: [
-              SectionTitleTextField(
-                text: context.l10n.contact,
-                padding: 0,
-                icon: FeatherIcons.phone,
-              ),
               CbTextFormField(
                 controller: _phoneController,
                 label: context.l10n.phone,

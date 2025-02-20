@@ -47,7 +47,7 @@ class OptionTile extends StatelessWidget {
             ),
             IconButton(
               onPressed: onDeleteTap,
-              icon: const Icon(FeatherIcons.trash2),
+              icon: Icon(FeatherIcons.trash2, color: context.colors.error),
             ),
           ],
         ),

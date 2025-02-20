@@ -55,12 +55,12 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
     return Form(
       key: _formKey,
       child: FormContainer(
+        title: SectionTitleTextField(
+          text: context.l10n.resumeInfo,
+          icon: FeatherIcons.fileText,
+          padding: 0,
+        ),
         fields: [
-          SectionTitleTextField(
-            text: context.l10n.resumeInfo,
-            icon: FeatherIcons.fileText,
-            padding: 0,
-          ),
           CbTextFormField(
             controller: _nameController,
             autovalidateMode: _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
