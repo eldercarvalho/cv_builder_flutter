@@ -8,8 +8,10 @@
           "content": "Reordenar itens error",
           "id": 1739838592908,
           "level": "default",
-          "done": false,
-          "start": 1739838592908
+          "done": true,
+          "start": 1739838592908,
+          "focus": false,
+          "end": 1740025225993
         }
       },
       {
@@ -30,8 +32,10 @@
           "content": "Corrigir lista de habilidades não scrollando",
           "id": 1739836815743,
           "level": "default",
-          "done": false,
-          "start": 1739836815743
+          "done": true,
+          "start": 1739836815743,
+          "focus": false,
+          "end": 1740025229084
         }
       },
       {
@@ -376,6 +380,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1739838604743"
+    "version": "1740025229130"
   }
 }

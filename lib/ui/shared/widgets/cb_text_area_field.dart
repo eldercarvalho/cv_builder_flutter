@@ -49,6 +49,7 @@ class CbTextAreaField extends StatelessWidget {
         // const SizedBox(height: 6),
         TextFormField(
           controller: controller,
+          textCapitalization: TextCapitalization.sentences,
           autovalidateMode: autovalidateMode,
           readOnly: readOnly,
           onTap: onTap,
