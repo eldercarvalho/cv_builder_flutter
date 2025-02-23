@@ -77,7 +77,6 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
               Option(value: 'pt', text: 'Português'),
               Option(value: 'en', text: 'English'),
             ],
-            hintText: 'Seleciona o idioma do currículo',
             onChanged: (value) => setState(() => _resumeLanguage = value),
           ),
         ],

@@ -10,10 +10,12 @@ class OptionTile extends StatelessWidget {
     required this.onTap,
     required this.onDeleteTap,
     required this.isLastItem,
+    this.icon,
   });
 
   final String title;
   final String? subtitle;
+  final Widget? icon;
   final Function() onTap;
   final Function() onDeleteTap;
   final bool isLastItem;
@@ -35,6 +37,7 @@ class OptionTile extends StatelessWidget {
         ),
         child: Row(
           children: [
+            if (icon != null) Padding(padding: const EdgeInsets.only(right: 10), child: icon),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

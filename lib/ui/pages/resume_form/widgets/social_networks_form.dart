@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -73,8 +74,14 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
                 itemCount: _viewModel.resume.socialNetworks.length,
                 itemBuilder: (context, index) {
                   final socialNetwork = _viewModel.resume.socialNetworks[index];
+                  final socialNetworkImagePath =
+                      'assets/images/brands/${socialNetwork.name.split(' ').join('_').toLowerCase()}.svg';
                   return OptionTile(
                     key: ValueKey(socialNetwork.id),
+                    icon: SvgPicture.asset(
+                      socialNetworkImagePath,
+                      width: 30,
+                    ),
                     title: socialNetwork.name,
                     subtitle: socialNetwork.username,
                     onTap: () => _onAddButtonPressed(itemToEdit: socialNetwork),
@@ -207,12 +214,31 @@ class _CreateItemModalState extends State<_CreateItemModal> {
         key: _formKey,
         child: FormContainer(
           fields: [
-            CbTextFormField(
-              controller: _nameController,
-              label: context.l10n.name,
+            // CbTextFormField(
+            //   controller: _nameController,
+            //   label: context.l10n.name,
+            //   validator: MultiValidator([
+            //     RequiredValidator(errorText: context.l10n.requiredField),
+            //   ]).call,
+            // ),
+            CbDropdown(
+              labelText: context.l10n.socialNetwork(1),
+              initialValue: _nameController.text,
+              options: availableSocialNetworks.map((v) => Option(value: v, text: v)).toList(),
+              buildItem: (value) => Row(
+                children: [
+                  SvgPicture.asset(
+                    'assets/images/brands/${value.split(' ').join('_').toLowerCase()}.svg',
+                    width: 30,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(value),
+                ],
+              ),
               validator: MultiValidator([
                 RequiredValidator(errorText: context.l10n.requiredField),
               ]).call,
+              onChanged: (value) => _nameController.text = value,
             ),
             CbTextFormField(
               controller: _usernameController,

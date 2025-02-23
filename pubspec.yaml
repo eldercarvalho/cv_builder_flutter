@@ -48,6 +48,7 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   image: ^4.5.2
   image_cropper: ^9.0.0
+  dropdown_search: ^6.0.2
 
 dev_dependencies:
   flutter_lints: ^4.0.0
@@ -60,6 +61,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/brands/
 
 flutter_native_splash:
   color: "#FFFFFF"
