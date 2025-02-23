@@ -247,7 +247,9 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             CbTextFormField(
               controller: _linkController,
               label: 'Url',
-              suffix: const Icon(FeatherIcons.link),
+              validator: UrlValidator(
+                errorText: context.l10n.invalidUrlError,
+              ).call,
             ),
           ],
           bottom: FormButtons(

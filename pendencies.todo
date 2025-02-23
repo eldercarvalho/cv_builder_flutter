@@ -135,8 +135,10 @@
           "content": "Fornecer redes sociais como opções",
           "id": 1738675971721,
           "level": "default",
-          "done": false,
-          "start": 1738675971721
+          "done": true,
+          "start": 1738675971721,
+          "focus": false,
+          "end": 1740289479773
         }
       },
       {
@@ -380,6 +382,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1740025229130"
+    "version": "1740289479842"
   }
 }

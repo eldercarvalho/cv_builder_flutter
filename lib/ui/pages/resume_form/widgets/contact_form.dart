@@ -4,6 +4,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/extensions/extensions.dart';
+import '../../../shared/validators/validators.dart';
 import '../../../shared/widgets/widgets.dart';
 import '../view_model/resume_form_view_model.dart';
 import 'form_buttons.dart';
@@ -76,6 +77,9 @@ class _ContactFormState extends State<ContactForm> {
               CbTextFormField(
                 controller: _websiteController,
                 label: context.l10n.website,
+                validator: UrlValidator(
+                  errorText: context.l10n.invalidUrlError,
+                ).call,
               ),
             ],
             bottom: ListenableBuilder(
@@ -103,19 +107,21 @@ class _ContactFormState extends State<ContactForm> {
   void _onPreview() {
     FocusScope.of(context).unfocus();
     _viewModel.previewResume = _viewModel.resume.copyWith(
-      phoneNumber: _phoneController.text,
-      email: _emailController.text,
-      website: _websiteController.text,
+      phoneNumber: _phoneController.text.trim(),
+      email: _emailController.text.trim(),
+      website: _websiteController.text.trim(),
     );
     _viewModel.generatePdf.execute();
   }
 
   void _onNext() {
-    _viewModel.resume = _viewModel.resume.copyWith(
-      phoneNumber: _phoneController.text.trim(),
-      email: _emailController.text.trim(),
-      website: _websiteController.text.trim(),
-    );
-    widget.onSubmit();
+    if (_formKey.currentState!.validate()) {
+      _viewModel.resume = _viewModel.resume.copyWith(
+        phoneNumber: _phoneController.text.trim(),
+        email: _emailController.text.trim(),
+        website: _websiteController.text.trim(),
+      );
+      widget.onSubmit();
+    }
   }
 }
