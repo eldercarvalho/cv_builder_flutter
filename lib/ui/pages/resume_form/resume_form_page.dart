@@ -74,6 +74,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
     _viewModel.saveResume.removeListener(_onSaveResumeListener);
     _viewModel.generatePdf.removeListener(_onGeneratePdfListener);
     _pageController.dispose();
+    _viewModel.dispose();
     super.dispose();
   }
 

@@ -2,43 +2,6 @@
   "todotree": {
     "tree": [
       {
-        "key": 1739838592908,
-        "children": [],
-        "todo": {
-          "content": "Reordenar itens error",
-          "id": 1739838592908,
-          "level": "default",
-          "done": true,
-          "start": 1739838592908,
-          "focus": false,
-          "end": 1740025225993
-        }
-      },
-      {
-        "key": 1739836830766,
-        "children": [],
-        "todo": {
-          "content": "Erro co google sign in android 14",
-          "id": 1739836830766,
-          "level": "default",
-          "done": false,
-          "start": 1739836830766
-        }
-      },
-      {
-        "key": 1739836815743,
-        "children": [],
-        "todo": {
-          "content": "Corrigir lista de habilidades não scrollando",
-          "id": 1739836815743,
-          "level": "default",
-          "done": true,
-          "start": 1739836815743,
-          "focus": false,
-          "end": 1740025229084
-        }
-      },
-      {
         "key": 1738675723804,
         "children": [],
         "todo": {
@@ -61,14 +24,14 @@
         }
       },
       {
-        "key": 1739413098282,
+        "key": 1739836830766,
         "children": [],
         "todo": {
-          "content": "Validar campos de link",
-          "id": 1739413098282,
+          "content": "Erro co google sign in android 14",
+          "id": 1739836830766,
           "level": "default",
           "done": false,
-          "start": 1739413098283
+          "start": 1739836830766
         }
       },
       {
@@ -80,19 +43,6 @@
           "level": "default",
           "done": false,
           "start": 1739031800644
-        }
-      },
-      {
-        "key": 1738935229208,
-        "children": [],
-        "todo": {
-          "content": "Atribuir data inicial no calendário",
-          "id": 1738935229208,
-          "level": "default",
-          "done": true,
-          "start": 1738935229208,
-          "focus": false,
-          "end": 1739413417788
         }
       },
       {
@@ -118,6 +68,17 @@
         }
       },
       {
+        "key": 1738763088684,
+        "children": [],
+        "todo": {
+          "content": "Importar currículo",
+          "id": 1738763088684,
+          "level": "default",
+          "done": false,
+          "start": 1738763088684
+        }
+      },
+      {
         "key": 1738675949189,
         "children": [],
         "todo": {
@@ -126,19 +87,6 @@
           "level": "default",
           "done": false,
           "start": 1738675949189
-        }
-      },
-      {
-        "key": 1738675971721,
-        "children": [],
-        "todo": {
-          "content": "Fornecer redes sociais como opções",
-          "id": 1738675971721,
-          "level": "default",
-          "done": true,
-          "start": 1738675971721,
-          "focus": false,
-          "end": 1740289479773
         }
       },
       {
@@ -164,28 +112,6 @@
         }
       },
       {
-        "key": 1738763088684,
-        "children": [],
-        "todo": {
-          "content": "Importar currículo",
-          "id": 1738763088684,
-          "level": "default",
-          "done": false,
-          "start": 1738763088684
-        }
-      },
-      {
-        "key": 1738675682527,
-        "children": [],
-        "todo": {
-          "content": "Criar tela Configurtações",
-          "id": 1738675682527,
-          "level": "default",
-          "done": false,
-          "start": 1738675682527
-        }
-      },
-      {
         "key": 1738899693515,
         "children": [],
         "todo": {
@@ -194,6 +120,71 @@
           "level": "default",
           "done": false,
           "start": 1738899693516
+        }
+      },
+      {
+        "key": 1739838592908,
+        "children": [],
+        "todo": {
+          "content": "Reordenar itens error",
+          "id": 1739838592908,
+          "level": "default",
+          "done": true,
+          "start": 1739838592908,
+          "focus": false,
+          "end": 1740025225993
+        }
+      },
+      {
+        "key": 1739836815743,
+        "children": [],
+        "todo": {
+          "content": "Corrigir lista de habilidades não scrollando",
+          "id": 1739836815743,
+          "level": "default",
+          "done": true,
+          "start": 1739836815743,
+          "focus": false,
+          "end": 1740025229084
+        }
+      },
+      {
+        "key": 1739413098282,
+        "children": [],
+        "todo": {
+          "content": "Validar campos de link",
+          "id": 1739413098282,
+          "level": "default",
+          "done": true,
+          "start": 1739413098283,
+          "focus": false,
+          "end": 1740331613804
+        }
+      },
+      {
+        "key": 1738935229208,
+        "children": [],
+        "todo": {
+          "content": "Atribuir data inicial no calendário",
+          "id": 1738935229208,
+          "level": "default",
+          "done": true,
+          "start": 1738935229208,
+          "focus": false,
+          "end": 1739413417788
+        }
+      },
+      {
+        "key": 1738675971721,
+        "children": [],
+        "todo": {
+          "content": "Fornecer redes sociais como opções",
+          "id": 1738675971721,
+          "level": "default",
+          "done": true,
+          "start": 1738675971721,
+          "focus": false,
+          "end": 1740289479773
         }
       },
       {
@@ -382,6 +373,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1740289479842"
+    "version": "1740331638235"
   }
 }

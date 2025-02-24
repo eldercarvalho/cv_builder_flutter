@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage> {
   void _navToResumeForm() {
     ResumeFormPage.push(context).then((value) {
       if (value != null) {
-        _viewModel.getResumes.execute();
+        // _viewModel.getResumes.execute();
       }
     });
   }

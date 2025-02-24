@@ -60,40 +60,43 @@ class _CbDropdownState extends State<CbDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        DropdownButtonFormField(
-          validator: widget.validator,
-          items: List.generate(widget.options.length, (index) {
-            final option = widget.options[index];
-            return DropdownMenuItem(
-              value: option.value,
-              child: widget.buildItem != null ? widget.buildItem!(option.text) : Text(option.text),
-            );
-          }),
-          onChanged: !widget.disabled ? _onChanged : null,
-          value: _value,
-          icon: widget.loading
-              ? SizedBox(
-                  width: 24.w,
-                  height: 24.w,
-                  child: const CircularProgressIndicator(),
-                )
-              : Icon(
-                  FeatherIcons.chevronDown,
-                  size: 24,
-                  color: context.colors.onSurface,
-                ),
-          style: context.textTheme.labelMedium,
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-            labelStyle: context.textTheme.labelMedium,
+    return Opacity(
+      opacity: widget.disabled ? 0.5 : 1,
+      child: DropdownButtonFormField(
+        validator: widget.validator,
+        items: List.generate(widget.options.length, (index) {
+          final option = widget.options[index];
+          return DropdownMenuItem(
+            value: option.value,
+            child: widget.buildItem != null ? widget.buildItem!(option.text) : Text(option.text),
+          );
+        }),
+        onChanged: !widget.disabled ? _onChanged : null,
+        value: _value,
+        icon: widget.loading
+            ? SizedBox(
+                width: 24.w,
+                height: 24.w,
+                child: const CircularProgressIndicator(),
+              )
+            : Icon(
+                FeatherIcons.chevronDown,
+                size: 24,
+                color: context.colors.onSurface,
+              ),
+        style: context.textTheme.bodyLarge,
+        decoration: InputDecoration(
+          labelText: widget.labelText,
+          labelStyle: context.textTheme.labelMedium,
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: context.colors.outline.withValues(alpha: 0.1),
+              width: 1,
+            ),
           ),
-          menuMaxHeight: 400,
-          // isExpanded: true,
         ),
-      ],
+        menuMaxHeight: 400,
+      ),
     );
   }
 
