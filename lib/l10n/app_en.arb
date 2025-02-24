@@ -134,5 +134,6 @@
   "noNetworkError": "No internet connection",
   "emailAlreadyInUseError": "The email is already in use",
   "weakPasswordError": "The password is too weak",
-  "creatingResume": "Creating Resume..."
+  "creatingResume": "Creating Resume...",
+  "addPhoto": "Add Photo"
 }

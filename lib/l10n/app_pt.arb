@@ -135,5 +135,6 @@
   "noNetworkError": "Sem conexão com a internet",
   "emailAlreadyInUseError": "O email informado já está vinculado a uma conta",
   "weakPasswordError": "A senha informada é muito fraca",
-  "creatingResume": "Criando Currículo..."
+  "creatingResume": "Criando Currículo...",
+  "addPhoto": "Adicionar Foto"
 }
