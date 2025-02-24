@@ -1,8 +1,8 @@
-import 'package:cv_builder/domain/models/resume.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../domain/models/resume.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
 import '../../../shared/widgets/widgets.dart';
@@ -34,15 +34,19 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
   String _resumeLanguage = 'pt';
   String? _resumeToCopy;
   bool _isSubmitted = false;
-  bool _isResumeNamedFilled = false;
-  final bool _isImportted = false;
+  bool _isNameFieldFilled = false;
 
   @override
   void initState() {
     _viewModel = context.read();
     _nameController.text = _viewModel.resume.resumeName;
-    _isResumeNamedFilled = _viewModel.resume.resumeName.isNotEmpty;
-    _nameController.addListener(() => setState(() => _isResumeNamedFilled = _nameController.text.isNotEmpty));
+    _isNameFieldFilled = _viewModel.resume.resumeName.isNotEmpty;
+    // _resumeToCopy =
+    _nameController.addListener(() {
+      setState(() {
+        _isNameFieldFilled = _nameController.text.isNotEmpty;
+      });
+    });
     super.initState();
     Future.microtask(() {
       _setLanguage();
@@ -92,7 +96,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
                 child: CbDropdown(
                   initialValue: _resumeToCopy,
                   labelText: 'Copiar Currículo',
-                  disabled: _nameController.text.isEmpty,
+                  disabled: !_isNameFieldFilled,
                   options: List.generate(_viewModel.resumes.length, (index) {
                     final resume = _viewModel.resumes[index];
                     return Option(value: resume.id, text: resume.resumeName);
