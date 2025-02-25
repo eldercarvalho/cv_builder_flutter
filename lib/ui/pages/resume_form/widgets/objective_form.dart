@@ -51,12 +51,12 @@ class _ObjectiveFormState extends State<ObjectiveForm> {
         return FormContainer(
           showPreviewButton: !widget.isEditing,
           onPreviewButtonPressed: _onPreview,
+          title: SectionTitleTextField(
+            text: context.l10n.objective,
+            padding: 0,
+            icon: FeatherIcons.target,
+          ),
           fields: [
-            SectionTitleTextField(
-              text: context.l10n.objective,
-              padding: 0,
-              icon: FeatherIcons.target,
-            ),
             CbTextAreaField(
               controller: _objectiveController,
               validator: MultiValidator([

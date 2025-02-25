@@ -68,6 +68,7 @@ class _CbTextFormFieldState extends State<CbTextFormField> {
         TextFormField(
           controller: widget.controller,
           focusNode: widget.focusNode,
+          textCapitalization: TextCapitalization.sentences,
           autovalidateMode: widget.autovalidateMode,
           readOnly: widget.readOnly,
           onTap: widget.onTap,

@@ -45,12 +45,12 @@ class _AddressFormState extends State<AddressForm> {
         return FormContainer(
           showPreviewButton: !widget.isEditing && !isKeyboardVisible,
           onPreviewButtonPressed: _onPreview,
+          title: SectionTitleTextField(
+            text: context.l10n.address,
+            padding: 0,
+            icon: FeatherIcons.mapPin,
+          ),
           fields: [
-            SectionTitleTextField(
-              text: context.l10n.address,
-              padding: 0,
-              icon: FeatherIcons.mapPin,
-            ),
             CbTextFormField(
               controller: _addressController,
               label: context.l10n.address,

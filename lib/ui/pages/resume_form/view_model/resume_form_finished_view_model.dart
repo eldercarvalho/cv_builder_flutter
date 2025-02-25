@@ -13,16 +13,17 @@ class ResumeFormFinishedViewModel extends ChangeNotifier {
   }) {
     _resumeRepository = resumeRepository;
     _authRepository = authRepository;
-    downloadResume = Command1(_downloadResume);
+    saveResume = Command1(_saveResume);
   }
 
   late final ResumeRepository _resumeRepository;
   late final AuthRepository _authRepository;
-  late final Command1<Unit, Resume> downloadResume;
+  late final Command1<Unit, Resume> saveResume;
 
-  AsyncResult<Unit> _downloadResume(Resume resume) async {
-    // final bytes = await resume.toPdf();
-    // await _fileService.savePdf(name: resume.id, bytes: bytes);
-    return const Success(unit);
+  AsyncResult<Unit> _saveResume(Resume resume) async {
+    final updatedResume = resume.copyWith(updatedAt: DateTime.now());
+    return _authRepository //
+        .getCurrentUser()
+        .flatMap((user) => _resumeRepository.saveResume(userId: user.id, resume: updatedResume));
   }
 }

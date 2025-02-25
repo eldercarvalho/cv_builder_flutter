@@ -10,9 +10,29 @@ class SocialNetwork extends Equatable {
     required this.id,
     required this.name,
     this.username,
-   this.url,
+    this.url,
   });
 
   @override
   List<Object?> get props => [id, name, username, url];
 }
+
+const availableSocialNetworks = [
+  'Instagram',
+  'Facebook',
+  'LinkedIn',
+  'Twitter',
+  'GitHub',
+  'Stack Overflow',
+  'YouTube',
+  'Medium',
+  'Behance',
+  'Dribbble',
+  'Pinterest',
+  'TikTok',
+  'Tumblr',
+  'Skype',
+  // 'Telegram',
+  'Twitch',
+  'Discord',
+];

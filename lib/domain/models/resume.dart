@@ -83,6 +83,7 @@ class Resume extends Equatable {
   final DateTime? updatedAt;
   final String? thumbnail;
   final bool isDraft;
+  final String? copyId;
 
   String? get age => birthDate != null ? (DateTime.now().difference(birthDate!).inDays ~/ 365).toString() : null;
   bool get hasPhoto => photo != null;
@@ -136,6 +137,7 @@ class Resume extends Equatable {
     this.updatedAt,
     this.thumbnail,
     this.isDraft = false,
+    this.copyId,
   });
 
   static Resume empty() => Resume(
@@ -347,6 +349,7 @@ class Resume extends Equatable {
     DateTime? updatedAt,
     String? thumbnail,
     bool? isDraft,
+    String? copyId,
   }) {
     return Resume(
       id: id ?? this.id,
@@ -379,6 +382,7 @@ class Resume extends Equatable {
       updatedAt: updatedAt ?? this.updatedAt,
       thumbnail: thumbnail ?? this.thumbnail,
       isDraft: isDraft ?? this.isDraft,
+      copyId: copyId ?? this.copyId,
     );
   }
 
@@ -414,6 +418,7 @@ class Resume extends Equatable {
         updatedAt,
         thumbnail,
         isDraft,
+        copyId,
       ];
 }
 

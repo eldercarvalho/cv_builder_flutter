@@ -20,6 +20,11 @@ class ResumeRepositoryRemote extends ResumeRepository {
   late final RemoteService _remoteService;
   late final FileService _fileService;
 
+  final _resumes = <Resume>[];
+
+  @override
+  List<Resume> get resumes => _resumes;
+
   @override
   AsyncResult<Resume> getResume({
     required String userId,
@@ -31,6 +36,20 @@ class ResumeRepositoryRemote extends ResumeRepository {
   }
 
   @override
+  AsyncResult<List<Resume>> getResumes({required String userId}) async {
+    return _remoteService
+        .getResumes(userId)
+        .map((resumes) => resumes.map((e) => e.toDomain()).toList())
+        .onSuccess(_onGetResumeSuccess);
+  }
+
+  void _onGetResumeSuccess(List<Resume> resumes) {
+    _resumes.clear();
+    _resumes.addAll(resumes);
+    notifyListeners();
+  }
+
+  @override
   AsyncResult<Unit> saveResume({
     required String userId,
     required Resume resume,
@@ -39,7 +58,14 @@ class ResumeRepositoryRemote extends ResumeRepository {
     return await _fileService
         .saveTempImage(name: resume.id, bytes: thumbnailBytes)
         .flatMap((thumbFile) => _remoteService.saveResume(userId, ResumeModel.fromDomain(resume), thumbFile))
+        .map((resumeModel) => resumeModel.toDomain())
+        .onSuccess(_onSaveResumeSuccess)
         .pure(unit);
+  }
+
+  void _onSaveResumeSuccess(Resume resume) {
+    _resumes.insert(0, resume);
+    notifyListeners();
   }
 
   @override
@@ -50,14 +76,15 @@ class ResumeRepositoryRemote extends ResumeRepository {
 
   @override
   AsyncResult<Unit> deleteResume({required String userId, required Resume resume}) {
-    return _remoteService.deleteResume(userId, ResumeModel.fromDomain(resume));
+    return _remoteService
+        .deleteResume(userId, ResumeModel.fromDomain(resume))
+        .onSuccess((_) => _onDeleteResumeSuccess(resume))
+        .pure(unit);
   }
 
-  @override
-  AsyncResult<List<Resume>> getResumes({required String userId}) async {
-    return _remoteService
-        .getResumes(userId) //
-        .map((resumes) => resumes.map((e) => e.toDomain()).toList());
+  void _onDeleteResumeSuccess(Resume resume) {
+    _resumes.remove(resume);
+    notifyListeners();
   }
 
   @override
@@ -67,6 +94,10 @@ class ResumeRepositoryRemote extends ResumeRepository {
 
   @override
   AsyncResult<Unit> deleteResumes({required String userId}) {
-    return _remoteService.deleteResumes(userId);
+    return _remoteService
+        .deleteResumes(userId)
+        .onSuccess((_) => _resumes.clear())
+        .onSuccess((_) => notifyListeners())
+        .pure(unit);
   }
 }

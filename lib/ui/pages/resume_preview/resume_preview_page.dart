@@ -30,8 +30,8 @@ class ResumePreviewPage extends StatefulWidget {
     return await Navigator.of(context).pushNamed(route, arguments: params);
   }
 
-  static void replace(BuildContext context, {required ResumePreviewParams params}) {
-    Navigator.of(context).pushReplacementNamed(route, arguments: params);
+  static Future<Object?> pushNamedAndRemoveUntil(BuildContext context, {required ResumePreviewParams params}) async {
+    return await Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => route.isFirst, arguments: params);
   }
 
   @override

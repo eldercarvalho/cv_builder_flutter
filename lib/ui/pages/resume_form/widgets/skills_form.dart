@@ -41,21 +41,24 @@ class _SkillsFormState extends State<SkillsForm> {
 
   @override
   Widget build(BuildContext context) {
-    return FormContainer(
-      spacing: 0,
-      showPreviewButton: !widget.isEditing,
-      onPreviewButtonPressed: _onPreview,
-      fields: [
-        SectionTitleTextField(
-          text: context.l10n.skills(2),
-          icon: FeatherIcons.star,
-          padding: 0,
-        ),
-        ListenableBuilder(
-          listenable: _viewModel,
-          builder: (context, _) {
-            if (_viewModel.resume.skills.isEmpty) {
-              return Padding(
+    return ListenableBuilder(
+      listenable: _viewModel,
+      builder: (context, _) {
+        return FormContainer(
+          spacing: 0,
+          showPreviewButton: !widget.isEditing,
+          onPreviewButtonPressed: _onPreview,
+          showAddButton: _viewModel.resume.skills.isNotEmpty,
+          onAddPressed: _onAddButtonPressed,
+          title: SectionTitleTextField(
+            text: context.l10n.skills(2),
+            icon: FeatherIcons.star,
+            padding: 0,
+          ),
+          fields: [
+            Visibility(
+              visible: _viewModel.resume.skills.isNotEmpty,
+              replacement: Padding(
                 padding: const EdgeInsets.only(top: 40),
                 child: CbEmptyState(
                   imagePath: 'assets/images/empty.svg',
@@ -63,57 +66,46 @@ class _SkillsFormState extends State<SkillsForm> {
                   buttonText: context.l10n.addSkill,
                   onPressed: _onAddButtonPressed,
                 ),
-              );
-            }
-
-            return ReorderableListView.builder(
-              shrinkWrap: true,
-              onReorder: _onReorder,
-              itemCount: _viewModel.resume.skills.length,
-              itemBuilder: (context, index) {
-                final skill = _viewModel.resume.skills[index];
-                return OptionTile(
-                  key: ValueKey(skill.id),
-                  title: skill.name,
-                  subtitle: skill.level,
-                  onTap: () => _onAddButtonPressed(itemToEdit: skill),
-                  onDeleteTap: () => _onRemove(skill.id),
-                  isLastItem: index == _viewModel.resume.skills.length - 1,
-                );
-              },
-            );
-          },
-        ),
-        Visibility(
-          visible: _viewModel.resume.skills.isNotEmpty,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: OutlinedButton.icon(
-              onPressed: () => _onAddButtonPressed(),
-              label: Text(context.l10n.addSkill),
-              icon: const Icon(Icons.add),
+              ),
+              child: ReorderableListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                onReorder: _onReorder,
+                itemCount: _viewModel.resume.skills.length,
+                itemBuilder: (context, index) {
+                  final skill = _viewModel.resume.skills[index];
+                  return OptionTile(
+                    key: ValueKey(skill.id),
+                    title: skill.name,
+                    subtitle: skill.level,
+                    onTap: () => _onAddButtonPressed(itemToEdit: skill),
+                    onDeleteTap: () => _onRemove(skill.id),
+                    isLastItem: index == _viewModel.resume.skills.length - 1,
+                  );
+                },
+              ),
             ),
-          ),
-        ),
-      ],
-      bottom: ListenableBuilder(
-        listenable: _viewModel.saveResume,
-        builder: (context, _) {
-          return FormButtons(
-            isEditing: widget.isEditing,
-            step: 9,
-            showIcons: true,
-            showSaveButton: widget.isEditing,
-            isLoading: _viewModel.saveResume.running,
-            previousText: context.l10n.experience(1),
-            onPreviousPressed: widget.onPrevious,
-            nextText: context.l10n.languages(1),
-            onNextPressed: () {
-              widget.onSubmit();
+          ],
+          bottom: ListenableBuilder(
+            listenable: _viewModel.saveResume,
+            builder: (context, _) {
+              return FormButtons(
+                isEditing: widget.isEditing,
+                step: 9,
+                showIcons: true,
+                showSaveButton: widget.isEditing,
+                isLoading: _viewModel.saveResume.running,
+                previousText: context.l10n.experience(1),
+                onPreviousPressed: widget.onPrevious,
+                nextText: context.l10n.languages(1),
+                onNextPressed: () {
+                  widget.onSubmit();
+                },
+              );
             },
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -150,7 +142,7 @@ class _SkillsFormState extends State<SkillsForm> {
 
   void _onRemove(String id) {
     _viewModel.resume = _viewModel.resume.copyWith(
-      workExperience: _viewModel.resume.workExperience.where((e) => e.id != id).toList(),
+      skills: _viewModel.resume.skills.where((e) => e.id != id).toList(),
     );
   }
 
@@ -158,10 +150,10 @@ class _SkillsFormState extends State<SkillsForm> {
     if (index > oldIndex) {
       index -= 1;
     }
-    final experiences = _viewModel.resume.workExperience;
-    final experience = experiences.removeAt(oldIndex);
-    experiences.insert(index, experience);
-    _viewModel.resume = _viewModel.resume.copyWith(workExperience: experiences);
+    final skills = _viewModel.resume.skills;
+    final skill = skills.removeAt(oldIndex);
+    skills.insert(index, skill);
+    _viewModel.resume = _viewModel.resume.copyWith(skills: skills);
   }
 }
 

@@ -11,6 +11,7 @@ export 'min_length_validator.dart';
 export 'min_number_validator.dart';
 export 'multi_validator.dart';
 export 'pattern_validator.dart';
+export 'phone_validator.dart';
 export 'required_validator.dart';
 export 'text_field_validator.dart';
-export 'phone_validator.dart';
+export 'url_validator.dart';

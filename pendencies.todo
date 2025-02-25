@@ -2,14 +2,36 @@
   "todotree": {
     "tree": [
       {
-        "key": 1738899693515,
+        "key": 1738675723804,
         "children": [],
         "todo": {
-          "content": "Tratamento de Erros",
-          "id": 1738899693515,
+          "content": "Integrar IA",
+          "id": 1738675723804,
+          "level": "warning",
+          "done": false,
+          "start": 1738675723804
+        }
+      },
+      {
+        "key": 1738675841014,
+        "children": [],
+        "todo": {
+          "content": "Implementar novo template Modern",
+          "id": 1738675841014,
+          "level": "warning",
+          "done": false,
+          "start": 1738675841014
+        }
+      },
+      {
+        "key": 1739836830766,
+        "children": [],
+        "todo": {
+          "content": "Erro co google sign in android 14",
+          "id": 1739836830766,
           "level": "default",
           "done": false,
-          "start": 1738899693516
+          "start": 1739836830766
         }
       },
       {
@@ -24,93 +46,16 @@
         }
       },
       {
-        "key": 1739031781437,
-        "children": [],
-        "todo": {
-          "content": "Não está trocando email",
-          "id": 1739031781437,
-          "level": "default",
-          "done": false,
-          "start": 1739031781438
-        }
-      },
-      {
-        "key": 1738935229208,
-        "children": [],
-        "todo": {
-          "content": "Atribuir data inicial no calendário",
-          "id": 1738935229208,
-          "level": "default",
-          "done": false,
-          "start": 1738935229208
-        }
-      },
-      {
-        "key": 1738675671455,
-        "children": [],
-        "todo": {
-          "content": "Criar tela Perfil",
-          "id": 1738675671455,
-          "level": "default",
-          "done": true,
-          "start": 1738675671455,
-          "focus": false,
-          "end": 1738909075965
-        }
-      },
-      {
-        "key": 1738675820505,
-        "children": [],
-        "todo": {
-          "content": "Consertar template Basic",
-          "id": 1738675820505,
-          "level": "default",
-          "done": false,
-          "start": 1738675820505
-        }
-      },
-      {
-        "key": 1738675853667,
-        "children": [],
-        "todo": {
-          "content": "Salvar currículo para a tela de finalização",
-          "id": 1738675853667,
-          "level": "default",
-          "done": false,
-          "start": 1738675853667
-        }
-      },
-      {
         "key": 1738765767900,
         "children": [],
         "todo": {
           "content": "Importar dados de um currículo",
           "id": 1738765767900,
           "level": "default",
-          "done": false,
-          "start": 1738765767900
-        }
-      },
-      {
-        "key": 1738675841014,
-        "children": [],
-        "todo": {
-          "content": "Implementar novo template Modern",
-          "id": 1738675841014,
-          "level": "default",
-          "done": false,
-          "start": 1738675841014
-        }
-      },
-      {
-        "key": 1738675682527,
-        "children": [],
-        "todo": {
-          "content": "Criar tela Configurtações",
-          "id": 1738675682527,
-          "level": "default",
-          "done": false,
-          "start": 1738675682527
+          "done": true,
+          "start": 1738765767900,
+          "focus": false,
+          "end": 1740441657321
         }
       },
       {
@@ -125,14 +70,14 @@
         }
       },
       {
-        "key": 1738675723804,
+        "key": 1738763088684,
         "children": [],
         "todo": {
-          "content": "Integrar IA",
-          "id": 1738675723804,
+          "content": "Importar currículo",
+          "id": 1738763088684,
           "level": "default",
           "done": false,
-          "start": 1738675723804
+          "start": 1738763088684
         }
       },
       {
@@ -144,17 +89,6 @@
           "level": "default",
           "done": false,
           "start": 1738675949189
-        }
-      },
-      {
-        "key": 1738675971721,
-        "children": [],
-        "todo": {
-          "content": "Fornecer redes sociais como opções",
-          "id": 1738675971721,
-          "level": "default",
-          "done": false,
-          "start": 1738675971721
         }
       },
       {
@@ -180,14 +114,131 @@
         }
       },
       {
-        "key": 1738763088684,
+        "key": 1738899693515,
         "children": [],
         "todo": {
-          "content": "Importar currículo",
-          "id": 1738763088684,
+          "content": "Tratamento de Erros",
+          "id": 1738899693515,
           "level": "default",
           "done": false,
-          "start": 1738763088684
+          "start": 1738899693516
+        }
+      },
+      {
+        "key": 1739838592908,
+        "children": [],
+        "todo": {
+          "content": "Reordenar itens error",
+          "id": 1739838592908,
+          "level": "default",
+          "done": true,
+          "start": 1739838592908,
+          "focus": false,
+          "end": 1740025225993
+        }
+      },
+      {
+        "key": 1739836815743,
+        "children": [],
+        "todo": {
+          "content": "Corrigir lista de habilidades não scrollando",
+          "id": 1739836815743,
+          "level": "default",
+          "done": true,
+          "start": 1739836815743,
+          "focus": false,
+          "end": 1740025229084
+        }
+      },
+      {
+        "key": 1739413098282,
+        "children": [],
+        "todo": {
+          "content": "Validar campos de link",
+          "id": 1739413098282,
+          "level": "default",
+          "done": true,
+          "start": 1739413098283,
+          "focus": false,
+          "end": 1740331613804
+        }
+      },
+      {
+        "key": 1738935229208,
+        "children": [],
+        "todo": {
+          "content": "Atribuir data inicial no calendário",
+          "id": 1738935229208,
+          "level": "default",
+          "done": true,
+          "start": 1738935229208,
+          "focus": false,
+          "end": 1739413417788
+        }
+      },
+      {
+        "key": 1738675971721,
+        "children": [],
+        "todo": {
+          "content": "Fornecer redes sociais como opções",
+          "id": 1738675971721,
+          "level": "default",
+          "done": true,
+          "start": 1738675971721,
+          "focus": false,
+          "end": 1740289479773
+        }
+      },
+      {
+        "key": 1739031781437,
+        "children": [],
+        "todo": {
+          "content": "Não está trocando email",
+          "id": 1739031781437,
+          "level": "default",
+          "done": true,
+          "start": 1739031781438,
+          "focus": false,
+          "end": 1739406490641
+        }
+      },
+      {
+        "key": 1738675671455,
+        "children": [],
+        "todo": {
+          "content": "Criar tela Perfil",
+          "id": 1738675671455,
+          "level": "default",
+          "done": true,
+          "start": 1738675671455,
+          "focus": false,
+          "end": 1738909075965
+        }
+      },
+      {
+        "key": 1738675820505,
+        "children": [],
+        "todo": {
+          "content": "Consertar template Basic",
+          "id": 1738675820505,
+          "level": "default",
+          "done": true,
+          "start": 1738675820505,
+          "focus": false,
+          "end": 1739406497726
+        }
+      },
+      {
+        "key": 1738675853667,
+        "children": [],
+        "todo": {
+          "content": "Salvar currículo para a tela de finalização",
+          "id": 1738675853667,
+          "level": "default",
+          "done": true,
+          "start": 1738675853667,
+          "focus": false,
+          "end": 1739412905287
         }
       },
       {
@@ -324,6 +375,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1739047923488"
+    "version": "1740441657383"
   }
 }

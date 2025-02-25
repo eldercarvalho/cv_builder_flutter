@@ -47,6 +47,17 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   @override
+  void dispose() {
+    _viewModel.updateAccount.removeListener(_onUpdateAccountListener);
+    _viewModel.deleteAccount.removeListener(_onDeleteAccountListener);
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

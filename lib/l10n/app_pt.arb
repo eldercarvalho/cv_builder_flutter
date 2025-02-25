@@ -25,6 +25,7 @@
   "minLenghtError": "O campo deve ter no mínimo {min} caracteres",
   "invalidEmailError": "Email inválido",
   "passwordsDoesntMatch": "As senhas não são iguais",
+  "invalidUrlError": "URL inválida",
   "resumeInfo": "Informações do Currículo",
   "education": "{count, plural, =1{Formação} other{Formações}}",
   "socialNetwork": "{count, plural, =0{Nenhuma Rede Social} =1{Rede Social} other{Redes Sociais}}",
@@ -133,6 +134,7 @@
   "accountDeleteAlertCancel": "Cancelar",
   "noNetworkError": "Sem conexão com a internet",
   "emailAlreadyInUseError": "O email informado já está vinculado a uma conta",
-  "weakPasswordError": "A senha informada é muito fraca"
-
+  "weakPasswordError": "A senha informada é muito fraca",
+  "creatingResume": "Criando Currículo...",
+  "addPhoto": "Adicionar Foto"
 }

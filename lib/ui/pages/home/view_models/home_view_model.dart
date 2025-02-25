@@ -21,6 +21,7 @@ class HomeViewModel extends ChangeNotifier {
       _isUserAuthenticated = user != null;
       notifyListeners();
     });
+    _resumeRepository.addListener(_setResumes);
   }
 
   late final AuthRepository _authRepository;
@@ -63,16 +64,7 @@ class HomeViewModel extends ChangeNotifier {
     return _authRepository
         .getCurrentUser()
         .flatMap((user) => _resumeRepository.deleteResume(userId: user.id, resume: resume))
-        .fold(
-          (_) => _onDeleteSuccess(resume),
-          (error) => Failure(error),
-        );
-  }
-
-  Result<Unit> _onDeleteSuccess(Resume resume) {
-    _resumes.remove(resume);
-    notifyListeners();
-    return const Success(unit);
+        .fold((_) => const Success(unit), (error) => Failure(error));
   }
 
   AsyncResult<Unit> logout() async {
@@ -83,9 +75,15 @@ class HomeViewModel extends ChangeNotifier {
     );
   }
 
+  void _setResumes() {
+    _resumes = _resumeRepository.resumes;
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     _authSubscription.cancel();
+    _resumeRepository.removeListener(_setResumes);
     super.dispose();
   }
 }

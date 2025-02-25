@@ -33,7 +33,7 @@ class _SectionTitleTextFieldState extends State<SectionTitleTextField> {
     }
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: widget.padding).copyWith(bottom: 10),
+      padding: EdgeInsets.symmetric(horizontal: widget.padding).copyWith(bottom: 16),
       child: Row(
         // spacing: 6,
         children: [

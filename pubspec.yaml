@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.1.1+4
 
 environment:
   sdk: ^3.5.3
@@ -48,11 +48,13 @@ dependencies:
   flutter_keyboard_visibility: ^6.0.0
   image: ^4.5.2
   image_cropper: ^9.0.0
+  dropdown_search: ^6.0.2
 
 dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
+  husky: ^0.1.7
 
 flutter:
   generate: true
@@ -60,6 +62,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/brands/
 
 flutter_native_splash:
   color: "#FFFFFF"

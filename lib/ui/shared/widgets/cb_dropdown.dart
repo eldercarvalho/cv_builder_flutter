@@ -13,29 +13,31 @@ class Option {
 class CbDropdown extends StatefulWidget {
   const CbDropdown({
     super.key,
-    required this.labelText,
+    this.labelText,
     required this.options,
-    required this.hintText,
     required this.onChanged,
     this.loading = false,
     this.initialValue,
     this.disabled = false,
+    this.buildItem,
+    this.validator,
   });
 
-  final String labelText;
-  final String hintText;
+  final String? labelText;
   final bool loading;
   final String? initialValue;
   final bool disabled;
   final List<Option> options;
   final Function(String value) onChanged;
+  final Widget Function(String value)? buildItem;
+  final String? Function(String?)? validator;
 
   @override
   State<CbDropdown> createState() => _CbDropdownState();
 }
 
 class _CbDropdownState extends State<CbDropdown> {
-  late String _value;
+  String? _value;
 
   @override
   void initState() {
@@ -58,51 +60,43 @@ class _CbDropdownState extends State<CbDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(widget.labelText, style: context.textTheme.titleSmall),
-        const SizedBox(height: 8),
-        DecoratedBox(
-          decoration: BoxDecoration(
-            color: context.colors.surface,
-            borderRadius: BorderRadius.circular(8.r),
-            border: Border.all(
-              width: 2,
-              // color: Colors.grey.shade300,
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
-            child: DropdownButton(
-              hint: Text(widget.hintText, style: context.textTheme.labelLarge),
-              items: List.generate(widget.options.length, (index) {
-                final option = widget.options[index];
-                return DropdownMenuItem(
-                  value: option.value,
-                  child: Text(option.text),
-                );
-              }),
-              onChanged: !widget.disabled ? _onChanged : null,
-              value: _value,
-              icon: widget.loading
-                  ? SizedBox(
-                      width: 24.w,
-                      height: 24.w,
-                      child: const CircularProgressIndicator(),
-                    )
-                  : Icon(
-                      FeatherIcons.chevronDown,
-                      size: 24,
-                      color: context.colors.onSurface,
-                    ),
-              underline: const SizedBox.shrink(),
-              style: context.textTheme.labelMedium,
-              isExpanded: true,
+    return Opacity(
+      opacity: widget.disabled ? 0.5 : 1,
+      child: DropdownButtonFormField(
+        validator: widget.validator,
+        items: List.generate(widget.options.length, (index) {
+          final option = widget.options[index];
+          return DropdownMenuItem(
+            value: option.value,
+            child: widget.buildItem != null ? widget.buildItem!(option.text) : Text(option.text),
+          );
+        }),
+        onChanged: !widget.disabled ? _onChanged : null,
+        value: _value,
+        icon: widget.loading
+            ? SizedBox(
+                width: 24.w,
+                height: 24.w,
+                child: const CircularProgressIndicator(),
+              )
+            : Icon(
+                FeatherIcons.chevronDown,
+                size: 24,
+                color: context.colors.onSurface,
+              ),
+        style: context.textTheme.bodyLarge,
+        decoration: InputDecoration(
+          labelText: widget.labelText,
+          labelStyle: context.textTheme.labelMedium,
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: context.colors.outline.withValues(alpha: 0.1),
+              width: 1,
             ),
           ),
         ),
-      ],
+        menuMaxHeight: 400,
+      ),
     );
   }
 
@@ -114,10 +108,11 @@ class _CbDropdownState extends State<CbDropdown> {
   void _checkInitialValue() {
     if (widget.initialValue != null && widget.initialValue!.isNotEmpty) {
       setState(() => _value = widget.initialValue!);
-    } else if (widget.options.isNotEmpty) {
-      setState(() => _value = widget.options.first.value);
-    } else {
-      _value = '';
     }
+    //  else if (widget.options.isNotEmpty) {
+    //   setState(() => _value = widget.options.first.value);
+    // } else {
+    //   _value = null;
+    // }
   }
 }

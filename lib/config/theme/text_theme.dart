@@ -49,7 +49,7 @@ class CbBuilderLightTextTheme {
         ),
         labelSmall: GoogleFonts.nunitoSans(
           fontSize: 10.sp,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w600,
         ),
       );
 }

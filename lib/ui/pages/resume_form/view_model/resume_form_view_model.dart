@@ -17,12 +17,16 @@ class ResumeFormViewModel extends ChangeNotifier {
     _resumeRepository = resumeRepository;
     saveResume = Command1(_saveResume);
     generatePdf = Command0(_generatePdf);
+    _resumes = _resumeRepository.resumes;
   }
 
   late final AuthRepository _authRepository;
   late final ResumeRepository _resumeRepository;
   late final Command1<Unit, bool> saveResume;
   late final Command0<File> generatePdf;
+
+  List<Resume> _resumes = [];
+  List<Resume> get resumes => _resumes;
 
   Resume _resume = Resume.empty();
   Resume get resume => _resume;
@@ -57,5 +61,15 @@ class ResumeFormViewModel extends ChangeNotifier {
       },
       (e) => Failure(e),
     );
+  }
+
+  void copyDataFromResume(String resumeId) {
+    final resumeToBeCopied = _resumes.firstWhere((element) => element.id == resumeId);
+    _resume = resumeToBeCopied.copyWith(
+      id: _resume.id,
+      resumeName: _resume.resumeName,
+      resumeLanguage: _resume.resumeLanguage,
+    );
+    notifyListeners();
   }
 }

@@ -25,6 +25,7 @@
   "minLenghtError": "The field must have a minimum of {min} characters",
   "invalidEmailError": "Invalid Email",
   "passwordsDoesntMatch": "Passwords doesn't match",
+  "invalidUrlError": "Invalid URL",
   "resumeInfo": "Resume Information",
   "education": "{count, plural, =1{Education} other{Educations}}",
   "socialNetwork": "{count, plural, =0{No Social Network} =1{Social Network} other{Social Networks}}",
@@ -132,5 +133,7 @@
   "accountDeleteAlertCancel": "Cancel",
   "noNetworkError": "No internet connection",
   "emailAlreadyInUseError": "The email is already in use",
-  "weakPasswordError": "The password is too weak"
+  "weakPasswordError": "The password is too weak",
+  "creatingResume": "Creating Resume...",
+  "addPhoto": "Add Photo"
 }
