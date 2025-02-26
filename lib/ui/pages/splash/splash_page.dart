@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../config/di.dart';
 import '../../shared/extensions/context.dart';
@@ -28,8 +29,8 @@ class _SplashPageState extends State<SplashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Image.asset(
-          'assets/images/splash.png',
+        child: SvgPicture.asset(
+          'assets/images/splash.svg',
           width: context.screenWidth * 0.7,
         ),
       ),
