@@ -64,6 +64,14 @@ class ResumeRepositoryRemote extends ResumeRepository {
   }
 
   void _onSaveResumeSuccess(Resume resume) {
+    final index = _resumes.indexWhere((e) => e.id == resume.id);
+
+    if (index != -1) {
+      _resumes[index] = resume;
+      notifyListeners();
+      return;
+    }
+
     _resumes.insert(0, resume);
     notifyListeners();
   }

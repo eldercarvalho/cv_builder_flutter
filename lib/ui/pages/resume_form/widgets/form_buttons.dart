@@ -36,94 +36,97 @@ class FormButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          padding: shrink ? const EdgeInsets.symmetric(horizontal: 16, vertical: 6) : const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: context.colors.surface,
-            // border: Border(
-            //   top: BorderSide(color: context.colors.outline),
-            // ),
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: context.colors.shadow.withValues(alpha: 0.2),
-                offset: const Offset(0, -2),
-                blurRadius: 4,
+    return SafeArea(
+      top: false,
+      child: Stack(
+        children: [
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 300),
+            padding: shrink ? const EdgeInsets.symmetric(horizontal: 16, vertical: 6) : const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: context.colors.surface,
+              // border: Border(
+              //   top: BorderSide(color: context.colors.outline),
+              // ),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
               ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Visibility(
-                visible: showSaveButton,
-                child: CbButton(
-                  onPressed: onNextPressed,
-                  text: context.l10n.save,
-                  isLoading: isLoading,
+              boxShadow: [
+                BoxShadow(
+                  color: context.colors.shadow.withValues(alpha: 0.2),
+                  offset: const Offset(0, -2),
+                  blurRadius: 4,
                 ),
-              ),
-              Visibility(
-                visible: !showSaveButton,
-                child: Row(
-                  spacing: 16,
-                  children: [
-                    if (onPreviousPressed != null)
+              ],
+            ),
+            child: Column(
+              children: [
+                Visibility(
+                  visible: showSaveButton,
+                  child: CbButton(
+                    onPressed: onNextPressed,
+                    text: context.l10n.save,
+                    isLoading: isLoading,
+                  ),
+                ),
+                Visibility(
+                  visible: !showSaveButton,
+                  child: Row(
+                    spacing: 16,
+                    children: [
+                      if (onPreviousPressed != null)
+                        Expanded(
+                          child: CbButton(
+                            onPressed: onPreviousPressed!,
+                            text: previousText ?? context.l10n.cancel,
+                            prefixIcon: showIcons ? FeatherIcons.chevronLeft : null,
+                            type: CbButtonType.outlined,
+                          ),
+                        ),
                       Expanded(
                         child: CbButton(
-                          onPressed: onPreviousPressed!,
-                          text: previousText ?? context.l10n.cancel,
-                          prefixIcon: showIcons ? FeatherIcons.chevronLeft : null,
-                          type: CbButtonType.outlined,
+                          onPressed: onNextPressed,
+                          text: nextText ?? context.l10n.next,
+                          suffixIcon: showIcons ? nextIcon ?? FeatherIcons.chevronRight : null,
+                          isLoading: isLoading,
                         ),
                       ),
-                    Expanded(
-                      child: CbButton(
-                        onPressed: onNextPressed,
-                        text: nextText ?? context.l10n.next,
-                        suffixIcon: showIcons ? nextIcon ?? FeatherIcons.chevronRight : null,
-                        isLoading: isLoading,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Visibility(
-          visible: step != null && !isEditing,
-          child: Transform.translate(
-            offset: const Offset(0, -46),
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 6, left: 16),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                decoration: BoxDecoration(
-                  color: context.colors.surface,
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: context.colors.shadow.withValues(alpha: 0.2),
-                      offset: const Offset(0, 1),
-                      blurRadius: 4,
-                    ),
-                  ],
-                ),
-                child: Text(
-                  '$step ${context.l10n.outOf} 11',
-                  style: context.textTheme.labelLarge?.copyWith(color: context.colors.secondary),
+          Visibility(
+            visible: step != null && !isEditing,
+            child: Transform.translate(
+              offset: const Offset(0, -46),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 6, left: 16),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: context.colors.surface,
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: context.colors.shadow.withValues(alpha: 0.2),
+                        offset: const Offset(0, 1),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    '$step ${context.l10n.outOf} 11',
+                    style: context.textTheme.labelLarge?.copyWith(color: context.colors.secondary),
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

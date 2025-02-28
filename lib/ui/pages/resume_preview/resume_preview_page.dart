@@ -109,60 +109,63 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
                         controller: _pdfViewerController,
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: context.colors.surface,
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          topRight: Radius.circular(16),
+                    SafeArea(
+                      top: false,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: context.colors.surface,
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: context.colors.shadow.withValues(alpha: 0.3),
+                              blurRadius: 4,
+                              offset: const Offset(0, -2),
+                            ),
+                          ],
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: context.colors.shadow.withValues(alpha: 0.3),
-                            blurRadius: 4,
-                            offset: const Offset(0, -2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Builder(builder: (context) {
-                            return IconButton(
-                              onPressed: () => Scaffold.of(context).openEndDrawer(),
-                              icon: Icon(FeatherIcons.edit, color: context.colors.primary),
-                            );
-                          }),
-                          IconButton(
-                            onPressed: () => Printing.sharePdf(
-                                bytes: _viewModel.resumePdf!.readAsBytesSync(),
-                                filename: '${_viewModel.resume!.resumeName}.pdf'),
-                            icon: Icon(FeatherIcons.share2, color: context.colors.primary),
-                          ),
-                          Container(
-                            height: 24,
-                            width: 1,
-                            color: context.colors.outline,
-                          ),
-                          IconButton(
-                            onPressed: () => _pdfViewerController.zoomLevel += 0.5,
-                            icon: Icon(FeatherIcons.zoomIn, size: 26, color: context.colors.primary),
-                          ),
-                          IconButton(
-                            onPressed: () => _pdfViewerController.zoomLevel -= 0.5,
-                            icon: Icon(FeatherIcons.zoomOut, size: 26, color: context.colors.primary),
-                          ),
-                          Container(
-                            height: 24,
-                            width: 1,
-                            color: context.colors.outline,
-                          ),
-                          IconButton(
-                            onPressed: _showDeleteDialog,
-                            icon: Icon(FeatherIcons.trash2, size: 26, color: context.colors.error),
-                          ),
-                        ],
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Builder(builder: (context) {
+                              return IconButton(
+                                onPressed: () => Scaffold.of(context).openEndDrawer(),
+                                icon: Icon(FeatherIcons.edit, color: context.colors.primary),
+                              );
+                            }),
+                            IconButton(
+                              onPressed: () => Printing.sharePdf(
+                                  bytes: _viewModel.resumePdf!.readAsBytesSync(),
+                                  filename: '${_viewModel.resume!.resumeName}.pdf'),
+                              icon: Icon(FeatherIcons.share2, color: context.colors.primary),
+                            ),
+                            Container(
+                              height: 24,
+                              width: 1,
+                              color: context.colors.outline,
+                            ),
+                            IconButton(
+                              onPressed: () => _pdfViewerController.zoomLevel += 0.5,
+                              icon: Icon(FeatherIcons.zoomIn, size: 26, color: context.colors.primary),
+                            ),
+                            IconButton(
+                              onPressed: () => _pdfViewerController.zoomLevel -= 0.5,
+                              icon: Icon(FeatherIcons.zoomOut, size: 26, color: context.colors.primary),
+                            ),
+                            Container(
+                              height: 24,
+                              width: 1,
+                              color: context.colors.outline,
+                            ),
+                            IconButton(
+                              onPressed: _showDeleteDialog,
+                              icon: Icon(FeatherIcons.trash2, size: 26, color: context.colors.error),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   ],

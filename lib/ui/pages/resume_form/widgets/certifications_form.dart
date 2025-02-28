@@ -41,67 +41,72 @@ class _CertificationsFormState extends State<CertificationsForm> {
 
   @override
   Widget build(BuildContext context) {
-    return FormContainer(
-      showPreviewButton: !widget.isEditing,
-      onPreviewButtonPressed: _onPreview,
-      spacing: 0,
-      showAddButton: _viewModel.resume.certifications.isNotEmpty,
-      onAddPressed: _onAddButtonPressed,
-      title: SectionTitleTextField(
-        text: context.l10n.certifications(2),
-        icon: FeatherIcons.award,
-        padding: 0,
-      ),
-      fields: [
-        Visibility(
-          visible: _viewModel.resume.certifications.isNotEmpty,
-          replacement: Padding(
-            padding: const EdgeInsets.only(top: 40),
-            child: CbEmptyState(
-              imagePath: 'assets/images/empty.svg',
-              message: context.l10n.noItemAdded('female', context.l10n.certifications(1)),
-              buttonText: context.l10n.addCertification,
-              onPressed: _onAddButtonPressed,
-            ),
+    return ListenableBuilder(
+      listenable: _viewModel,
+      builder: (context, _) {
+        return FormContainer(
+          spacing: 0,
+          showPreviewButton: !widget.isEditing,
+          showAddButton: _viewModel.resume.certifications.isNotEmpty,
+          onPreviewButtonPressed: _onPreview,
+          onAddPressed: _onAddButtonPressed,
+          title: SectionTitleTextField(
+            text: context.l10n.certifications(2),
+            icon: FeatherIcons.award,
+            padding: 0,
           ),
-          child: ReorderableListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            onReorder: _onReorder,
-            itemCount: _viewModel.resume.certifications.length,
-            itemBuilder: (context, index) {
-              final certification = _viewModel.resume.certifications[index];
-              return OptionTile(
-                key: ValueKey(certification.id),
-                title: certification.title,
-                subtitle: certification.issuer,
-                onTap: () => _onAddButtonPressed(itemToEdit: certification),
-                onDeleteTap: () => _onRemove(certification.id),
-                isLastItem: index == _viewModel.resume.certifications.length - 1,
+          fields: [
+            Visibility(
+              visible: _viewModel.resume.certifications.isNotEmpty,
+              replacement: Padding(
+                padding: const EdgeInsets.only(top: 40),
+                child: CbEmptyState(
+                  imagePath: 'assets/images/empty.svg',
+                  message: context.l10n.noItemAdded('female', context.l10n.certifications(1)),
+                  buttonText: context.l10n.addCertification,
+                  onPressed: _onAddButtonPressed,
+                ),
+              ),
+              child: ReorderableListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                onReorder: _onReorder,
+                itemCount: _viewModel.resume.certifications.length,
+                itemBuilder: (context, index) {
+                  final certification = _viewModel.resume.certifications[index];
+                  return OptionTile(
+                    key: ValueKey(certification.id),
+                    title: certification.title,
+                    subtitle: certification.issuer,
+                    onTap: () => _onAddButtonPressed(itemToEdit: certification),
+                    onDeleteTap: () => _onRemove(certification.id),
+                    isLastItem: index == _viewModel.resume.certifications.length - 1,
+                  );
+                },
+              ),
+            ),
+          ],
+          bottom: ListenableBuilder(
+            listenable: _viewModel.saveResume,
+            builder: (context, child) {
+              return FormButtons(
+                isEditing: widget.isEditing,
+                step: 11,
+                showIcons: true,
+                showSaveButton: widget.isEditing,
+                isLoading: _viewModel.saveResume.running,
+                onPreviousPressed: widget.onPrevious,
+                previousText: context.l10n.skills(2),
+                nextText: context.l10n.finish,
+                nextIcon: FeatherIcons.checkCircle,
+                onNextPressed: () {
+                  widget.onSubmit();
+                },
               );
             },
           ),
-        ),
-      ],
-      bottom: ListenableBuilder(
-        listenable: _viewModel.saveResume,
-        builder: (context, child) {
-          return FormButtons(
-            isEditing: widget.isEditing,
-            step: 11,
-            showIcons: true,
-            showSaveButton: widget.isEditing,
-            isLoading: _viewModel.saveResume.running,
-            onPreviousPressed: widget.onPrevious,
-            previousText: context.l10n.skills(2),
-            nextText: context.l10n.finish,
-            nextIcon: FeatherIcons.checkCircle,
-            onNextPressed: () {
-              widget.onSubmit();
-            },
-          );
-        },
-      ),
+        );
+      },
     );
   }
 
@@ -242,14 +247,14 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
                 final format = DateFormat('dd/MM/yyyy');
-                final education = Certification(
+                final certification = Certification(
                   id: _isEditing ? widget.certification!.id : const Uuid().v4(),
                   title: _titleController.text.trim(),
                   issuer: _issuerController.text.trim(),
                   date: format.parse(_dateController.text),
                   summary: _summaryController.text.trim(),
                 );
-                Navigator.of(context).pop(education);
+                Navigator.of(context).pop(certification);
               }
             },
           ),

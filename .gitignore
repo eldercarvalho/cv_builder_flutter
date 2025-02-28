@@ -12,6 +12,7 @@
 .swiftpm/
 migrate_working_dir/
 curriculo-top-c5760cb9f87a.json
+keystore.b64
 
 # IntelliJ related
 *.iml
