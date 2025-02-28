@@ -12,7 +12,20 @@
           "package_name": "com.carvalhodev.cvbuilder.cv_builder"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "643458092980-a0dr4bdunbirii6b9l8gscg99t714479.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carvalhodev.cvbuilder.cv_builder",
+            "certificate_hash": "0fc086e8feb2b83d74a70303dd03bc8db031617e"
+          }
+        },
+        {
+          "client_id": "643458092980-81t032kd5l64b3e66nqbr87k7f8t65tk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBrkRmofrls5bRMjHf_1eowv7AW67-v1iY"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643458092980-81t032kd5l64b3e66nqbr87k7f8t65tk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "643458092980-i7fmo1st7hvt4u3jni2joqm0p6cl3dq1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.carvalhodev.cvbuilder.cvBuilder"
+              }
+            }
+          ]
         }
       }
     }
