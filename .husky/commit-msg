@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# dart run commitlint_cli --edit ${1}
+
+# Expressão regex para validar a mensagem de commit
+# COMMIT_REGEX="^\[[A-Z]+-[0-9]+\] (feat|fix|chore|docs|style|refactor|test|perf)(\([a-zA-Z0-9_-]+\))?: .+$"
+COMMIT_REGEX="^(feat|fix|chore|docs|style|refactor|test|perf|ci)(\([a-zA-Z0-9_-]+\))?: .+$"
+
+# Lê a mensagem do commit
+COMMIT_MSG=$(cat "$1")
+
+# Verifica se a mensagem corresponde ao padrão
+if ! [[ $COMMIT_MSG =~ $COMMIT_REGEX ]]; then
+    echo "❌ Invalid commit message! The message should follow the pattern:"
+    echo ""
+    echo "[PRO-000] feat: Implementar nova funcionalidade"
+    echo "[PRO-000] fix: Corrigir bug"
+    echo "[PRO-000] chore: Atualizar dependências"
+    echo ""
+    exit 1
+fi
