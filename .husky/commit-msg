@@ -14,9 +14,7 @@ COMMIT_MSG=$(cat "$1")
 if ! [[ $COMMIT_MSG =~ $COMMIT_REGEX ]]; then
     echo "❌ Invalid commit message! The message should follow the pattern:"
     echo ""
-    echo "[PRO-000] feat: Implementar nova funcionalidade"
-    echo "[PRO-000] fix: Corrigir bug"
-    echo "[PRO-000] chore: Atualizar dependências"
+    echo "feat: commit message"
     echo ""
     exit 1
 fi

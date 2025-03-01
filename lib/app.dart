@@ -23,7 +23,7 @@ class _CvBuilderAppState extends State<CvBuilderApp> {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Currículo Top',
+          title: 'Currículo Fácil',
           theme: CvBuilderTheme.lightTheme,
           // locale: const Locale('pt'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,

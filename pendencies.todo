@@ -2,6 +2,17 @@
   "todotree": {
     "tree": [
       {
+        "key": 1740704650748,
+        "children": [],
+        "todo": {
+          "content": "Remover alteração de senha caso o usuário esteja logado pelo Google",
+          "id": 1740704650748,
+          "level": "default",
+          "done": false,
+          "start": 1740704650748
+        }
+      },
+      {
         "key": 1738675723804,
         "children": [],
         "todo": {
@@ -375,6 +386,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1740441657383"
+    "version": "1740704664775"
   }
 }
