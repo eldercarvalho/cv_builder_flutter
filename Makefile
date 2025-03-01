@@ -28,3 +28,14 @@ appbundle:
 	@echo "Generating version for Play Store..."
 	@flutter build appbundle
 	@echo "Done."
+
+githooks:
+	@echo "Setting up git hooks..."
+	dart pub add --dev husky
+	@dart run husky install
+	@dart pub add --dev commitlint_cli
+	@dart run husky add .husky/pre-push "flutter analyze"
+	@dart run husky add .husky/pre-push "flutter test --coverage"
+	@echo "include: package:commitlint_cli/commitlint.yaml" > commitlint.yaml
+	@dart run husky add .husky/commit-msg  'dart run commitlint_cli --edit ${1}'
+	@echo "Done."
