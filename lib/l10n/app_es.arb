@@ -136,5 +136,13 @@
   "emailAlreadyInUseError": "El correo indicado ya está vinculado a una cuenta",
   "weakPasswordError": "La contraseña indicada es muy débil",
   "creatingResume": "Creando Currículum...",
-  "addPhoto": "Añadir Foto"
+  "addPhoto": "Añadir Foto",
+  "copyResume": "Copiar Currículum",
+  "basic": "Básico",
+  "modern": "Moderno",
+  "elegant": "Elegante",
+  "classic": "Clásico",
+  "chooseTemplate": "Elige un modelo",
+  "template": "Modelo",
+  "errorLoadingResume": "Ocurrió un error al cargar el currículum"
 }

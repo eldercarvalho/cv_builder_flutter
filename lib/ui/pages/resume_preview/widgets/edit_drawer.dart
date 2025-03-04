@@ -22,6 +22,11 @@ class EditDrawer extends StatelessWidget {
           const SizedBox(height: 20),
           EditDrawerItem(
             icon: FeatherIcons.fileText,
+            title: context.l10n.template,
+            onTap: () => _navToForm(context, resume!, ResumeFormPageStep.template, viewModel),
+          ),
+          EditDrawerItem(
+            icon: FeatherIcons.info,
             title: context.l10n.resumeAbout,
             onTap: () => _navToForm(context, resume!, ResumeFormPageStep.resumeInfo, viewModel),
           ),

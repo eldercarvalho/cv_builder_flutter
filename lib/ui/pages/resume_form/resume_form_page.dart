@@ -1,3 +1,4 @@
+import 'package:cv_builder/ui/pages/resume_form/widgets/template_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,6 +10,7 @@ import 'view_model/resume_form_view_model.dart';
 import 'widgets/widgets.dart';
 
 enum ResumeFormPageStep {
+  template,
   resumeInfo,
   personalInfo,
   address,
@@ -95,7 +97,8 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
             physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
             children: [
-              ResumeInfoForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _pop),
+              TemplateForm(onSubmit: _onNextPage, isEditing: _isEditing, onPrevious: _pop),
+              ResumeInfoForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
               ProfileForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
               AddressForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
               ContactForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
@@ -153,6 +156,13 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
 
   void _onSubmit() async {
     FocusScope.of(context).unfocus();
+
+    if (_isEditing) {
+      FocusScope.of(context).unfocus();
+      _viewModel.saveResume.execute(_isEditing);
+      return;
+    }
+
     await ResumeFormFinishedPage.push(context, _viewModel.resume);
     if (mounted) Navigator.of(context).pop(true);
   }

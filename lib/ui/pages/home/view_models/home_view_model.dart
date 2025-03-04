@@ -39,7 +39,7 @@ class HomeViewModel extends ChangeNotifier {
 
   Future<void> saveResume() async {
     await _authRepository.getCurrentUser().flatMap((user) async {
-      final resume = Resume.fake().copyWith(resumeLanguage: ResumeLanguage.en);
+      final resume = Resume.fake().copyWith(resumeLanguage: ResumeLanguage.en, template: ResumeTemplate.basic);
       await _resumeRepository.saveResume(userId: user.id, resume: resume);
       return const Success(unit);
     });

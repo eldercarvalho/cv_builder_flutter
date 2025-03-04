@@ -121,7 +121,7 @@ class _ResumeFormFinishedPageState extends State<ResumeFormFinishedPage> {
   }
 
   Future<void> _onShare() async {
-    final resumePdf = await BasicResumeTemplate.generatePdf(widget.resume);
+    final resumePdf = await BasicTemplate.generatePdf(widget.resume);
     await Printing.sharePdf(bytes: resumePdf, filename: '${widget.resume.resumeName}.pdf');
   }
 }

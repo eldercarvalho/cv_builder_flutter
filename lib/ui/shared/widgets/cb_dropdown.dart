@@ -87,7 +87,7 @@ class _CbDropdownState extends State<CbDropdown> {
         style: context.textTheme.bodyLarge,
         decoration: InputDecoration(
           labelText: widget.labelText,
-          labelStyle: context.textTheme.labelMedium,
+          labelStyle: context.textTheme.labelMedium?.copyWith(fontSize: 16),
           disabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: context.colors.outline.withValues(alpha: 0.1),

@@ -6,7 +6,6 @@ import 'package:result_dart/result_dart.dart';
 import '../../../../data/repositories/auth_repository/auth_repository.dart';
 import '../../../../data/repositories/resume_repository/resume_respository.dart';
 import '../../../../domain/models/resume.dart';
-import '../../../../domain/templates/basic/basic.dart';
 import '../../../../utils/command.dart';
 
 class ResumePreviewViewModel extends ChangeNotifier {
@@ -20,6 +19,7 @@ class ResumePreviewViewModel extends ChangeNotifier {
   late final ResumeRepository _resumeRepository;
   late final Command1<Unit, String> getResume = Command1(_getResume);
   late final Command0<Unit> deleteResume = Command0(_deleteResume);
+  late final Command0<Unit> reloadResume = Command0(_reloadResume);
 
   Resume? _resume;
   Resume? get resume => _resume;
@@ -31,20 +31,22 @@ class ResumePreviewViewModel extends ChangeNotifier {
   File? _resumePdf;
   File? get resumePdf => _resumePdf;
 
+  AsyncResult<Unit> _reloadResume() async {
+    return _authRepository
+        .getCurrentUser()
+        .map((user) => Resume.fake().copyWith(resumeName: 'Teste', resumeLanguage: ResumeLanguage.pt).toPdf())
+        .flatMap((pdfBytes) => _resumeRepository.savePdf(resumeId: _resume!.id, bytes: pdfBytes))
+        .flatMap(_onGetResumePdf);
+  }
+
   AsyncResult<Unit> _getResume(String resumeId) async {
     return _authRepository
         .getCurrentUser()
         .flatMap((user) => _resumeRepository.getResume(userId: user.id, resumeId: resumeId))
         .flatMap(_onGetResume)
-        .map((resume) => BasicResumeTemplate.generatePdf(resume))
+        .map((resume) => resume.toPdf())
         .flatMap((pdfBytes) => _resumeRepository.savePdf(resumeId: resumeId, bytes: pdfBytes))
-        .flatMap(_onGetResumePdf);
-  }
-
-  AsyncResult<Unit> _deleteResume() async {
-    return _authRepository
-        .getCurrentUser()
-        .flatMap((user) => _resumeRepository.deleteResume(userId: user.id, resume: _resume!))
+        .flatMap(_onGetResumePdf)
         .fold((_) => const Success(unit), (error) => Failure(error));
   }
 
@@ -58,5 +60,12 @@ class ResumePreviewViewModel extends ChangeNotifier {
     _resumePdf = resumePdf;
     notifyListeners();
     return const Success(unit);
+  }
+
+  AsyncResult<Unit> _deleteResume() async {
+    return _authRepository
+        .getCurrentUser()
+        .flatMap((user) => _resumeRepository.deleteResume(userId: user.id, resume: _resume!))
+        .fold((_) => const Success(unit), (error) => Failure(error));
   }
 }
