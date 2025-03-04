@@ -30,7 +30,7 @@ class ResumeInfoForm extends StatefulWidget {
 class _ResumeInfoFormState extends State<ResumeInfoForm> {
   late final ResumeFormViewModel _viewModel; // = getIt<ResumeFormViewModel>();
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
+  final _nameController = TextEditingController();
   String _resumeLanguage = 'pt';
   String? _resumeToCopy;
   bool _isSubmitted = false;
@@ -68,8 +68,8 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
           key: _formKey,
           child: FormContainer(
             title: SectionTitleTextField(
-              text: context.l10n.resumeInfo,
-              icon: FeatherIcons.fileText,
+              text: context.l10n.resumeAbout,
+              icon: FeatherIcons.info,
               padding: 0,
             ),
             fields: [
@@ -95,7 +95,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
                 visible: _viewModel.resumes.isNotEmpty && !widget.isEditing,
                 child: CbDropdown(
                   initialValue: _resumeToCopy,
-                  labelText: 'Copiar Currículo',
+                  labelText: context.l10n.copyResume,
                   disabled: !_isNameFieldFilled,
                   options: List.generate(_viewModel.resumes.length, (index) {
                     final resume = _viewModel.resumes[index];
@@ -117,7 +117,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
                   showSaveButton: widget.isEditing,
                   isLoading: _viewModel.saveResume.running,
                   nextText: context.l10n.profile,
-                  previousText: context.l10n.goBack,
+                  previousText: context.l10n.template,
                   onPreviousPressed: widget.onPrevious,
                   isEditing: widget.isEditing,
                   onNextPressed: () {

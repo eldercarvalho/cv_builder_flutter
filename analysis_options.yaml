@@ -30,3 +30,4 @@ linter:
 analyzer:
   exclude:
     - convert_keystore.dart
+    - lib/l10n/*.arb

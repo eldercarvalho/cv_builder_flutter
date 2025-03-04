@@ -135,5 +135,13 @@
   "emailAlreadyInUseError": "The email is already in use",
   "weakPasswordError": "The password is too weak",
   "creatingResume": "Creating Resume...",
-  "addPhoto": "Add Photo"
+  "addPhoto": "Add Photo",
+  "copyResume": "Copy Resume",
+  "basic": "Basic",
+  "modern": "Modern",
+  "elegant": "Elegant",
+  "classic": "Classic",
+  "chooseTemplate": "Choose a template",
+  "template": "Template",
+  "errorLoadingResume": "An error occurred while trying to load the resume"
 }
