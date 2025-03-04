@@ -144,5 +144,8 @@
   "classic": "Clássico",
   "chooseTemplate": "Escolha um modelo",
   "template": "Modelo",
-  "errorLoadingResume": "Ocorreu um erro ao carregar o currículo"
+  "errorLoadingResume": "Ocorreu um erro ao carregar o currículo",
+  "portuguese": "Português",
+  "english": "Inglês",
+  "spanish": "Espanhol"
 }

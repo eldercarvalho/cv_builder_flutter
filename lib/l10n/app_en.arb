@@ -143,5 +143,8 @@
   "classic": "Classic",
   "chooseTemplate": "Choose a template",
   "template": "Template",
-  "errorLoadingResume": "An error occurred while trying to load the resume"
+  "errorLoadingResume": "An error occurred while trying to load the resume",
+  "portuguese": "Portuguese",
+  "english": "English",
+  "spanish": "Spanish"
 }

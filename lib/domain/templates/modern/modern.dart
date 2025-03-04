@@ -8,8 +8,8 @@ import 'package:printing/printing.dart';
 import '../../../ui/shared/extensions/datetime.dart';
 import '../../models/resume.dart';
 import '../icons.dart';
+import '../texts.dart';
 import 'constants.dart';
-import 'texts.dart';
 import 'widgets/widgets.dart';
 
 class ModernTemplate {
@@ -312,40 +312,5 @@ class ModernTemplate {
       raster = image;
     }
     return raster.toPng();
-  }
-
-  static TemplateTexts getTexts(ResumeLanguage language) {
-    return switch (language) {
-      ResumeLanguage.pt => TemplateTexts(
-          years: 'anos',
-          contact: 'Contato',
-          objective: 'Objetivo',
-          experience: 'Experiência Profissional',
-          skills: 'Habilidades',
-          education: 'Formação',
-          languages: 'Idiomas',
-          certifications: 'Certificações',
-          projects: 'Projetos',
-          references: 'Referências',
-          hobbies: 'Interesses',
-          responsibilities: 'Atividades:',
-          current: 'Atual',
-        ),
-      ResumeLanguage.en => TemplateTexts(
-          years: 'years',
-          contact: 'Contact',
-          objective: 'Objective',
-          experience: 'Experience',
-          skills: 'Skills',
-          education: 'Education',
-          languages: 'Languages',
-          certifications: 'Certifications',
-          projects: 'Projects',
-          references: 'References',
-          hobbies: 'Hobbies',
-          responsibilities: 'Activities:',
-          current: 'Current',
-        ),
-    };
   }
 }

@@ -86,8 +86,9 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
                 initialValue: _resumeLanguage,
                 labelText: context.l10n.languages(1),
                 options: [
-                  Option(value: 'pt', text: 'Português'),
-                  Option(value: 'en', text: 'English'),
+                  Option(value: 'pt', text: context.l10n.portuguese),
+                  Option(value: 'en', text: context.l10n.english),
+                  Option(value: 'es', text: context.l10n.spanish),
                 ],
                 onChanged: (value) => setState(() => _resumeLanguage = value),
               ),

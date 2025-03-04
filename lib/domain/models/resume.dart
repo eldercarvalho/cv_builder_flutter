@@ -54,12 +54,15 @@ enum ResumeTemplate {
 
 enum ResumeLanguage {
   pt,
-  en;
+  en,
+  es;
 
   static ResumeLanguage fromString(String value) {
     switch (value) {
       case 'en':
         return ResumeLanguage.en;
+      case 'es':
+        return ResumeLanguage.es;
       default:
         return ResumeLanguage.pt;
     }
