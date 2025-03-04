@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:result_dart/result_dart.dart';
 
 import '../../../domain/models/resume.dart';
-import '../../../domain/templates/basic/basic.dart';
 import '../../models/resume.dart';
 import '../../services/api/remote_service.dart';
 import '../../services/local/file_service.dart';
@@ -54,7 +53,7 @@ class ResumeRepositoryRemote extends ResumeRepository {
     required String userId,
     required Resume resume,
   }) async {
-    final thumbnailBytes = await BasicResumeTemplate.generateThumbnail(resume);
+    final thumbnailBytes = await resume.toThumbnail();
     return await _fileService
         .saveTempImage(name: resume.id, bytes: thumbnailBytes)
         .flatMap((thumbFile) => _remoteService.saveResume(userId, ResumeModel.fromDomain(resume), thumbFile))
@@ -78,7 +77,7 @@ class ResumeRepositoryRemote extends ResumeRepository {
 
   @override
   AsyncResult<File> getPdf({required Resume resume}) async {
-    final pdfBytes = await BasicResumeTemplate.generatePdf(resume);
+    final pdfBytes = await resume.toPdf();
     return _fileService.savePdf(name: resume.id, bytes: pdfBytes);
   }
 

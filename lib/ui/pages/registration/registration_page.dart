@@ -46,7 +46,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.h),
         child: Form(
           key: _formKey,
           autovalidateMode: _autoValidateMode,
@@ -58,45 +58,49 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 width: context.screenWidth - 32,
                 height: 110,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               Text(
                 context.l10n.registrationTitle,
                 style: context.textTheme.titleLarge?.copyWith(
                   color: context.colors.secondary,
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               CbTextFormField(
                 controller: _nameController,
                 label: context.l10n.name,
+                textCapitalization: TextCapitalization.none,
                 validator: MultiValidator([
                   RequiredValidator(errorText: context.l10n.requiredField),
                   MinLengthValidator(min: 3, errorText: context.l10n.minLenghtError(3)),
                 ]).call,
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               CbTextFormField(
                 controller: _emailController,
                 label: context.l10n.email,
+                textCapitalization: TextCapitalization.none,
                 validator: MultiValidator([
                   RequiredValidator(errorText: context.l10n.requiredField),
                   EmailValidator(errorText: context.l10n.invalidEmailError),
                 ]).call,
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               CbTextFormField(
                 label: context.l10n.password,
                 controller: _passwordController,
                 obscured: true,
+                textCapitalization: TextCapitalization.none,
                 validator: MultiValidator([
                   RequiredValidator(errorText: context.l10n.requiredField),
                   MinLengthValidator(min: 8, errorText: context.l10n.minLenghtError(8)),
                 ]).call,
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               CbTextFormField(
                 label: context.l10n.confirmPassword,
                 controller: _confirmPasswordController,
+                textCapitalization: TextCapitalization.none,
                 obscured: true,
                 validator: (value) {
                   if (value != _passwordController.text) {
@@ -105,7 +109,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   return null;
                 },
               ),
-              const SizedBox(height: 40),
+              SizedBox(height: 40.h),
               ListenableBuilder(
                 listenable: _viewModel.register,
                 builder: (context, child) {
@@ -116,7 +120,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   );
                 },
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               TextButton(
                 onPressed: () => LoginPage.replace(context),
                 child: Text(context.l10n.registrationAlreadyHaveAccount),

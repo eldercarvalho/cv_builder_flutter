@@ -61,6 +61,7 @@ class _RecoverPasswordPageState extends State<RecoverPasswordPage> {
               CbTextFormField(
                 controller: _emailController,
                 label: context.l10n.email,
+                textCapitalization: TextCapitalization.none,
                 validator: MultiValidator([
                   RequiredValidator(errorText: context.l10n.requiredField),
                   EmailValidator(errorText: context.l10n.invalidEmailError),

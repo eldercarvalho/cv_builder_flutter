@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.h),
         child: Form(
           key: _formKey,
           autovalidateMode: _autoValidateMode,
@@ -59,22 +59,23 @@ class _LoginPageState extends State<LoginPage> {
                 width: context.screenWidth - 32,
                 height: 110,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: 12.h),
               Text(
                 context.l10n.loginTitle,
                 style: context.textTheme.titleLarge?.copyWith(
                   color: context.colors.secondary,
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               CbTextFormField(
                 controller: _emailController,
                 label: context.l10n.email,
+                textCapitalization: TextCapitalization.none,
                 validator: MultiValidator([
                   RequiredValidator(errorText: context.l10n.requiredField),
                 ]).call,
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -82,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     controller: _passwordController,
                     label: context.l10n.password,
                     obscured: true,
+                    textCapitalization: TextCapitalization.none,
                     validator: MultiValidator([
                       RequiredValidator(errorText: context.l10n.requiredField),
                     ]).call,
@@ -95,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               ListenableBuilder(
                 listenable: _viewModel.login,
                 builder: (context, child) {
@@ -106,12 +108,12 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 },
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               TextButton(
                 onPressed: () => RegistrationPage.replace(context),
                 child: Text(context.l10n.loginNoAccount),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16.h),
               Row(
                 children: [
                   Expanded(
@@ -132,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: 30.h),
               ListenableBuilder(
                 listenable: _viewModel.loginWithGoogle,
                 builder: (context, child) {

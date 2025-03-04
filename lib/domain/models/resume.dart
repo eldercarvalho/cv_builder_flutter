@@ -5,6 +5,7 @@ import 'package:faker/faker.dart';
 import 'package:uuid/uuid.dart';
 
 import '../templates/basic/basic.dart';
+import '../templates/modern/modern.dart';
 import 'award.dart';
 import 'certification.dart';
 import 'education.dart';
@@ -18,7 +19,7 @@ import 'work_experience.dart';
 
 enum ResumeTemplate {
   basic('basic'),
-  elegant('elegant'),
+  // elegant('elegant'),
   modern('modern');
 
   final String value;
@@ -28,10 +29,23 @@ enum ResumeTemplate {
     switch (value) {
       case 'basic':
         return ResumeTemplate.basic;
-      case 'elegant':
-        return ResumeTemplate.elegant;
+      // case 'elegant':
+      //   return ResumeTemplate.elegant;
       case 'modern':
         return ResumeTemplate.modern;
+      default:
+        return ResumeTemplate.basic;
+    }
+  }
+
+  static ResumeTemplate fromIndex(int index) {
+    switch (index) {
+      case 0:
+        return ResumeTemplate.basic;
+      case 1:
+        return ResumeTemplate.modern;
+      // case 1:
+      //   return ResumeTemplate.elegant;
       default:
         return ResumeTemplate.basic;
     }
@@ -40,12 +54,15 @@ enum ResumeTemplate {
 
 enum ResumeLanguage {
   pt,
-  en;
+  en,
+  es;
 
   static ResumeLanguage fromString(String value) {
     switch (value) {
       case 'en':
         return ResumeLanguage.en;
+      case 'es':
+        return ResumeLanguage.es;
       default:
         return ResumeLanguage.pt;
     }
@@ -155,27 +172,28 @@ class Resume extends Equatable {
         id: const Uuid().v4(),
         isActive: true,
         resumeName: 'Currículo 1',
-        name: 'Elder Amaral de Carvalho',
-        profession: 'Desenvolvedor Mobile Flutter',
+        name: 'João Francisco da Silva',
+        profession: 'Desenvolvedor Mobile',
         birthDate: DateTime.now().subtract(const Duration(days: 365 * 30)),
-        // photo: 'https://fastly.picsum.photos/id/237/200/200.jpg?hmac=zHUGikXUDyLCCmvyww1izLK3R3k8oRYBRiTizZEdyfI',
-        address: 'Rua Padre Lourenço Rodrigues de Andrade, 130',
-        city: 'Florianópolis',
+        photo:
+            'https://firebasestorage.googleapis.com/v0/b/cvbuilder-67b67.firebasestorage.app/o/user_photo.png?alt=media&token=d7228e79-a5a4-4efc-bd45-d9c9988dccf2',
+        address: 'Rua dos Devs, 130',
+        city: 'São Paulo',
         zipCode: '88050-400',
-        phoneNumber: '48 98851-9100',
-        website: Faker().internet.httpsUrl(),
-        email: Faker().internet.email(),
+        phoneNumber: '11 988661-9110',
+        website: 'joaosilva.com.br',
+        email: 'joaofsilva@gmail.com',
         socialNetworks: const [
           SocialNetwork(
             id: '1',
             name: 'LinkedIn',
-            username: 'elder-carvalho-28753492',
+            username: 'joaofrancisco',
             url: 'https://www.linkedin.com/in/elder-carvalho-28753492/',
           ),
           SocialNetwork(
             id: '2',
             name: 'GitHub',
-            username: 'eldercarvalho',
+            username: 'joaofrancisco',
             url: 'https://github.com/eldercarvalho',
           ),
         ],
@@ -183,21 +201,30 @@ class Resume extends Equatable {
         workExperience: [
           WorkExperience(
             id: '1',
-            company: 'Sasi Comunicação Ágil ltda',
-            position: 'Desenvolvedor Mobile Flutter',
+            company: 'Google Inc.',
+            position: 'Desenvolvedor Mobile Senior',
             startDate: DateTime.now().subtract(const Duration(days: 365)),
             endDate: null,
             website: Faker().internet.httpsUrl(),
-            summary: Faker().lorem.sentences(5).join(' '),
+            summary: Faker().lorem.sentences(6).join(' '),
           ),
           WorkExperience(
             id: '2',
-            company: 'DOT Digital Group',
-            position: 'Desenvolvedor Frontend',
-            startDate: DateTime.now().subtract(const Duration(days: 730)),
+            company: 'Amazon Inc.',
+            position: 'Desenvolvedor Mobile Pleno',
+            startDate: DateTime.now().subtract(const Duration(days: 365 * 2)),
             endDate: DateTime.now().subtract(const Duration(days: 365)),
             website: Faker().internet.httpsUrl(),
-            summary: Faker().lorem.sentences(5).join(' '),
+            summary: Faker().lorem.sentences(6).join(' '),
+          ),
+          WorkExperience(
+            id: '3',
+            company: 'Apple Inc.',
+            position: 'Desenvolvedor Mobile Júnior',
+            startDate: DateTime.now().subtract(const Duration(days: 365 * 3)),
+            endDate: DateTime.now().subtract(const Duration(days: 365 * 2)),
+            website: Faker().internet.httpsUrl(),
+            summary: Faker().lorem.sentences(6).join(' '),
           ),
         ],
         education: [
@@ -230,65 +257,70 @@ class Resume extends Equatable {
         awards: [
           Award(
             id: '1',
-            title: 'Award 1',
+            title: 'Prêmio 1',
             date: DateTime.parse('2021-01-01'),
-            awarder: 'Issuer 1',
+            awarder: 'Emissor 1',
             summary: '',
           ),
           Award(
             id: '2',
-            title: 'Award 2',
+            title: 'Prêmio 2',
             date: DateTime.parse('2021-01-01'),
             summary: '',
-            awarder: 'Issuer 2',
+            awarder: 'Emissor 2',
           ),
         ],
         certifications: [
           Certification(
             id: '1',
-            title: 'Certification 1',
+            title: 'Curso de Android',
             date: DateTime.parse('2021-01-01'),
             summary: Faker().lorem.sentences(3).join(' '),
-            issuer: 'Issuer 1',
+            issuer: 'Udemy',
           ),
-          Certification(
-            id: '2',
-            title: 'Certification 2',
-            date: DateTime.parse('2021-01-01'),
-            summary: Faker().lorem.sentences(3).join(' '),
-            issuer: 'Issuer 2',
-          ),
+          // Certification(
+          //   id: '2',
+          //   title: 'Certificado 2',
+          //   date: DateTime.parse('2021-01-01'),
+          //   summary: Faker().lorem.sentences(3).join(' '),
+          //   issuer: 'Emissor 2',
+          // ),
         ],
         skills: const [
           Skill(
             id: '1',
-            name: 'Flutter',
+            name: 'Android',
             level: 'Avançado',
           ),
           Skill(
             id: '2',
-            name: 'Dart',
-            level: 'Expert',
+            name: 'Kotlin',
+            level: 'Avançado',
           ),
           Skill(
             id: '3',
             name: 'React',
-            level: 'Expert',
+            level: 'Intermediário',
           ),
           Skill(
             id: '4',
-            name: 'Git',
-            level: 'Expert',
+            name: 'JavaScript',
+            level: 'Avançado',
           ),
           Skill(
             id: '5',
-            name: 'Clean Architecture',
-            level: 'Expert',
+            name: 'Git',
+            level: 'Avançado',
           ),
           Skill(
             id: '6',
+            name: 'Clean Architecture',
+            level: 'Avançado',
+          ),
+          Skill(
+            id: '7',
             name: 'CI/CD',
-            level: 'Expert',
+            level: 'Avançado',
           ),
         ],
         hobbies: const [
@@ -300,8 +332,13 @@ class Resume extends Equatable {
         languages: const [
           Language(
             id: '1',
+            name: 'Português',
+            fluency: 'Nativo',
+          ),
+          Language(
+            id: '2',
             name: 'Inglês',
-            fluency: 'Intermediário',
+            fluency: 'Intermediário B2',
           ),
         ],
         references: [
@@ -314,7 +351,7 @@ class Resume extends Equatable {
             summary: Faker().lorem.sentences(2).join(' '),
           ),
         ],
-        template: ResumeTemplate.basic,
+        template: ResumeTemplate.modern,
         createdAt: DateTime.now(),
       );
 
@@ -425,9 +462,17 @@ class Resume extends Equatable {
 extension ToPdfExtension on Resume {
   Future<Uint8List> toPdf() async {
     return switch (template) {
-      ResumeTemplate.basic => BasicResumeTemplate.generatePdf(this),
-      ResumeTemplate.elegant => BasicResumeTemplate.generatePdf(this),
-      ResumeTemplate.modern => BasicResumeTemplate.generatePdf(this)
+      ResumeTemplate.basic => BasicTemplate.generatePdf(this),
+      ResumeTemplate.modern => ModernTemplate.generatePdf(this),
+      // ResumeTemplate.elegant => BasicTemplate.generatePdf(this),
+    };
+  }
+
+  Future<Uint8List> toThumbnail() async {
+    return switch (template) {
+      ResumeTemplate.basic => BasicTemplate.generateThumbnail(this),
+      ResumeTemplate.modern => ModernTemplate.generateThumbnail(this),
+      // ResumeTemplate.elegant => BasicTemplate.generateThumbnail(this),
     };
   }
 }

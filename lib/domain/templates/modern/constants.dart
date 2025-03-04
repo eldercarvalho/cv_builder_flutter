@@ -1,4 +1,5 @@
 // Text Styles
+import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:printing/printing.dart';
 
@@ -39,18 +40,18 @@ class TemplateConfig {
   // final TextStyle iconTextStyle;
 
   static Future<TemplateConfig> get instance async {
-    final interBold = await PdfGoogleFonts.interBold();
-    final interRegular = await PdfGoogleFonts.interRegular();
+    final fontBold = await PdfGoogleFonts.cabinBold();
+    final fontRegular = await PdfGoogleFonts.cabinRegular();
 
     return TemplateConfig._(
-      titleLargeTextStyle: TextStyle(font: interBold, fontSize: 20),
-      titleMediumTextStyle: TextStyle(font: interBold, fontSize: 16),
-      titleSmallTextStyle: TextStyle(font: interBold, fontSize: 14),
-      titleXSmallTextStyle: TextStyle(font: interBold, fontSize: 12),
-      bodyLargeTextStyle: TextStyle(font: interRegular, fontSize: 14),
-      bodyMediumTextStyle: TextStyle(font: interRegular, fontSize: 12),
-      bodySmallTextStyle: TextStyle(font: interRegular, fontSize: 10),
-      paragraphTextStyle: TextStyle(font: interRegular, fontSize: 10, lineSpacing: 3),
+      titleLargeTextStyle: TextStyle(font: fontBold, fontSize: 20),
+      titleMediumTextStyle: TextStyle(font: fontBold, fontSize: 16),
+      titleSmallTextStyle: TextStyle(font: fontBold, fontSize: 14),
+      titleXSmallTextStyle: TextStyle(font: fontBold, fontSize: 12),
+      bodyLargeTextStyle: TextStyle(font: fontRegular, fontSize: 14, color: PdfColors.grey700),
+      bodyMediumTextStyle: TextStyle(font: fontRegular, fontSize: 12, color: PdfColors.grey700),
+      bodySmallTextStyle: TextStyle(font: fontRegular, fontSize: 10, color: PdfColors.grey700),
+      paragraphTextStyle: TextStyle(font: fontRegular, fontSize: 10, lineSpacing: 3, color: PdfColors.grey700),
       // iconTextStyle: TextStyle(font: faRegular400Font),
     );
   }
@@ -58,4 +59,4 @@ class TemplateConfig {
 
 // // Page Config
 const horizontalMargin = 60.0;
-const verticalMargin = 36.0;
+const verticalMargin = 40.0;

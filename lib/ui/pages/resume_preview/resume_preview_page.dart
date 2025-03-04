@@ -71,7 +71,12 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
               return Text(_viewModel.resume?.resumeName ?? "");
             },
           ),
-          actions: const [],
+          // actions: [
+          //   IconButton(
+          //     onPressed: () => _viewModel.reloadResume.execute(),
+          //     icon: const Icon(FeatherIcons.refreshCcw),
+          //   ),
+          // ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(1),
             child: Divider(height: 1, color: context.colors.outline),
@@ -81,6 +86,7 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
           listenable: Listenable.merge([
             _viewModel.getResume,
             _viewModel.deleteResume,
+            _viewModel.reloadResume,
           ]),
           builder: (context, child) {
             if (_viewModel.getResume.running || _viewModel.deleteResume.running) {
@@ -92,7 +98,7 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
             if (_viewModel.getResume.error) {
               return Center(
                 child: Text(
-                  'Erro ao carregar currículo',
+                  context.l10n.errorLoadingResume,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               );

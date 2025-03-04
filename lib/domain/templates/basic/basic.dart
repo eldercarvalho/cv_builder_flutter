@@ -7,13 +7,14 @@ import 'package:printing/printing.dart';
 
 import '../../../ui/shared/extensions/datetime.dart';
 import '../../models/resume.dart';
+import '../icons.dart';
+import '../texts.dart';
 import 'constants.dart';
-import 'texts.dart';
 import 'widgets/persoal_info.dart';
 import 'widgets/section_title.dart';
 import 'widgets/social_network.dart';
 
-class BasicResumeTemplate {
+class BasicTemplate {
   static Future<Uint8List> generatePdf(Resume resume) async {
     final pdf = Document();
     final pageWidth = PdfPageFormat.a4.availableWidth;
@@ -143,7 +144,7 @@ class BasicResumeTemplate {
       if (resume.skills.isNotEmpty) ...[
         SizedBox(height: config.sectionSpace),
         SectionTitle(text: texts.skills, config: config),
-        SizedBox(height: config.titleSpace),
+        // SizedBox(height: config.titleSpace),
         Wrap(
           children: List.generate(
             resume.skills.length,
@@ -151,10 +152,7 @@ class BasicResumeTemplate {
               final skill = resume.skills[index];
               return Container(
                 width: (pageWidth / 4) - 10,
-                padding: EdgeInsets.only(bottom: 12, left: index % 4 == 0 ? 0 : 10),
-                // decoration: BoxDecoration(
-                //   border: Border.all(color: PdfColors.black, width: 1),
-                // ),
+                padding: EdgeInsets.only(top: config.titleSpace, left: index % 4 == 0 ? 0 : 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -364,40 +362,5 @@ class BasicResumeTemplate {
       raster = image;
     }
     return raster.toPng();
-  }
-
-  static TemplateTexts getTexts(ResumeLanguage language) {
-    return switch (language) {
-      ResumeLanguage.pt => TemplateTexts(
-          years: 'anos',
-          contact: 'Contato',
-          objective: 'Objetivo',
-          experience: 'Experiência Profissional',
-          skills: 'Habilidades',
-          education: 'Formação',
-          languages: 'Idiomas',
-          certifications: 'Certificações',
-          projects: 'Projetos',
-          references: 'Referências',
-          hobbies: 'Interesses',
-          responsibilities: 'Atividades:',
-          current: 'Atual',
-        ),
-      ResumeLanguage.en => TemplateTexts(
-          years: 'years',
-          contact: 'Contact',
-          objective: 'Objective',
-          experience: 'Experience',
-          skills: 'Skills',
-          education: 'Education',
-          languages: 'Languages',
-          certifications: 'Certifications',
-          projects: 'Projects',
-          references: 'References',
-          hobbies: 'Hobbies',
-          responsibilities: 'Activities:',
-          current: 'Current',
-        ),
-    };
   }
 }

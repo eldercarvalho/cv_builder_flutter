@@ -136,5 +136,16 @@
   "emailAlreadyInUseError": "O email informado já está vinculado a uma conta",
   "weakPasswordError": "A senha informada é muito fraca",
   "creatingResume": "Criando Currículo...",
-  "addPhoto": "Adicionar Foto"
+  "addPhoto": "Adicionar Foto",
+  "copyResume": "Copiar Currículo",
+  "basic": "Básico",
+  "modern": "Moderno",
+  "elegant": "Elegante",
+  "classic": "Clássico",
+  "chooseTemplate": "Escolha um modelo",
+  "template": "Modelo",
+  "errorLoadingResume": "Ocorreu um erro ao carregar o currículo",
+  "portuguese": "Português",
+  "english": "Inglês",
+  "spanish": "Espanhol"
 }
