@@ -2,17 +2,6 @@
   "todotree": {
     "tree": [
       {
-        "key": 1740704650748,
-        "children": [],
-        "todo": {
-          "content": "Remover alteração de senha caso o usuário esteja logado pelo Google",
-          "id": 1740704650748,
-          "level": "default",
-          "done": false,
-          "start": 1740704650748
-        }
-      },
-      {
         "key": 1738675723804,
         "children": [],
         "todo": {
@@ -30,8 +19,21 @@
           "content": "Implementar novo template Modern",
           "id": 1738675841014,
           "level": "warning",
+          "done": true,
+          "start": 1738675841014,
+          "focus": false,
+          "end": 1741117709390
+        }
+      },
+      {
+        "key": 1740704650748,
+        "children": [],
+        "todo": {
+          "content": "Remover alteração de senha caso o usuário esteja logado pelo Google",
+          "id": 1740704650748,
+          "level": "default",
           "done": false,
-          "start": 1738675841014
+          "start": 1740704650748
         }
       },
       {
@@ -54,19 +56,6 @@
           "level": "default",
           "done": false,
           "start": 1739031800644
-        }
-      },
-      {
-        "key": 1738765767900,
-        "children": [],
-        "todo": {
-          "content": "Importar dados de um currículo",
-          "id": 1738765767900,
-          "level": "default",
-          "done": true,
-          "start": 1738765767900,
-          "focus": false,
-          "end": 1740441657321
         }
       },
       {
@@ -133,6 +122,19 @@
           "level": "default",
           "done": false,
           "start": 1738899693516
+        }
+      },
+      {
+        "key": 1738765767900,
+        "children": [],
+        "todo": {
+          "content": "Importar dados de um currículo",
+          "id": 1738765767900,
+          "level": "default",
+          "done": true,
+          "start": 1738765767900,
+          "focus": false,
+          "end": 1740441657321
         }
       },
       {
@@ -386,6 +388,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1740704664775"
+    "version": "1741117709455"
   }
 }
