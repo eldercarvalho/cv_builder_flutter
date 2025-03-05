@@ -17,5 +17,12 @@
           "program": "lib/main.dart",
           "flutterMode": "profile"
       },
+      {
+          "name": "CV Builder Release",
+          "request": "launch",
+          "type": "dart",
+          "program": "lib/main.dart",
+          "flutterMode": "release"
+      },
   ]
 }
