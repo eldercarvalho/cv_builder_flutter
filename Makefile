@@ -39,3 +39,8 @@ githooks:
 	@echo "include: package:commitlint_cli/commitlint.yaml" > commitlint.yaml
 	@dart run husky add .husky/commit-msg  'dart run commitlint_cli --edit ${1}'
 	@echo "Done."
+
+showkeystore:
+	@echo "Showing keystore..."
+	@keytool -list -v -keystore android/app/key.jks -storepass password -keypass password
+	@echo "Done."
