@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _viewModel.login.addListener(_onLoginListener);
-    _viewModel.loginWithGoogle.addListener(_onLoginWithListener);
+    _viewModel.loginWithGoogle.addListener(_onLoginWithGoogleListener);
   }
 
   @override
@@ -190,18 +190,20 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  void _onLoginWithListener() {
+  void _onLoginWithGoogleListener() {
     if (_viewModel.loginWithGoogle.completed) {
       HomePage.replace(context);
     }
 
     if (_viewModel.login.error) {
       final result = _viewModel.login.result;
+      // final error = result?.exceptionOrNull();
+
       result?.fold(
         (_) {},
         (error) {
           if (error is AuthException) {
-            context.showErrorSnackBar('Erro ao fazer login');
+            context.showErrorSnackBar(context.l10n.loginGenericError);
           }
         },
       );
