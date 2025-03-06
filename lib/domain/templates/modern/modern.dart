@@ -267,6 +267,7 @@ class ModernTemplate {
                                 SizedBox(height: config.lineSpace),
                                 Text(experience.summary!, style: config.paragraphTextStyle),
                               ],
+                              if (index < resume.workExperience.length - 1) SizedBox(height: config.innerSpace),
                             ],
                           ),
                         );
