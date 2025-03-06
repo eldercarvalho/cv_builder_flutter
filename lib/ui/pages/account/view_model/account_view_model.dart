@@ -22,6 +22,9 @@ class AccountViewModel extends ChangeNotifier {
 
   User? get user => _authRepository.currentUser;
 
+  List<String> _signInMethods = [];
+  List<String> get signInMethods => _signInMethods;
+
   AsyncResult<Unit> _updateAccount(UpdateAccountData data) async {
     final result = await _authRepository
         .getCurrentUser()
@@ -39,5 +42,18 @@ class AccountViewModel extends ChangeNotifier {
         .map((_) => _authRepository.logout());
 
     return result.fold((_) => const Success(unit), (error) => Failure(error));
+  }
+
+  AsyncResult<List<String>> getSignInMethods() async {
+    final result = await _authRepository.getSignInMethods();
+
+    return result.fold(
+      (methods) {
+        _signInMethods = methods;
+        notifyListeners();
+        return Success(methods);
+      },
+      (error) => Failure(error),
+    );
   }
 }

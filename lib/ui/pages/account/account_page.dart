@@ -37,6 +37,8 @@ class _AccountPageState extends State<AccountPage> {
   @override
   void initState() {
     super.initState();
+
+    _viewModel.getSignInMethods();
     _nameController.text = _viewModel.user?.name ?? '';
     _emailController.text = _viewModel.user?.email ?? '';
     _passwordController.addListener(() {
@@ -101,41 +103,54 @@ class _AccountPageState extends State<AccountPage> {
                             ]).call,
                           ),
                         ),
-                        const SizedBox(height: 24),
-                        SectionTitle(text: context.l10n.accountChangePassword),
-                        const SizedBox(height: 24),
-                        CbTextFormField(
-                          controller: _passwordController,
-                          autovalidateMode:
-                              _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
-                          label: context.l10n.password,
-                          validator: MultiValidator([
-                            RequiredValidator(
-                              errorText: context.l10n.requiredField,
-                              validateIf: _shouldValidatePassword,
-                            ),
-                            MinLengthValidator(
-                              min: 8,
-                              errorText: context.l10n.minLenghtError(8),
-                              validatedIf: _shouldValidatePassword,
-                            ),
-                          ]).call,
-                        ),
-                        const SizedBox(height: 24),
-                        CbTextFormField(
-                          controller: _confirmPasswordController,
-                          autovalidateMode:
-                              _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
-                          label: context.l10n.confirmPassword,
-                          validator: (value) {
-                            if (!_shouldValidatePassword) {
-                              return null;
+                        ListenableBuilder(
+                          listenable: _viewModel,
+                          builder: (context, child) {
+                            if (!_viewModel.signInMethods.contains('password')) {
+                              return const SizedBox.shrink();
                             }
 
-                            if (value != _passwordController.text) {
-                              return context.l10n.passwordsDoesntMatch;
-                            }
-                            return null;
+                            return Column(
+                              children: [
+                                const SizedBox(height: 24),
+                                SectionTitle(text: context.l10n.accountChangePassword),
+                                const SizedBox(height: 24),
+                                CbTextFormField(
+                                  controller: _passwordController,
+                                  autovalidateMode:
+                                      _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+                                  label: context.l10n.password,
+                                  validator: MultiValidator([
+                                    RequiredValidator(
+                                      errorText: context.l10n.requiredField,
+                                      validateIf: _shouldValidatePassword,
+                                    ),
+                                    MinLengthValidator(
+                                      min: 8,
+                                      errorText: context.l10n.minLenghtError(8),
+                                      validatedIf: _shouldValidatePassword,
+                                    ),
+                                  ]).call,
+                                ),
+                                const SizedBox(height: 24),
+                                CbTextFormField(
+                                  controller: _confirmPasswordController,
+                                  autovalidateMode:
+                                      _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+                                  label: context.l10n.confirmPassword,
+                                  validator: (value) {
+                                    if (!_shouldValidatePassword) {
+                                      return null;
+                                    }
+
+                                    if (value != _passwordController.text) {
+                                      return context.l10n.passwordsDoesntMatch;
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ],
+                            );
                           },
                         ),
                         const SizedBox(height: 24),

@@ -22,7 +22,7 @@ extension ContextEx on BuildContext {
           content: Row(children: [
             const Icon(FeatherIcons.checkCircle, color: Colors.white),
             const SizedBox(width: 16),
-            Expanded(child: Text(message, style: textTheme.bodyLarge?.copyWith(color: Colors.white)))
+            Expanded(child: Text(message, style: textTheme.bodyLarge?.copyWith(color: Colors.white, height: 1)))
           ]),
           backgroundColor: Colors.green,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -34,7 +34,7 @@ extension ContextEx on BuildContext {
           content: Row(children: [
             const Icon(FeatherIcons.alertCircle, color: Colors.white),
             const SizedBox(width: 16),
-            Expanded(child: Text(message, style: textTheme.bodyLarge?.copyWith(color: Colors.white)))
+            Expanded(child: Text(message, style: textTheme.bodyLarge?.copyWith(color: Colors.white, height: 1)))
           ]),
           backgroundColor: Theme.of(this).colorScheme.error,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
