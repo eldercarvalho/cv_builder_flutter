@@ -22,6 +22,6 @@ class CvBuilderTheme {
     filledButtonTheme: CvBuilderFilledButtonTheme.lightTheme,
     outlinedButtonTheme: CvBuilderOutlinedButtonTheme.lightTheme,
     // dividerColor: CbColors.border,
-    // dividerTheme: const DividerThemeData(space: 0, thickness: 1, color: CbColors.border),
+    dividerTheme: const DividerThemeData(space: 0, thickness: 1, color: CbColors.border),
   );
 }

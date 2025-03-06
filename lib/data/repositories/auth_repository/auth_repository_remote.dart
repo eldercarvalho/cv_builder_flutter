@@ -52,19 +52,24 @@ class AuthRepositoryRemote extends AuthRepository {
   AsyncResult<void> loginWithGoogle() {
     return _authService.signInWithGoogle();
   }
-  
+
   @override
   AsyncResult<Unit> deleteAccount() {
     return _authService.deleteAccount();
   }
-  
+
   @override
   AsyncResult<void> updatePassword(String password) {
     return _authService.updatePassword(password);
   }
-  
+
   @override
   AsyncResult<void> updateProfile(User user) {
     return _authService.updateProfile(UserModel.fromDomain(user));
+  }
+
+  @override
+  AsyncResult<List<String>> getSignInMethods() async {
+    return _authService.getSignInMethods();
   }
 }

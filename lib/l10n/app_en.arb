@@ -146,5 +146,13 @@
   "errorLoadingResume": "An error occurred while trying to load the resume",
   "portuguese": "Portuguese",
   "english": "English",
-  "spanish": "Spanish"
+  "spanish": "Spanish",
+  "about": "About",
+  "privacyPolicy": "Privacy Policy",
+  "termsOfService": "Terms of Service",
+  "version": "Version",
+  "policyAndTerms": "Policy and Terms",
+  "aboutTheApp": "About the App",
+  "developer": "Developer",
+  "review": "Review"
 }

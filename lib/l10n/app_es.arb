@@ -147,5 +147,13 @@
   "errorLoadingResume": "Ocurrió un error al cargar el currículum",
   "portuguese": "Portugués",
   "english": "Inglés",
-  "spanish": "Español"
+  "spanish": "Español",
+  "about": "Acerca de",
+  "privacyPolicy": "Política de Privacidad",
+  "termsOfService": "Términos de Servicio",
+  "version": "Versión",
+  "policyAndTerms": "Políticas y Términos",
+  "aboutTheApp": "Acerca de la App",
+  "developer": "Desarrollador",
+  "review": "Evaluar"
 }

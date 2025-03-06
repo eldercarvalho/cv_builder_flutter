@@ -175,4 +175,21 @@ class AuthService {
       return Failure(exception);
     }
   }
+
+  AsyncResult<List<String>> getSignInMethods() async {
+    try {
+      User? currentUser = _firebaseAuth.currentUser;
+
+      if (currentUser == null) {
+        return const Success([]);
+      }
+
+      List<String> providers = currentUser.providerData.map((userInfo) => userInfo.providerId).toList();
+
+      return Success(providers);
+    } on FirebaseAuthException catch (e) {
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
+      return Failure(exception);
+    }
+  }
 }

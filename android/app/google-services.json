@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "643458092980-7ju9k417bgj20k6arbbqg6856tkvp505.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carvalhodev.cvbuilder.cv_builder",
+            "certificate_hash": "5b8ac8823f64967d31c2b905c4747496714d39f8"
+          }
+        },
+        {
           "client_id": "643458092980-7tquqjn10n9hfru2kmp5fh7gqiu11ibq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
