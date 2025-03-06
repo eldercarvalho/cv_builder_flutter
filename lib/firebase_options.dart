@@ -70,6 +70,9 @@ class DefaultFirebaseOptions {
     messagingSenderId: '643458092980',
     projectId: 'cvbuilder-67b67',
     storageBucket: 'cvbuilder-67b67.firebasestorage.app',
+    androidClientId: '643458092980-7tquqjn10n9hfru2kmp5fh7gqiu11ibq.apps.googleusercontent.com',
+    iosClientId: '643458092980-i7fmo1st7hvt4u3jni2joqm0p6cl3dq1.apps.googleusercontent.com',
     iosBundleId: 'com.carvalhodev.cvbuilder.cvBuilder',
   );
+
 }

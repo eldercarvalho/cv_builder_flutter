@@ -10,7 +10,6 @@ import 'package:result_dart/result_dart.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Stream<UserModel?> get authStateChanges => _firebaseAuth.authStateChanges().map((user) {
         if (user != null) {
@@ -50,8 +49,10 @@ class AuthService {
 
   AsyncResult<User> signInWithGoogle() async {
     try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+
       // Inicia o processo de login com o Google
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
       if (googleUser == null) {
         // O usuário cancelou o login
@@ -73,6 +74,8 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
+    } catch (e) {
+      return Failure(AuthException(e.toString(), AuthErrorCode.unknown));
     }
   }
 
