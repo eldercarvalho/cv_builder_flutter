@@ -98,14 +98,14 @@ class _ProfileFormState extends State<ProfileForm> {
                 autovalidateMode: _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
                 validator: MultiValidator([
                   RequiredValidator(errorText: context.l10n.requiredField),
-                  MaxLengthValidator(max: 50, errorText: context.l10n.maxLenghtError(50)),
+                  MaxLengthValidator(max: 100, errorText: context.l10n.maxLenghtError(100)),
                 ]).call,
               ),
               CbTextFormField(
                 controller: _professionController,
                 label: context.l10n.profession,
                 validator: MultiValidator([
-                  MaxLengthValidator(max: 50, errorText: context.l10n.maxLenghtError(50)),
+                  MaxLengthValidator(max: 100, errorText: context.l10n.maxLenghtError(100)),
                 ]).call,
               ),
               CbDatePicker(
