@@ -229,9 +229,9 @@ class _CreateItemModalState extends State<_CreateItemModal> {
               controller: _dateController,
               label: context.l10n.date,
               required: true,
-              validator: MultiValidator([
-                RequiredValidator(errorText: context.l10n.requiredField),
-              ]).call,
+              // validator: MultiValidator([
+              //   RequiredValidator(errorText: context.l10n.requiredField),
+              // ]).call,
             ),
             CbTextAreaField(
               controller: _summaryController,
