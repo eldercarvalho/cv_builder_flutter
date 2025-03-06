@@ -37,6 +37,9 @@ abstract class Routes {
       RecoverPasswordPage.route: (BuildContext context) {
         return const RecoverPasswordPage();
       },
+      AboutPage.route: (BuildContext context) {
+        return const AboutPage();
+      },
     };
   }
 

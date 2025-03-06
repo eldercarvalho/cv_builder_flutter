@@ -120,8 +120,10 @@
           "content": "Integrar Crashlytics",
           "id": 1738676083296,
           "level": "default",
-          "done": false,
-          "start": 1738676083296
+          "done": true,
+          "start": 1738676083296,
+          "focus": false,
+          "end": 1741227609460
         }
       },
       {
@@ -399,6 +401,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1741181398146"
+    "version": "1741227609525"
   }
 }
