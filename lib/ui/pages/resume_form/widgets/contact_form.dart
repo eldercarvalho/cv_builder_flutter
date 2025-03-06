@@ -69,14 +69,18 @@ class _ContactFormState extends State<ContactForm> {
               CbTextFormField(
                 controller: _phoneController,
                 label: context.l10n.phone,
+                textCapitalization: TextCapitalization.none,
+                keyboardType: TextInputType.phone,
               ),
               CbTextFormField(
                 controller: _emailController,
                 label: context.l10n.email,
+                textCapitalization: TextCapitalization.none,
               ),
               CbTextFormField(
                 controller: _websiteController,
                 label: context.l10n.website,
+                textCapitalization: TextCapitalization.none,
                 validator: UrlValidator(
                   errorText: context.l10n.invalidUrlError,
                 ).call,

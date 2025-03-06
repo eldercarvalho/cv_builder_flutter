@@ -22,6 +22,7 @@ class CbTextFormField extends StatefulWidget {
     this.autovalidateMode = AutovalidateMode.disabled,
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
+    this.keyboardType,
   });
 
   final TextEditingController? controller;
@@ -39,6 +40,7 @@ class CbTextFormField extends StatefulWidget {
   final FocusNode? focusNode;
   final AutovalidateMode autovalidateMode;
   final TextCapitalization textCapitalization;
+  final TextInputType? keyboardType;
   final Function()? onTap;
 
   @override
@@ -76,6 +78,7 @@ class _CbTextFormFieldState extends State<CbTextFormField> {
           onTap: widget.onTap,
           validator: widget.validator,
           obscureText: _isObscured,
+          keyboardType: widget.keyboardType,
           // onEditingComplete: ,
           decoration: InputDecoration(
             label: widget.label != null
