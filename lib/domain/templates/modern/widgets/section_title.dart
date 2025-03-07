@@ -26,7 +26,7 @@ class SectionTitle extends StatelessWidget {
         children: [
           Text(text, style: style),
           SizedBox(height: 2),
-          Container(height: 1, color: PdfColors.grey400),
+          Container(height: 1, color: PdfColors.grey600),
         ],
       ),
     );

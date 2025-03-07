@@ -98,8 +98,8 @@ class _PhotoPickerState extends State<PhotoPicker> {
               bottom: 4,
               child: GestureDetector(
                 onTap: () {
-                  setState(() => _image = null);
                   widget.onDelete?.call();
+                  setState(() => _image = null);
                 },
                 child: Container(
                   width: 36,

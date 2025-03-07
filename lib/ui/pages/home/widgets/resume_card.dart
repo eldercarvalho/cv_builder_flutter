@@ -98,10 +98,20 @@ class _ResumeCardState extends State<ResumeCard> with SingleTickerProviderStateM
                               ),
                             ),
                             PopupMenuItem(
+                              value: 'share',
+                              child: Row(
+                                children: [
+                                  Icon(FeatherIcons.share2, size: 20, color: context.colors.primary),
+                                  const SizedBox(width: 8),
+                                  Text(context.l10n.finishedFormShare),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
                               value: 'delete',
                               child: Row(
                                 children: [
-                                  Icon(FeatherIcons.trash2, size: 20, color: context.colors.primary),
+                                  Icon(FeatherIcons.trash2, size: 20, color: context.colors.error),
                                   const SizedBox(width: 8),
                                   Text(context.l10n.delete),
                                 ],

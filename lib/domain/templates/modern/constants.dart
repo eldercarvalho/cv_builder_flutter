@@ -48,10 +48,10 @@ class TemplateConfig {
       titleMediumTextStyle: TextStyle(font: fontBold, fontSize: 16),
       titleSmallTextStyle: TextStyle(font: fontBold, fontSize: 14),
       titleXSmallTextStyle: TextStyle(font: fontBold, fontSize: 12),
-      bodyLargeTextStyle: TextStyle(font: fontRegular, fontSize: 14, color: PdfColors.grey700),
-      bodyMediumTextStyle: TextStyle(font: fontRegular, fontSize: 12, color: PdfColors.grey700),
-      bodySmallTextStyle: TextStyle(font: fontRegular, fontSize: 10, color: PdfColors.grey700),
-      paragraphTextStyle: TextStyle(font: fontRegular, fontSize: 10, lineSpacing: 3, color: PdfColors.grey700),
+      bodyLargeTextStyle: TextStyle(font: fontRegular, fontSize: 14, color: PdfColors.grey800),
+      bodyMediumTextStyle: TextStyle(font: fontRegular, fontSize: 12, color: PdfColors.grey800),
+      bodySmallTextStyle: TextStyle(font: fontRegular, fontSize: 10, color: PdfColors.grey800),
+      paragraphTextStyle: TextStyle(font: fontRegular, fontSize: 10, lineSpacing: 3, color: PdfColors.grey800),
       // iconTextStyle: TextStyle(font: faRegular400Font),
     );
   }

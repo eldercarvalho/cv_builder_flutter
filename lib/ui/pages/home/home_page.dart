@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/di.dart';
@@ -183,10 +184,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _onMenuSelected(String value, Resume resume) {
+  void _onMenuSelected(String value, Resume resume) async {
     switch (value) {
       case 'edit':
         _navToPreview(resume);
+        break;
+      case 'share':
+        final bytes = await resume.toPdf();
+        Printing.sharePdf(bytes: bytes, filename: '${resume.resumeName}.pdf');
         break;
       case 'delete':
         _viewModel.deleteResume.execute(resume);

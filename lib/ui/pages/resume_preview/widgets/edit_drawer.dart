@@ -95,6 +95,7 @@ class EditDrawer extends StatelessWidget {
       context,
       params: ResumeFormParams(resume: resume, step: step),
     );
+    if (context.mounted) Navigator.of(context).pop();
     viewModel.getResume.execute(resume.id);
   }
 }

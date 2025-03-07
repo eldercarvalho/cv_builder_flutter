@@ -2,17 +2,6 @@
   "todotree": {
     "tree": [
       {
-        "key": 1741181372675,
-        "children": [],
-        "todo": {
-          "content": "Página Sobre (Politica, Termos, Versão, Idioma)",
-          "id": 1741181372675,
-          "level": "default",
-          "done": false,
-          "start": 1741181372676
-        }
-      },
-      {
         "key": 1738675723804,
         "children": [],
         "todo": {
@@ -24,38 +13,14 @@
         }
       },
       {
-        "key": 1738675841014,
+        "key": 1741282207283,
         "children": [],
         "todo": {
-          "content": "Implementar novo template Modern",
-          "id": 1738675841014,
-          "level": "warning",
-          "done": true,
-          "start": 1738675841014,
-          "focus": false,
-          "end": 1741117709390
-        }
-      },
-      {
-        "key": 1740704650748,
-        "children": [],
-        "todo": {
-          "content": "Remover alteração de senha caso o usuário esteja logado pelo Google",
-          "id": 1740704650748,
+          "content": "botão de limpar campo",
+          "id": 1741282207283,
           "level": "default",
           "done": false,
-          "start": 1740704650748
-        }
-      },
-      {
-        "key": 1739836830766,
-        "children": [],
-        "todo": {
-          "content": "Erro co google sign in android 14",
-          "id": 1739836830766,
-          "level": "default",
-          "done": false,
-          "start": 1739836830766
+          "start": 1741282207283
         }
       },
       {
@@ -114,6 +79,69 @@
         }
       },
       {
+        "key": 1738899693515,
+        "children": [],
+        "todo": {
+          "content": "Tratamento de Erros",
+          "id": 1738899693515,
+          "level": "default",
+          "done": false,
+          "start": 1738899693516
+        }
+      },
+      {
+        "key": 1738675841014,
+        "children": [],
+        "todo": {
+          "content": "Implementar novo template Modern",
+          "id": 1738675841014,
+          "level": "warning",
+          "done": true,
+          "start": 1738675841014,
+          "focus": false,
+          "end": 1741117709390
+        }
+      },
+      {
+        "key": 1741181372675,
+        "children": [],
+        "todo": {
+          "content": "Página Sobre (Politica, Termos, Versão, Idioma)",
+          "id": 1741181372675,
+          "level": "default",
+          "done": true,
+          "start": 1741181372676,
+          "focus": false,
+          "end": 1741282191652
+        }
+      },
+      {
+        "key": 1740704650748,
+        "children": [],
+        "todo": {
+          "content": "Remover alteração de senha caso o usuário esteja logado pelo Google",
+          "id": 1740704650748,
+          "level": "default",
+          "done": true,
+          "start": 1740704650748,
+          "focus": false,
+          "end": 1741282194791
+        }
+      },
+      {
+        "key": 1739836830766,
+        "children": [],
+        "todo": {
+          "content": "Erro co google sign in android 14",
+          "id": 1739836830766,
+          "level": "default",
+          "done": true,
+          "start": 1739836830766,
+          "focus": false,
+          "end": 1741282198031
+        }
+      },
+      {
         "key": 1738676083296,
         "children": [],
         "todo": {
@@ -124,17 +152,6 @@
           "start": 1738676083296,
           "focus": false,
           "end": 1741227609460
-        }
-      },
-      {
-        "key": 1738899693515,
-        "children": [],
-        "todo": {
-          "content": "Tratamento de Erros",
-          "id": 1738899693515,
-          "level": "default",
-          "done": false,
-          "start": 1738899693516
         }
       },
       {
@@ -401,6 +418,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1741227609525"
+    "version": "1741282383248"
   }
 }
