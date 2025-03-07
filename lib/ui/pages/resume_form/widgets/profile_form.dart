@@ -84,7 +84,7 @@ class _ProfileFormState extends State<ProfileForm> {
                       initialValue: _viewModel.resume.photo,
                       onImagePicked: (image) => setState(() => _image = image),
                       onDelete: () {
-                        _viewModel.resume = _viewModel.resume.copyWith(photo: null);
+                        _viewModel.resume = _viewModel.resume.copyWith(setNullPhoto: true);
                         setState(() => _image = null);
                       },
                     );

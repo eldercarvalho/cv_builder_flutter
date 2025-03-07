@@ -171,6 +171,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
     if (_viewModel.saveResume.completed) {
       if (_isEditing) {
         context.showSuccessSnackBar(context.l10n.resumeFormEditSuccess);
+        Navigator.of(context).pop(true);
         return;
       }
 
