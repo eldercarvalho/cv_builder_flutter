@@ -131,6 +131,7 @@
   "accountDeleteAlertMessage": "Are you sure you want to delete your account? All resumes will be permanently deleted",
   "accountDeleteAlertConfirm": "Yes, delete",
   "accountDeleteAlertCancel": "Cancel",
+  "accountLoginRequiredError": "Login again to delete your account",
   "noNetworkError": "No internet connection",
   "emailAlreadyInUseError": "The email is already in use",
   "weakPasswordError": "The password is too weak",

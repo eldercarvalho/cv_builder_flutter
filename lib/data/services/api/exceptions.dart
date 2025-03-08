@@ -6,6 +6,8 @@ enum AuthErrorCode {
   authUserNotFound,
   weakPassword,
   networkRequestFailed,
+  permissionDenied,
+  requiresRecentLogin,
   unknown;
 
   static AuthErrorCode fromString(String code) {
@@ -26,6 +28,10 @@ enum AuthErrorCode {
         return weakPassword;
       case 'network-request-failed':
         return networkRequestFailed;
+      case 'permission-denied':
+        return permissionDenied;
+      case 'requires-recent-login':
+        return requiresRecentLogin;
       default:
         return unknown;
     }

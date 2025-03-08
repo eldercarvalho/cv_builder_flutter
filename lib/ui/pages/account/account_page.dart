@@ -223,7 +223,7 @@ class _AccountPageState extends State<AccountPage> {
         errorMessage = switch (error.code) {
           AuthErrorCode.emailAlreadyInUse => context.l10n.emailAlreadyInUseError,
           AuthErrorCode.networkRequestFailed => context.l10n.noNetworkError,
-          _ => context.l10n.loginGenericError,
+          _ => context.l10n.accountUpdateError,
         };
         context.showErrorSnackBar(errorMessage);
       }
@@ -231,12 +231,22 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void _onDeleteAccountListener() {
-    if (_viewModel.updateAccount.completed) {
+    if (_viewModel.deleteAccount.completed) {
       context.showSuccessSnackBar(context.l10n.accountDeleteSuccess);
     }
 
-    if (_viewModel.updateAccount.error) {
-      context.showErrorSnackBar(context.l10n.accountDeleteError);
+    if (_viewModel.deleteAccount.error) {
+      final error = _viewModel.deleteAccount.result?.exceptionOrNull();
+
+      if (error is AuthException) {
+        String errorMessage = '';
+        errorMessage = switch (error.code) {
+          AuthErrorCode.requiresRecentLogin => context.l10n.accountLoginRequiredError,
+          AuthErrorCode.networkRequestFailed => context.l10n.noNetworkError,
+          _ => context.l10n.accountDeleteError,
+        };
+        context.showErrorSnackBar(errorMessage);
+      }
     }
   }
 

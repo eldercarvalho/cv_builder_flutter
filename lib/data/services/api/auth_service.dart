@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cv_builder/data/models/user.dart';
 import 'package:cv_builder/data/services/api/exceptions.dart';
 import 'package:cv_builder/domain/dtos/authentication_data.dart';
@@ -10,6 +11,7 @@ import 'package:result_dart/result_dart.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Stream<UserModel?> get authStateChanges => _firebaseAuth.authStateChanges().map((user) {
         if (user != null) {
@@ -70,6 +72,13 @@ class AuthService {
 
       // Autentica o usuário no Firebase
       final UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
+
+      // Cria um documento para o usuário no Firestore
+      await _firestore.collection('users').doc(userCredential.user!.uid).set({
+        'name': googleUser.displayName,
+        'email': googleUser.email,
+      });
+
       return Success(userCredential.user!);
     } on FirebaseAuthException catch (e) {
       final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
@@ -87,6 +96,11 @@ class AuthService {
       );
 
       await userCredential.user!.updateDisplayName(data.name);
+
+      await _firestore.collection('users').doc(userCredential.user!.uid).set({
+        'name': data.name,
+        'email': data.email,
+      });
 
       return Success(userCredential.user!);
     } on FirebaseAuthException catch (e) {
@@ -137,12 +151,19 @@ class AuthService {
     try {
       final User? firebaseUser = _firebaseAuth.currentUser;
       if (firebaseUser != null) {
+        await _firestore.collection('users').doc(firebaseUser.uid).update({
+          'name': user.name,
+          'email': user.email,
+        });
         await firebaseUser.updateDisplayName(user.name);
         // await firebaseUser.verifyBeforeUpdateEmail(user.email);
         return const Success(unit);
       }
       throw Exception('User not found');
     } on FirebaseAuthException catch (e) {
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
+      return Failure(exception);
+    } on FirebaseException catch (e) {
       final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
@@ -163,14 +184,18 @@ class AuthService {
   }
 
   AsyncResult<Unit> deleteAccount() async {
+    final User? firebaseUser = _firebaseAuth.currentUser;
     try {
-      final User? firebaseUser = _firebaseAuth.currentUser;
       if (firebaseUser != null) {
+        await _firestore.collection('users').doc(firebaseUser.uid).delete();
         await firebaseUser.delete();
         return const Success(unit);
       }
       throw Exception('User not found');
     } on FirebaseAuthException catch (e) {
+      final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
+      return Failure(exception);
+    } on FirebaseException catch (e) {
       final exception = AuthException(e.message, AuthErrorCode.fromString(e.code));
       return Failure(exception);
     }
