@@ -132,6 +132,7 @@
   "accountDeleteAlertMessage": "¿Estás seguro de que deseas eliminar tu cuenta? Todos los currículums serán eliminados permanentemente",
   "accountDeleteAlertConfirm": "Sí, eliminar",
   "accountDeleteAlertCancel": "Cancelar",
+  "accountLoginRequiredError": "Inicia sesión de nuevo para eliminar tu cuenta",
   "noNetworkError": "Sin conexión a Internet",
   "emailAlreadyInUseError": "El correo indicado ya está vinculado a una cuenta",
   "weakPasswordError": "La contraseña indicada es muy débil",

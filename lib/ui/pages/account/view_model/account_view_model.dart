@@ -38,10 +38,13 @@ class AccountViewModel extends ChangeNotifier {
     final result = await _authRepository
         .getCurrentUser()
         .flatMap((user) => _resumeRepository.deleteResumes(userId: user.id))
-        .map((_) => _authRepository.deleteAccount())
+        .flatMap((_) => _authRepository.deleteAccount())
         .map((_) => _authRepository.logout());
 
-    return result.fold((_) => const Success(unit), (error) => Failure(error));
+    return result.fold(
+      (_) => const Success(unit),
+      (error) => Failure(error),
+    );
   }
 
   AsyncResult<List<String>> getSignInMethods() async {

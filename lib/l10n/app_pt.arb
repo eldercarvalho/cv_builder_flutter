@@ -132,6 +132,7 @@
   "accountDeleteAlertMessage": "Você tem certeza que deseja excluir sua conta? Todos os currículos serão excluídos permanentemente",
   "accountDeleteAlertConfirm": "Sim, excluir",
   "accountDeleteAlertCancel": "Cancelar",
+  "accountLoginRequiredError": "Faça login novamente para excluir sua conta",
   "noNetworkError": "Sem conexão com a internet",
   "emailAlreadyInUseError": "O email informado já está vinculado a uma conta",
   "weakPasswordError": "A senha informada é muito fraca",

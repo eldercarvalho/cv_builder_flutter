@@ -101,6 +101,7 @@ class RemoteService {
       return await _firestore.runTransaction((transaction) async {
         final resumesRef = _firestore.collection('users').doc(userId).collection('resumes');
         final resumes = await resumesRef.get();
+
         for (final doc in resumes.docs) {
           final resume = ResumeModel.fromJson(doc.data());
           final thumbnailRef = _storage.ref().child('images/$userId/${resume.id}/thumbnail');
@@ -113,6 +114,7 @@ class RemoteService {
 
           transaction.delete(doc.reference);
         }
+
         return const Success(unit);
       });
     } on FirebaseException catch (e) {
