@@ -65,14 +65,14 @@ class FormContainer extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: context.colors.surface,
                         shape: BoxShape.circle,
-                        border: Border.all(color: context.colors.primary),
-                        boxShadow: [
-                          BoxShadow(
-                            color: context.colors.shadow.withValues(alpha: 0.2),
-                            offset: const Offset(0, 2),
-                            blurRadius: 4,
-                          ),
-                        ],
+                        border: Border.all(color: context.colors.primary, width: 2),
+                        // boxShadow: [
+                        //   BoxShadow(
+                        //     color: context.colors.shadow.withValues(alpha: 0.2),
+                        //     offset: const Offset(0, 2),
+                        //     blurRadius: 4,
+                        //   ),
+                        // ],
                       ),
                       child: Icon(
                         FeatherIcons.eye,

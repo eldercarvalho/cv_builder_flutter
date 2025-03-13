@@ -1,4 +1,4 @@
-import 'package:cv_builder/ui/pages/resume_form/widgets/template_form.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,6 +7,7 @@ import '../../../domain/models/resume.dart';
 import '../../shared/extensions/extensions.dart';
 import 'resume_form_finished_page.dart';
 import 'view_model/resume_form_view_model.dart';
+import 'widgets/template_form.dart';
 import 'widgets/widgets.dart';
 
 enum ResumeFormPageStep {
@@ -92,6 +93,13 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
         child: Scaffold(
           appBar: AppBar(
             title: Text(title),
+            actions: [
+              if (kDebugMode)
+                IconButton(
+                  icon: const Icon(Icons.download),
+                  onPressed: () => _viewModel.resume = Resume.fake(),
+                ),
+            ],
           ),
           body: PageView(
             physics: const NeverScrollableScrollPhysics(),

@@ -156,5 +156,17 @@
   "policyAndTerms": "Políticas y Términos",
   "aboutTheApp": "Acerca de la App",
   "developer": "Desarrollador",
-  "review": "Evaluar"
+  "review": "Evaluar",
+  "customizeColors": "Personalizar Colores",
+  "backgroundColor": "Color de Fondo",
+  "titleColor": "Color del Título",
+  "textColor": "Color del Texto",
+  "linkColor": "Color del Enlace",
+  "iconColor": "Color del Icono",
+  "dividerColor": "Color de la Divisoria",
+  "column1": "Columna 1",
+  "column2": "Columna 2",
+  "defaultColor": "Color Predeterminado",
+  "close": "Cerrar",
+  "saving": "Guardando..."
 }

@@ -155,5 +155,17 @@
   "policyAndTerms": "Policy and Terms",
   "aboutTheApp": "About the App",
   "developer": "Developer",
-  "review": "Review"
+  "review": "Review",
+  "customizeColors": "Customize Colors",
+  "backgroundColor": "Background Color",
+  "titleColor": "Title Color",
+  "textColor": "Text Color",
+  "linkColor": "Link Color",
+  "iconColor": "Icon Color",
+  "dividerColor": "Divider Color",
+  "column1": "Column 1",
+  "column2": "Column 2",
+  "defaultColor": "Default Color",
+  "close": "Close",
+  "saving": "Saving..."
 }

@@ -7,6 +7,7 @@ import 'package:printing/printing.dart';
 
 import '../../../ui/shared/extensions/datetime.dart';
 import '../../models/resume.dart';
+import '../constants.dart';
 import '../icons.dart';
 import '../texts.dart';
 import 'constants.dart';
@@ -20,9 +21,11 @@ class ModernTemplate {
     final pageHeight = PdfPageFormat.a4.height;
     final leftColumnWidth = pageWidth * 0.35;
     final rightColumnWidth = pageWidth * 0.65;
-    final config = await TemplateConfig.instance;
+    final config = await TemplateConfig.getInstance(resume.theme);
     final resumeLanguage = resume.resumeLanguage!.name;
     final texts = getTexts(resume.resumeLanguage!);
+    final primaryColors = config.theme.primaryColors;
+    final secondaryColors = config.theme.secondaryColors;
 
     final photo = resume.hasPhoto
         ? resume.isNetworkPhoto
@@ -57,7 +60,7 @@ class ModernTemplate {
 
                   // Formação
                   if (resume.education.isNotEmpty) ...[
-                    SectionTitle(text: texts.education, config: config),
+                    SectionTitle(text: texts.education, config: config, column: TemplateColumn.one),
                     SizedBox(height: config.titleSpace),
                     ListView.separated(
                       itemBuilder: (context, index) {
@@ -66,22 +69,22 @@ class ModernTemplate {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text(education.fieldOfStudy, style: config.titleSmallTextStyle),
+                              Text(education.fieldOfStudy, style: config.titleSmallTextStyle1),
                               SizedBox(height: config.lineSpace),
-                              Text(education.institution, style: config.bodyMediumTextStyle),
+                              Text(education.institution, style: config.bodyMediumTextStyle1),
                               SizedBox(height: config.lineSpace),
                               Row(children: [
                                 Text(education.startDate.toShortDate(locale: resumeLanguage),
-                                    style: config.bodyMediumTextStyle),
+                                    style: config.bodyMediumTextStyle1),
                                 if (education.endDate != null)
                                   Text('- ${education.endDate!.toShortDate(locale: resumeLanguage)}',
-                                      style: config.bodyMediumTextStyle),
+                                      style: config.bodyMediumTextStyle1),
                                 if (education.endDate == null)
-                                  Text('- ${texts.current}', style: config.bodyMediumTextStyle),
+                                  Text('- ${texts.current}', style: config.bodyMediumTextStyle1),
                               ]),
                               if (education.summary != null) ...[
                                 SizedBox(height: config.lineSpace),
-                                Text(education.summary!, style: config.bodyMediumTextStyle),
+                                Text(education.summary!, style: config.bodyMediumTextStyle1),
                               ],
                             ],
                           ),
@@ -95,7 +98,7 @@ class ModernTemplate {
                   // Habilidades
                   if (resume.skills.isNotEmpty) ...[
                     SizedBox(height: config.sectionSpace),
-                    SectionTitle(text: texts.skills, config: config),
+                    SectionTitle(text: texts.skills, config: config, column: TemplateColumn.one),
                     SizedBox(height: config.titleSpace),
                     ...List.generate(
                       resume.skills.length,
@@ -104,7 +107,9 @@ class ModernTemplate {
                         return Bullet(
                           text:
                               skill.name + (skill.level != null && skill.level!.isNotEmpty ? ' - ${skill.level}' : ''),
-                          style: config.bodyMediumTextStyle,
+                          style: config.bodyMediumTextStyle1,
+                          bulletColor: PdfColor.fromHex(primaryColors.textColor),
+                          padding: const EdgeInsets.only(left: 6),
                         );
                       },
                     )
@@ -113,14 +118,16 @@ class ModernTemplate {
                   // Idiomas
                   if (resume.languages.isNotEmpty) ...[
                     SizedBox(height: config.sectionSpace),
-                    SectionTitle(text: texts.languages, config: config),
+                    SectionTitle(text: texts.languages, config: config, column: TemplateColumn.one),
                     SizedBox(height: config.titleSpace),
                     ...List.generate(resume.languages.length, (index) {
                       final language = resume.languages[index];
                       return Bullet(
                         text: language.name +
                             (language.fluency != null && language.fluency!.isNotEmpty ? ' - ${language.fluency}' : ''),
-                        style: config.bodyMediumTextStyle,
+                        style: config.bodyMediumTextStyle1,
+                        bulletColor: PdfColor.fromHex(primaryColors.textColor),
+                        padding: const EdgeInsets.only(left: 6),
                       );
                     })
                     // ListView.separated(
@@ -144,7 +151,7 @@ class ModernTemplate {
                   // Certificações
                   if (resume.certifications.isNotEmpty) ...[
                     SizedBox(height: config.sectionSpace),
-                    SectionTitle(text: texts.certifications, config: config),
+                    SectionTitle(text: texts.certifications, config: config, column: TemplateColumn.one),
                     SizedBox(height: config.titleSpace),
                     ...List.generate(
                       resume.certifications.length,
@@ -154,13 +161,13 @@ class ModernTemplate {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text(certification.title, style: config.titleSmallTextStyle),
-                              Text(certification.issuer, style: config.bodyMediumTextStyle),
+                              Text(certification.title, style: config.titleSmallTextStyle1),
+                              Text(certification.issuer, style: config.bodyMediumTextStyle1),
                               Text(certification.date.toShortDate(locale: resume.resumeLanguage!.name),
-                                  style: config.bodyMediumTextStyle),
+                                  style: config.bodyMediumTextStyle1),
                               if (certification.summary != null) ...[
                                 SizedBox(height: config.lineSpace),
-                                Text(certification.summary!, style: config.paragraphTextStyle),
+                                Text(certification.summary!, style: config.paragraphTextStyle1),
                               ],
                               if (index < resume.certifications.length - 1) SizedBox(height: config.innerSpace),
                             ],
@@ -182,8 +189,8 @@ class ModernTemplate {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(resume.name, style: config.titleLargeTextStyle),
-                        if (resume.profession != null) Text(resume.profession!, style: config.bodyLargeTextStyle),
+                        Text(resume.name, style: config.titleLargeTextStyle2),
+                        if (resume.profession != null) Text(resume.profession!, style: config.bodyLargeTextStyle2),
                       ],
                     ),
                   ),
@@ -217,15 +224,15 @@ class ModernTemplate {
                   // Objetivo
                   if (resume.objectiveSummary != null && resume.objectiveSummary!.isNotEmpty) ...[
                     SizedBox(height: config.sectionSpace),
-                    SectionTitle(text: texts.objective, config: config),
+                    SectionTitle(text: texts.objective, config: config, column: TemplateColumn.two),
                     SizedBox(height: config.titleSpace),
-                    Box(child: Text(resume.objectiveSummary!, style: config.paragraphTextStyle))
+                    Box(child: Text(resume.objectiveSummary!, style: config.paragraphTextStyle2))
                   ],
 
                   // Experiência
                   if (resume.workExperience.isNotEmpty) ...[
                     SizedBox(height: config.sectionSpace),
-                    SectionTitle(text: texts.experience, config: config),
+                    SectionTitle(text: texts.experience, config: config, column: TemplateColumn.two),
                     SizedBox(height: config.titleSpace),
                     ...List.generate(
                       resume.workExperience.length,
@@ -235,17 +242,20 @@ class ModernTemplate {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text(experience.position, style: config.titleSmallTextStyle),
+                              Text(experience.position, style: config.titleSmallTextStyle2),
                               SizedBox(height: config.lineSpace),
                               Row(
                                 children: [
-                                  Text(experience.company, style: config.bodyMediumTextStyle),
+                                  Text(experience.company, style: config.bodyMediumTextStyle2),
                                   if (experience.website.isNotEmpty)
                                     Padding(
                                       padding: const EdgeInsets.only(left: 8),
                                       child: UrlLink(
-                                        child:
-                                            SvgImage(svg: getIconSvg('link'), colorFilter: PdfColors.blue, width: 12),
+                                        child: SvgImage(
+                                          svg: getIconSvg('link'),
+                                          colorFilter: PdfColor.fromHex(secondaryColors.linkColor),
+                                          width: 12,
+                                        ),
                                         destination: experience.website,
                                       ),
                                     ),
@@ -254,18 +264,18 @@ class ModernTemplate {
                               SizedBox(height: config.lineSpace),
                               Row(children: [
                                 Text(experience.startDate.toShortDate(locale: resumeLanguage),
-                                    style: config.bodyMediumTextStyle),
+                                    style: config.bodyMediumTextStyle2),
                                 if (experience.endDate != null)
                                   Text(' - ${experience.endDate!.toShortDate(locale: resumeLanguage)}',
-                                      style: config.bodyMediumTextStyle),
+                                      style: config.bodyMediumTextStyle2),
                                 if (experience.endDate == null)
-                                  Text(' - ${texts.current}', style: config.bodyMediumTextStyle),
+                                  Text(' - ${texts.current}', style: config.bodyMediumTextStyle2),
                               ]),
                               if (experience.summary != null && experience.summary!.isNotEmpty) ...[
                                 SizedBox(height: config.lineSpace),
-                                Text(texts.responsibilities, style: config.bodySmallTextStyle),
+                                Text(texts.responsibilities, style: config.bodySmallTextStyle2),
                                 SizedBox(height: config.lineSpace),
-                                Text(experience.summary!, style: config.paragraphTextStyle),
+                                Text(experience.summary!, style: config.paragraphTextStyle2),
                               ],
                               if (index < resume.workExperience.length - 1) SizedBox(height: config.innerSpace),
                             ],
@@ -289,10 +299,19 @@ class ModernTemplate {
           pageFormat: PdfPageFormat.a4,
           margin: EdgeInsets.zero,
           buildBackground: (context) {
-            return Container(
-              color: PdfColor.fromHex('#D8DFE7'),
-              width: pageWidth * 0.35,
-              height: pageHeight,
+            return Row(
+              children: [
+                Container(
+                  width: pageWidth * 0.35,
+                  height: pageHeight,
+                  color: PdfColor.fromHex(primaryColors.backgroundColor),
+                ),
+                Container(
+                  width: pageWidth * 0.65,
+                  height: pageHeight,
+                  color: PdfColor.fromHex(secondaryColors.backgroundColor),
+                ),
+              ],
             );
           },
         ),

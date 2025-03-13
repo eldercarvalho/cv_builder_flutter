@@ -1,23 +1,32 @@
+import 'package:cv_builder/domain/models/models.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
+import '../../constants.dart';
 import '../constants.dart';
 
 class SectionTitle extends StatelessWidget {
   SectionTitle({
     required this.text,
     required this.config,
-    this.darkMode = false,
+    required this.column,
   });
 
   final String text;
   final TemplateConfig config;
-  final bool darkMode;
+  final TemplateColumn column;
 
   @override
   Widget build(Context context) {
-    final style = darkMode ? config.titleMediumTextStyle.copyWith(color: PdfColors.white) : config.titleMediumTextStyle;
-    // final color = darkMode ? const PdfColor.fromInt(0x40FFFFFF) : PdfColors.grey300;
+    final style = switch (column) {
+      TemplateColumn.one => config.titleLargeTextStyle1,
+      TemplateColumn.two => config.titleLargeTextStyle2,
+    };
+
+    final colors = switch (column) {
+      TemplateColumn.one => config.theme.primaryColors,
+      TemplateColumn.two => config.theme.secondaryColors,
+    };
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -26,7 +35,7 @@ class SectionTitle extends StatelessWidget {
         children: [
           Text(text, style: style),
           SizedBox(height: 2),
-          Container(height: 1, color: PdfColors.grey600),
+          Container(height: 1, color: PdfColor.fromHex(colors.dividerColor)),
         ],
       ),
     );

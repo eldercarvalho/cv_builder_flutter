@@ -101,6 +101,7 @@ class Resume extends Equatable {
   final String? thumbnail;
   final bool isDraft;
   final String? copyId;
+  final ResumeTheme theme;
 
   String? get age => birthDate != null ? (DateTime.now().difference(birthDate!).inDays ~/ 365).toString() : null;
   bool get hasPhoto => photo != null;
@@ -155,6 +156,7 @@ class Resume extends Equatable {
     this.thumbnail,
     this.isDraft = false,
     this.copyId,
+    this.theme = ResumeTheme.basic,
   });
 
   static Resume empty() => Resume(
@@ -175,13 +177,13 @@ class Resume extends Equatable {
         name: 'João Francisco da Silva',
         profession: 'Desenvolvedor Mobile',
         birthDate: DateTime.now().subtract(const Duration(days: 365 * 30)),
-        photo:
-            'https://firebasestorage.googleapis.com/v0/b/cvbuilder-67b67.firebasestorage.app/o/user_photo.png?alt=media&token=d7228e79-a5a4-4efc-bd45-d9c9988dccf2',
+        // photo:
+        //     'https://firebasestorage.googleapis.com/v0/b/cvbuilder-67b67.firebasestorage.app/o/user_photo.png?alt=media&token=d7228e79-a5a4-4efc-bd45-d9c9988dccf2',
         address: 'Rua dos Devs, 130',
         city: 'São Paulo',
         zipCode: '88050-400',
         phoneNumber: '11 988661-9110',
-        website: 'joaosilva.com.br',
+        website: 'https://joaosilva.com.br',
         email: 'joaofsilva@gmail.com',
         socialNetworks: const [
           SocialNetwork(
@@ -388,6 +390,7 @@ class Resume extends Equatable {
     String? thumbnail,
     bool? isDraft,
     String? copyId,
+    ResumeTheme? theme,
   }) {
     return Resume(
       id: id ?? this.id,
@@ -421,6 +424,7 @@ class Resume extends Equatable {
       thumbnail: thumbnail ?? this.thumbnail,
       isDraft: isDraft ?? this.isDraft,
       copyId: copyId ?? this.copyId,
+      theme: theme ?? this.theme,
     );
   }
 
@@ -457,6 +461,7 @@ class Resume extends Equatable {
         thumbnail,
         isDraft,
         copyId,
+        theme,
       ];
 }
 
@@ -476,4 +481,151 @@ extension ToPdfExtension on Resume {
       // ResumeTemplate.elegant => BasicTemplate.generateThumbnail(this),
     };
   }
+}
+
+enum ResumeColorType {
+  background,
+  link,
+  title,
+  text,
+  icon,
+  divider;
+
+  static ResumeColorType fromString(String value) {
+    switch (value) {
+      case 'background':
+        return ResumeColorType.background;
+      case 'link':
+        return ResumeColorType.link;
+      case 'title':
+        return ResumeColorType.title;
+      case 'text':
+        return ResumeColorType.text;
+      case 'icon':
+        return ResumeColorType.icon;
+      case 'divider':
+        return ResumeColorType.divider;
+      default:
+        return ResumeColorType.background;
+    }
+  }
+}
+
+class ResumeColor extends Equatable {
+  final ResumeColorType type;
+  final String value;
+
+  const ResumeColor({
+    required this.type,
+    required this.value,
+  });
+
+  ResumeColor copyWith({
+    ResumeColorType? type,
+    String? value,
+  }) {
+    return ResumeColor(
+      type: type ?? this.type,
+      value: value ?? this.value,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        type,
+        value,
+      ];
+}
+
+class ResumeTheme extends Equatable {
+  final List<ResumeColor> primaryColors;
+  final List<ResumeColor> secondaryColors;
+
+  const ResumeTheme({
+    required this.primaryColors,
+    this.secondaryColors = const [],
+  });
+
+  static const ResumeTheme basic = ResumeTheme(
+    primaryColors: [
+      ResumeColor(type: ResumeColorType.background, value: '#FFFFFF'),
+      ResumeColor(type: ResumeColorType.title, value: '#000000'),
+      ResumeColor(type: ResumeColorType.text, value: '#000000'),
+      ResumeColor(type: ResumeColorType.icon, value: '#000000'),
+      ResumeColor(type: ResumeColorType.link, value: '#2196f3'),
+      ResumeColor(type: ResumeColorType.divider, value: '#000000'),
+    ],
+  );
+
+  static const ResumeTheme modern = ResumeTheme(
+    primaryColors: [
+      ResumeColor(type: ResumeColorType.background, value: '#D8DFE7'),
+      ResumeColor(type: ResumeColorType.title, value: '#424242'),
+      ResumeColor(type: ResumeColorType.text, value: '#424242'),
+      ResumeColor(type: ResumeColorType.icon, value: '#424242'),
+      ResumeColor(type: ResumeColorType.link, value: '#2196f3'),
+      ResumeColor(type: ResumeColorType.divider, value: '#424242'),
+    ],
+    secondaryColors: [
+      ResumeColor(type: ResumeColorType.background, value: '#FFFFFF'),
+      ResumeColor(type: ResumeColorType.title, value: '#424242'),
+      ResumeColor(type: ResumeColorType.text, value: '#424242'),
+      ResumeColor(type: ResumeColorType.icon, value: '#424242'),
+      ResumeColor(type: ResumeColorType.link, value: '#2196f3'),
+      ResumeColor(type: ResumeColorType.divider, value: '#424242'),
+    ],
+  );
+
+  static ResumeTheme getByTemplate(ResumeTemplate template) {
+    switch (template) {
+      case ResumeTemplate.basic:
+        return basic;
+      case ResumeTemplate.modern:
+        return modern;
+      // case ResumeTemplate.elegant:
+      //   return elegant;
+    }
+  }
+
+  ResumeTheme copyWith({
+    List<ResumeColor>? primaryColors,
+    List<ResumeColor>? secondaryColors,
+  }) {
+    return ResumeTheme(
+      primaryColors: primaryColors ?? this.primaryColors,
+      secondaryColors: secondaryColors ?? this.secondaryColors,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        primaryColors,
+        secondaryColors,
+      ];
+}
+
+extension ResumeColorListExtension on List<ResumeColor> {
+  String get backgroundColor => firstWhere((color) => color.type == ResumeColorType.background).value;
+  String get titleColor => firstWhere((color) => color.type == ResumeColorType.title).value;
+  String get textColor => firstWhere((color) => color.type == ResumeColorType.text).value;
+  String get iconColor => firstWhere((color) => color.type == ResumeColorType.icon).value;
+  String get linkColor => firstWhere((color) => color.type == ResumeColorType.link).value;
+  String get dividerColor => firstWhere((color) => color.type == ResumeColorType.divider).value;
+
+  List<ResumeColor> setColor(ResumeColorType type, String value) {
+    return map((e) => e.type == type ? e.copyWith(value: value) : e).toList();
+  }
+
+  List<ResumeColor> setBackgroundColor(String color) =>
+      map((e) => e.type == ResumeColorType.background ? e.copyWith(value: color) : e).toList();
+  List<ResumeColor> setLinkColor(String color) =>
+      map((e) => e.type == ResumeColorType.link ? e.copyWith(value: color) : e).toList();
+  List<ResumeColor> setTitleColor(String color) =>
+      map((e) => e.type == ResumeColorType.title ? e.copyWith(value: color) : e).toList();
+  List<ResumeColor> setTextColor(String color) =>
+      map((e) => e.type == ResumeColorType.text ? e.copyWith(value: color) : e).toList();
+  List<ResumeColor> setIconColor(String color) =>
+      map((e) => e.type == ResumeColorType.icon ? e.copyWith(value: color) : e).toList();
+  List<ResumeColor> setDividerColor(String color) =>
+      map((e) => e.type == ResumeColorType.divider ? e.copyWith(value: color) : e).toList();
 }

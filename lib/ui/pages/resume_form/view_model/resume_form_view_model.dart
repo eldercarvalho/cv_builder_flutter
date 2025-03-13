@@ -69,6 +69,8 @@ class ResumeFormViewModel extends ChangeNotifier {
       id: _resume.id,
       resumeName: _resume.resumeName,
       resumeLanguage: _resume.resumeLanguage,
+      theme: _resume.theme,
+      template: _resume.template,
     );
     notifyListeners();
   }

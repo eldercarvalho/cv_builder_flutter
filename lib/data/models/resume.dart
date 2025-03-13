@@ -42,6 +42,7 @@ class ResumeModel extends Equatable {
   final String createdAt;
   final String? updatedAt;
   final String? thumbnail;
+  final ResumeThemeModel? theme;
 
   const ResumeModel({
     required this.id,
@@ -73,6 +74,7 @@ class ResumeModel extends Equatable {
     required this.createdAt,
     this.updatedAt,
     this.thumbnail,
+    this.theme,
   });
 
   static const ResumeModel empty = ResumeModel(
@@ -123,6 +125,7 @@ class ResumeModel extends Equatable {
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String?,
       thumbnail: json['thumbnail'] as String?,
+      theme: json['theme'] != null ? ResumeThemeModel.fromJson(json['theme']) : null,
     );
   }
 
@@ -157,6 +160,7 @@ class ResumeModel extends Equatable {
       'createdAt': createdAt,
       'updatedAt': updatedAt,
       'thumbnail': thumbnail,
+      'theme': theme?.toJson(),
     };
   }
 
@@ -191,6 +195,7 @@ class ResumeModel extends Equatable {
       createdAt: DateTime.parse(createdAt),
       updatedAt: updatedAt != null ? DateTime.parse(updatedAt!) : null,
       thumbnail: thumbnail,
+      theme: theme != null ? theme!.toDomain() : ResumeTheme.basic,
     );
   }
 
@@ -225,6 +230,7 @@ class ResumeModel extends Equatable {
       createdAt: resume.createdAt.toIso8601String(),
       updatedAt: resume.updatedAt?.toIso8601String(),
       thumbnail: resume.thumbnail,
+      theme: ResumeThemeModel.fromDomain(resume.theme),
     );
   }
 
@@ -258,6 +264,7 @@ class ResumeModel extends Equatable {
     String? createdAt,
     String? updatedAt,
     String? thumbnail,
+    ResumeThemeModel? theme,
   }) {
     return ResumeModel(
       id: id ?? this.id,
@@ -289,6 +296,7 @@ class ResumeModel extends Equatable {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       thumbnail: thumbnail ?? this.thumbnail,
+      theme: theme ?? this.theme,
     );
   }
 
@@ -322,5 +330,88 @@ class ResumeModel extends Equatable {
         createdAt,
         updatedAt,
         thumbnail,
+        theme,
+      ];
+}
+
+class ResumeColorModel {
+  final String type;
+  final String value;
+
+  const ResumeColorModel({
+    required this.type,
+    required this.value,
+  });
+
+  factory ResumeColorModel.fromJson(Map<String, dynamic> json) {
+    return ResumeColorModel(
+      type: json['type'] as String,
+      value: json['value'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'type': type,
+      'value': value,
+    };
+  }
+
+  ResumeColor toDomain() {
+    return ResumeColor(
+      type: ResumeColorType.fromString(type),
+      value: value,
+    );
+  }
+
+  factory ResumeColorModel.fromDomain(ResumeColor color) {
+    return ResumeColorModel(
+      type: color.type.name,
+      value: color.value,
+    );
+  }
+}
+
+class ResumeThemeModel extends Equatable {
+  final List<ResumeColorModel> primaryColors;
+  final List<ResumeColorModel> secondaryColors;
+
+  const ResumeThemeModel({
+    required this.primaryColors,
+    required this.secondaryColors,
+  });
+
+  factory ResumeThemeModel.fromJson(Map<String, dynamic> json) {
+    return ResumeThemeModel(
+      primaryColors: List.of(json['primaryColors']).map((e) => ResumeColorModel.fromJson(e)).toList(),
+      secondaryColors: List.of(json['secondaryColors']).map((e) => ResumeColorModel.fromJson(e)).toList(),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'primaryColors': primaryColors.map((e) => e.toJson()).toList(),
+      'secondaryColors': secondaryColors.map((e) => e.toJson()).toList(),
+    };
+  }
+
+  ResumeTheme toDomain() {
+    return ResumeTheme(
+      primaryColors: primaryColors.map((e) => e.toDomain()).toList(),
+      secondaryColors: secondaryColors.map((e) => e.toDomain()).toList(),
+    );
+  }
+
+  factory ResumeThemeModel.fromDomain(ResumeTheme theme) {
+    return ResumeThemeModel(
+      primaryColors: theme.primaryColors.map((e) => ResumeColorModel.fromDomain(e)).toList(),
+      secondaryColors: theme.secondaryColors.map((e) => ResumeColorModel.fromDomain(e)).toList(),
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        primaryColors,
+        secondaryColors,
       ];
 }

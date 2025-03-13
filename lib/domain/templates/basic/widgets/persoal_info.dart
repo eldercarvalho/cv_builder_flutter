@@ -1,3 +1,4 @@
+import 'package:cv_builder/domain/models/resume.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
@@ -23,6 +24,7 @@ class PersonalInfo extends StatelessWidget {
 
   @override
   Widget build(Context context) {
+    final colors = config.theme.primaryColors;
     if (text == null || (text != null && text!.isEmpty)) return SizedBox.shrink();
 
     return Padding(
@@ -30,7 +32,7 @@ class PersonalInfo extends StatelessWidget {
       child: Row(
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SvgImage(svg: getIconSvg(icon), colorFilter: PdfColors.black, width: iconSize),
+          SvgImage(svg: getIconSvg(icon), colorFilter: PdfColor.fromHex(colors.iconColor), width: iconSize),
           SizedBox(width: 8),
           Expanded(child: Text(text!, style: config.bodySmallTextStyle)),
         ],
