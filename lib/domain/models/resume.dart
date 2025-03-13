@@ -587,6 +587,19 @@ class ResumeTheme extends Equatable {
     }
   }
 
+  static ResumeTheme getByString(String value) {
+    switch (value) {
+      case 'basic':
+        return basic;
+      case 'modern':
+        return modern;
+      // case 'elegant':
+      //   return elegant;
+      default:
+        return basic;
+    }
+  }
+
   ResumeTheme copyWith({
     List<ResumeColor>? primaryColors,
     List<ResumeColor>? secondaryColors,
