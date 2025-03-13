@@ -23,6 +23,8 @@ class CbTextFormField extends StatefulWidget {
     this.focusNode,
     this.textCapitalization = TextCapitalization.sentences,
     this.keyboardType,
+    this.showClearButton = true,
+    this.onClear,
   });
 
   final TextEditingController? controller;
@@ -42,6 +44,8 @@ class CbTextFormField extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final TextInputType? keyboardType;
   final Function()? onTap;
+  final Function()? onClear;
+  final bool showClearButton;
 
   @override
   State<CbTextFormField> createState() => _CbTextFormFieldState();
@@ -49,11 +53,26 @@ class CbTextFormField extends StatefulWidget {
 
 class _CbTextFormFieldState extends State<CbTextFormField> {
   bool _isObscured = false;
+  bool _isFilled = false;
 
   @override
   void initState() {
     _isObscured = widget.obscured;
+    _isFilled = widget.controller?.text.isNotEmpty ?? false;
+    widget.controller?.addListener(_onType);
     super.initState();
+  }
+
+  void _onType() {
+    setState(() {
+      _isFilled = widget.controller?.text.isNotEmpty ?? false;
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.controller?.removeListener(_onType);
+    super.dispose();
   }
 
   @override
@@ -86,28 +105,46 @@ class _CbTextFormFieldState extends State<CbTextFormField> {
                 : null,
             hintText: widget.hint,
             prefixIcon: widget.prefix,
-            suffixIcon: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (widget.prefix != null) widget.prefix!,
-                Visibility(
-                  visible: widget.obscured,
-                  child: GestureDetector(
-                    onTap: () => setState(() => _isObscured = !_isObscured),
-                    child: _isObscured
-                        ? Icon(
-                            FeatherIcons.eye,
-                            size: 24.sp,
-                            color: context.colors.primary,
-                          )
-                        : Icon(
-                            FeatherIcons.eyeOff,
-                            size: 24.sp,
-                            color: context.colors.primary,
-                          ),
-                  ),
-                ),
-              ],
+            suffixIcon: Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (_isFilled && widget.showClearButton)
+                    GestureDetector(
+                      onTap: () {
+                        widget.controller?.clear();
+                        widget.onClear?.call();
+                        setState(() => _isFilled = false);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(right: widget.suffix != null ? 16 : 0),
+                        child: Icon(
+                          Icons.backspace_outlined,
+                          size: 22.sp,
+                          color: context.colors.primary,
+                        ),
+                      ),
+                    ),
+                  if (widget.suffix != null) widget.suffix!,
+                  if (widget.obscured)
+                    GestureDetector(
+                      onTap: () => setState(() => _isObscured = !_isObscured),
+                      child: _isObscured
+                          ? Icon(
+                              FeatherIcons.eye,
+                              size: 22.sp,
+                              color: context.colors.primary,
+                            )
+                          : Icon(
+                              FeatherIcons.eyeOff,
+                              size: 22.sp,
+                              color: context.colors.primary,
+                            ),
+                    ),
+                ],
+              ),
             ),
             errorStyle: TextStyle(fontSize: 12.sp),
           ),

@@ -111,6 +111,7 @@ class _ProfileFormState extends State<ProfileForm> {
               CbDatePicker(
                 controller: _birthDateController,
                 label: context.l10n.birthDate,
+                onClear: () => _birthDateController.clear(),
               ),
             ],
             bottom: ListenableBuilder(
@@ -143,6 +144,7 @@ class _ProfileFormState extends State<ProfileForm> {
       _viewModel.resume = _viewModel.resume.copyWith(
         name: _nameController.text.trim(),
         profession: _professionController.text.trim(),
+        setNullbirthDate: _birthDateController.text.isEmpty,
         birthDate: _birthDateController.text.isNotEmpty ? format.parse(_birthDateController.text) : null,
         photo: _image?.path,
       );

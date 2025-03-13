@@ -1,7 +1,7 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:cv_builder/ui/shared/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CbDatePicker extends StatefulWidget {
@@ -12,12 +12,14 @@ class CbDatePicker extends StatefulWidget {
     this.hint,
     this.required = false,
     this.validator,
+    this.onClear,
   });
 
   final TextEditingController? controller;
   final String? label;
   final String? hint;
   final bool required;
+  final Function()? onClear;
   final String? Function(String?)? validator;
 
   @override
@@ -51,32 +53,19 @@ class _CbDatePickerState extends State<CbDatePicker> {
           child: Column(
             children: [
               Expanded(child: child),
-              // CbButton(
-              //   text: 'OK',
-              //   onPressed: () => Navigator.of(context).pop(),
-              // ),
+              SafeArea(
+                top: false,
+                child: TextButton(
+                  child: Text(context.l10n.close),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
-  // Future<void> _selectDate(BuildContext context) async {
-  //   final DateTime? pickedDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: _selectedDate ?? DateTime.now(),
-  //     firstDate: DateTime(1960),
-  //     lastDate: DateTime.now(),
-  //   );
-
-  //   if (pickedDate != null && pickedDate != _selectedDate) {
-  //     setState(() {
-  //       _selectedDate = pickedDate;
-  //       _controller.text = DateFormat('dd/MM/yyyy').format(pickedDate);
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +76,13 @@ class _CbDatePickerState extends State<CbDatePicker> {
       readOnly: true,
       required: widget.required,
       validator: widget.validator,
-      suffix: Icon(FeatherIcons.calendar, color: context.colors.primary),
+      // suffix: Icon(FeatherIcons.calendar, color: context.colors.primary),
+      onClear: () {
+        widget.onClear?.call();
+        setState(() {
+          _selectedDate = null;
+        });
+      },
       onTap: () => _showDialog(
         CupertinoDatePicker(
           initialDateTime: _selectedDate ?? DateTime.now(),

@@ -21,9 +21,9 @@ class ModernTemplate {
     final pageHeight = PdfPageFormat.a4.height;
     final leftColumnWidth = pageWidth * 0.35;
     final rightColumnWidth = pageWidth * 0.65;
-    final config = await TemplateConfig.getInstance(resume.theme);
     final resumeLanguage = resume.resumeLanguage!.name;
     final texts = getTexts(resume.resumeLanguage!);
+    final config = await TemplateConfig.getInstance(resume.theme);
     final primaryColors = config.theme.primaryColors;
     final secondaryColors = config.theme.secondaryColors;
 
@@ -41,7 +41,6 @@ class ModernTemplate {
         child: Partitions(
           children: [
             Partition(
-              // flex: 1,
               width: leftColumnWidth,
               child: Column(
                 children: [
@@ -57,6 +56,9 @@ class ModernTemplate {
                     ),
                     SizedBox(height: config.sectionSpace),
                   ],
+
+                  SectionTitle(text: texts.contact, config: config, column: TemplateColumn.one),
+                  SizedBox(height: config.titleSpace),
 
                   // Sobre
                   Box(
@@ -132,9 +134,9 @@ class ModernTemplate {
                         return Bullet(
                           text:
                               skill.name + (skill.level != null && skill.level!.isNotEmpty ? ' - ${skill.level}' : ''),
-                          style: config.bodyMediumTextStyle1,
+                          style: config.bodyMediumTextStyle1.copyWith(lineSpacing: 1),
                           bulletColor: PdfColor.fromHex(primaryColors.textColor),
-                          padding: const EdgeInsets.only(left: 6),
+                          padding: const EdgeInsets.only(left: 6, right: 16),
                         );
                       },
                     ),
@@ -150,9 +152,9 @@ class ModernTemplate {
                       return Bullet(
                         text: language.name +
                             (language.fluency != null && language.fluency!.isNotEmpty ? ' - ${language.fluency}' : ''),
-                        style: config.bodyMediumTextStyle1,
+                        style: config.bodyMediumTextStyle1.copyWith(lineSpacing: 1),
                         bulletColor: PdfColor.fromHex(primaryColors.textColor),
-                        padding: const EdgeInsets.only(left: 6),
+                        padding: const EdgeInsets.only(left: 6, right: 16),
                       );
                     })
                   ],
@@ -237,7 +239,7 @@ class ModernTemplate {
                         );
                       },
                     ),
-                    if (resume.projects.isNotEmpty) SizedBox(height: config.sectionSpace),
+                    if (resume.certifications.isNotEmpty) SizedBox(height: config.sectionSpace),
                   ],
 
                   // Certificações
@@ -266,7 +268,6 @@ class ModernTemplate {
                         );
                       },
                     ),
-                    SizedBox(height: config.sectionSpace),
                   ],
                 ],
               ),

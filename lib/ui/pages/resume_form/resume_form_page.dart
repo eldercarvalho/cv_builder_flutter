@@ -156,6 +156,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
   }
 
   void _onPreviousPage() {
+    FocusScope.of(context).unfocus();
     _pageController.previousPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
