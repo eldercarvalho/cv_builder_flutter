@@ -64,7 +64,7 @@
   "position": "Cargo",
   "startDate": "Data de Início",
   "endDate": "Data de Término",
-  "summary": "Resume",
+  "summary": "Resumo",
   "level": "Nível",
   "fluency": "Fluência",
   "issuer": "Emissor",
@@ -156,5 +156,17 @@
   "policyAndTerms": "Políticas e Termos",
   "aboutTheApp": "Sobre o App",
   "developer": "Desenvolvedor",
-  "review": "Avaliar"
+  "review": "Avaliar",
+  "customizeColors": "Personalizar Cores",
+  "backgroundColor": "Fundo",
+  "titleColor": "Título",
+  "textColor": "Texto",
+  "linkColor": "Link",
+  "iconColor": "Ícone",
+  "dividerColor": "Divisória",
+  "column1": "Coluna 1",
+  "column2": "Coluna 2",
+  "defaultColor": "Cor Padrão",
+  "close": "Fechar",
+  "saving": "Salvando..."
 }

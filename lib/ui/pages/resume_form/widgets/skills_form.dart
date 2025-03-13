@@ -95,9 +95,9 @@ class _SkillsFormState extends State<SkillsForm> {
                 showIcons: true,
                 showSaveButton: widget.isEditing,
                 isLoading: _viewModel.saveResume.running,
-                previousText: context.l10n.experience(1),
+                previousText: context.l10n.education(1),
                 onPreviousPressed: widget.onPrevious,
-                nextText: context.l10n.languages(1),
+                nextText: context.l10n.languages(2),
                 onNextPressed: () {
                   widget.onSubmit();
                 },

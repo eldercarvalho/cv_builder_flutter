@@ -1,3 +1,4 @@
+import 'package:cv_builder/ui/shared/extensions/context.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:printing/printing.dart';
@@ -6,7 +7,6 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../config/di.dart';
 import '../../../domain/models/resume.dart';
-import '../../shared/extensions/extensions.dart';
 import 'view_model/resume_preview_view_model.dart';
 import 'widgets/widgets.dart';
 
@@ -71,12 +71,28 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
               return Text(_viewModel.resume?.resumeName ?? "");
             },
           ),
-          // actions: [
-          //   IconButton(
-          //     onPressed: () => _viewModel.reloadResume.execute(),
-          //     icon: const Icon(FeatherIcons.refreshCcw),
-          //   ),
-          // ],
+          actions: [
+            ListenableBuilder(
+              listenable: _viewModel.updateResume,
+              builder: (context, child) {
+                if (_viewModel.updateResume.running) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 6),
+                    child: Text(context.l10n.saving,
+                        style: context.textTheme.labelLarge?.copyWith(color: context.colors.primary)),
+                  );
+                }
+
+                return const SizedBox.shrink();
+              },
+            ),
+            Builder(builder: (context) {
+              return IconButton(
+                onPressed: () => Scaffold.of(context).openEndDrawer(),
+                icon: const Icon(FeatherIcons.menu),
+              );
+            }),
+          ],
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(1),
             child: Divider(height: 1, color: context.colors.outline),
@@ -109,71 +125,25 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: SfPdfViewer.file(
-                        _viewModel.resumePdf!,
-                        pageSpacing: 16,
-                        controller: _pdfViewerController,
+                      child: ListenableBuilder(
+                        listenable: _viewModel,
+                        builder: (context, child) {
+                          return SfPdfViewer.file(
+                            _viewModel.resumePdf!,
+                            pageSpacing: 16,
+                            controller: _pdfViewerController,
+                          );
+                        },
                       ),
                     ),
-                    SafeArea(
-                      top: false,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: context.colors.surface,
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(16),
-                            topRight: Radius.circular(16),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: context.colors.shadow.withValues(alpha: 0.3),
-                              blurRadius: 4,
-                              offset: const Offset(0, -2),
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Builder(builder: (context) {
-                              return IconButton(
-                                onPressed: () => Scaffold.of(context).openEndDrawer(),
-                                icon: Icon(FeatherIcons.edit, color: context.colors.primary),
-                              );
-                            }),
-                            IconButton(
-                              onPressed: () => Printing.sharePdf(
-                                  bytes: _viewModel.resumePdf!.readAsBytesSync(),
-                                  filename: '${_viewModel.resume!.resumeName}.pdf'),
-                              icon: Icon(FeatherIcons.share2, color: context.colors.primary),
-                            ),
-                            Container(
-                              height: 24,
-                              width: 1,
-                              color: context.colors.outline,
-                            ),
-                            IconButton(
-                              onPressed: () => _pdfViewerController.zoomLevel += 0.5,
-                              icon: Icon(FeatherIcons.zoomIn, size: 26, color: context.colors.primary),
-                            ),
-                            IconButton(
-                              onPressed: () => _pdfViewerController.zoomLevel -= 0.5,
-                              icon: Icon(FeatherIcons.zoomOut, size: 26, color: context.colors.primary),
-                            ),
-                            Container(
-                              height: 24,
-                              width: 1,
-                              color: context.colors.outline,
-                            ),
-                            IconButton(
-                              onPressed: _showDeleteDialog,
-                              icon: Icon(FeatherIcons.trash2, size: 26, color: context.colors.error),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
+                    PreviewBottomToolbar(
+                      onEditTap: () => Scaffold.of(context).openEndDrawer(),
+                      onSettingsTap: _showSettings,
+                      onShareTap: _onShareTap,
+                      onZoomInTap: () => _pdfViewerController.zoomLevel += 0.5,
+                      onZoomOutTap: () => _pdfViewerController.zoomLevel -= 0.5,
+                      onDeleteTap: _showDeleteDialog,
+                    ),
                   ],
                 ),
               );
@@ -188,11 +158,9 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
 
   Future<void> _onGetResume() async {
     if (_viewModel.getResume.error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Erro ao carregar currículo'),
-        ),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(context.l10n.errorLoadingResume),
+      ));
     }
   }
 
@@ -203,12 +171,17 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
     }
 
     if (_viewModel.deleteResume.error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Erro ao deletar o currículo'),
-        ),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(context.l10n.errorLoadingResume),
+      ));
     }
+  }
+
+  void _onShareTap() {
+    Printing.sharePdf(
+      bytes: _viewModel.resumePdf!.readAsBytesSync(),
+      filename: '${_viewModel.resume!.resumeName}.pdf',
+    );
   }
 
   void _showDeleteDialog() {
@@ -233,5 +206,32 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
         ],
       ),
     );
+  }
+
+  void _showSettings() async {
+    final oldTheme = _viewModel.resume!.theme;
+    final result = await showModalBottomSheet(
+      context: context,
+      isDismissible: false,
+      enableDrag: false,
+      // isScrollControlled: true,
+      barrierColor: Colors.transparent,
+      constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.5),
+      builder: (context) => ChangeNotifierProvider.value(
+        value: _viewModel,
+        child: CustomBottomSheet(
+          oldTheme: oldTheme,
+        ),
+      ),
+    );
+
+    if (result != null && result == true) {
+      _viewModel.updateResume.execute();
+      return;
+    }
+
+    if (oldTheme != _viewModel.resume!.theme) {
+      _viewModel.updateTheme(oldTheme);
+    }
   }
 }

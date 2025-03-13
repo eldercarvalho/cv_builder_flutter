@@ -112,7 +112,11 @@ class TemplateFormState extends State<TemplateForm> {
   }
 
   void _onSubmit() {
-    _viewModel.resume = _viewModel.resume.copyWith(template: ResumeTemplate.fromIndex(_templateIndex));
+    final template = ResumeTemplate.fromIndex(_templateIndex);
+    _viewModel.resume = _viewModel.resume.copyWith(
+      template: template,
+      theme: ResumeTheme.getByTemplate(template),
+    );
     widget.onSubmit();
   }
 

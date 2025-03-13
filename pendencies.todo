@@ -2,6 +2,17 @@
   "todotree": {
     "tree": [
       {
+        "key": 1741840862930,
+        "children": [],
+        "todo": {
+          "content": "Adicionar loading na thumb do curriculo",
+          "id": 1741840862930,
+          "level": "default",
+          "done": false,
+          "start": 1741840862930
+        }
+      },
+      {
         "key": 1741313026459,
         "children": [],
         "todo": {
@@ -96,8 +107,10 @@
           "content": "Tratamento de Erros",
           "id": 1738899693515,
           "level": "default",
-          "done": false,
-          "start": 1738899693516
+          "done": true,
+          "start": 1738899693516,
+          "focus": false,
+          "end": 1741406170677
         }
       },
       {
@@ -429,6 +442,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1741313030715"
+    "version": "1741840879234"
   }
 }
