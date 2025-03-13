@@ -48,12 +48,14 @@ class BasicTemplate {
               ),
               SizedBox(width: 24),
             ],
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(resume.name, style: config.titleLargeTextStyle),
-                if (resume.profession != null) Text(resume.profession!, style: config.bodyLargeTextStyle),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(resume.name, style: config.titleLargeTextStyle),
+                  if (resume.profession != null) Text(resume.profession!, style: config.bodyLargeTextStyle),
+                ],
+              ),
             ),
           ],
         ),
@@ -131,6 +133,7 @@ class BasicTemplate {
                     SizedBox(height: config.lineSpace),
                     Text(experience.summary!, style: config.paragraphTextStyle),
                   ],
+                  if (index < resume.workExperience.length - 1) SizedBox(height: config.innerSpace),
                 ],
               );
             },
@@ -237,26 +240,6 @@ class BasicTemplate {
               ],
             );
           })
-          // ListView.separated(
-          //   itemBuilder: (context, index) {
-          //     final certification = resume.certifications[index];
-          //     return Column(
-          //       crossAxisAlignment: CrossAxisAlignment.stretch,
-          //       children: [
-          //         Text(certification.title, style: config.titleSmallTextStyle),
-          //         Text(certification.issuer, style: config.bodyMediumTextStyle),
-          //         Text(certification.date.toShortDate(locale: resume.resumeLanguage!.name),
-          //             style: config.bodyMediumTextStyle),
-          //         if (certification.summary != null) ...[
-          //           SizedBox(height: config.lineSpace),
-          //           Text(certification.summary!, style: config.paragraphTextStyle),
-          //         ],
-          //       ],
-          //     );
-          //   },
-          //   separatorBuilder: (context, index) => SizedBox(height: config.innerSpace),
-          //   itemCount: resume.certifications.length,
-          // )
         ],
 
         // Projetos
