@@ -125,7 +125,7 @@ class ResumeModel extends Equatable {
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String?,
       thumbnail: json['thumbnail'] as String?,
-      theme: json['theme'] != null ? ResumeThemeModel.fromJson(json['theme']) : null,
+      theme: json['theme'] != null ? ResumeThemeModel.fromJson(json['theme']) : ResumeThemeModel.defaultTemplate,
     );
   }
 
@@ -408,6 +408,25 @@ class ResumeThemeModel extends Equatable {
       secondaryColors: theme.secondaryColors.map((e) => ResumeColorModel.fromDomain(e)).toList(),
     );
   }
+
+  static const ResumeThemeModel defaultTemplate = ResumeThemeModel(
+    primaryColors: [
+      ResumeColorModel(type: 'background', value: '#D8DFE7'),
+      ResumeColorModel(type: 'title', value: '#424242'),
+      ResumeColorModel(type: 'text', value: '#424242'),
+      ResumeColorModel(type: 'icon', value: '#424242'),
+      ResumeColorModel(type: 'link', value: '#2196f3'),
+      ResumeColorModel(type: 'divider', value: '#424242'),
+    ],
+    secondaryColors: [
+      ResumeColorModel(type: 'background', value: '#FFFFFF'),
+      ResumeColorModel(type: 'title', value: '#424242'),
+      ResumeColorModel(type: 'text', value: '#424242'),
+      ResumeColorModel(type: 'icon', value: '#424242'),
+      ResumeColorModel(type: 'link', value: '#2196f3'),
+      ResumeColorModel(type: 'divider', value: '#424242'),
+    ],
+  );
 
   @override
   List<Object?> get props => [
