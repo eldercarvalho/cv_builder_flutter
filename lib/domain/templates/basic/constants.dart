@@ -1,6 +1,9 @@
 // Text Styles
+import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:printing/printing.dart';
+
+import '../../models/resume.dart';
 
 class TemplateConfig {
   TemplateConfig._({
@@ -12,6 +15,7 @@ class TemplateConfig {
     required this.bodyMediumTextStyle,
     required this.bodySmallTextStyle,
     required this.paragraphTextStyle,
+    required this.theme,
     // required this.iconTextStyle,
   });
 
@@ -38,24 +42,28 @@ class TemplateConfig {
   final TextStyle paragraphTextStyle;
   // final TextStyle iconTextStyle;
 
-  static Future<TemplateConfig> get instance async {
+  final ResumeTheme theme;
+
+  static Future<TemplateConfig> getInstance(ResumeTheme theme) async {
     final interBold = await PdfGoogleFonts.interBold();
     final interRegular = await PdfGoogleFonts.interRegular();
+    final colors = theme.primaryColors;
 
     return TemplateConfig._(
-      titleLargeTextStyle: TextStyle(font: interBold, fontSize: 20),
-      titleMediumTextStyle: TextStyle(font: interBold, fontSize: 16),
-      titleSmallTextStyle: TextStyle(font: interBold, fontSize: 14),
-      titleXSmallTextStyle: TextStyle(font: interBold, fontSize: 12),
-      bodyLargeTextStyle: TextStyle(font: interRegular, fontSize: 14),
-      bodyMediumTextStyle: TextStyle(font: interRegular, fontSize: 12),
-      bodySmallTextStyle: TextStyle(font: interRegular, fontSize: 10),
-      paragraphTextStyle: TextStyle(font: interRegular, fontSize: 10, lineSpacing: 3),
-      // iconTextStyle: TextStyle(font: faRegular400Font),
+      theme: theme,
+      titleLargeTextStyle: TextStyle(font: interBold, fontSize: 20, color: PdfColor.fromHex(colors.titleColor)),
+      titleMediumTextStyle: TextStyle(font: interBold, fontSize: 16, color: PdfColor.fromHex(colors.titleColor)),
+      titleSmallTextStyle: TextStyle(font: interBold, fontSize: 14, color: PdfColor.fromHex(colors.titleColor)),
+      titleXSmallTextStyle: TextStyle(font: interBold, fontSize: 12, color: PdfColor.fromHex(colors.titleColor)),
+      bodyLargeTextStyle: TextStyle(font: interRegular, fontSize: 14, color: PdfColor.fromHex(colors.textColor)),
+      bodyMediumTextStyle: TextStyle(font: interRegular, fontSize: 12, color: PdfColor.fromHex(colors.textColor)),
+      bodySmallTextStyle: TextStyle(font: interRegular, fontSize: 10, color: PdfColor.fromHex(colors.textColor)),
+      paragraphTextStyle:
+          TextStyle(font: interRegular, fontSize: 10, lineSpacing: 3, color: PdfColor.fromHex(colors.textColor)),
     );
   }
 }
 
 // // Page Config
-const horizontalMargin = 60.0;
-const verticalMargin = 36.0;
+const horizontalMargin = 40.0;
+const verticalMargin = 40.0;

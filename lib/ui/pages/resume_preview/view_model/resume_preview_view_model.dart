@@ -20,6 +20,7 @@ class ResumePreviewViewModel extends ChangeNotifier {
   late final Command1<Unit, String> getResume = Command1(_getResume);
   late final Command0<Unit> deleteResume = Command0(_deleteResume);
   late final Command0<Unit> reloadResume = Command0(_reloadResume);
+  late final Command0<Unit> updateResume = Command0(_updateResume);
 
   Resume? _resume;
   Resume? get resume => _resume;
@@ -67,5 +68,19 @@ class ResumePreviewViewModel extends ChangeNotifier {
         .getCurrentUser()
         .flatMap((user) => _resumeRepository.deleteResume(userId: user.id, resume: _resume!))
         .fold((_) => const Success(unit), (error) => Failure(error));
+  }
+
+  AsyncResult<Unit> _updateResume() async {
+    return _authRepository
+        .getCurrentUser()
+        .map((user) => _resumeRepository.saveResume(userId: user.id, resume: _resume!))
+        .fold((_) => const Success(unit), (error) => Failure(error));
+  }
+
+  AsyncResult<Unit> updateTheme(ResumeTheme theme) async {
+    return _onGetResume(_resume!.copyWith(theme: theme))
+        .map((resume) => resume.toPdf())
+        .flatMap((bytes) => _resumeRepository.savePdf(resumeId: _resume!.id, bytes: bytes))
+        .flatMap(_onGetResumePdf);
   }
 }

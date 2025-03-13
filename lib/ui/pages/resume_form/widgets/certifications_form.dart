@@ -96,7 +96,7 @@ class _CertificationsFormState extends State<CertificationsForm> {
                 showSaveButton: widget.isEditing,
                 isLoading: _viewModel.saveResume.running,
                 onPreviousPressed: widget.onPrevious,
-                previousText: context.l10n.skills(2),
+                previousText: context.l10n.languages(2),
                 nextText: context.l10n.finish,
                 nextIcon: FeatherIcons.checkCircle,
                 onNextPressed: () {

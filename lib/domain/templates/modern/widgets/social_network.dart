@@ -1,3 +1,4 @@
+import 'package:cv_builder/domain/models/resume.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
@@ -16,24 +17,30 @@ class SocialNetworkInfo extends StatelessWidget {
 
   @override
   Widget build(Context context) {
-    return _buildChild();
-  }
+    final colors = config.theme.secondaryColors;
 
-  Widget _buildChild() {
     return Padding(
       padding: const EdgeInsets.only(top: 6),
       child: Row(
         children: [
-          SvgImage(svg: getIconSvg(socialNetwork.name), colorFilter: PdfColors.black, width: 12),
+          SvgImage(
+            svg: getIconSvg(socialNetwork.name),
+            colorFilter: PdfColor.fromHex(colors.iconColor),
+            width: 12,
+          ),
           SizedBox(width: 8),
-          // Text(socialNetwork.name, style: config.bodySmallTextStyle),
+          // Text(socialNetwork.name, style: config.bodySmallTextStyle2),
           if (socialNetwork.username != null && socialNetwork.username!.isNotEmpty)
-            Text('@${socialNetwork.username}', style: config.bodySmallTextStyle),
+            Text('@${socialNetwork.username}', style: config.bodySmallTextStyle2),
           if (socialNetwork.url != null && socialNetwork.url!.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: UrlLink(
-                child: SvgImage(svg: getIconSvg('link'), colorFilter: PdfColors.blue, width: 12),
+                child: SvgImage(
+                  svg: getIconSvg('link'),
+                  colorFilter: PdfColor.fromHex(colors.linkColor),
+                  width: 12,
+                ),
                 destination: socialNetwork.url!,
               ),
             ),
