@@ -58,12 +58,39 @@ class ModernTemplate {
                     SizedBox(height: config.sectionSpace),
                   ],
 
+                  // Sobre
+                  Box(
+                    child: Column(children: [
+                      PersonalInfo(text: birthdayText, icon: 'cake', marginTop: 0, config: config),
+                      PersonalInfo(text: resume.formattedAddress, icon: 'mapmarker', config: config),
+                      PersonalInfo(text: resume.phoneNumber, icon: 'phone', config: config),
+                      PersonalInfo(text: resume.email, icon: 'email', config: config),
+                      PersonalInfo(text: resume.website, icon: 'website', config: config),
+                    ]),
+                  ),
+
+                  // Redes Sociais
+                  if (resume.socialNetworks.isNotEmpty) ...[
+                    Box(
+                      child: ListView.builder(
+                        itemCount: resume.socialNetworks.length,
+                        itemBuilder: (context, index) {
+                          final social = resume.socialNetworks[index];
+                          return SocialNetworkInfo(socialNetwork: social, config: config);
+                        },
+                        // separatorBuilder: (context, index) => SizedBox(height: config.lineSpace),
+                      ),
+                    )
+                  ],
+
                   // Formação
                   if (resume.education.isNotEmpty) ...[
+                    SizedBox(height: config.sectionSpace),
                     SectionTitle(text: texts.education, config: config, column: TemplateColumn.one),
                     SizedBox(height: config.titleSpace),
-                    ListView.separated(
-                      itemBuilder: (context, index) {
+                    ...List.generate(
+                      resume.education.length,
+                      (index) {
                         final education = resume.education[index];
                         return Box(
                           child: Column(
@@ -90,14 +117,12 @@ class ModernTemplate {
                           ),
                         );
                       },
-                      separatorBuilder: (context, index) => SizedBox(height: config.innerSpace),
-                      itemCount: resume.education.length,
-                    )
+                    ),
+                    if (resume.skills.isNotEmpty) SizedBox(height: config.sectionSpace),
                   ],
 
                   // Habilidades
                   if (resume.skills.isNotEmpty) ...[
-                    SizedBox(height: config.sectionSpace),
                     SectionTitle(text: texts.skills, config: config, column: TemplateColumn.one),
                     SizedBox(height: config.titleSpace),
                     ...List.generate(
@@ -112,12 +137,12 @@ class ModernTemplate {
                           padding: const EdgeInsets.only(left: 6),
                         );
                       },
-                    )
+                    ),
+                    if (resume.languages.isNotEmpty) SizedBox(height: config.sectionSpace),
                   ],
 
                   // Idiomas
                   if (resume.languages.isNotEmpty) ...[
-                    SizedBox(height: config.sectionSpace),
                     SectionTitle(text: texts.languages, config: config, column: TemplateColumn.one),
                     SizedBox(height: config.titleSpace),
                     ...List.generate(resume.languages.length, (index) {
@@ -130,51 +155,6 @@ class ModernTemplate {
                         padding: const EdgeInsets.only(left: 6),
                       );
                     })
-                    // ListView.separated(
-                    //   itemBuilder: (context, index) {
-                    //     final language = resume.languages[index];
-                    //     return Box(
-                    //       child: Row(
-                    //         children: [
-                    //           Text(language.name, style: config.titleXSmallTextStyle),
-                    //           if (language.fluency != null && language.fluency!.isNotEmpty)
-                    //             Text(' - ${language.fluency}', style: config.bodyMediumTextStyle),
-                    //         ],
-                    //       ),
-                    //     );
-                    //   },
-                    //   separatorBuilder: (context, index) => SizedBox(height: config.lineSpace),
-                    //   itemCount: resume.languages.length,
-                    // )
-                  ],
-
-                  // Certificações
-                  if (resume.certifications.isNotEmpty) ...[
-                    SizedBox(height: config.sectionSpace),
-                    SectionTitle(text: texts.certifications, config: config, column: TemplateColumn.one),
-                    SizedBox(height: config.titleSpace),
-                    ...List.generate(
-                      resume.certifications.length,
-                      (index) {
-                        final certification = resume.certifications[index];
-                        return Box(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(certification.title, style: config.titleSmallTextStyle1),
-                              Text(certification.issuer, style: config.bodyMediumTextStyle1),
-                              Text(certification.date.toShortDate(locale: resume.resumeLanguage!.name),
-                                  style: config.bodyMediumTextStyle1),
-                              if (certification.summary != null) ...[
-                                SizedBox(height: config.lineSpace),
-                                Text(certification.summary!, style: config.paragraphTextStyle1),
-                              ],
-                              if (index < resume.certifications.length - 1) SizedBox(height: config.innerSpace),
-                            ],
-                          ),
-                        );
-                      },
-                    )
                   ],
                 ],
               ),
@@ -191,47 +171,21 @@ class ModernTemplate {
                       children: [
                         Text(resume.name, style: config.titleLargeTextStyle2),
                         if (resume.profession != null) Text(resume.profession!, style: config.bodyLargeTextStyle2),
+                        SizedBox(height: config.sectionSpace),
                       ],
                     ),
                   ),
 
-                  SizedBox(height: config.sectionSpace),
-
-                  // Sobre
-                  Box(
-                    child: Column(children: [
-                      PersonalInfo(text: birthdayText, icon: 'cake', marginTop: 0, config: config),
-                      PersonalInfo(text: resume.formattedAddress, icon: 'mapmarker', config: config),
-                      PersonalInfo(text: resume.phoneNumber, icon: 'phone', config: config),
-                      PersonalInfo(text: resume.email, icon: 'email', config: config),
-                      PersonalInfo(text: resume.website, icon: 'website', config: config),
-                    ]),
-                  ),
-
-                  // Redes Sociais
-                  if (resume.socialNetworks.isNotEmpty)
-                    Box(
-                      child: ListView.builder(
-                        itemCount: resume.socialNetworks.length,
-                        itemBuilder: (context, index) {
-                          final social = resume.socialNetworks[index];
-                          return SocialNetworkInfo(socialNetwork: social, config: config);
-                        },
-                        // separatorBuilder: (context, index) => SizedBox(height: config.lineSpace),
-                      ),
-                    ),
-
                   // Objetivo
                   if (resume.objectiveSummary != null && resume.objectiveSummary!.isNotEmpty) ...[
-                    SizedBox(height: config.sectionSpace),
                     SectionTitle(text: texts.objective, config: config, column: TemplateColumn.two),
                     SizedBox(height: config.titleSpace),
-                    Box(child: Text(resume.objectiveSummary!, style: config.paragraphTextStyle2))
+                    Box(child: Text(resume.objectiveSummary!, style: config.paragraphTextStyle2)),
+                    SizedBox(height: config.sectionSpace),
                   ],
 
                   // Experiência
                   if (resume.workExperience.isNotEmpty) ...[
-                    SizedBox(height: config.sectionSpace),
                     SectionTitle(text: texts.experience, config: config, column: TemplateColumn.two),
                     SizedBox(height: config.titleSpace),
                     ...List.generate(
@@ -283,6 +237,36 @@ class ModernTemplate {
                         );
                       },
                     ),
+                    if (resume.projects.isNotEmpty) SizedBox(height: config.sectionSpace),
+                  ],
+
+                  // Certificações
+                  if (resume.certifications.isNotEmpty) ...[
+                    SectionTitle(text: texts.certifications, config: config, column: TemplateColumn.two),
+                    SizedBox(height: config.titleSpace),
+                    ...List.generate(
+                      resume.certifications.length,
+                      (index) {
+                        final certification = resume.certifications[index];
+                        return Box(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(certification.title, style: config.titleSmallTextStyle2),
+                              Text(certification.issuer, style: config.bodyMediumTextStyle2),
+                              Text(certification.date.toShortDate(locale: resume.resumeLanguage!.name),
+                                  style: config.bodyMediumTextStyle2),
+                              if (certification.summary != null) ...[
+                                SizedBox(height: config.lineSpace),
+                                Text(certification.summary!, style: config.paragraphTextStyle2),
+                              ],
+                              if (index < resume.certifications.length - 1) SizedBox(height: config.innerSpace),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(height: config.sectionSpace),
                   ],
                 ],
               ),

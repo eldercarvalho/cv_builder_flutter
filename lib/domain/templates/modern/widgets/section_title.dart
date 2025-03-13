@@ -19,8 +19,8 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(Context context) {
     final style = switch (column) {
-      TemplateColumn.one => config.titleLargeTextStyle1,
-      TemplateColumn.two => config.titleLargeTextStyle2,
+      TemplateColumn.one => config.titleMediumTextStyle1,
+      TemplateColumn.two => config.titleMediumTextStyle2,
     };
 
     final colors = switch (column) {

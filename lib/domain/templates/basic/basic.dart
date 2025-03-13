@@ -84,15 +84,16 @@ class BasicTemplate {
           SectionTitle(text: texts.objective, config: config),
           SizedBox(height: config.titleSpace),
           Text(resume.objectiveSummary!, style: config.paragraphTextStyle),
+          SizedBox(height: config.sectionSpace),
         ],
 
         // Experiência
         if (resume.workExperience.isNotEmpty) ...[
-          SizedBox(height: config.sectionSpace),
           SectionTitle(text: texts.experience, config: config),
           SizedBox(height: config.titleSpace),
-          ListView.separated(
-            itemBuilder: (context, index) {
+          ...List.generate(
+            resume.workExperience.length,
+            (index) {
               final experience = resume.workExperience[index];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -105,7 +106,6 @@ class BasicTemplate {
                           style: config.bodyMediumTextStyle),
                     if (experience.endDate == null) Text(' - ${texts.current}', style: config.bodyMediumTextStyle),
                   ]),
-
                   SizedBox(height: config.lineSpace),
                   Row(
                     children: [
@@ -125,13 +125,6 @@ class BasicTemplate {
                     ],
                   ),
                   SizedBox(height: config.lineSpace),
-                  // Row(children: [
-                  //   Text(experience.startDate.toShortDate(locale: resumeLanguage), style: config.bodyMediumTextStyle),
-                  //   if (experience.endDate != null)
-                  //     Text(' - ${experience.endDate!.toShortDate(locale: resumeLanguage)}',
-                  //         style: config.bodyMediumTextStyle),
-                  //   if (experience.endDate == null) Text(' - ${texts.current}', style: config.bodyMediumTextStyle),
-                  // ]),
                   if (experience.summary != null && experience.summary!.isNotEmpty) ...[
                     SizedBox(height: config.lineSpace),
                     Text(texts.responsibilities, style: config.bodySmallTextStyle),
@@ -141,16 +134,14 @@ class BasicTemplate {
                 ],
               );
             },
-            separatorBuilder: (context, index) => SizedBox(height: 10),
-            itemCount: resume.workExperience.length,
           ),
+          if (resume.skills.isNotEmpty) SizedBox(height: config.sectionSpace),
         ],
 
         // Habilidades
         if (resume.skills.isNotEmpty) ...[
-          SizedBox(height: config.sectionSpace),
           SectionTitle(text: texts.skills, config: config),
-          // SizedBox(height: config.titleSpace),
+          SizedBox(height: config.titleSpace),
           Wrap(
             children: List.generate(
               resume.skills.length,
@@ -171,26 +162,12 @@ class BasicTemplate {
                 );
               },
             ),
-          )
-          // ListView.separated(
-          //   itemCount: resume.skills.length,
-          //   itemBuilder: (context, index) {
-          //     final skill = resume.skills[index];
-          //     return Row(
-          //       children: [
-          //         // Icon(IconData(''), size: 10),
-          //         Text(skill.name, style: config.titleXSmallTextStyle),
-          //         Text(' - ${skill.level}', style: config.bodyMediumTextStyle),
-          //       ],
-          //     );
-          //   },
-          //   separatorBuilder: (context, index) => SizedBox(height: config.lineSpace),
-          // ),
+          ),
+          if (resume.education.isNotEmpty) SizedBox(height: config.sectionSpace),
         ],
 
         // Formação
         if (resume.education.isNotEmpty) ...[
-          SizedBox(height: config.sectionSpace),
           SectionTitle(text: texts.education, config: config),
           SizedBox(height: config.titleSpace),
           ListView.separated(
@@ -219,55 +196,67 @@ class BasicTemplate {
             },
             separatorBuilder: (context, index) => SizedBox(height: config.innerSpace),
             itemCount: resume.education.length,
-          )
+          ),
+          if (resume.languages.isNotEmpty) SizedBox(height: config.sectionSpace),
         ],
 
         // Idiomas
         if (resume.languages.isNotEmpty) ...[
-          SizedBox(height: config.sectionSpace),
           SectionTitle(text: texts.languages, config: config),
           SizedBox(height: config.titleSpace),
-          ListView.separated(
-            itemBuilder: (context, index) {
-              final language = resume.languages[index];
-              return Row(
-                children: [
-                  Text(language.name, style: config.titleXSmallTextStyle),
-                  if (language.fluency != null && language.fluency!.isNotEmpty)
-                    Text(' - ${language.fluency}', style: config.bodyMediumTextStyle),
-                ],
-              );
-            },
-            separatorBuilder: (context, index) => SizedBox(height: config.lineSpace),
-            itemCount: resume.languages.length,
-          )
+          ...List.generate(resume.languages.length, (index) {
+            final language = resume.languages[index];
+            return Row(
+              children: [
+                Text(language.name, style: config.titleXSmallTextStyle),
+                if (language.fluency != null && language.fluency!.isNotEmpty)
+                  Text(' - ${language.fluency}', style: config.bodyMediumTextStyle),
+              ],
+            );
+          }),
+          if (resume.certifications.isNotEmpty) SizedBox(height: config.sectionSpace),
         ],
 
         // Certificações
         if (resume.certifications.isNotEmpty) ...[
-          SizedBox(height: config.sectionSpace),
           SectionTitle(text: texts.certifications, config: config),
           SizedBox(height: config.titleSpace),
-          ListView.separated(
-            itemBuilder: (context, index) {
-              final certification = resume.certifications[index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(certification.title, style: config.titleSmallTextStyle),
-                  Text(certification.issuer, style: config.bodyMediumTextStyle),
-                  Text(certification.date.toShortDate(locale: resume.resumeLanguage!.name),
-                      style: config.bodyMediumTextStyle),
-                  if (certification.summary != null) ...[
-                    SizedBox(height: config.lineSpace),
-                    Text(certification.summary!, style: config.paragraphTextStyle),
-                  ],
+          ...List.generate(resume.certifications.length, (index) {
+            final certification = resume.certifications[index];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(certification.title, style: config.titleSmallTextStyle),
+                Text(certification.issuer, style: config.bodyMediumTextStyle),
+                Text(certification.date.toShortDate(locale: resume.resumeLanguage!.name),
+                    style: config.bodyMediumTextStyle),
+                if (certification.summary != null) ...[
+                  SizedBox(height: config.lineSpace),
+                  Text(certification.summary!, style: config.paragraphTextStyle),
                 ],
-              );
-            },
-            separatorBuilder: (context, index) => SizedBox(height: config.innerSpace),
-            itemCount: resume.certifications.length,
-          )
+              ],
+            );
+          })
+          // ListView.separated(
+          //   itemBuilder: (context, index) {
+          //     final certification = resume.certifications[index];
+          //     return Column(
+          //       crossAxisAlignment: CrossAxisAlignment.stretch,
+          //       children: [
+          //         Text(certification.title, style: config.titleSmallTextStyle),
+          //         Text(certification.issuer, style: config.bodyMediumTextStyle),
+          //         Text(certification.date.toShortDate(locale: resume.resumeLanguage!.name),
+          //             style: config.bodyMediumTextStyle),
+          //         if (certification.summary != null) ...[
+          //           SizedBox(height: config.lineSpace),
+          //           Text(certification.summary!, style: config.paragraphTextStyle),
+          //         ],
+          //       ],
+          //     );
+          //   },
+          //   separatorBuilder: (context, index) => SizedBox(height: config.innerSpace),
+          //   itemCount: resume.certifications.length,
+          // )
         ],
 
         // Projetos

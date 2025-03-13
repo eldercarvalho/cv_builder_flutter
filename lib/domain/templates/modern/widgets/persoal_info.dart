@@ -24,7 +24,7 @@ class PersonalInfo extends StatelessWidget {
 
   @override
   Widget build(Context context) {
-    final colors = config.theme.secondaryColors;
+    final colors = config.theme.primaryColors;
     if (text == null || (text != null && text!.isEmpty)) return SizedBox.shrink();
 
     return Padding(
@@ -34,7 +34,7 @@ class PersonalInfo extends StatelessWidget {
         children: [
           SvgImage(svg: getIconSvg(icon), colorFilter: PdfColor.fromHex(colors.iconColor), width: iconSize),
           SizedBox(width: 8),
-          Expanded(child: Text(text!, style: config.bodySmallTextStyle2)),
+          Expanded(child: Text(text!, style: config.bodySmallTextStyle1)),
         ],
       ),
     );
