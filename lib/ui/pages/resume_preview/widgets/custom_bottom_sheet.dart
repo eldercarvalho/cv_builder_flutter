@@ -144,21 +144,24 @@ class CustomBottomSheet extends StatelessWidget {
               ),
               const Divider(),
               const SizedBox(height: 6),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text(context.l10n.cancel),
-                  ),
-                  if (viewModel.resume!.theme != oldTheme) ...[
-                    const SizedBox(width: 16),
-                    FilledButton(
-                      onPressed: () => Navigator.pop(context, true),
-                      child: Text(context.l10n.save),
+              SafeArea(
+                top: false,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(context.l10n.cancel),
                     ),
-                  ]
-                ],
+                    if (viewModel.resume!.theme != oldTheme) ...[
+                      const SizedBox(width: 16),
+                      FilledButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: Text(context.l10n.save),
+                      ),
+                    ]
+                  ],
+                ),
               ),
             ],
           );
