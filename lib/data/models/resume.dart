@@ -125,7 +125,9 @@ class ResumeModel extends Equatable {
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String?,
       thumbnail: json['thumbnail'] as String?,
-      theme: json['theme'] != null ? ResumeThemeModel.fromJson(json['theme']) : ResumeThemeModel.defaultTemplate,
+      theme: json['theme'] != null
+          ? ResumeThemeModel.fromJson(json['theme'])
+          : ResumeThemeModel.getByTemplate(json['model']),
     );
   }
 
@@ -409,7 +411,30 @@ class ResumeThemeModel extends Equatable {
     );
   }
 
-  static const ResumeThemeModel defaultTemplate = ResumeThemeModel(
+  static ResumeThemeModel getByTemplate(String template) {
+    switch (template) {
+      case 'basic':
+        return basic;
+      case 'modern':
+        return modern;
+      default:
+        return basic;
+    }
+  }
+
+  static const ResumeThemeModel basic = ResumeThemeModel(
+    primaryColors: [
+      ResumeColorModel(type: 'background', value: '#FFFFFF'),
+      ResumeColorModel(type: 'title', value: '#000000'),
+      ResumeColorModel(type: 'text', value: '#000000'),
+      ResumeColorModel(type: 'icon', value: '#000000'),
+      ResumeColorModel(type: 'link', value: '#2196f3'),
+      ResumeColorModel(type: 'divider', value: '#000000'),
+    ],
+    secondaryColors: [],
+  );
+
+  static const ResumeThemeModel modern = ResumeThemeModel(
     primaryColors: [
       ResumeColorModel(type: 'background', value: '#D8DFE7'),
       ResumeColorModel(type: 'title', value: '#424242'),
