@@ -44,7 +44,8 @@ class _AboutPageState extends State<AboutPage> {
             children: [
               SvgPicture.asset(
                 'assets/images/horizontal_logo.svg',
-                height: 100,
+                width: context.screenWidth * 0.7,
+                // height: 100,
               ),
               const SizedBox(height: 16),
               SectionTitle(text: context.l10n.policyAndTerms),

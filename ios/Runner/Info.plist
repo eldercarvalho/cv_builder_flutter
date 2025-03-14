@@ -53,9 +53,9 @@
 		<false/>
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
-				<string>tel</string>
-				<string>mailto</string>
-				<string>https</string>
+			<string>tel</string>
+			<string>mailto</string>
+			<string>https</string>
 		</array>
 	</dict>
 </plist>

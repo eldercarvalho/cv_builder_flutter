@@ -12,7 +12,7 @@ splash:
 	@dart run flutter_native_splash:create
 	@echo "Done."
 
-icons:
+launcher:
 	@echo "Generating launcher icons..."
 	@dart pub run flutter_launcher_icons
 	@echo "Done."

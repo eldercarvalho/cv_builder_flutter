@@ -5,7 +5,7 @@
 
 # Expressão regex para validar a mensagem de commit
 # COMMIT_REGEX="^\[[A-Z]+-[0-9]+\] (feat|fix|chore|docs|style|refactor|test|perf)(\([a-zA-Z0-9_-]+\))?: .+$"
-COMMIT_REGEX="^(feat|fix|chore|docs|style|refactor|test|perf|ci)(\([a-zA-Z0-9_-]+\))?: .+$"
+COMMIT_REGEX="^(feat|fix|chore|docs|style|refactor|test|perf|ci|build)(\([a-zA-Z0-9_-]+\))?: .+$"
 
 # Lê a mensagem do commit
 COMMIT_MSG=$(cat "$1")

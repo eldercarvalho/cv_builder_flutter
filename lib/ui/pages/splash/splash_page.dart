@@ -31,7 +31,7 @@ class _SplashPageState extends State<SplashPage> {
       body: Center(
         child: SvgPicture.asset(
           'assets/images/splash.svg',
-          width: context.screenWidth * 0.7,
+          width: context.screenWidth * 0.5,
         ),
       ),
     );

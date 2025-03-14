@@ -56,8 +56,8 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 40.h),
               SvgPicture.asset(
                 'assets/images/horizontal_logo.svg',
-                width: context.screenWidth - 32,
-                height: 110,
+                width: context.screenWidth * 0.7,
+                // height: 110,
               ),
               SizedBox(height: 12.h),
               Text(
