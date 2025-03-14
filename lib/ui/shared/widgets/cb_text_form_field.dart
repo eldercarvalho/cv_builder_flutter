@@ -106,7 +106,7 @@ class _CbTextFormFieldState extends State<CbTextFormField> {
             hintText: widget.hint,
             prefixIcon: widget.prefix,
             suffixIcon: Padding(
-              padding: const EdgeInsets.only(right: 20),
+              padding: const EdgeInsets.only(right: 16),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -119,10 +119,10 @@ class _CbTextFormFieldState extends State<CbTextFormField> {
                         setState(() => _isFilled = false);
                       },
                       child: Padding(
-                        padding: EdgeInsets.only(right: widget.suffix != null ? 16 : 0),
+                        padding: EdgeInsets.only(right: widget.suffix != null || widget.obscured ? 16 : 0),
                         child: Icon(
                           Icons.backspace_outlined,
-                          size: 22.sp,
+                          size: 24.sp,
                           color: context.colors.primary,
                         ),
                       ),
@@ -134,12 +134,12 @@ class _CbTextFormFieldState extends State<CbTextFormField> {
                       child: _isObscured
                           ? Icon(
                               FeatherIcons.eye,
-                              size: 22.sp,
+                              size: 24.sp,
                               color: context.colors.primary,
                             )
                           : Icon(
                               FeatherIcons.eyeOff,
-                              size: 22.sp,
+                              size: 24.sp,
                               color: context.colors.primary,
                             ),
                     ),

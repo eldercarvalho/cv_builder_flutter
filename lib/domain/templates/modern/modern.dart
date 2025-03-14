@@ -256,8 +256,9 @@ class ModernTemplate {
                             children: [
                               Text(certification.title, style: config.titleSmallTextStyle2),
                               Text(certification.issuer, style: config.bodyMediumTextStyle2),
-                              Text(certification.date.toShortDate(locale: resume.resumeLanguage!.name),
-                                  style: config.bodyMediumTextStyle2),
+                              if (certification.date != null)
+                                Text(certification.date!.toShortDate(locale: resume.resumeLanguage!.name),
+                                    style: config.bodyMediumTextStyle2),
                               if (certification.summary != null) ...[
                                 SizedBox(height: config.lineSpace),
                                 Text(certification.summary!, style: config.paragraphTextStyle2),

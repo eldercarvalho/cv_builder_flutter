@@ -181,7 +181,8 @@ class _CreateItemModalState extends State<_CreateItemModal> {
       _isEditing = true;
       _titleController.text = widget.certification!.title;
       _issuerController.text = widget.certification!.issuer;
-      _dateController.text = DateFormat('dd/MM/yyyy').format(widget.certification!.date);
+      _dateController.text =
+          widget.certification?.date != null ? DateFormat('dd/MM/yyyy').format(widget.certification!.date!) : '';
       _summaryController.text = widget.certification!.summary ?? '';
     }
     super.initState();
@@ -251,7 +252,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
                   id: _isEditing ? widget.certification!.id : const Uuid().v4(),
                   title: _titleController.text.trim(),
                   issuer: _issuerController.text.trim(),
-                  date: format.parse(_dateController.text),
+                  date: _dateController.text.isNotEmpty ? format.parse(_dateController.text) : null,
                   summary: _summaryController.text.trim(),
                 );
                 Navigator.of(context).pop(certification);
