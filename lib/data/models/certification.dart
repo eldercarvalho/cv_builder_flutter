@@ -6,14 +6,14 @@ class CertificationModel extends Equatable {
   final String id;
   final String title;
   final String issuer;
-  final String date;
+  final String? date;
   final String? summary;
 
   const CertificationModel({
     required this.id,
     required this.title,
     required this.issuer,
-    required this.date,
+    this.date,
     this.summary,
   });
 
@@ -22,7 +22,7 @@ class CertificationModel extends Equatable {
       id: json['id'] as String,
       title: json['title'] as String,
       issuer: json['issuer'] as String,
-      date: json['date'] as String,
+      date: json['date'] as String?,
       summary: json['summary'] as String?,
     );
   }
@@ -42,7 +42,7 @@ class CertificationModel extends Equatable {
       id: id,
       title: title,
       issuer: issuer,
-      date: date != '' ? DateTime.parse(date) : DateTime.now(),
+      date: date != null && date != '' ? DateTime.parse(date!) : null,
       summary: summary,
     );
   }
@@ -52,7 +52,7 @@ class CertificationModel extends Equatable {
       id: certification.id,
       title: certification.title,
       issuer: certification.issuer,
-      date: certification.date.toIso8601String(),
+      date: certification.date?.toIso8601String(),
       summary: certification.summary,
     );
   }
@@ -74,5 +74,5 @@ class CertificationModel extends Equatable {
   }
 
   @override
-  List<Object> get props => [id, title, issuer, date];
+  List<Object?> get props => [id, title, issuer, date];
 }

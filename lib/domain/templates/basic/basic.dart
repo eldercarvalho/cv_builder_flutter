@@ -231,8 +231,9 @@ class BasicTemplate {
               children: [
                 Text(certification.title, style: config.titleSmallTextStyle),
                 Text(certification.issuer, style: config.bodyMediumTextStyle),
-                Text(certification.date.toShortDate(locale: resume.resumeLanguage!.name),
-                    style: config.bodyMediumTextStyle),
+                if (certification.date != null)
+                  Text(certification.date!.toShortDate(locale: resume.resumeLanguage!.name),
+                      style: config.bodyMediumTextStyle),
                 if (certification.summary != null) ...[
                   SizedBox(height: config.lineSpace),
                   Text(certification.summary!, style: config.paragraphTextStyle),
