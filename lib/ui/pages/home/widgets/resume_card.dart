@@ -57,7 +57,7 @@ class _ResumeCardState extends State<ResumeCard> with SingleTickerProviderStateM
             duration: const Duration(milliseconds: 500),
             opacity: widget.isLoading ? 0.4 : 1,
             child: Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               margin: const EdgeInsets.only(bottom: 16),
               decoration: BoxDecoration(
                 color: context.colors.surfaceBright,
@@ -73,62 +73,65 @@ class _ResumeCardState extends State<ResumeCard> with SingleTickerProviderStateM
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(widget.resume.resumeName, style: context.textTheme.titleMedium),
-                      ),
-                      if (!widget.isLoading)
-                        PopupMenuButton<String>(
-                          onSelected: widget.onMenuSelected,
-                          child: const SizedBox(
-                            height: 26,
-                            width: 26,
-                            child: Icon(FeatherIcons.moreVertical),
-                          ),
-                          itemBuilder: (context) => [
-                            PopupMenuItem(
-                              value: 'edit',
-                              child: Row(
-                                children: [
-                                  Icon(FeatherIcons.edit, size: 18, color: context.colors.primary),
-                                  const SizedBox(width: 8),
-                                  Text(context.l10n.edit),
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 'share',
-                              child: Row(
-                                children: [
-                                  Icon(FeatherIcons.share2, size: 20, color: context.colors.primary),
-                                  const SizedBox(width: 8),
-                                  Text(context.l10n.finishedFormShare),
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 'delete',
-                              child: Row(
-                                children: [
-                                  Icon(FeatherIcons.trash2, size: 20, color: context.colors.error),
-                                  const SizedBox(width: 8),
-                                  Text(context.l10n.delete),
-                                ],
-                              ),
-                            ),
-                          ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(widget.resume.resumeName, style: context.textTheme.titleMedium),
                         ),
-                    ],
+                        if (!widget.isLoading)
+                          PopupMenuButton<String>(
+                            onSelected: widget.onMenuSelected,
+                            child: const SizedBox(
+                              height: 26,
+                              width: 26,
+                              child: Icon(FeatherIcons.moreVertical),
+                            ),
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                value: 'edit',
+                                child: Row(
+                                  children: [
+                                    Icon(FeatherIcons.edit, size: 18, color: context.colors.primary),
+                                    const SizedBox(width: 8),
+                                    Text(context.l10n.edit),
+                                  ],
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'share',
+                                child: Row(
+                                  children: [
+                                    Icon(FeatherIcons.share2, size: 20, color: context.colors.primary),
+                                    const SizedBox(width: 8),
+                                    Text(context.l10n.finishedFormShare),
+                                  ],
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'delete',
+                                child: Row(
+                                  children: [
+                                    Icon(FeatherIcons.trash2, size: 20, color: context.colors.error),
+                                    const SizedBox(width: 8),
+                                    Text(context.l10n.delete),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 10),
                   Container(
                     width: double.infinity,
-                    height: 150,
+                    height: 160,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(4),
-                      border: Border.all(color: context.colors.outline),
+                      border: Border.all(color: context.colors.outline.withValues(alpha: 0.6)),
                       image: DecorationImage(
                         alignment: Alignment.topCenter,
                         image: CachedNetworkImageProvider(widget.resume.thumbnail!),
@@ -137,9 +140,12 @@ class _ResumeCardState extends State<ResumeCard> with SingleTickerProviderStateM
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Text(
-                    context.l10n.homeResumeCardUpdatedAt(updatedAt.toSimpleDate()),
-                    style: context.textTheme.bodySmall,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      context.l10n.homeResumeCardUpdatedAt(updatedAt.toSimpleDate()),
+                      style: context.textTheme.bodySmall,
+                    ),
                   ),
                 ],
               ),

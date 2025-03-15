@@ -2,6 +2,50 @@
   "todotree": {
     "tree": [
       {
+        "key": 1742051594357,
+        "children": [],
+        "todo": {
+          "content": "Criar Flavors",
+          "id": 1742051594357,
+          "level": "default",
+          "done": false,
+          "start": 1742051594358
+        }
+      },
+      {
+        "key": 1738675723804,
+        "children": [],
+        "todo": {
+          "content": "Integrar IA",
+          "id": 1738675723804,
+          "level": "default",
+          "done": false,
+          "start": 1738675723804
+        }
+      },
+      {
+        "key": 1742050909650,
+        "children": [],
+        "todo": {
+          "content": "Criar artes para Ingles e Espanhol",
+          "id": 1742050909650,
+          "level": "default",
+          "done": false,
+          "start": 1742050909650
+        }
+      },
+      {
+        "key": 1742050790602,
+        "children": [],
+        "todo": {
+          "content": "Avaliação do app na loja",
+          "id": 1742050790602,
+          "level": "default",
+          "done": false,
+          "start": 1742050790602
+        }
+      },
+      {
         "key": 1741840862930,
         "children": [],
         "todo": {
@@ -21,30 +65,6 @@
           "level": "default",
           "done": false,
           "start": 1741313026459
-        }
-      },
-      {
-        "key": 1738675723804,
-        "children": [],
-        "todo": {
-          "content": "Integrar IA",
-          "id": 1738675723804,
-          "level": "warning",
-          "done": false,
-          "start": 1738675723804
-        }
-      },
-      {
-        "key": 1741282207283,
-        "children": [],
-        "todo": {
-          "content": "botão de limpar campo",
-          "id": 1741282207283,
-          "level": "default",
-          "done": true,
-          "start": 1741282207283,
-          "focus": false,
-          "end": 1741921059772
         }
       },
       {
@@ -103,19 +123,6 @@
         }
       },
       {
-        "key": 1738899693515,
-        "children": [],
-        "todo": {
-          "content": "Tratamento de Erros",
-          "id": 1738899693515,
-          "level": "default",
-          "done": true,
-          "start": 1738899693516,
-          "focus": false,
-          "end": 1741406170677
-        }
-      },
-      {
         "key": 1738675841014,
         "children": [],
         "todo": {
@@ -126,6 +133,32 @@
           "start": 1738675841014,
           "focus": false,
           "end": 1741117709390
+        }
+      },
+      {
+        "key": 1741282207283,
+        "children": [],
+        "todo": {
+          "content": "botão de limpar campo",
+          "id": 1741282207283,
+          "level": "default",
+          "done": true,
+          "start": 1741282207283,
+          "focus": false,
+          "end": 1741921059772
+        }
+      },
+      {
+        "key": 1738899693515,
+        "children": [],
+        "todo": {
+          "content": "Tratamento de Erros",
+          "id": 1738899693515,
+          "level": "default",
+          "done": true,
+          "start": 1738899693516,
+          "focus": false,
+          "end": 1741406170677
         }
       },
       {
@@ -444,6 +477,6 @@
     "showEndTime": false,
     "simpleMode": false,
     "lang": "en",
-    "version": "1741921059839"
+    "version": "1742051600569"
   }
 }
