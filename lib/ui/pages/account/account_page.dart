@@ -97,6 +97,7 @@ class _AccountPageState extends State<AccountPage> {
                             autovalidateMode:
                                 _isSubmitted ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
                             label: context.l10n.email,
+                            showClearButton: false,
                             textCapitalization: TextCapitalization.none,
                             validator: MultiValidator([
                               RequiredValidator(errorText: context.l10n.requiredField),
