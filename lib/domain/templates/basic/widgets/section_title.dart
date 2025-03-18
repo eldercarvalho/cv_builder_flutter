@@ -16,7 +16,7 @@ class SectionTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(text, style: config.titleMediumTextStyle),
+        Text(text, style: config.titleSmallTextStyle),
         SizedBox(height: 2),
         Container(height: 1, color: PdfColor.fromHex(colors.dividerColor)),
       ],

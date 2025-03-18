@@ -101,7 +101,7 @@ class BasicTemplate {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Row(children: [
-                    Expanded(child: Text(experience.position, style: config.titleSmallTextStyle)),
+                    Expanded(child: Text(experience.position, style: config.titleXSmallTextStyle)),
                     Text(experience.startDate.toShortDate(locale: resumeLanguage), style: config.bodyMediumTextStyle),
                     if (experience.endDate != null)
                       Text(' - ${experience.endDate!.toShortDate(locale: resumeLanguage)}',
@@ -174,33 +174,30 @@ class BasicTemplate {
         if (resume.education.isNotEmpty) ...[
           SectionTitle(text: texts.education, config: config),
           SizedBox(height: config.titleSpace),
-          ListView.separated(
-            itemBuilder: (context, index) {
-              final education = resume.education[index];
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(education.fieldOfStudy, style: config.titleSmallTextStyle),
+          ...List.generate(resume.education.length, (index) {
+            final education = resume.education[index];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(education.fieldOfStudy, style: config.titleXSmallTextStyle),
+                SizedBox(height: config.lineSpace),
+                Text(education.institution, style: config.bodyMediumTextStyle),
+                SizedBox(height: config.lineSpace),
+                Row(children: [
+                  Text(education.startDate.toShortDate(locale: resumeLanguage), style: config.bodyMediumTextStyle),
+                  if (education.endDate != null)
+                    Text('- ${education.endDate!.toShortDate(locale: resumeLanguage)}',
+                        style: config.bodyMediumTextStyle),
+                  if (education.endDate == null) Text('- ${texts.current}', style: config.bodyMediumTextStyle),
+                ]),
+                if (education.summary != null) ...[
                   SizedBox(height: config.lineSpace),
-                  Text(education.institution, style: config.bodyMediumTextStyle),
-                  SizedBox(height: config.lineSpace),
-                  Row(children: [
-                    Text(education.startDate.toShortDate(locale: resumeLanguage), style: config.bodyMediumTextStyle),
-                    if (education.endDate != null)
-                      Text('- ${education.endDate!.toShortDate(locale: resumeLanguage)}',
-                          style: config.bodyMediumTextStyle),
-                    if (education.endDate == null) Text('- ${texts.current}', style: config.bodyMediumTextStyle),
-                  ]),
-                  if (education.summary != null) ...[
-                    SizedBox(height: config.lineSpace),
-                    Text(education.summary!, style: config.bodyMediumTextStyle),
-                  ],
+                  Text(education.summary!, style: config.bodyMediumTextStyle),
                 ],
-              );
-            },
-            separatorBuilder: (context, index) => SizedBox(height: config.innerSpace),
-            itemCount: resume.education.length,
-          ),
+                if (index < resume.education.length - 1) SizedBox(height: config.innerSpace),
+              ],
+            );
+          }),
           if (resume.languages.isNotEmpty) SizedBox(height: config.sectionSpace),
         ],
 
@@ -210,13 +207,15 @@ class BasicTemplate {
           SizedBox(height: config.titleSpace),
           ...List.generate(resume.languages.length, (index) {
             final language = resume.languages[index];
-            return Row(
-              children: [
-                Text(language.name, style: config.titleXSmallTextStyle),
-                if (language.fluency != null && language.fluency!.isNotEmpty)
-                  Text(' - ${language.fluency}', style: config.bodyMediumTextStyle),
-              ],
-            );
+            return Padding(
+                padding: EdgeInsets.only(bottom: index < resume.languages.length - 1 ? 1.8 : 0),
+                child: Row(
+                  children: [
+                    Text(language.name, style: config.titleXSmallTextStyle),
+                    if (language.fluency != null && language.fluency!.isNotEmpty)
+                      Text(' - ${language.fluency}', style: config.bodyMediumTextStyle),
+                  ],
+                ));
           }),
           if (resume.certifications.isNotEmpty) SizedBox(height: config.sectionSpace),
         ],
@@ -230,7 +229,7 @@ class BasicTemplate {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(certification.title, style: config.titleSmallTextStyle),
+                Text(certification.title, style: config.titleXSmallTextStyle),
                 Text(certification.issuer, style: config.bodyMediumTextStyle),
                 if (certification.date != null)
                   Text(certification.date!.toShortDate(locale: resume.resumeLanguage!.name),
