@@ -76,7 +76,7 @@ class CustomBottomSheet extends StatelessWidget {
                           title: Text(context.l10n.column1, style: context.textTheme.titleMedium),
                           dense: true,
                           // initiallyExpanded: true,
-                          childrenPadding: const EdgeInsets.symmetric(vertical: 16),
+                          childrenPadding: const EdgeInsets.only(bottom: 16),
                           children: [
                             Wrap(
                               spacing: 16,
@@ -110,7 +110,7 @@ class CustomBottomSheet extends StatelessWidget {
                           title: Text(context.l10n.column2, style: context.textTheme.titleMedium),
                           dense: true,
                           // initiallyExpanded: true,
-                          childrenPadding: const EdgeInsets.symmetric(vertical: 16),
+                          childrenPadding: const EdgeInsets.only(bottom: 16),
                           children: [
                             Wrap(
                               spacing: 16,
@@ -142,7 +142,7 @@ class CustomBottomSheet extends StatelessWidget {
                   ),
                 ),
               ),
-              const Divider(),
+              // const Divider(),
               const SizedBox(height: 6),
               SafeArea(
                 top: false,

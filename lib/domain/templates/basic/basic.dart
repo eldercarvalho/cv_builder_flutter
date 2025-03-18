@@ -150,9 +150,10 @@ class BasicTemplate {
               resume.skills.length,
               (index) {
                 final skill = resume.skills[index];
+                final topPadding = index < 4 ? 0.0 : config.innerSpace;
                 return Container(
-                  width: (pageWidth / 4) - 10,
-                  padding: EdgeInsets.only(top: config.titleSpace, left: index % 4 == 0 ? 0 : 10),
+                  width: (pageWidth / 4),
+                  padding: EdgeInsets.only(top: topPadding, left: index % 4 == 0 ? 0 : 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -325,7 +326,7 @@ class BasicTemplate {
         MultiPage(
           build: (context) => [
             Padding(
-              padding: EdgeInsets.all(config.horizontalMargin),
+              padding: EdgeInsets.symmetric(horizontal: config.horizontalMargin, vertical: config.verticalMargin),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: children,
