@@ -8,6 +8,7 @@ import 'hobbie.dart';
 import 'language.dart';
 import 'project.dart';
 import 'reference.dart';
+import 'resume_text_theme.dart';
 import 'skill.dart';
 import 'social_network.dart';
 import 'work_experience.dart';
@@ -43,6 +44,7 @@ class ResumeModel extends Equatable {
   final String? updatedAt;
   final String? thumbnail;
   final ResumeThemeModel? theme;
+  final List<ResumeTextThemeModel> texts;
 
   const ResumeModel({
     required this.id,
@@ -75,6 +77,7 @@ class ResumeModel extends Equatable {
     this.updatedAt,
     this.thumbnail,
     this.theme,
+    this.texts = const [],
   });
 
   static const ResumeModel empty = ResumeModel(
@@ -128,6 +131,7 @@ class ResumeModel extends Equatable {
       theme: json['theme'] != null
           ? ResumeThemeModel.fromJson(json['theme'])
           : ResumeThemeModel.getByTemplate(json['model']),
+      texts: List.of(json['texts']).map((e) => ResumeTextThemeModel.fromJson(e)).toList(),
     );
   }
 
@@ -163,6 +167,7 @@ class ResumeModel extends Equatable {
       'updatedAt': updatedAt,
       'thumbnail': thumbnail,
       'theme': theme?.toJson(),
+      'texts': texts.map((e) => e.toJson()).toList(),
     };
   }
 
@@ -198,6 +203,7 @@ class ResumeModel extends Equatable {
       updatedAt: updatedAt != null ? DateTime.parse(updatedAt!) : null,
       thumbnail: thumbnail,
       theme: theme != null ? theme!.toDomain() : ResumeTheme.basic,
+      texts: texts.map((e) => e.toDomain()).toList(),
     );
   }
 

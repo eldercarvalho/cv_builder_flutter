@@ -6,6 +6,7 @@ import 'package:result_dart/result_dart.dart';
 import '../../../../data/repositories/auth_repository/auth_repository.dart';
 import '../../../../data/repositories/resume_repository/resume_respository.dart';
 import '../../../../domain/models/resume.dart';
+import '../../../../domain/utils/get_fake_resume.dart';
 import '../../../../utils/command.dart';
 
 class HomeViewModel extends ChangeNotifier {
@@ -39,7 +40,7 @@ class HomeViewModel extends ChangeNotifier {
 
   Future<void> saveResume() async {
     await _authRepository.getCurrentUser().flatMap((user) async {
-      final resume = Resume.fake().copyWith(resumeLanguage: ResumeLanguage.en, template: ResumeTemplate.basic);
+      final resume = createFakeResume().copyWith(resumeLanguage: ResumeLanguage.en, template: ResumeTemplate.basic);
       await _resumeRepository.saveResume(userId: user.id, resume: resume);
       return const Success(unit);
     });

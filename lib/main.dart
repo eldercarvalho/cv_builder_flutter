@@ -25,5 +25,7 @@ Future<void> main() async {
     return true;
   };
 
+  // debugPrintRebuildDirtyWidgets = true;
+
   runApp(const CvBuilderApp());
 }

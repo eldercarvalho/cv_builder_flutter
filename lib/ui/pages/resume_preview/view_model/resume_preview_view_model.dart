@@ -6,6 +6,7 @@ import 'package:result_dart/result_dart.dart';
 import '../../../../data/repositories/auth_repository/auth_repository.dart';
 import '../../../../data/repositories/resume_repository/resume_respository.dart';
 import '../../../../domain/models/resume.dart';
+import '../../../../domain/utils/get_fake_resume.dart';
 import '../../../../utils/command.dart';
 
 class ResumePreviewViewModel extends ChangeNotifier {
@@ -35,7 +36,7 @@ class ResumePreviewViewModel extends ChangeNotifier {
   AsyncResult<Unit> _reloadResume() async {
     return _authRepository
         .getCurrentUser()
-        .map((user) => Resume.fake().copyWith(resumeName: 'Teste', resumeLanguage: ResumeLanguage.pt).toPdf())
+        .map((user) => createFakeResume().copyWith(resumeName: 'Teste', resumeLanguage: ResumeLanguage.pt).toPdf())
         .flatMap((pdfBytes) => _resumeRepository.savePdf(resumeId: _resume!.id, bytes: pdfBytes))
         .flatMap(_onGetResumePdf);
   }
