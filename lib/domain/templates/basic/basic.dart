@@ -31,14 +31,6 @@ class BasicTemplate {
         if (section != resume.sections.last) SizedBox(height: config.sectionSpace),
       ],
 
-      // ...buildContact(resume: resume, config: config),
-      // ...buildObjective(resume: resume, config: config),
-      // ...buildExperience(resume: resume, config: config),
-      // ...buildSkills(resume: resume, config: config),
-      // ...buildEducation(resume: resume, config: config),
-      // ...buildLanguages(resume: resume, config: config),
-      // ...buildCertifications(resume: resume, config: config),
-
       //   // Projetos
       //   if (resume.projects.isNotEmpty) ...[
       //     SizedBox(height: config.sectionSpace),

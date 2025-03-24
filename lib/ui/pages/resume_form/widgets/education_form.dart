@@ -94,7 +94,7 @@ class _EducationFormState extends State<EducationForm> {
                 showIcons: true,
                 showSaveButton: widget.isEditing,
                 isLoading: _viewModel.saveResume.running,
-                previousText: context.l10n.objective,
+                previousText: context.l10n.experience(1),
                 onPreviousPressed: widget.onPrevious,
                 nextText: context.l10n.skills(2),
                 onNextPressed: widget.onSubmit,

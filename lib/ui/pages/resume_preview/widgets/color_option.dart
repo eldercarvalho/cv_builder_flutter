@@ -46,7 +46,6 @@ class ColorOption extends StatelessWidget {
           Colors.brown,
           const Color(0xFF87CEEB),
           const Color(0xFFB0E0E6),
-          // const Color(0xFFADD8E6),
           Colors.cyan,
           Colors.lightBlue,
           Colors.blueAccent,

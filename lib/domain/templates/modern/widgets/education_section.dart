@@ -60,6 +60,7 @@ List<Widget> buildEducation({
                 SizedBox(height: config.lineSpace),
                 Text(education.summary!, style: textTheme.bodyMediumTextStyle),
               ],
+              if (index < resume.education.length - 1) SizedBox(height: config.innerSpace),
             ],
           ),
         );
