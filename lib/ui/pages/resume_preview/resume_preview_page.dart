@@ -182,7 +182,7 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
 
   Future<void> _onDeleteResume() async {
     if (_viewModel.deleteResume.completed) {
-      context.showSuccessSnackBar('Currículo excluído com sucesso');
+      context.showSuccessSnackBar(context.l10n.previewDeleteSuccess);
       Navigator.of(context).pop(true);
     }
 

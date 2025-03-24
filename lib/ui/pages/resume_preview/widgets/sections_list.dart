@@ -28,15 +28,16 @@ class _SectionsListState extends State<SectionsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Configurar Seções', style: context.textTheme.titleLarge),
+        title: Text(context.l10n.previewConfigureSections, style: context.textTheme.titleLarge),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Padding(
-          //   padding: const EdgeInsets.all(16.0),
-          //   child: Text('Você pode reordenar as seções arrastando e soltando.', style: context.textTheme.bodyLarge),
-          // ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child:
+                Text(context.l10n.previewConfigurationText, style: context.textTheme.bodyLarge?.copyWith(height: 1.4)),
+          ),
           Expanded(
             child: ReorderableListView.builder(
               // padding: const EdgeInsets.symmetric(horizontal: 16),

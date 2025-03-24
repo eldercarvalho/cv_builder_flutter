@@ -59,7 +59,7 @@ class _SectionSettingsState extends State<SectionSettings> {
                       controlAffinity: ListTileControlAffinity.leading,
                       value: _hideTitle,
                       onChanged: (value) => setState(() => _hideTitle = value!),
-                      title: const Text('Esconder título da seção'),
+                      title: Text(context.l10n.previewHideSectionTitle),
                       contentPadding: EdgeInsets.zero,
                       // dense: true,
                     ),
