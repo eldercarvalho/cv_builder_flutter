@@ -103,4 +103,20 @@ class ResumeTextThemeModel {
       hobbies: hobbies,
     );
   }
+
+  static ResumeTextThemeModel fromDomain(ResumeTextTheme resume) {
+    return ResumeTextThemeModel(
+      language: resume.language.toString(),
+      objective: resume.objective,
+      experience: resume.experience,
+      education: resume.education,
+      skills: resume.skills,
+      languages: resume.languages,
+      certifications: resume.certifications,
+      projects: resume.projects,
+      contact: resume.contact,
+      references: resume.references,
+      hobbies: resume.hobbies,
+    );
+  }
 }

@@ -6,6 +6,7 @@ import 'package:result_dart/result_dart.dart';
 import '../../../../data/repositories/auth_repository/auth_repository.dart';
 import '../../../../data/repositories/resume_repository/resume_respository.dart';
 import '../../../../domain/models/resume.dart';
+import '../../../../domain/models/resume_section.dart';
 import '../../../../domain/utils/get_fake_resume.dart';
 import '../../../../utils/command.dart';
 
@@ -22,6 +23,7 @@ class ResumePreviewViewModel extends ChangeNotifier {
   late final Command0<Unit> deleteResume = Command0(_deleteResume);
   late final Command0<Unit> reloadResume = Command0(_reloadResume);
   late final Command0<Unit> updateResume = Command0(_updateResume);
+  late final Command1<Unit, List<ResumeSection>> updateSections = Command1(_updateSections);
 
   Resume? _resume;
   Resume? get resume => _resume;
@@ -83,5 +85,16 @@ class ResumePreviewViewModel extends ChangeNotifier {
         .map((resume) => resume.toPdf())
         .flatMap((bytes) => _resumeRepository.savePdf(resumeId: _resume!.id, bytes: bytes))
         .flatMap(_onGetResumePdf);
+  }
+
+  AsyncResult<Unit> _updateSections(List<ResumeSection> sections) async {
+    final newResume = _resume!.copyWith(sections: sections);
+    return _onGetResume(newResume)
+        .map((resume) => resume.toPdf())
+        .flatMap((bytes) => _resumeRepository.savePdf(resumeId: newResume.id, bytes: bytes))
+        .flatMap(_onGetResumePdf)
+        .flatMap((_) => _authRepository.getCurrentUser())
+        .map((user) => _resumeRepository.saveResume(userId: user.id, resume: newResume))
+        .fold((_) => const Success(unit), (error) => Failure(error));
   }
 }

@@ -27,11 +27,21 @@ class ResumePreviewPage extends StatefulWidget {
   static const route = '/resume-preview';
 
   static Future<Object?> push(BuildContext context, {required ResumePreviewParams params}) async {
-    return await Navigator.of(context).pushNamed(route, arguments: params);
+    return await Navigator.of(context).pushNamed(
+      route,
+      arguments: params,
+    );
   }
 
-  static Future<Object?> pushNamedAndRemoveUntil(BuildContext context, {required ResumePreviewParams params}) async {
-    return await Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => route.isFirst, arguments: params);
+  static Future<Object?> pushNamedAndRemoveUntil(
+    BuildContext context, {
+    required ResumePreviewParams params,
+  }) async {
+    return await Navigator.of(context).pushNamedAndRemoveUntil(
+      route,
+      (route) => route.isFirst,
+      arguments: params,
+    );
   }
 
   @override
@@ -49,12 +59,14 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
     _viewModel.getResume.execute(widget.params.resume.id);
     _viewModel.getResume.addListener(_onGetResume);
     _viewModel.deleteResume.addListener(_onDeleteResume);
+    _viewModel.updateSections.addListener(_onUpdateSections);
   }
 
   @override
   void dispose() {
     _viewModel.getResume.removeListener(_onGetResume);
     _viewModel.deleteResume.removeListener(_onDeleteResume);
+    _viewModel.updateSections.removeListener(_onUpdateSections);
     super.dispose();
   }
 
@@ -73,9 +85,12 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
           ),
           actions: [
             ListenableBuilder(
-              listenable: _viewModel.updateResume,
+              listenable: Listenable.merge([
+                _viewModel.updateResume,
+                _viewModel.updateSections,
+              ]),
               builder: (context, child) {
-                if (_viewModel.updateResume.running) {
+                if (_viewModel.updateResume.running || _viewModel.updateSections.running) {
                   return Padding(
                     padding: const EdgeInsets.only(right: 6),
                     child: Text(context.l10n.saving,
@@ -139,6 +154,7 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
                     PreviewBottomToolbar(
                       onEditTap: () => Scaffold.of(context).openEndDrawer(),
                       onSettingsTap: _showSettings,
+                      onSectionSettings: _onSectionSettings,
                       onShareTap: _onShareTap,
                       onZoomInTap: () => _pdfViewerController.zoomLevel += 0.5,
                       onZoomOutTap: () => _pdfViewerController.zoomLevel -= 0.5,
@@ -171,6 +187,14 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
     }
 
     if (_viewModel.deleteResume.error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(context.l10n.errorLoadingResume),
+      ));
+    }
+  }
+
+  Future<void> _onUpdateSections() async {
+    if (_viewModel.updateSections.error) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(context.l10n.errorLoadingResume),
       ));
@@ -232,6 +256,18 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
 
     if (oldTheme != _viewModel.resume!.theme) {
       _viewModel.updateTheme(oldTheme);
+    }
+  }
+
+  void _onSectionSettings() async {
+    final result = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => SectionsList(sections: _viewModel.resume!.sections),
+      ),
+    );
+
+    if (result != null) {
+      _viewModel.updateSections.execute(result);
     }
   }
 }

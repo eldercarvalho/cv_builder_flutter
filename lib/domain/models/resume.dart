@@ -12,6 +12,7 @@ import 'hobbie.dart';
 import 'language.dart';
 import 'project.dart';
 import 'reference.dart';
+import 'resume_section.dart';
 import 'resume_text_theme.dart';
 import 'skill.dart';
 import 'social_network.dart';
@@ -103,6 +104,7 @@ class Resume extends Equatable {
   final String? copyId;
   final ResumeTheme theme;
   final List<ResumeTextTheme> texts;
+  final List<ResumeSection> sections;
 
   String? get age => birthDate != null ? (DateTime.now().difference(birthDate!).inDays ~/ 365).toString() : null;
   bool get hasPhoto => photo != null;
@@ -159,6 +161,7 @@ class Resume extends Equatable {
     this.copyId,
     this.theme = ResumeTheme.basic,
     this.texts = const [],
+    this.sections = const [],
   });
 
   static Resume empty() => Resume(
@@ -171,6 +174,47 @@ class Resume extends Equatable {
         updatedAt: DateTime.now(),
         isDraft: true,
       );
+
+  static List<ResumeSection> getSectionsByTemplate({
+    required ResumeTemplate template,
+    String objectiveTitle = 'Objetivo',
+    String experienceTitle = 'Experiência Profissional',
+    String educationTitle = 'Formação',
+    String skillsTitle = 'Conhecimentos',
+    String languagesTitle = 'Idiomas',
+    String certificationsTitle = 'Certificações',
+    String projectsTitle = 'Projetos',
+    String contactTitle = 'Contato',
+    String referencesTitle = 'Referências',
+    String hobbiesTitle = 'Interesses',
+  }) {
+    return switch (template) {
+      ResumeTemplate.basic => [
+          ResumeSection(type: ResumeSectionType.contact, title: contactTitle, hideTitle: true),
+          ResumeSection(type: ResumeSectionType.objective, title: objectiveTitle),
+          ResumeSection(type: ResumeSectionType.experience, title: experienceTitle),
+          ResumeSection(type: ResumeSectionType.skills, title: skillsTitle),
+          ResumeSection(type: ResumeSectionType.education, title: educationTitle),
+          ResumeSection(type: ResumeSectionType.languages, title: languagesTitle),
+          ResumeSection(type: ResumeSectionType.certifications, title: certificationsTitle),
+          // ResumeSection(type: ResumeSectionType.projects, title: projectsTitle),
+          // ResumeSection(type: ResumeSectionType.references, title: referencesTitle),
+          // ResumeSection(type: ResumeSectionType.hobbies, title: hobbiesTitle),
+        ],
+      ResumeTemplate.modern => [
+          ResumeSection(type: ResumeSectionType.contact, title: contactTitle),
+          ResumeSection(type: ResumeSectionType.education, title: educationTitle),
+          ResumeSection(type: ResumeSectionType.skills, title: skillsTitle),
+          ResumeSection(type: ResumeSectionType.languages, title: languagesTitle),
+          ResumeSection(type: ResumeSectionType.objective, title: objectiveTitle),
+          ResumeSection(type: ResumeSectionType.experience, title: experienceTitle),
+          ResumeSection(type: ResumeSectionType.certifications, title: certificationsTitle),
+          // ResumeSection(type: ResumeSectionType.projects, title: projectsTitle),
+          // ResumeSection(type: ResumeSectionType.references, title: referencesTitle),
+          // ResumeSection(type: ResumeSectionType.hobbies, title: hobbiesTitle),
+        ],
+    };
+  }
 
   Resume copyWith({
     String? id,
@@ -208,6 +252,7 @@ class Resume extends Equatable {
     String? copyId,
     ResumeTheme? theme,
     List<ResumeTextTheme>? texts,
+    List<ResumeSection>? sections,
   }) {
     return Resume(
       id: id ?? this.id,
@@ -243,6 +288,7 @@ class Resume extends Equatable {
       copyId: copyId ?? this.copyId,
       theme: theme ?? this.theme,
       texts: texts ?? this.texts,
+      sections: sections ?? this.sections,
     );
   }
 
@@ -281,6 +327,7 @@ class Resume extends Equatable {
         copyId,
         theme,
         texts,
+        sections,
       ];
 }
 
@@ -374,6 +421,14 @@ class ResumeTheme extends Equatable {
       ResumeColor(type: ResumeColorType.link, value: '#2196f3'),
       ResumeColor(type: ResumeColorType.divider, value: '#000000'),
     ],
+    secondaryColors: [
+      ResumeColor(type: ResumeColorType.background, value: '#FFFFFF'),
+      ResumeColor(type: ResumeColorType.title, value: '#000000'),
+      ResumeColor(type: ResumeColorType.text, value: '#000000'),
+      ResumeColor(type: ResumeColorType.icon, value: '#000000'),
+      ResumeColor(type: ResumeColorType.link, value: '#2196f3'),
+      ResumeColor(type: ResumeColorType.divider, value: '#000000'),
+    ],
   );
 
   static const ResumeTheme modern = ResumeTheme(
@@ -437,12 +492,30 @@ class ResumeTheme extends Equatable {
 }
 
 extension ResumeColorListExtension on List<ResumeColor> {
-  String get backgroundColor => firstWhere((color) => color.type == ResumeColorType.background).value;
-  String get titleColor => firstWhere((color) => color.type == ResumeColorType.title).value;
-  String get textColor => firstWhere((color) => color.type == ResumeColorType.text).value;
-  String get iconColor => firstWhere((color) => color.type == ResumeColorType.icon).value;
-  String get linkColor => firstWhere((color) => color.type == ResumeColorType.link).value;
-  String get dividerColor => firstWhere((color) => color.type == ResumeColorType.divider).value;
+  String get backgroundColor => firstWhere(
+        (color) => color.type == ResumeColorType.background,
+        orElse: () => const ResumeColor(type: ResumeColorType.background, value: '#FFFFFF'),
+      ).value;
+  String get titleColor => firstWhere(
+        (color) => color.type == ResumeColorType.title,
+        orElse: () => const ResumeColor(type: ResumeColorType.title, value: '#000000'),
+      ).value;
+  String get textColor => firstWhere(
+        (color) => color.type == ResumeColorType.text,
+        orElse: () => const ResumeColor(type: ResumeColorType.text, value: '#000000'),
+      ).value;
+  String get iconColor => firstWhere(
+        (color) => color.type == ResumeColorType.icon,
+        orElse: () => const ResumeColor(type: ResumeColorType.icon, value: '#000000'),
+      ).value;
+  String get linkColor => firstWhere(
+        (color) => color.type == ResumeColorType.link,
+        orElse: () => const ResumeColor(type: ResumeColorType.link, value: '#2196f3'),
+      ).value;
+  String get dividerColor => firstWhere(
+        (color) => color.type == ResumeColorType.divider,
+        orElse: () => const ResumeColor(type: ResumeColorType.divider, value: '#000000'),
+      ).value;
 
   List<ResumeColor> setColor(ResumeColorType type, String value) {
     return map((e) => e.type == type ? e.copyWith(value: value) : e).toList();
