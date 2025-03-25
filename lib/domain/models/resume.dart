@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
-import 'package:faker/faker.dart';
 import 'package:uuid/uuid.dart';
 
 import '../templates/basic/basic.dart';
@@ -13,6 +12,8 @@ import 'hobbie.dart';
 import 'language.dart';
 import 'project.dart';
 import 'reference.dart';
+import 'resume_section.dart';
+import 'resume_text_theme.dart';
 import 'skill.dart';
 import 'social_network.dart';
 import 'work_experience.dart';
@@ -102,6 +103,8 @@ class Resume extends Equatable {
   final bool isDraft;
   final String? copyId;
   final ResumeTheme theme;
+  final List<ResumeTextTheme> texts;
+  final List<ResumeSection> sections;
 
   String? get age => birthDate != null ? (DateTime.now().difference(birthDate!).inDays ~/ 365).toString() : null;
   bool get hasPhoto => photo != null;
@@ -157,6 +160,8 @@ class Resume extends Equatable {
     this.isDraft = false,
     this.copyId,
     this.theme = ResumeTheme.basic,
+    this.texts = const [],
+    this.sections = const [],
   });
 
   static Resume empty() => Resume(
@@ -170,192 +175,111 @@ class Resume extends Equatable {
         isDraft: true,
       );
 
-  static Resume fake() => Resume(
-        id: const Uuid().v4(),
-        isActive: true,
-        resumeName: 'Currículo 1',
-        name: 'João Francisco da Silva',
-        profession: 'Desenvolvedor Mobile',
-        birthDate: DateTime.now().subtract(const Duration(days: 365 * 30)),
-        // photo:
-        //     'https://firebasestorage.googleapis.com/v0/b/cvbuilder-67b67.firebasestorage.app/o/user_photo.png?alt=media&token=d7228e79-a5a4-4efc-bd45-d9c9988dccf2',
-        address: 'Rua dos Devs, 130',
-        city: 'São Paulo',
-        zipCode: '88050-400',
-        phoneNumber: '11 988661-9110',
-        website: 'https://joaosilva.com.br',
-        email: 'joaofsilva@gmail.com',
-        socialNetworks: const [
-          SocialNetwork(
-            id: '1',
-            name: 'LinkedIn',
-            username: 'joaofrancisco',
-            url: 'https://www.linkedin.com/in/elder-carvalho-28753492/',
-          ),
-          SocialNetwork(
-            id: '2',
-            name: 'GitHub',
-            username: 'joaofrancisco',
-            url: 'https://github.com/eldercarvalho',
-          ),
+  static List<ResumeSection> createSectionsByTemplate({required ResumeTemplate template}) {
+    switch (template) {
+      case ResumeTemplate.basic:
+        return [
+          const ResumeSection(type: ResumeSectionType.contact, title: 'Contato'),
+          const ResumeSection(type: ResumeSectionType.objective, title: 'Objetivo'),
+          const ResumeSection(type: ResumeSectionType.experience, title: 'Experiência Profissional'),
+          const ResumeSection(type: ResumeSectionType.education, title: 'Formação'),
+          const ResumeSection(type: ResumeSectionType.skills, title: 'Conhecimentos'),
+          const ResumeSection(type: ResumeSectionType.languages, title: 'Idiomas'),
+          const ResumeSection(type: ResumeSectionType.certifications, title: 'Certificações'),
+          // ResumeSection(type: ResumeSectionType.projects, title: 'Projetos'),
+          // ResumeSection(type: ResumeSectionType.references, title: 'Referências'),
+          // ResumeSection(type: ResumeSectionType.hobbies, title: 'Interesses'),
+        ];
+      case ResumeTemplate.modern:
+        return [
+          const ResumeSection(type: ResumeSectionType.contact, title: 'Contato'),
+          const ResumeSection(type: ResumeSectionType.education, title: 'Formação'),
+          const ResumeSection(type: ResumeSectionType.skills, title: 'Conhecimentos'),
+          const ResumeSection(type: ResumeSectionType.languages, title: 'Idiomas'),
+          const ResumeSection(type: ResumeSectionType.objective, title: 'Objetivo'),
+          const ResumeSection(type: ResumeSectionType.experience, title: 'Experiência Profissional'),
+          const ResumeSection(type: ResumeSectionType.certifications, title: 'Certificações'),
+          // ResumeSection(type: ResumeSectionType.projects, title: 'Projetos'),
+          // ResumeSection(type: ResumeSectionType.references, title: 'Referências'),
+          // ResumeSection(type: ResumeSectionType.hobbies, title: 'Interesses'),
+        ];
+    }
+  }
+
+  static List<ResumeSection> setSectionTitles({
+    required List<ResumeSection> sections,
+    required String objectiveTitle,
+    required String experienceTitle,
+    required String educationTitle,
+    required String skillsTitle,
+    required String languagesTitle,
+    required String certificationsTitle,
+    required String projectsTitle,
+    required String contactTitle,
+    required String referencesTitle,
+    required String hobbiesTitle,
+  }) {
+    return sections.map((section) {
+      switch (section.type) {
+        case ResumeSectionType.contact:
+          return section.copyWith(title: contactTitle);
+        case ResumeSectionType.objective:
+          return section.copyWith(title: objectiveTitle);
+        case ResumeSectionType.experience:
+          return section.copyWith(title: experienceTitle);
+        case ResumeSectionType.education:
+          return section.copyWith(title: educationTitle);
+        case ResumeSectionType.skills:
+          return section.copyWith(title: skillsTitle);
+        case ResumeSectionType.languages:
+          return section.copyWith(title: languagesTitle);
+        case ResumeSectionType.certifications:
+          return section.copyWith(title: certificationsTitle);
+        case ResumeSectionType.projects:
+          return section.copyWith(title: projectsTitle);
+        case ResumeSectionType.references:
+          return section.copyWith(title: referencesTitle);
+        case ResumeSectionType.hobbies:
+          return section.copyWith(title: hobbiesTitle);
+        case ResumeSectionType.socialNetworks:
+          throw UnimplementedError();
+        case ResumeSectionType.address:
+          throw UnimplementedError();
+      }
+    }).toList();
+  }
+
+  static List<ResumeSection> orderSectionsByTemplate({
+    required ResumeTemplate template,
+    required List<ResumeSection> sections,
+  }) {
+    return switch (template) {
+      ResumeTemplate.basic => [
+          sections.getByType(ResumeSectionType.contact)!,
+          sections.getByType(ResumeSectionType.objective)!,
+          sections.getByType(ResumeSectionType.experience)!,
+          sections.getByType(ResumeSectionType.skills)!,
+          sections.getByType(ResumeSectionType.education)!,
+          sections.getByType(ResumeSectionType.languages)!,
+          sections.getByType(ResumeSectionType.certifications)!,
+          // sections.getByType(ResumeSectionType.projects)!,
+          // sections.getByType(ResumeSectionType.references)!,
+          // sections.getByType(ResumeSectionType.hobbies)!,
         ],
-        objectiveSummary: Faker().lorem.sentences(6).join(' '),
-        workExperience: [
-          WorkExperience(
-            id: '1',
-            company: 'Google Inc.',
-            position: 'Desenvolvedor Mobile Senior',
-            startDate: DateTime.now().subtract(const Duration(days: 365)),
-            endDate: null,
-            website: Faker().internet.httpsUrl(),
-            summary: Faker().lorem.sentences(6).join(' '),
-          ),
-          WorkExperience(
-            id: '2',
-            company: 'Amazon Inc.',
-            position: 'Desenvolvedor Mobile Pleno',
-            startDate: DateTime.now().subtract(const Duration(days: 365 * 2)),
-            endDate: DateTime.now().subtract(const Duration(days: 365)),
-            website: Faker().internet.httpsUrl(),
-            summary: Faker().lorem.sentences(6).join(' '),
-          ),
-          WorkExperience(
-            id: '3',
-            company: 'Apple Inc.',
-            position: 'Desenvolvedor Mobile Júnior',
-            startDate: DateTime.now().subtract(const Duration(days: 365 * 3)),
-            endDate: DateTime.now().subtract(const Duration(days: 365 * 2)),
-            website: Faker().internet.httpsUrl(),
-            summary: Faker().lorem.sentences(6).join(' '),
-          ),
+      ResumeTemplate.modern => [
+          sections.getByType(ResumeSectionType.contact)!,
+          sections.getByType(ResumeSectionType.education)!,
+          sections.getByType(ResumeSectionType.skills)!,
+          sections.getByType(ResumeSectionType.languages)!,
+          sections.getByType(ResumeSectionType.objective)!,
+          sections.getByType(ResumeSectionType.experience)!,
+          sections.getByType(ResumeSectionType.certifications)!,
+          // sections.getByType(ResumeSectionType.projects)!,
+          // sections.getByType(ResumeSectionType.references)!,
+          // sections.getByType(ResumeSectionType.hobbies)!,
         ],
-        education: [
-          Education(
-            id: '1',
-            institution: 'UNIP',
-            typeOfDegree: 'Bacharelado',
-            fieldOfStudy: 'Ciência da Computação',
-            startDate: DateTime.parse('2012-01-01'),
-            endDate: DateTime.parse('2016-12-30'),
-            summary: '',
-          ),
-        ],
-        projects: [
-          Project(
-            id: '1',
-            title: 'Projeto 1',
-            startDate: DateTime.parse('2021-01-01'),
-            endDate: DateTime.parse('2021-12-31'),
-            summary: Faker().lorem.sentences(3).join(' '),
-          ),
-          Project(
-            id: '2',
-            title: 'Projeto 2',
-            startDate: DateTime.parse('2022-01-01'),
-            endDate: DateTime.parse('2022-12-31'),
-            summary: Faker().lorem.sentences(3).join(' '),
-          ),
-        ],
-        awards: [
-          Award(
-            id: '1',
-            title: 'Prêmio 1',
-            date: DateTime.parse('2021-01-01'),
-            awarder: 'Emissor 1',
-            summary: '',
-          ),
-          Award(
-            id: '2',
-            title: 'Prêmio 2',
-            date: DateTime.parse('2021-01-01'),
-            summary: '',
-            awarder: 'Emissor 2',
-          ),
-        ],
-        certifications: [
-          Certification(
-            id: '1',
-            title: 'Curso de Android',
-            date: DateTime.parse('2021-01-01'),
-            summary: Faker().lorem.sentences(3).join(' '),
-            issuer: 'Udemy',
-          ),
-          // Certification(
-          //   id: '2',
-          //   title: 'Certificado 2',
-          //   date: DateTime.parse('2021-01-01'),
-          //   summary: Faker().lorem.sentences(3).join(' '),
-          //   issuer: 'Emissor 2',
-          // ),
-        ],
-        skills: const [
-          Skill(
-            id: '1',
-            name: 'Android',
-            level: 'Avançado',
-          ),
-          Skill(
-            id: '2',
-            name: 'Kotlin',
-            level: 'Avançado',
-          ),
-          Skill(
-            id: '3',
-            name: 'React',
-            level: 'Intermediário',
-          ),
-          Skill(
-            id: '4',
-            name: 'JavaScript',
-            level: 'Avançado',
-          ),
-          Skill(
-            id: '5',
-            name: 'Git',
-            level: 'Avançado',
-          ),
-          Skill(
-            id: '6',
-            name: 'Clean Architecture',
-            level: 'Avançado',
-          ),
-          Skill(
-            id: '7',
-            name: 'CI/CD',
-            level: 'Avançado',
-          ),
-        ],
-        hobbies: const [
-          Hobbie(
-            id: '1',
-            name: 'Hobbie 1',
-          ),
-        ],
-        languages: const [
-          Language(
-            id: '1',
-            name: 'Português',
-            fluency: 'Nativo',
-          ),
-          Language(
-            id: '2',
-            name: 'Inglês',
-            fluency: 'Intermediário B2',
-          ),
-        ],
-        references: [
-          Reference(
-            id: '1',
-            name: 'Reference 1',
-            position: 'Position 1',
-            phoneNumber: '48 98851-9100',
-            email: Faker().internet.email(),
-            summary: Faker().lorem.sentences(2).join(' '),
-          ),
-        ],
-        template: ResumeTemplate.modern,
-        createdAt: DateTime.now(),
-      );
+    };
+  }
 
   Resume copyWith({
     String? id,
@@ -392,6 +316,8 @@ class Resume extends Equatable {
     bool? isDraft,
     String? copyId,
     ResumeTheme? theme,
+    List<ResumeTextTheme>? texts,
+    List<ResumeSection>? sections,
   }) {
     return Resume(
       id: id ?? this.id,
@@ -426,6 +352,8 @@ class Resume extends Equatable {
       isDraft: isDraft ?? this.isDraft,
       copyId: copyId ?? this.copyId,
       theme: theme ?? this.theme,
+      texts: texts ?? this.texts,
+      sections: sections ?? this.sections,
     );
   }
 
@@ -463,6 +391,8 @@ class Resume extends Equatable {
         isDraft,
         copyId,
         theme,
+        texts,
+        sections,
       ];
 }
 
@@ -556,6 +486,14 @@ class ResumeTheme extends Equatable {
       ResumeColor(type: ResumeColorType.link, value: '#2196f3'),
       ResumeColor(type: ResumeColorType.divider, value: '#000000'),
     ],
+    secondaryColors: [
+      ResumeColor(type: ResumeColorType.background, value: '#FFFFFF'),
+      ResumeColor(type: ResumeColorType.title, value: '#000000'),
+      ResumeColor(type: ResumeColorType.text, value: '#000000'),
+      ResumeColor(type: ResumeColorType.icon, value: '#000000'),
+      ResumeColor(type: ResumeColorType.link, value: '#2196f3'),
+      ResumeColor(type: ResumeColorType.divider, value: '#000000'),
+    ],
   );
 
   static const ResumeTheme modern = ResumeTheme(
@@ -619,12 +557,30 @@ class ResumeTheme extends Equatable {
 }
 
 extension ResumeColorListExtension on List<ResumeColor> {
-  String get backgroundColor => firstWhere((color) => color.type == ResumeColorType.background).value;
-  String get titleColor => firstWhere((color) => color.type == ResumeColorType.title).value;
-  String get textColor => firstWhere((color) => color.type == ResumeColorType.text).value;
-  String get iconColor => firstWhere((color) => color.type == ResumeColorType.icon).value;
-  String get linkColor => firstWhere((color) => color.type == ResumeColorType.link).value;
-  String get dividerColor => firstWhere((color) => color.type == ResumeColorType.divider).value;
+  String get backgroundColor => firstWhere(
+        (color) => color.type == ResumeColorType.background,
+        orElse: () => const ResumeColor(type: ResumeColorType.background, value: '#FFFFFF'),
+      ).value;
+  String get titleColor => firstWhere(
+        (color) => color.type == ResumeColorType.title,
+        orElse: () => const ResumeColor(type: ResumeColorType.title, value: '#000000'),
+      ).value;
+  String get textColor => firstWhere(
+        (color) => color.type == ResumeColorType.text,
+        orElse: () => const ResumeColor(type: ResumeColorType.text, value: '#000000'),
+      ).value;
+  String get iconColor => firstWhere(
+        (color) => color.type == ResumeColorType.icon,
+        orElse: () => const ResumeColor(type: ResumeColorType.icon, value: '#000000'),
+      ).value;
+  String get linkColor => firstWhere(
+        (color) => color.type == ResumeColorType.link,
+        orElse: () => const ResumeColor(type: ResumeColorType.link, value: '#2196f3'),
+      ).value;
+  String get dividerColor => firstWhere(
+        (color) => color.type == ResumeColorType.divider,
+        orElse: () => const ResumeColor(type: ResumeColorType.divider, value: '#000000'),
+      ).value;
 
   List<ResumeColor> setColor(ResumeColorType type, String value) {
     return map((e) => e.type == type ? e.copyWith(value: value) : e).toList();

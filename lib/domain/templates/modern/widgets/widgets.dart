@@ -1,5 +1,13 @@
-export 'aside_column.dart';
 export 'box.dart';
+export 'build_sections.dart';
+export 'certifications_section.dart';
+export 'contact_section.dart';
+export 'education_section.dart';
+export 'experience_section.dart';
+export 'header_section.dart';
+export 'languages_section.dart';
+export 'objective_section.dart';
 export 'persoal_info.dart';
 export 'section_title.dart';
+export 'skills_section.dart';
 export 'social_network.dart';

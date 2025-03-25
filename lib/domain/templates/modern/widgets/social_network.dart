@@ -3,21 +3,32 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
 import '../../../models/social_network.dart';
+import '../../constants.dart';
 import '../../icons.dart';
-import '../constants.dart';
+import '../../template_config.dart';
 
 class SocialNetworkInfo extends StatelessWidget {
   SocialNetworkInfo({
     required this.socialNetwork,
     required this.config,
+    required this.column,
   });
 
   final SocialNetwork socialNetwork;
   final TemplateConfig config;
+  final TemplateColumn column;
 
   @override
   Widget build(Context context) {
-    final colors = config.theme.primaryColors;
+    final textTheme = switch (column) {
+      TemplateColumn.one => config.leftTextTheme,
+      TemplateColumn.two => config.rightTextTheme,
+    };
+
+    final colors = switch (column) {
+      TemplateColumn.one => config.theme.primaryColors,
+      TemplateColumn.two => config.theme.secondaryColors,
+    };
 
     return Padding(
       padding: const EdgeInsets.only(top: 6),
@@ -31,7 +42,7 @@ class SocialNetworkInfo extends StatelessWidget {
           SizedBox(width: 8),
           // Text(socialNetwork.name, style: config.bodySmallTextStyle2),
           if (socialNetwork.username != null && socialNetwork.username!.isNotEmpty)
-            Text('@${socialNetwork.username}', style: config.bodySmallTextStyle1),
+            Text('@${socialNetwork.username}', style: textTheme.bodySmallTextStyle),
           if (socialNetwork.url != null && socialNetwork.url!.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(left: 8),

@@ -3,6 +3,7 @@ import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../domain/models/resume.dart';
+import '../../../../domain/templates/texts.dart';
 import '../../../shared/extensions/extensions.dart';
 import '../../../shared/validators/validators.dart';
 import '../../../shared/widgets/widgets.dart';
@@ -121,16 +122,7 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
                   previousText: context.l10n.template,
                   onPreviousPressed: widget.onPrevious,
                   isEditing: widget.isEditing,
-                  onNextPressed: () {
-                    _isSubmitted = true;
-                    if (_formKey.currentState!.validate()) {
-                      _viewModel.resume = _viewModel.resume.copyWith(
-                        resumeName: _nameController.text.trim(),
-                        resumeLanguage: ResumeLanguage.fromString(_resumeLanguage),
-                      );
-                      widget.onSubmit();
-                    }
-                  },
+                  onNextPressed: _onSubmit,
                 );
               },
             ),
@@ -138,6 +130,31 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
         );
       },
     );
+  }
+
+  void _onSubmit() {
+    _isSubmitted = true;
+    if (_formKey.currentState!.validate()) {
+      final texts = getTexts(ResumeLanguage.fromString(_resumeLanguage));
+      _viewModel.resume = _viewModel.resume.copyWith(
+        resumeName: _nameController.text.trim(),
+        resumeLanguage: ResumeLanguage.fromString(_resumeLanguage),
+        sections: Resume.setSectionTitles(
+          sections: _viewModel.resume.sections,
+          objectiveTitle: texts.objective,
+          experienceTitle: texts.experience,
+          educationTitle: texts.education,
+          skillsTitle: texts.skills,
+          languagesTitle: texts.languages,
+          certificationsTitle: texts.certifications,
+          projectsTitle: texts.projects,
+          contactTitle: texts.contact,
+          referencesTitle: '',
+          hobbiesTitle: '',
+        ),
+      );
+      widget.onSubmit();
+    }
   }
 
   void _setLanguage() {
