@@ -100,7 +100,3 @@ class TemplateConfig {
     );
   }
 }
-
-// // Page Config
-const horizontalMargin = 60.0;
-const verticalMargin = 40.0;

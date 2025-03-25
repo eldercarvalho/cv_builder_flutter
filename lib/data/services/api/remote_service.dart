@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:result_dart/result_dart.dart';
 
 import '../../models/resume.dart';
@@ -51,12 +53,29 @@ class RemoteService {
         ResumeModel newResume = resume;
         final resumesRef = _firestore.collection('users').doc(userId).collection('resumes');
 
-        // Save Photo
+        // Save photo from device
         if (resume.photo != null && !resume.photo!.startsWith('https')) {
           final profilePictureRef = _storage.ref().child('images/$userId/${newResume.id}/profile_picture');
           final storageRef = await profilePictureRef.putFile(File(newResume.photo!));
           final url = await storageRef.ref.getDownloadURL();
           newResume = newResume.copyWith(photo: url);
+        }
+
+        // Save photo from resume copy
+        if (resume.photo != null && resume.photo!.startsWith('https') && resume.copyId != null) {
+          final fileResult = downloadPhotoFromUrl(
+            resumeId: resume.copyId!,
+            url: 'images/$userId/${newResume.copyId}/profile_picture',
+          );
+
+          final file = await fileResult.getOrNull();
+
+          if (file != null) {
+            final profilePictureRef = _storage.ref().child('images/$userId/${newResume.id}/profile_picture');
+            final storageRef = await profilePictureRef.putFile(file);
+            final url = await storageRef.ref.getDownloadURL();
+            newResume = newResume.copyWith(photo: url);
+          }
         }
 
         // Save Thumbnail
@@ -71,6 +90,34 @@ class RemoteService {
       return Success(createdResume);
     } on FirebaseException catch (e) {
       final exception = RemoteException(e.message, e.code);
+      return Failure(exception);
+    } catch (e) {
+      final exception = RemoteException(e.toString(), 'unknown');
+      return Failure(exception);
+    }
+  }
+
+  AsyncResult<File> downloadPhotoFromUrl({required String resumeId, required String url}) async {
+    try {
+      String firebaseUrl = await _storage.ref(url).getDownloadURL();
+
+      Directory dir = await getTemporaryDirectory();
+      String filePath = "${dir.path}/$resumeId.png";
+
+      Response<List<int>> response = await Dio().get<List<int>>(
+        firebaseUrl,
+        options: Options(responseType: ResponseType.bytes),
+      );
+
+      File photoFile = File(filePath);
+      await photoFile.writeAsBytes(response.data!);
+
+      return Success(photoFile);
+    } on FirebaseException catch (e) {
+      final exception = RemoteException(e.message, e.code);
+      return Failure(exception);
+    } on DioException catch (e) {
+      final exception = RemoteException(e.message, e.error.toString());
       return Failure(exception);
     }
   }

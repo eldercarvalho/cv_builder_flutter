@@ -43,7 +43,7 @@ class _AddressFormState extends State<AddressForm> {
       key: _formKey,
       child: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
         return FormContainer(
-          showPreviewButton: !widget.isEditing && !isKeyboardVisible,
+          showPreviewButton: !widget.isEditing,
           onPreviewButtonPressed: _onPreview,
           title: SectionTitleTextField(
             text: context.l10n.address,

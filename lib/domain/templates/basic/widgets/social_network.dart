@@ -1,10 +1,10 @@
-import 'package:cv_builder/domain/models/resume.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
+import '../../../models/resume.dart';
 import '../../../models/social_network.dart';
 import '../../icons.dart';
-import '../constants.dart';
+import '../../template_config.dart';
 
 class SocialNetworkInfo extends StatelessWidget {
   SocialNetworkInfo({
@@ -25,9 +25,9 @@ class SocialNetworkInfo extends StatelessWidget {
         children: [
           SvgImage(svg: getIconSvg(socialNetwork.name), colorFilter: PdfColor.fromHex(colors.iconColor), width: 12),
           SizedBox(width: 8),
-          Text(socialNetwork.name, style: config.bodySmallTextStyle),
+          Text(socialNetwork.name, style: config.leftTextTheme.bodySmallTextStyle),
           if (socialNetwork.username != null && socialNetwork.username!.isNotEmpty)
-            Text(' - @${socialNetwork.username}', style: config.bodySmallTextStyle),
+            Text(' - @${socialNetwork.username}', style: config.leftTextTheme.bodySmallTextStyle),
           if (socialNetwork.url != null && socialNetwork.url!.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(left: 8),

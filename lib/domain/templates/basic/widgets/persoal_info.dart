@@ -3,7 +3,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
 import '../../icons.dart';
-import '../constants.dart';
+import '../../template_config.dart';
 
 class PersonalInfo extends StatelessWidget {
   PersonalInfo({
@@ -34,7 +34,7 @@ class PersonalInfo extends StatelessWidget {
         children: [
           SvgImage(svg: getIconSvg(icon), colorFilter: PdfColor.fromHex(colors.iconColor), width: iconSize),
           SizedBox(width: 8),
-          Expanded(child: Text(text!, style: config.bodySmallTextStyle)),
+          Expanded(child: Text(text!, style: config.leftTextTheme.bodySmallTextStyle)),
         ],
       ),
     );

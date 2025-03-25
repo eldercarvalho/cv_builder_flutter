@@ -7,6 +7,7 @@ class PreviewBottomToolbar extends StatelessWidget {
     super.key,
     required this.onEditTap,
     required this.onSettingsTap,
+    required this.onSectionSettings,
     required this.onShareTap,
     required this.onZoomInTap,
     required this.onZoomOutTap,
@@ -15,6 +16,7 @@ class PreviewBottomToolbar extends StatelessWidget {
 
   final Function() onEditTap;
   final Function() onSettingsTap;
+  final Function() onSectionSettings;
   final Function() onShareTap;
   final Function() onZoomInTap;
   final Function() onZoomOutTap;
@@ -52,6 +54,10 @@ class PreviewBottomToolbar extends StatelessWidget {
             IconButton(
               onPressed: onSettingsTap,
               icon: Icon(Icons.color_lens_outlined, color: context.colors.primary, size: 28),
+            ),
+            IconButton(
+              onPressed: onSectionSettings,
+              icon: Icon(FeatherIcons.list, color: context.colors.primary, size: 28),
             ),
             IconButton(
               onPressed: onShareTap,

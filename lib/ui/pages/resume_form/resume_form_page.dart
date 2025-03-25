@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../config/di.dart';
 import '../../../domain/models/resume.dart';
+import '../../../domain/utils/get_fake_resume.dart';
 import '../../shared/extensions/extensions.dart';
 import 'resume_form_finished_page.dart';
 import 'view_model/resume_form_view_model.dart';
@@ -97,7 +98,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
               if (kDebugMode)
                 IconButton(
                   icon: const Icon(Icons.download),
-                  onPressed: () => _viewModel.resume = Resume.fake(),
+                  onPressed: () => _viewModel.resume = createFakeResume(),
                 ),
             ],
           ),

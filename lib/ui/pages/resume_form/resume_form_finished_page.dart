@@ -69,6 +69,14 @@ class _ResumeFormFinishedPageState extends State<ResumeFormFinishedPage> {
             );
           }
 
+          if (_viewModel.saveResume.error) {
+            return CbEmptyState(
+              message: 'Ocorreu um erro ao salvar o currículo',
+              buttonText: context.l10n.finishedFormGoToHome,
+              onPressed: () => Navigator.of(context).pop(true),
+            );
+          }
+
           return Center(
             child: Padding(
               padding: const EdgeInsets.all(24),

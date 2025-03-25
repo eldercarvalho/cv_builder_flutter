@@ -113,9 +113,19 @@ class TemplateFormState extends State<TemplateForm> {
 
   void _onSubmit() {
     final template = ResumeTemplate.fromIndex(_templateIndex);
+    final changedTemplate = template.name != _viewModel.resume.template.name;
+
     _viewModel.resume = _viewModel.resume.copyWith(
       template: template,
       theme: ResumeTheme.getByTemplate(template),
+      sections: widget.isEditing
+          ? changedTemplate
+              ? Resume.orderSectionsByTemplate(
+                  template: template,
+                  sections: _viewModel.resume.sections,
+                )
+              : _viewModel.resume.sections
+          : Resume.createSectionsByTemplate(template: template),
     );
     widget.onSubmit();
   }

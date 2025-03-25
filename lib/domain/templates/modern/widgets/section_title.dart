@@ -3,7 +3,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
 import '../../constants.dart';
-import '../constants.dart';
+import '../../template_config.dart';
 
 class SectionTitle extends StatelessWidget {
   SectionTitle({
@@ -18,9 +18,9 @@ class SectionTitle extends StatelessWidget {
 
   @override
   Widget build(Context context) {
-    final style = switch (column) {
-      TemplateColumn.one => config.titleMediumTextStyle1,
-      TemplateColumn.two => config.titleMediumTextStyle2,
+    final textTheme = switch (column) {
+      TemplateColumn.one => config.leftTextTheme,
+      TemplateColumn.two => config.rightTextTheme,
     };
 
     final colors = switch (column) {
@@ -33,7 +33,7 @@ class SectionTitle extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(text, style: style),
+          Text(text, style: textTheme.titleMediumTextStyle),
           SizedBox(height: 2),
           Container(height: 1, color: PdfColor.fromHex(colors.dividerColor)),
         ],

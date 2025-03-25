@@ -39,7 +39,7 @@ TemplateTexts getTexts(ResumeLanguage language) {
         contact: 'Contato',
         objective: 'Objetivo',
         experience: 'Experiência Profissional',
-        skills: 'Habilidades',
+        skills: 'Conhecimentos',
         education: 'Formação',
         languages: 'Idiomas',
         certifications: 'Certificações',
@@ -62,7 +62,7 @@ TemplateTexts getTexts(ResumeLanguage language) {
         references: 'References',
         hobbies: 'Hobbies',
         responsibilities: 'Activities:',
-        current: 'Current',
+        current: 'Present',
       ),
     ResumeLanguage.es => TemplateTexts(
         years: 'años',
