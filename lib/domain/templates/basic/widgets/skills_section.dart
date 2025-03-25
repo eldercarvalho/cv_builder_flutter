@@ -10,7 +10,7 @@ List<Widget> buildSkills({required Resume resume, required TemplateConfig config
   final ResumeSection sectionConfig = resume.sections.skills;
 
   if (resume.skills.isEmpty) {
-    return [SizedBox.shrink()];
+    return [];
   }
 
   return [

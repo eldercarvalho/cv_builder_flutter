@@ -10,7 +10,7 @@ List<Widget> buildCertifications({required Resume resume, required TemplateConfi
   final ResumeSection sectionConfig = resume.sections.certifications;
 
   if (resume.certifications.isEmpty) {
-    return [SizedBox.shrink()];
+    return [];
   }
 
   return [

@@ -73,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                 textCapitalization: TextCapitalization.none,
                 validator: MultiValidator([
                   RequiredValidator(errorText: context.l10n.requiredField),
+                  EmailValidator(errorText: context.l10n.invalidEmailError),
                 ]).call,
               ),
               SizedBox(height: 20.h),

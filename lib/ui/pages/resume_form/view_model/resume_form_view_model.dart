@@ -67,6 +67,7 @@ class ResumeFormViewModel extends ChangeNotifier {
     final resumeToBeCopied = _resumes.firstWhere((element) => element.id == resumeId);
     _resume = resumeToBeCopied.copyWith(
       id: _resume.id,
+      copyId: resumeToBeCopied.id,
       resumeName: _resume.resumeName,
       resumeLanguage: _resume.resumeLanguage,
       theme: _resume.theme,

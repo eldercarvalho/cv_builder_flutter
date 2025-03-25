@@ -9,7 +9,7 @@ List<Widget> buildLanguages({required Resume resume, required TemplateConfig con
   final ResumeSection sectionConfig = resume.sections.languages;
 
   if (resume.languages.isEmpty) {
-    return [SizedBox.shrink()];
+    return [];
   }
 
   return [

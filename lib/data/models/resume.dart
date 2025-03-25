@@ -47,6 +47,7 @@ class ResumeModel extends Equatable {
   final String? thumbnail;
   final ResumeThemeModel? theme;
   final List<ResumeSectionModel> sections;
+  final String? copyId;
 
   const ResumeModel({
     required this.id,
@@ -80,6 +81,7 @@ class ResumeModel extends Equatable {
     this.thumbnail,
     this.theme,
     this.sections = const [],
+    this.copyId,
   });
 
   static const ResumeModel empty = ResumeModel(
@@ -244,6 +246,7 @@ class ResumeModel extends Equatable {
       thumbnail: resume.thumbnail,
       theme: ResumeThemeModel.fromDomain(resume.theme),
       sections: resume.sections.map((e) => ResumeSectionModel.fromDomain(e)).toList(),
+      copyId: resume.copyId,
     );
   }
 
@@ -280,6 +283,7 @@ class ResumeModel extends Equatable {
     ResumeThemeModel? theme,
     List<ResumeTextThemeModel>? texts,
     List<ResumeSectionModel>? sections,
+    String? copyId,
   }) {
     return ResumeModel(
       id: id ?? this.id,
@@ -313,6 +317,7 @@ class ResumeModel extends Equatable {
       thumbnail: thumbnail ?? this.thumbnail,
       theme: theme ?? this.theme,
       sections: sections ?? this.sections,
+      copyId: copyId ?? this.copyId,
     );
   }
 
@@ -348,5 +353,6 @@ class ResumeModel extends Equatable {
         thumbnail,
         theme,
         sections,
+        copyId,
       ];
 }

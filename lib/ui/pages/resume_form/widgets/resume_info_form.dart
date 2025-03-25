@@ -139,8 +139,8 @@ class _ResumeInfoFormState extends State<ResumeInfoForm> {
       _viewModel.resume = _viewModel.resume.copyWith(
         resumeName: _nameController.text.trim(),
         resumeLanguage: ResumeLanguage.fromString(_resumeLanguage),
-        sections: Resume.getSectionsByTemplate(
-          template: _viewModel.resume.template,
+        sections: Resume.setSectionTitles(
+          sections: _viewModel.resume.sections,
           objectiveTitle: texts.objective,
           experienceTitle: texts.experience,
           educationTitle: texts.education,

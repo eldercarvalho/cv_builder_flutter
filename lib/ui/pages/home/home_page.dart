@@ -107,6 +107,7 @@ class _HomePageState extends State<HomePage> {
                   message: context.l10n.homeCreateNewResumeTitle,
                   imagePath: 'assets/images/mascot.svg',
                   buttonText: context.l10n.homeCreateNewResumeButton,
+                  buttonIcon: FeatherIcons.plus,
                   onPressed: () async {
                     await ResumeFormPage.push(context);
                     _viewModel.getResumes.execute();

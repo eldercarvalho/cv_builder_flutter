@@ -53,7 +53,7 @@ class ResumeSectionModel extends Equatable {
   }
 
   static List<ResumeSectionModel> getSectionsByTemplate(String template) {
-    return Resume.getSectionsByTemplate(template: ResumeTemplate.fromString(template))
+    return Resume.createSectionsByTemplate(template: ResumeTemplate.fromString(template))
         .map((e) => ResumeSectionModel.fromDomain(e))
         .toList();
   }

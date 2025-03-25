@@ -33,6 +33,26 @@ class ModernTemplate {
             : MemoryImage(await File(resume.photo!).readAsBytes())
         : null;
 
+    final firstColumnSections = resume.sections
+        .take(4)
+        .map((section) => buildSection(
+              resume: resume,
+              section: section,
+              config: config,
+              column: TemplateColumn.one,
+            ))
+        .toList();
+
+    final secondColumnSections = resume.sections
+        .skip(4)
+        .map((section) => buildSection(
+              resume: resume,
+              section: section,
+              config: config,
+              column: TemplateColumn.two,
+            ))
+        .toList();
+
     final List<Widget> children = [
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 30),
@@ -51,11 +71,12 @@ class ModernTemplate {
                         image: DecorationImage(image: photo, fit: BoxFit.cover),
                       ),
                     ),
-                    SizedBox(height: config.sectionSpace),
+                    // SizedBox(height: config.sectionSpace),
                   ],
-                  for (final section in resume.sections.take(4)) ...[
-                    ...buildSection(resume: resume, section: section, config: config, column: TemplateColumn.one),
-                    SizedBox(height: config.sectionSpace),
+                  for (final (index, section) in firstColumnSections.indexed) ...[
+                    if (section.isNotEmpty && index == 0 && photo != null) SizedBox(height: config.sectionSpace),
+                    if (section.isNotEmpty && index != 0) SizedBox(height: config.sectionSpace),
+                    ...section,
                   ]
                 ],
               ),
@@ -66,9 +87,9 @@ class ModernTemplate {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   HeaderSection(resume: resume, config: config),
-                  for (final section in resume.sections.skip(4)) ...[
-                    ...buildSection(resume: resume, section: section, config: config, column: TemplateColumn.two),
-                    SizedBox(height: config.sectionSpace),
+                  for (final section in secondColumnSections) ...[
+                    if (section.isNotEmpty) SizedBox(height: config.sectionSpace),
+                    ...section,
                   ],
                 ],
               ),

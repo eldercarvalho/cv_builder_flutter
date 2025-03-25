@@ -19,7 +19,7 @@ class HeaderSection extends StatelessWidget {
         children: [
           Text(resume.name, style: config.rightTextTheme.titleLargeTextStyle),
           if (resume.profession != null) Text(resume.profession!, style: config.rightTextTheme.bodyLargeTextStyle),
-          SizedBox(height: config.sectionSpace),
+          // SizedBox(height: config.sectionSpace),
         ],
       ),
     );

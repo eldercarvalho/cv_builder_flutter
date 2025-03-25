@@ -24,6 +24,7 @@ class ResumeFormFinishedViewModel extends ChangeNotifier {
     final updatedResume = resume.copyWith(updatedAt: DateTime.now());
     return _authRepository //
         .getCurrentUser()
-        .flatMap((user) => _resumeRepository.saveResume(userId: user.id, resume: updatedResume));
+        .flatMap((user) => _resumeRepository.saveResume(userId: user.id, resume: updatedResume))
+        .fold((_) => const Success(unit), (error) => Failure(error));
   }
 }

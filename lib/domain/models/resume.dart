@@ -175,43 +175,108 @@ class Resume extends Equatable {
         isDraft: true,
       );
 
-  static List<ResumeSection> getSectionsByTemplate({
+  static List<ResumeSection> createSectionsByTemplate({required ResumeTemplate template}) {
+    switch (template) {
+      case ResumeTemplate.basic:
+        return [
+          const ResumeSection(type: ResumeSectionType.contact, title: 'Contato'),
+          const ResumeSection(type: ResumeSectionType.objective, title: 'Objetivo'),
+          const ResumeSection(type: ResumeSectionType.experience, title: 'Experiência Profissional'),
+          const ResumeSection(type: ResumeSectionType.education, title: 'Formação'),
+          const ResumeSection(type: ResumeSectionType.skills, title: 'Conhecimentos'),
+          const ResumeSection(type: ResumeSectionType.languages, title: 'Idiomas'),
+          const ResumeSection(type: ResumeSectionType.certifications, title: 'Certificações'),
+          // ResumeSection(type: ResumeSectionType.projects, title: 'Projetos'),
+          // ResumeSection(type: ResumeSectionType.references, title: 'Referências'),
+          // ResumeSection(type: ResumeSectionType.hobbies, title: 'Interesses'),
+        ];
+      case ResumeTemplate.modern:
+        return [
+          const ResumeSection(type: ResumeSectionType.contact, title: 'Contato'),
+          const ResumeSection(type: ResumeSectionType.education, title: 'Formação'),
+          const ResumeSection(type: ResumeSectionType.skills, title: 'Conhecimentos'),
+          const ResumeSection(type: ResumeSectionType.languages, title: 'Idiomas'),
+          const ResumeSection(type: ResumeSectionType.objective, title: 'Objetivo'),
+          const ResumeSection(type: ResumeSectionType.experience, title: 'Experiência Profissional'),
+          const ResumeSection(type: ResumeSectionType.certifications, title: 'Certificações'),
+          // ResumeSection(type: ResumeSectionType.projects, title: 'Projetos'),
+          // ResumeSection(type: ResumeSectionType.references, title: 'Referências'),
+          // ResumeSection(type: ResumeSectionType.hobbies, title: 'Interesses'),
+        ];
+    }
+  }
+
+  static List<ResumeSection> setSectionTitles({
+    required List<ResumeSection> sections,
+    required String objectiveTitle,
+    required String experienceTitle,
+    required String educationTitle,
+    required String skillsTitle,
+    required String languagesTitle,
+    required String certificationsTitle,
+    required String projectsTitle,
+    required String contactTitle,
+    required String referencesTitle,
+    required String hobbiesTitle,
+  }) {
+    return sections.map((section) {
+      switch (section.type) {
+        case ResumeSectionType.contact:
+          return section.copyWith(title: contactTitle);
+        case ResumeSectionType.objective:
+          return section.copyWith(title: objectiveTitle);
+        case ResumeSectionType.experience:
+          return section.copyWith(title: experienceTitle);
+        case ResumeSectionType.education:
+          return section.copyWith(title: educationTitle);
+        case ResumeSectionType.skills:
+          return section.copyWith(title: skillsTitle);
+        case ResumeSectionType.languages:
+          return section.copyWith(title: languagesTitle);
+        case ResumeSectionType.certifications:
+          return section.copyWith(title: certificationsTitle);
+        case ResumeSectionType.projects:
+          return section.copyWith(title: projectsTitle);
+        case ResumeSectionType.references:
+          return section.copyWith(title: referencesTitle);
+        case ResumeSectionType.hobbies:
+          return section.copyWith(title: hobbiesTitle);
+        case ResumeSectionType.socialNetworks:
+          throw UnimplementedError();
+        case ResumeSectionType.address:
+          throw UnimplementedError();
+      }
+    }).toList();
+  }
+
+  static List<ResumeSection> orderSectionsByTemplate({
     required ResumeTemplate template,
-    String objectiveTitle = 'Objetivo',
-    String experienceTitle = 'Experiência Profissional',
-    String educationTitle = 'Formação',
-    String skillsTitle = 'Conhecimentos',
-    String languagesTitle = 'Idiomas',
-    String certificationsTitle = 'Certificações',
-    String projectsTitle = 'Projetos',
-    String contactTitle = 'Contato',
-    String referencesTitle = 'Referências',
-    String hobbiesTitle = 'Interesses',
+    required List<ResumeSection> sections,
   }) {
     return switch (template) {
       ResumeTemplate.basic => [
-          ResumeSection(type: ResumeSectionType.contact, title: contactTitle, hideTitle: true),
-          ResumeSection(type: ResumeSectionType.objective, title: objectiveTitle),
-          ResumeSection(type: ResumeSectionType.experience, title: experienceTitle),
-          ResumeSection(type: ResumeSectionType.skills, title: skillsTitle),
-          ResumeSection(type: ResumeSectionType.education, title: educationTitle),
-          ResumeSection(type: ResumeSectionType.languages, title: languagesTitle),
-          ResumeSection(type: ResumeSectionType.certifications, title: certificationsTitle),
-          // ResumeSection(type: ResumeSectionType.projects, title: projectsTitle),
-          // ResumeSection(type: ResumeSectionType.references, title: referencesTitle),
-          // ResumeSection(type: ResumeSectionType.hobbies, title: hobbiesTitle),
+          sections.getByType(ResumeSectionType.contact)!,
+          sections.getByType(ResumeSectionType.objective)!,
+          sections.getByType(ResumeSectionType.experience)!,
+          sections.getByType(ResumeSectionType.skills)!,
+          sections.getByType(ResumeSectionType.education)!,
+          sections.getByType(ResumeSectionType.languages)!,
+          sections.getByType(ResumeSectionType.certifications)!,
+          // sections.getByType(ResumeSectionType.projects)!,
+          // sections.getByType(ResumeSectionType.references)!,
+          // sections.getByType(ResumeSectionType.hobbies)!,
         ],
       ResumeTemplate.modern => [
-          ResumeSection(type: ResumeSectionType.contact, title: contactTitle),
-          ResumeSection(type: ResumeSectionType.education, title: educationTitle),
-          ResumeSection(type: ResumeSectionType.skills, title: skillsTitle),
-          ResumeSection(type: ResumeSectionType.languages, title: languagesTitle),
-          ResumeSection(type: ResumeSectionType.objective, title: objectiveTitle),
-          ResumeSection(type: ResumeSectionType.experience, title: experienceTitle),
-          ResumeSection(type: ResumeSectionType.certifications, title: certificationsTitle),
-          // ResumeSection(type: ResumeSectionType.projects, title: projectsTitle),
-          // ResumeSection(type: ResumeSectionType.references, title: referencesTitle),
-          // ResumeSection(type: ResumeSectionType.hobbies, title: hobbiesTitle),
+          sections.getByType(ResumeSectionType.contact)!,
+          sections.getByType(ResumeSectionType.education)!,
+          sections.getByType(ResumeSectionType.skills)!,
+          sections.getByType(ResumeSectionType.languages)!,
+          sections.getByType(ResumeSectionType.objective)!,
+          sections.getByType(ResumeSectionType.experience)!,
+          sections.getByType(ResumeSectionType.certifications)!,
+          // sections.getByType(ResumeSectionType.projects)!,
+          // sections.getByType(ResumeSectionType.references)!,
+          // sections.getByType(ResumeSectionType.hobbies)!,
         ],
     };
   }

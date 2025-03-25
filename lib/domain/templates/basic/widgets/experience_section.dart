@@ -16,7 +16,7 @@ List<Widget> buildExperience({required Resume resume, required TemplateConfig co
   final colors = resume.theme.primaryColors;
 
   if (resume.workExperience.isEmpty) {
-    return [SizedBox.shrink()];
+    return [];
   }
 
   return [

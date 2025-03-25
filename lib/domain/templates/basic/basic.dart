@@ -22,13 +22,16 @@ class BasicTemplate {
             : MemoryImage(await File(resume.photo!).readAsBytes())
         : null;
 
+    final sections =
+        resume.sections.map((section) => buildSection(resume: resume, section: section, config: config)).toList();
+
     final List<Widget> children = [
       HeaderSection(photo: photo, resume: resume, config: config),
-      SizedBox(height: config.sectionSpace),
+      // SizedBox(height: config.sectionSpace),
 
-      for (final section in resume.sections) ...[
-        ...buildSection(resume: resume, section: section, config: config),
-        if (section != resume.sections.last) SizedBox(height: config.sectionSpace),
+      for (final section in sections) ...[
+        if (section.isNotEmpty) SizedBox(height: config.sectionSpace),
+        ...section,
       ],
 
       //   // Projetos

@@ -9,7 +9,7 @@ List<Widget> buildObjective({required Resume resume, required TemplateConfig con
   final ResumeSection sectionConfig = resume.sections.objective;
 
   if (resume.objectiveSummary == null || resume.objectiveSummary!.isEmpty) {
-    return [SizedBox.shrink()];
+    return [];
   }
 
   return [

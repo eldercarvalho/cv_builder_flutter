@@ -13,7 +13,7 @@ List<Widget> buildEducation({required Resume resume, required TemplateConfig con
   final texts = getTexts(resume.resumeLanguage!);
 
   if (resume.education.isEmpty) {
-    return [SizedBox.shrink()];
+    return [];
   }
 
   return [

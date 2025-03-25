@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../shared/extensions/extensions.dart';
@@ -11,12 +10,14 @@ class CbEmptyState extends StatelessWidget {
     required this.message,
     required this.buttonText,
     this.imagePath,
+    this.buttonIcon,
     this.onPressed,
   });
 
   final String message;
   final String? imagePath;
   final String buttonText;
+  final IconData? buttonIcon;
   final Function()? onPressed;
 
   @override
@@ -48,7 +49,7 @@ class CbEmptyState extends StatelessWidget {
                 onPressed: () => onPressed?.call(),
                 text: buttonText,
                 type: CbButtonType.outlined,
-                prefixIcon: FeatherIcons.plus,
+                prefixIcon: buttonIcon,
               ),
             ),
           ],
