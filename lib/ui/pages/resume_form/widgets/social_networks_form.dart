@@ -63,6 +63,7 @@ class _SocialNetworksFormState extends State<SocialNetworksForm> {
                 child: CbEmptyState(
                   imagePath: 'assets/images/empty.svg',
                   message: context.l10n.noItemAdded('female', context.l10n.socialNetwork(1)),
+                  buttonIcon: FeatherIcons.plus,
                   buttonText: context.l10n.addSocialNetwork,
                   onPressed: _onAddButtonPressed,
                 ),
