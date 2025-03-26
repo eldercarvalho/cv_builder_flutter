@@ -101,6 +101,10 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
                 return const SizedBox.shrink();
               },
             ),
+            IconButton(
+              onPressed: _onShareTap,
+              icon: const Icon(FeatherIcons.share2),
+            ),
             Builder(builder: (context) {
               return IconButton(
                 onPressed: () => Scaffold.of(context).openEndDrawer(),

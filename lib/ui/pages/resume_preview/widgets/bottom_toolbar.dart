@@ -1,3 +1,4 @@
+import 'package:cv_builder/ui/pages/resume_preview/widgets/toolbar_button.dart';
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -44,46 +45,44 @@ class PreviewBottomToolbar extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          spacing: 4,
           children: [
             Builder(builder: (context) {
-              return IconButton(
+              return ToolbarButton(
                 onPressed: onEditTap,
-                icon: Icon(FeatherIcons.edit, color: context.colors.primary),
+                icon: FeatherIcons.edit,
+                text: context.l10n.edit,
               );
             }),
-            IconButton(
+            ToolbarButton(
+              text: 'Cores',
               onPressed: onSettingsTap,
-              icon: Icon(Icons.color_lens_outlined, color: context.colors.primary, size: 28),
+              icon: Icons.color_lens_outlined,
             ),
-            IconButton(
+            ToolbarButton(
+              text: 'Seções',
               onPressed: onSectionSettings,
-              icon: Icon(FeatherIcons.list, color: context.colors.primary, size: 28),
+              icon: FeatherIcons.list,
             ),
-            IconButton(
-              onPressed: onShareTap,
-              icon: Icon(FeatherIcons.share2, color: context.colors.primary),
-            ),
-            Container(
-              height: 24,
-              width: 1,
-              color: context.colors.outline,
-            ),
-            IconButton(
+            // ToolbarButton(
+            //   text: 'Compartilhar',
+            //   onPressed: onShareTap,
+            //   icon: FeatherIcons.share2,
+            // ),
+            ToolbarButton(
+              text: 'Zoom +',
               onPressed: onZoomInTap,
-              icon: Icon(FeatherIcons.zoomIn, size: 26, color: context.colors.primary),
+              icon: FeatherIcons.zoomIn,
             ),
-            IconButton(
+            ToolbarButton(
+              text: 'Zoom -',
               onPressed: onZoomOutTap,
-              icon: Icon(FeatherIcons.zoomOut, size: 26, color: context.colors.primary),
+              icon: FeatherIcons.zoomOut,
             ),
-            Container(
-              height: 24,
-              width: 1,
-              color: context.colors.outline,
-            ),
-            IconButton(
+            ToolbarButton(
+              text: 'Deletar',
               onPressed: onDeleteTap,
-              icon: Icon(FeatherIcons.trash2, size: 26, color: context.colors.error),
+              icon: FeatherIcons.trash2,
             ),
           ],
         ),
