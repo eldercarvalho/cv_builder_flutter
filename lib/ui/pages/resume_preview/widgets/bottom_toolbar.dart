@@ -60,12 +60,12 @@ class PreviewBottomToolbar extends StatelessWidget {
                 );
               }),
               ToolbarButton(
-                text: 'Cores',
+                text: context.l10n.colors,
                 onPressed: onSettingsTap,
                 icon: Icons.color_lens_outlined,
               ),
               ToolbarButton(
-                text: 'Seções',
+                text: context.l10n.sections,
                 onPressed: onSectionSettings,
                 icon: FeatherIcons.list,
               ),
@@ -85,7 +85,7 @@ class PreviewBottomToolbar extends StatelessWidget {
                 icon: FeatherIcons.zoomOut,
               ),
               ToolbarButton(
-                text: 'Deletar',
+                text: context.l10n.delete,
                 onPressed: onDeleteTap,
                 icon: FeatherIcons.trash2,
               ),

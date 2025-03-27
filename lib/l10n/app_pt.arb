@@ -81,6 +81,8 @@
   "register": "Cadastrar",
   "password": "Senha",
   "confirmPassword": "Confirmar Senha",
+  "colors": "Cores",
+  "sections": "Seções",
   "loginTitle": "Entre na sua conta",
   "loginForgotPassword": "Esqueceu a senha?",
   "loginLogin": "Log In",
