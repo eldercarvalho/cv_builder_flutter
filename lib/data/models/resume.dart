@@ -133,7 +133,7 @@ class ResumeModel extends Equatable {
       updatedAt: json['updatedAt'] as String?,
       thumbnail: json['thumbnail'] as String?,
       theme: json['theme'] != null
-          ? ResumeThemeModel.fromJson(json['theme'])
+          ? ResumeThemeModel.fromJson(json['theme'], json['model'])
           : ResumeThemeModel.getByTemplate(json['model']),
       sections: json['sections'] != null
           ? List.of(json['sections'] ?? []).map((e) => ResumeSectionModel.fromJson(e)).toList()

@@ -34,12 +34,12 @@ class CustomBottomSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(context.l10n.customizeColors, style: context.textTheme.titleLarge),
-              theme.secondaryColors.isEmpty ? const SizedBox(height: 24) : const SizedBox(height: 8),
+              theme.singleLayout ? const SizedBox(height: 24) : const SizedBox(height: 8),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      if (theme.secondaryColors.isEmpty)
+                      if (theme.singleLayout)
                         Wrap(
                           spacing: 16,
                           runSpacing: 16,
@@ -63,7 +63,7 @@ class CustomBottomSheet extends StatelessWidget {
                             },
                           ),
                         ),
-                      if (theme.secondaryColors.isNotEmpty)
+                      if (!theme.singleLayout)
                         ExpansionTile(
                           tilePadding: const EdgeInsets.all(0),
                           title: Text(context.l10n.column1, style: context.textTheme.titleMedium),
@@ -96,8 +96,8 @@ class CustomBottomSheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                      if (theme.secondaryColors.isNotEmpty) const Divider(),
-                      if (theme.secondaryColors.isNotEmpty)
+                      if (!theme.singleLayout) const Divider(),
+                      if (!theme.singleLayout)
                         ExpansionTile(
                           tilePadding: const EdgeInsets.all(0),
                           title: Text(context.l10n.column2, style: context.textTheme.titleMedium),
