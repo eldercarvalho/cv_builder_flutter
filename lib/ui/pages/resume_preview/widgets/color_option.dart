@@ -25,7 +25,7 @@ class ColorOption extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ColorPreview(color: value),
-          const SizedBox(height: 6),
+          const SizedBox(height: 4),
           Text(text, style: context.textTheme.bodyMedium),
         ],
       ),
@@ -68,13 +68,21 @@ class ColorOption extends StatelessWidget {
 
         return Container(
           width: context.screenHeight,
-          height: context.screenHeight * 0.5,
+          height: context.screenHeight * 0.6,
           padding: const EdgeInsets.all(16),
           decoration: const BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
               topRight: Radius.circular(16),
             ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 2,
+                offset: Offset(0, -4),
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
