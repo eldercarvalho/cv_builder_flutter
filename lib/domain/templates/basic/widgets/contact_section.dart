@@ -16,6 +16,17 @@ List<Widget> buildContact({required Resume resume, required TemplateConfig confi
   final birthdayText =
       resume.birthDate != null ? '${resume.birthDate?.toSimpleDate()} - ${resume.age} ${texts.years}' : null;
 
+  if (resume.birthDate == null &&
+      (resume.phoneNumber == null || resume.phoneNumber!.isEmpty) &&
+      (resume.email == null || resume.email!.isEmpty) &&
+      (resume.website == null || resume.website!.isEmpty) &&
+      (resume.address == null || resume.address!.isEmpty) &&
+      (resume.city == null || resume.city!.isEmpty) &&
+      (resume.zipCode == null || resume.zipCode!.isEmpty) &&
+      resume.socialNetworks.isEmpty) {
+    return [];
+  }
+
   return [
     if (!sectionConfig.hideTitle) ...[
       SectionTitle(text: sectionConfig.title, config: config),

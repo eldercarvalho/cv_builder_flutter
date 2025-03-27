@@ -41,16 +41,19 @@ class ResumeColorModel {
 }
 
 class ResumeThemeModel extends Equatable {
+  final bool singleLayout;
   final List<ResumeColorModel> primaryColors;
   final List<ResumeColorModel> secondaryColors;
 
   const ResumeThemeModel({
+    required this.singleLayout,
     required this.primaryColors,
     required this.secondaryColors,
   });
 
-  factory ResumeThemeModel.fromJson(Map<String, dynamic> json) {
+  factory ResumeThemeModel.fromJson(Map<String, dynamic> json, String template) {
     return ResumeThemeModel(
+      singleLayout: json['singleLayout'] != null ? json['singleLayout'] as bool : getSingleLayoutByTemplate(template),
       primaryColors: List.of(json['primaryColors']).map((e) => ResumeColorModel.fromJson(e)).toList(),
       secondaryColors: List.of(json['secondaryColors']).map((e) => ResumeColorModel.fromJson(e)).toList(),
     );
@@ -58,6 +61,7 @@ class ResumeThemeModel extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
+      'singleLayout': singleLayout,
       'primaryColors': primaryColors.map((e) => e.toJson()).toList(),
       'secondaryColors': secondaryColors.map((e) => e.toJson()).toList(),
     };
@@ -65,6 +69,7 @@ class ResumeThemeModel extends Equatable {
 
   ResumeTheme toDomain() {
     return ResumeTheme(
+      singleLayout: singleLayout,
       primaryColors: primaryColors.map((e) => e.toDomain()).toList(),
       secondaryColors: secondaryColors.map((e) => e.toDomain()).toList(),
     );
@@ -72,6 +77,7 @@ class ResumeThemeModel extends Equatable {
 
   factory ResumeThemeModel.fromDomain(ResumeTheme theme) {
     return ResumeThemeModel(
+      singleLayout: theme.singleLayout,
       primaryColors: theme.primaryColors.map((e) => ResumeColorModel.fromDomain(e)).toList(),
       secondaryColors: theme.secondaryColors.map((e) => ResumeColorModel.fromDomain(e)).toList(),
     );
@@ -89,6 +95,7 @@ class ResumeThemeModel extends Equatable {
   }
 
   static const ResumeThemeModel basic = ResumeThemeModel(
+    singleLayout: true,
     primaryColors: [
       ResumeColorModel(type: 'background', value: '#FFFFFF'),
       ResumeColorModel(type: 'title', value: '#000000'),
@@ -108,6 +115,7 @@ class ResumeThemeModel extends Equatable {
   );
 
   static const ResumeThemeModel modern = ResumeThemeModel(
+    singleLayout: false,
     primaryColors: [
       ResumeColorModel(type: 'background', value: '#D8DFE7'),
       ResumeColorModel(type: 'title', value: '#424242'),
@@ -126,8 +134,20 @@ class ResumeThemeModel extends Equatable {
     ],
   );
 
+  static bool getSingleLayoutByTemplate(String template) {
+    switch (template) {
+      case 'basic':
+        return basic.singleLayout;
+      case 'modern':
+        return modern.singleLayout;
+      default:
+        return basic.singleLayout;
+    }
+  }
+
   @override
   List<Object?> get props => [
+        singleLayout,
         primaryColors,
         secondaryColors,
       ];

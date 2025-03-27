@@ -7,9 +7,16 @@ import '../view_model/resume_preview_view_model.dart';
 import 'color_option.dart';
 
 class CustomBottomSheet extends StatelessWidget {
-  const CustomBottomSheet({super.key, required this.oldTheme});
+  const CustomBottomSheet({
+    super.key,
+    required this.oldTheme,
+    required this.onCancel,
+    required this.onSave,
+  });
 
   final ResumeTheme oldTheme;
+  final Function() onCancel;
+  final Function() onSave;
 
   @override
   Widget build(BuildContext context) {
@@ -17,22 +24,8 @@ class CustomBottomSheet extends StatelessWidget {
     final theme = viewModel.resume!.theme;
 
     return Container(
-      // height: MediaQuery.of(context).size.height * 0.5,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      decoration: BoxDecoration(
-        color: context.colors.surface,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: context.colors.shadow.withValues(alpha: 0.3),
-            blurRadius: 4,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
+      decoration: BoxDecoration(color: context.colors.surface),
       child: ListenableBuilder(
         listenable: viewModel,
         builder: (context, _) {
@@ -41,12 +34,12 @@ class CustomBottomSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(context.l10n.customizeColors, style: context.textTheme.titleLarge),
-              theme.secondaryColors.isEmpty ? const SizedBox(height: 24) : const SizedBox(height: 8),
+              theme.singleLayout ? const SizedBox(height: 24) : const SizedBox(height: 8),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      if (theme.secondaryColors.isEmpty)
+                      if (theme.singleLayout)
                         Wrap(
                           spacing: 16,
                           runSpacing: 16,
@@ -70,12 +63,12 @@ class CustomBottomSheet extends StatelessWidget {
                             },
                           ),
                         ),
-                      if (theme.secondaryColors.isNotEmpty)
+                      if (!theme.singleLayout)
                         ExpansionTile(
                           tilePadding: const EdgeInsets.all(0),
                           title: Text(context.l10n.column1, style: context.textTheme.titleMedium),
                           dense: true,
-                          // initiallyExpanded: true,
+                          initiallyExpanded: true,
                           childrenPadding: const EdgeInsets.only(bottom: 16),
                           children: [
                             Wrap(
@@ -103,13 +96,13 @@ class CustomBottomSheet extends StatelessWidget {
                             ),
                           ],
                         ),
-                      if (theme.secondaryColors.isNotEmpty) const Divider(),
-                      if (theme.secondaryColors.isNotEmpty)
+                      if (!theme.singleLayout) const Divider(),
+                      if (!theme.singleLayout)
                         ExpansionTile(
                           tilePadding: const EdgeInsets.all(0),
                           title: Text(context.l10n.column2, style: context.textTheme.titleMedium),
                           dense: true,
-                          // initiallyExpanded: true,
+                          initiallyExpanded: true,
                           childrenPadding: const EdgeInsets.only(bottom: 16),
                           children: [
                             Wrap(
@@ -150,13 +143,13 @@ class CustomBottomSheet extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: onCancel,
                       child: Text(context.l10n.cancel),
                     ),
                     if (viewModel.resume!.theme != oldTheme) ...[
                       const SizedBox(width: 16),
                       FilledButton(
-                        onPressed: () => Navigator.pop(context, true),
+                        onPressed: onSave,
                         child: Text(context.l10n.save),
                       ),
                     ]

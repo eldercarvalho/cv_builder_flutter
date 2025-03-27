@@ -51,11 +51,14 @@ class ResumePreviewPage extends StatefulWidget {
 class _ResumePreviewPageState extends State<ResumePreviewPage> {
   final _viewModel = getIt<ResumePreviewViewModel>();
   final _pdfViewerController = PdfViewerController();
+  late ResumeTheme _oldTheme;
+  bool _isExpanded = false;
 
   @override
   void initState() {
     super.initState();
     _viewModel.resume = widget.params.resume;
+    _oldTheme = widget.params.resume.theme;
     _viewModel.getResume.execute(widget.params.resume.id);
     _viewModel.getResume.addListener(_onGetResume);
     _viewModel.deleteResume.addListener(_onDeleteResume);
@@ -101,6 +104,10 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
                 return const SizedBox.shrink();
               },
             ),
+            IconButton(
+              onPressed: _onShareTap,
+              icon: const Icon(FeatherIcons.share2),
+            ),
             Builder(builder: (context) {
               return IconButton(
                 onPressed: () => Scaffold.of(context).openEndDrawer(),
@@ -140,20 +147,29 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: ListenableBuilder(
-                        listenable: _viewModel,
-                        builder: (context, child) {
-                          return SfPdfViewer.file(
-                            _viewModel.resumePdf!,
-                            pageSpacing: 16,
-                            controller: _pdfViewerController,
-                          );
-                        },
+                      child: ResizableSplitScreen(
+                        isExpanded: _isExpanded,
+                        topChild: ListenableBuilder(
+                          listenable: _viewModel,
+                          builder: (context, child) {
+                            return SfPdfViewer.file(
+                              _viewModel.resumePdf!,
+                              pageSpacing: 16,
+                              controller: _pdfViewerController,
+                            );
+                          },
+                        ),
+                        bottomChild: CustomBottomSheet(
+                          oldTheme: _oldTheme,
+                          onCancel: _onCancelColors,
+                          onSave: _onSaveColors,
+                        ),
                       ),
                     ),
                     PreviewBottomToolbar(
+                      isHidden: _isExpanded,
                       onEditTap: () => Scaffold.of(context).openEndDrawer(),
-                      onSettingsTap: _showSettings,
+                      onSettingsTap: _onStylesTap,
                       onSectionSettings: _onSectionSettings,
                       onShareTap: _onShareTap,
                       onZoomInTap: () => _pdfViewerController.zoomLevel += 0.5,
@@ -201,6 +217,11 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
     }
   }
 
+  void _onStylesTap() {
+    _oldTheme = _viewModel.resume!.theme;
+    setState(() => _isExpanded = !_isExpanded);
+  }
+
   void _onShareTap() {
     Printing.sharePdf(
       bytes: _viewModel.resumePdf!.readAsBytesSync(),
@@ -232,31 +253,16 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
     );
   }
 
-  void _showSettings() async {
-    final oldTheme = _viewModel.resume!.theme;
-    final result = await showModalBottomSheet(
-      context: context,
-      isDismissible: false,
-      enableDrag: false,
-      // isScrollControlled: true,
-      barrierColor: Colors.transparent,
-      constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.5),
-      builder: (context) => ChangeNotifierProvider.value(
-        value: _viewModel,
-        child: CustomBottomSheet(
-          oldTheme: oldTheme,
-        ),
-      ),
-    );
-
-    if (result != null && result == true) {
-      _viewModel.updateResume.execute();
-      return;
+  void _onCancelColors() {
+    if (_viewModel.resume!.theme != _oldTheme) {
+      _viewModel.updateTheme(_oldTheme);
     }
+    setState(() => _isExpanded = false);
+  }
 
-    if (oldTheme != _viewModel.resume!.theme) {
-      _viewModel.updateTheme(oldTheme);
-    }
+  void _onSaveColors() {
+    _viewModel.updateResume.execute();
+    setState(() => _isExpanded = false);
   }
 
   void _onSectionSettings() async {

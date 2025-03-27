@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: 'none'
 
-version: 1.8.10+25
+version: 1.9.10+26
 
 environment:
   sdk: ^3.5.3
@@ -39,7 +39,6 @@ dependencies:
   cached_network_image: ^3.4.1
   flutter_screenutil: ^5.9.3
   google_fonts: ^6.2.1
-  flutter_native_splash: ^2.4.4
   get_it: ^8.0.3
   provider: ^6.1.2
   intl: ^0.19.0
@@ -65,6 +64,7 @@ dev_dependencies:
     sdk: flutter
   husky: ^0.1.7
   flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.4.4
 
 flutter:
   generate: true

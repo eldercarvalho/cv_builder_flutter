@@ -1,3 +1,4 @@
+import 'package:cv_builder/ui/pages/resume_preview/widgets/toolbar_button.dart';
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -12,6 +13,7 @@ class PreviewBottomToolbar extends StatelessWidget {
     required this.onZoomInTap,
     required this.onZoomOutTap,
     required this.onDeleteTap,
+    required this.isHidden,
   });
 
   final Function() onEditTap;
@@ -21,71 +23,74 @@ class PreviewBottomToolbar extends StatelessWidget {
   final Function() onZoomInTap;
   final Function() onZoomOutTap;
   final Function() onDeleteTap;
+  final bool isHidden;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: context.colors.surface,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
+      child: AnimatedSize(
+        duration: const Duration(milliseconds: 300),
+        child: Container(
+          height: isHidden ? 0 : 64.0,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: context.colors.surface,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: context.colors.shadow.withValues(alpha: 0.3),
+                blurRadius: 4,
+                offset: const Offset(0, -2),
+              ),
+            ],
           ),
-          boxShadow: [
-            BoxShadow(
-              color: context.colors.shadow.withValues(alpha: 0.3),
-              blurRadius: 4,
-              offset: const Offset(0, -2),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Builder(builder: (context) {
-              return IconButton(
-                onPressed: onEditTap,
-                icon: Icon(FeatherIcons.edit, color: context.colors.primary),
-              );
-            }),
-            IconButton(
-              onPressed: onSettingsTap,
-              icon: Icon(Icons.color_lens_outlined, color: context.colors.primary, size: 28),
-            ),
-            IconButton(
-              onPressed: onSectionSettings,
-              icon: Icon(FeatherIcons.list, color: context.colors.primary, size: 28),
-            ),
-            IconButton(
-              onPressed: onShareTap,
-              icon: Icon(FeatherIcons.share2, color: context.colors.primary),
-            ),
-            Container(
-              height: 24,
-              width: 1,
-              color: context.colors.outline,
-            ),
-            IconButton(
-              onPressed: onZoomInTap,
-              icon: Icon(FeatherIcons.zoomIn, size: 26, color: context.colors.primary),
-            ),
-            IconButton(
-              onPressed: onZoomOutTap,
-              icon: Icon(FeatherIcons.zoomOut, size: 26, color: context.colors.primary),
-            ),
-            Container(
-              height: 24,
-              width: 1,
-              color: context.colors.outline,
-            ),
-            IconButton(
-              onPressed: onDeleteTap,
-              icon: Icon(FeatherIcons.trash2, size: 26, color: context.colors.error),
-            ),
-          ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            spacing: 4,
+            children: [
+              Builder(builder: (context) {
+                return ToolbarButton(
+                  onPressed: onEditTap,
+                  icon: FeatherIcons.edit,
+                  text: context.l10n.edit,
+                );
+              }),
+              ToolbarButton(
+                text: 'Cores',
+                onPressed: onSettingsTap,
+                icon: Icons.color_lens_outlined,
+              ),
+              ToolbarButton(
+                text: 'Seções',
+                onPressed: onSectionSettings,
+                icon: FeatherIcons.list,
+              ),
+              // ToolbarButton(
+              //   text: 'Compartilhar',
+              //   onPressed: onShareTap,
+              //   icon: FeatherIcons.share2,
+              // ),
+              ToolbarButton(
+                text: 'Zoom +',
+                onPressed: onZoomInTap,
+                icon: FeatherIcons.zoomIn,
+              ),
+              ToolbarButton(
+                text: 'Zoom -',
+                onPressed: onZoomOutTap,
+                icon: FeatherIcons.zoomOut,
+              ),
+              ToolbarButton(
+                text: 'Deletar',
+                onPressed: onDeleteTap,
+                icon: FeatherIcons.trash2,
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -58,6 +58,7 @@ class _LanguagesFormState extends State<LanguagesForm> {
                 child: CbEmptyState(
                   imagePath: 'assets/images/empty.svg',
                   message: context.l10n.noItemAdded('female', context.l10n.languages(1)),
+                  buttonIcon: FeatherIcons.plus,
                   buttonText: context.l10n.addLanguage,
                   onPressed: _onAddButtonPressed,
                 ),

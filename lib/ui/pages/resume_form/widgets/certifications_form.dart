@@ -63,6 +63,7 @@ class _CertificationsFormState extends State<CertificationsForm> {
                 child: CbEmptyState(
                   imagePath: 'assets/images/empty.svg',
                   message: context.l10n.noItemAdded('female', context.l10n.certifications(1)),
+                  buttonIcon: FeatherIcons.plus,
                   buttonText: context.l10n.addCertification,
                   onPressed: _onAddButtonPressed,
                 ),

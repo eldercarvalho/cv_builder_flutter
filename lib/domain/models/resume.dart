@@ -469,15 +469,18 @@ class ResumeColor extends Equatable {
 }
 
 class ResumeTheme extends Equatable {
+  final bool singleLayout;
   final List<ResumeColor> primaryColors;
   final List<ResumeColor> secondaryColors;
 
   const ResumeTheme({
+    this.singleLayout = false,
     required this.primaryColors,
     this.secondaryColors = const [],
   });
 
   static const ResumeTheme basic = ResumeTheme(
+    singleLayout: true,
     primaryColors: [
       ResumeColor(type: ResumeColorType.background, value: '#FFFFFF'),
       ResumeColor(type: ResumeColorType.title, value: '#000000'),
@@ -540,10 +543,12 @@ class ResumeTheme extends Equatable {
   }
 
   ResumeTheme copyWith({
+    bool? multiple,
     List<ResumeColor>? primaryColors,
     List<ResumeColor>? secondaryColors,
   }) {
     return ResumeTheme(
+      singleLayout: multiple ?? singleLayout,
       primaryColors: primaryColors ?? this.primaryColors,
       secondaryColors: secondaryColors ?? this.secondaryColors,
     );
@@ -551,6 +556,7 @@ class ResumeTheme extends Equatable {
 
   @override
   List<Object?> get props => [
+        singleLayout,
         primaryColors,
         secondaryColors,
       ];

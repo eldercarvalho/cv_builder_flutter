@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -62,6 +63,7 @@ class _EducationFormState extends State<EducationForm> {
                 child: CbEmptyState(
                   imagePath: 'assets/images/empty.svg',
                   message: context.l10n.noItemAdded('female', context.l10n.education(1)),
+                  buttonIcon: FeatherIcons.plus,
                   buttonText: context.l10n.addEducation,
                   onPressed: _onAddButtonPressed,
                 ),
