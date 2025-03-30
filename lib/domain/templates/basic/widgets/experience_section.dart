@@ -44,7 +44,7 @@ List<Widget> buildExperience({required Resume resume, required TemplateConfig co
             SizedBox(height: config.lineSpace),
             Row(
               children: [
-                Text(experience.company, style: config.leftTextTheme.bodyMediumTextStyle),
+                Flexible(child: Text(experience.company, style: config.leftTextTheme.bodyMediumTextStyle)),
                 if (experience.website.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
