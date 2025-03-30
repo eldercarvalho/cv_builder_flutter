@@ -103,16 +103,24 @@ class ColorOption extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Wrap(
-                        spacing: 16,
-                        runSpacing: 16,
-                        children: colors.map((color) {
-                          return ColorPreview(
-                            color: color,
-                            selected: value.toHex() == color.toHex(),
-                            onTap: () => _onChangeColor(context, color),
-                          );
-                        }).toList(),
+                      GridView.count(
+                        shrinkWrap: true,
+                        crossAxisCount: 6,
+                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 0,
+                        children: List.generate(
+                          colors.length,
+                          (index) {
+                            final color = colors[index];
+                            return Center(
+                              child: ColorPreview(
+                                color: color,
+                                selected: value.toHex() == color.toHex(),
+                                onTap: () => _onChangeColor(context, color),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ],
                   ),

@@ -80,6 +80,8 @@
   "register": "Sign Up",
   "password": "Password",
   "confirmPassword": "Confirm Password",
+  "colors": "Colors",
+  "sections": "Sections",
   "loginTitle": "Login to your account",
   "loginForgotPassword": "Forgot password?",
   "loginLogin": "Log In",

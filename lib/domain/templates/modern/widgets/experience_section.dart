@@ -51,7 +51,9 @@ List<Widget> buildExperience({
               SizedBox(height: config.lineSpace),
               Row(
                 children: [
-                  Text(experience.company, style: textTheme.bodyMediumTextStyle),
+                  Flexible(
+                    child: Text(experience.company, style: textTheme.bodyMediumTextStyle),
+                  ),
                   if (experience.website.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(left: 8),

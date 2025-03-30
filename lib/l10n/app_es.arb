@@ -81,6 +81,8 @@
   "register": "Registrarse",
   "password": "Contraseña",
   "confirmPassword": "Confirmar Contraseña",
+  "colors": "Colores",
+  "sections": "Secciones",
   "loginTitle": "Inicia sesión en tu cuenta",
   "loginForgotPassword": "¿Olvidaste la contraseña?",
   "loginLogin": "Iniciar Sesión",

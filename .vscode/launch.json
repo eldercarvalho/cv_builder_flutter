@@ -8,7 +8,7 @@
           "name": "CV Builder Debug",
           "request": "launch",
           "type": "dart",
-          "program": "lib/main.dart",
+          "program": "lib/main.development.dart",
       },
       {
           "name": "CV Builder Profile",
