@@ -12,10 +12,10 @@ class CvBuilderTheme {
 
   static final lightTheme = ThemeData(
     useMaterial3: true,
-    // fontFamily: 'Inter',
+    fontFamily: 'Nunito Sans',
     brightness: Brightness.light,
     colorScheme: CbColorScheme.light,
-    textTheme: CbBuilderLightTextTheme.nunitoSans,
+    textTheme: CbBuilderLightTextTheme.textTheme,
     appBarTheme: CvBuilderAppBarTheme.lightTheme,
     // scaffoldBackgroundColor: const Color(0xFFdedede),
     inputDecorationTheme: CvBuilderTextFormFieldTheme.lightTheme,
