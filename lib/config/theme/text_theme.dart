@@ -1,51 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CbBuilderLightTextTheme {
   static TextTheme get textTheme => TextTheme(
-        headlineSmall: GoogleFonts.nunitoSans(
+        headlineSmall: TextStyle(
           fontSize: 32.sp,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
         ),
-        titleLarge: GoogleFonts.nunitoSans(
+        titleLarge: TextStyle(
           fontSize: 20.sp,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
         ),
-        titleMedium: GoogleFonts.nunitoSans(
+        titleMedium: TextStyle(
           fontSize: 16.sp,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
         ),
-        titleSmall: GoogleFonts.nunitoSans(
+        titleSmall: TextStyle(
           fontSize: 14.sp,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
         ),
-        bodyLarge: GoogleFonts.nunitoSans(
+        bodyLarge: TextStyle(
           fontSize: 16.sp,
           fontWeight: FontWeight.w400,
         ),
-        bodyMedium: GoogleFonts.nunitoSans(
-          fontSize: 14,
+        bodyMedium: TextStyle(
+          fontSize: 14.sp,
           fontWeight: FontWeight.w400,
         ),
-        bodySmall: GoogleFonts.nunitoSans(
+        bodySmall: TextStyle(
           fontSize: 12.sp,
           fontWeight: FontWeight.w400,
         ),
         //caption2
-        displayLarge: GoogleFonts.nunitoSans(
-          fontSize: 12,
-          fontWeight: FontWeight.w800,
+        displayLarge: TextStyle(
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w700,
         ),
-        labelLarge: GoogleFonts.nunitoSans(
+        labelLarge: TextStyle(
           fontSize: 16.sp,
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
         ),
-        labelMedium: GoogleFonts.nunitoSans(
+        labelMedium: TextStyle(
           fontSize: 14.sp,
           fontWeight: FontWeight.w600,
         ),
-        labelSmall: GoogleFonts.nunitoSans(
+        labelSmall: TextStyle(
           fontSize: 10.sp,
           fontWeight: FontWeight.w600,
         ),
