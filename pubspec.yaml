@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: 'none'
 
-version: 1.9.11+27
+version: 1.10.11+28
 
 environment:
   sdk: ^3.5.3
@@ -73,6 +73,19 @@ flutter:
   assets:
     - assets/images/
     - assets/images/brands/
+
+  fonts:
+    - family: Nunito Sans
+      fonts:
+        - asset: assets/fonts/NunitoSans-Regular.ttf
+        - asset: assets/fonts/NunitoSans-Black.ttf
+          weight: 800
+        - asset: assets/fonts/NunitoSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NunitoSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/NunitoSans-Light.ttf
+          weight: 300
 
 flutter_native_splash:
   color: "#FFFFFF"

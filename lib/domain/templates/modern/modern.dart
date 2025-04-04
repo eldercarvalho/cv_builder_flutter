@@ -71,12 +71,12 @@ class ModernTemplate {
                         image: DecorationImage(image: photo, fit: BoxFit.cover),
                       ),
                     ),
-                    // SizedBox(height: config.sectionSpace),
+                    SizedBox(height: config.sectionSpace),
                   ],
                   for (final (index, section) in firstColumnSections.indexed) ...[
-                    if (section.isNotEmpty && index == 0 && photo != null) SizedBox(height: config.sectionSpace),
-                    if (section.isNotEmpty && index != 0) SizedBox(height: config.sectionSpace),
                     ...section,
+                    if (index < firstColumnSections.length - 1 && section.isNotEmpty)
+                      SizedBox(height: config.sectionSpace),
                   ]
                 ],
               ),
@@ -87,9 +87,10 @@ class ModernTemplate {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   HeaderSection(resume: resume, config: config),
-                  for (final section in secondColumnSections) ...[
-                    if (section.isNotEmpty) SizedBox(height: config.sectionSpace),
+                  for (final (index, section) in secondColumnSections.indexed) ...[
                     ...section,
+                    if (index < secondColumnSections.length - 1 && section.isNotEmpty)
+                      SizedBox(height: config.sectionSpace),
                   ],
                 ],
               ),

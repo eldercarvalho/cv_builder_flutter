@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CbBuilderLightTextTheme {
-  static TextTheme get _nunitoSansTextTheme => GoogleFonts.nunitoSansTextTheme(const TextTheme());
-
-  static TextTheme get nunitoSans => _nunitoSansTextTheme.copyWith(
+  static TextTheme get textTheme => TextTheme(
         headlineSmall: GoogleFonts.nunitoSans(
           fontSize: 32.sp,
           fontWeight: FontWeight.w800,

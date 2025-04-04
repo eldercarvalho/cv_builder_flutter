@@ -27,11 +27,11 @@ class BasicTemplate {
 
     final List<Widget> children = [
       HeaderSection(photo: photo, resume: resume, config: config),
-      // SizedBox(height: config.sectionSpace),
+      SizedBox(height: config.sectionSpace),
 
-      for (final section in sections) ...[
-        if (section.isNotEmpty) SizedBox(height: config.sectionSpace),
+      for (final (index, section) in sections.indexed) ...[
         ...section,
+        if (section.isNotEmpty && index < sections.length - 1) SizedBox(height: config.sectionSpace),
       ],
 
       //   // Projetos
