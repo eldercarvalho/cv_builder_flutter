@@ -40,6 +40,7 @@ class _ProfileFormState extends State<ProfileForm> {
   final _professionController = TextEditingController();
   final _nameController = TextEditingController();
   final _birthDateController = TextEditingController();
+  final _documentController = TextEditingController();
 
   File? _image;
   bool _isSubmitted = false;
@@ -51,6 +52,7 @@ class _ProfileFormState extends State<ProfileForm> {
     _nameController.text = _viewModel.resume.name;
     _professionController.text = _viewModel.resume.profession ?? '';
     _birthDateController.text = _viewModel.resume.birthDate != null ? _viewModel.resume.birthDate!.toSimpleDate() : '';
+    _documentController.text = _viewModel.resume.document ?? '';
   }
 
   @override
@@ -58,6 +60,7 @@ class _ProfileFormState extends State<ProfileForm> {
     _nameController.dispose();
     _professionController.dispose();
     _birthDateController.dispose();
+    _documentController.dispose();
     super.dispose();
   }
 
@@ -113,6 +116,13 @@ class _ProfileFormState extends State<ProfileForm> {
                 label: context.l10n.birthDate,
                 onClear: () => _birthDateController.clear(),
               ),
+              CbTextFormField(
+                controller: _documentController,
+                label: context.l10n.document,
+                validator: MultiValidator([
+                  MaxLengthValidator(max: 30, errorText: context.l10n.maxLenghtError(100)),
+                ]).call,
+              ),
             ],
             bottom: ListenableBuilder(
               listenable: _viewModel.saveResume,
@@ -147,6 +157,8 @@ class _ProfileFormState extends State<ProfileForm> {
         setNullbirthDate: _birthDateController.text.isEmpty,
         birthDate: _birthDateController.text.isNotEmpty ? format.parse(_birthDateController.text) : null,
         photo: _image?.path,
+        document: _documentController.text.trim(),
+        setNullDocument: _documentController.text.isEmpty,
       );
       widget.onSubmit();
     }
@@ -160,6 +172,8 @@ class _ProfileFormState extends State<ProfileForm> {
       birthDate:
           _birthDateController.text.isNotEmpty ? DateFormat('dd/MM/yyyy').parse(_birthDateController.text) : null,
       photo: _image?.path,
+      document: _documentController.text.trim(),
+      setNullDocument: _documentController.text.isEmpty,
     );
     _viewModel.generatePdf.execute();
   }

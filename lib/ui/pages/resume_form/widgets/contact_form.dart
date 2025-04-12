@@ -31,6 +31,7 @@ class _ContactFormState extends State<ContactForm> {
   late final ResumeFormViewModel _viewModel;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _phone2Controller = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _websiteController = TextEditingController();
 
@@ -38,6 +39,7 @@ class _ContactFormState extends State<ContactForm> {
   void initState() {
     _viewModel = context.read();
     _phoneController.text = _viewModel.resume.phoneNumber ?? '';
+    _phone2Controller.text = _viewModel.resume.phoneNumber2 ?? '';
     _emailController.text = _viewModel.resume.email ?? '';
     _websiteController.text = _viewModel.resume.website ?? '';
     super.initState();
@@ -46,6 +48,7 @@ class _ContactFormState extends State<ContactForm> {
   @override
   void dispose() {
     _phoneController.dispose();
+    _phone2Controller.dispose();
     _emailController.dispose();
     _websiteController.dispose();
     super.dispose();
@@ -68,7 +71,13 @@ class _ContactFormState extends State<ContactForm> {
             fields: [
               CbTextFormField(
                 controller: _phoneController,
-                label: context.l10n.phone,
+                label: context.l10n.phone1,
+                textCapitalization: TextCapitalization.none,
+                keyboardType: TextInputType.phone,
+              ),
+              CbTextFormField(
+                controller: _phone2Controller,
+                label: context.l10n.phone2,
                 textCapitalization: TextCapitalization.none,
                 keyboardType: TextInputType.phone,
               ),
@@ -112,6 +121,7 @@ class _ContactFormState extends State<ContactForm> {
     FocusScope.of(context).unfocus();
     _viewModel.previewResume = _viewModel.resume.copyWith(
       phoneNumber: _phoneController.text.trim(),
+      phoneNumber2: _phone2Controller.text.trim(),
       email: _emailController.text.trim(),
       website: _websiteController.text.trim(),
     );
@@ -122,6 +132,7 @@ class _ContactFormState extends State<ContactForm> {
     if (_formKey.currentState!.validate()) {
       _viewModel.resume = _viewModel.resume.copyWith(
         phoneNumber: _phoneController.text.trim(),
+        phoneNumber2: _phone2Controller.text.trim(),
         email: _emailController.text.trim(),
         website: _websiteController.text.trim(),
       );

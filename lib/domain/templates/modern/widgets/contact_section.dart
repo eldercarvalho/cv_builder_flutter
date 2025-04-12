@@ -23,7 +23,9 @@ List<Widget> buildContact({
       resume.birthDate != null ? '${resume.birthDate?.toSimpleDate()} - ${resume.age} ${texts.years}' : null;
 
   if (resume.birthDate == null &&
+      (resume.document == null || resume.document!.isEmpty) &&
       (resume.phoneNumber == null || resume.phoneNumber!.isEmpty) &&
+      (resume.phoneNumber2 == null || resume.phoneNumber2!.isEmpty) &&
       (resume.email == null || resume.email!.isEmpty) &&
       (resume.website == null || resume.website!.isEmpty) &&
       (resume.address == null || resume.address!.isEmpty) &&
@@ -31,6 +33,12 @@ List<Widget> buildContact({
       (resume.zipCode == null || resume.zipCode!.isEmpty) &&
       resume.socialNetworks.isEmpty) {
     return [];
+  }
+
+  String phoneNumberText = resume.phoneNumber ?? '';
+
+  if (resume.phoneNumber2 != null && resume.phoneNumber2!.isNotEmpty) {
+    phoneNumberText += ' | ${resume.phoneNumber2}';
   }
 
   return [
@@ -41,8 +49,9 @@ List<Widget> buildContact({
     Box(
       child: Column(children: [
         PersonalInfo(text: birthdayText, icon: 'cake', marginTop: 0, config: config, column: column),
+        PersonalInfo(text: resume.document, icon: 'document', config: config, column: column),
         PersonalInfo(text: resume.formattedAddress, icon: 'mapmarker', config: config, column: column),
-        PersonalInfo(text: resume.phoneNumber, icon: 'phone', config: config, column: column),
+        PersonalInfo(text: phoneNumberText, icon: 'phone', config: config, column: column),
         PersonalInfo(text: resume.email, icon: 'email', config: config, column: column),
         PersonalInfo(text: resume.website, icon: 'website', config: config, column: column),
       ]),
