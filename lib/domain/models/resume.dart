@@ -79,10 +79,12 @@ class Resume extends Equatable {
   final String? profession;
   final String? photo;
   final DateTime? birthDate;
+  final String? document;
   final String? address;
   final String? city;
   final String? zipCode;
   final String? phoneNumber;
+  final String? phoneNumber2;
   final String? website;
   final String? email;
   final String? objectiveSummary;
@@ -135,11 +137,13 @@ class Resume extends Equatable {
     required this.name,
     this.profession,
     this.birthDate,
+    this.document,
     this.photo,
     this.address,
     this.city,
     this.zipCode,
     this.phoneNumber,
+    this.phoneNumber2,
     this.website,
     this.email,
     this.objectiveSummary,
@@ -290,12 +294,15 @@ class Resume extends Equatable {
     String? profession,
     bool setNullbirthDate = false,
     DateTime? birthDate,
+    String? document,
+    bool setNullDocument = false,
     String? photo,
     bool setNullPhoto = false,
     String? address,
     String? city,
     String? zipCode,
     String? phoneNumber,
+    String? phoneNumber2,
     String? website,
     String? email,
     List<SocialNetwork>? socialNetworks,
@@ -327,11 +334,13 @@ class Resume extends Equatable {
       name: name ?? this.name,
       profession: profession ?? this.profession,
       birthDate: setNullbirthDate ? null : birthDate ?? this.birthDate,
+      document: setNullDocument ? null : document ?? this.document,
       photo: setNullPhoto ? null : photo ?? this.photo,
       address: address ?? this.address,
       city: city ?? this.city,
       zipCode: zipCode ?? this.zipCode,
       phoneNumber: phoneNumber ?? this.phoneNumber,
+      phoneNumber2: phoneNumber2 ?? this.phoneNumber2,
       website: website ?? this.website,
       email: email ?? this.email,
       socialNetworks: socialNetworks ?? this.socialNetworks,
@@ -366,11 +375,13 @@ class Resume extends Equatable {
         name,
         profession,
         birthDate,
+        document,
         photo,
         address,
         city,
         zipCode,
         phoneNumber,
+        phoneNumber2,
         website,
         email,
         socialNetworks,

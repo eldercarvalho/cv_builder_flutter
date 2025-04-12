@@ -121,7 +121,7 @@ class _CbTextFormFieldState extends State<CbTextFormField> {
                       child: Padding(
                         padding: EdgeInsets.only(right: widget.suffix != null || widget.obscured ? 16 : 0),
                         child: Icon(
-                          Icons.backspace_outlined,
+                          Icons.cancel_outlined,
                           size: 24.sp,
                           color: context.colors.primary,
                         ),
