@@ -13,7 +13,6 @@ import '../models/skill.dart';
 import '../models/social_network.dart';
 import '../models/work_experience.dart';
 
-
 Resume createFakeResume() => Resume(
       id: const Uuid().v4(),
       isActive: true,
@@ -54,24 +53,24 @@ Resume createFakeResume() => Resume(
           website: Faker().internet.httpsUrl(),
           summary: Faker().lorem.sentences(6).join(' '),
         ),
-        WorkExperience(
-          id: '2',
-          company: 'Amazon Inc.',
-          position: 'Desenvolvedor Mobile Pleno',
-          startDate: DateTime.now().subtract(const Duration(days: 365 * 2)),
-          endDate: DateTime.now().subtract(const Duration(days: 365)),
-          website: Faker().internet.httpsUrl(),
-          summary: Faker().lorem.sentences(6).join(' '),
-        ),
-        WorkExperience(
-          id: '3',
-          company: 'Apple Inc.',
-          position: 'Desenvolvedor Mobile Júnior',
-          startDate: DateTime.now().subtract(const Duration(days: 365 * 3)),
-          endDate: DateTime.now().subtract(const Duration(days: 365 * 2)),
-          website: Faker().internet.httpsUrl(),
-          summary: Faker().lorem.sentences(6).join(' '),
-        ),
+        // WorkExperience(
+        //   id: '2',
+        //   company: 'Amazon Inc.',
+        //   position: 'Desenvolvedor Mobile Pleno',
+        //   startDate: DateTime.now().subtract(const Duration(days: 365 * 2)),
+        //   endDate: DateTime.now().subtract(const Duration(days: 365)),
+        //   website: Faker().internet.httpsUrl(),
+        //   summary: Faker().lorem.sentences(6).join(' '),
+        // ),
+        // WorkExperience(
+        //   id: '3',
+        //   company: 'Apple Inc.',
+        //   position: 'Desenvolvedor Mobile Júnior',
+        //   startDate: DateTime.now().subtract(const Duration(days: 365 * 3)),
+        //   endDate: DateTime.now().subtract(const Duration(days: 365 * 2)),
+        //   website: Faker().internet.httpsUrl(),
+        //   summary: Faker().lorem.sentences(6).join(' '),
+        // ),
       ],
       education: [
         Education(
@@ -197,6 +196,7 @@ Resume createFakeResume() => Resume(
           summary: Faker().lorem.sentences(2).join(' '),
         ),
       ],
-      template: ResumeTemplate.modern,
+      template: ResumeTemplate.basic,
       createdAt: DateTime.now(),
+      sections: Resume.createSectionsByTemplate(template: ResumeTemplate.basic),
     );

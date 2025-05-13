@@ -15,7 +15,7 @@ List<Widget> buildCertifications({required Resume resume, required TemplateConfi
 
   return [
     if (!sectionConfig.hideTitle) ...[
-      SectionTitle(text: sectionConfig.title, config: config),
+      SectionTitle(text: sectionConfig.title, config: config, hideDivider: sectionConfig.hideDivider),
       SizedBox(height: config.titleSpace),
     ],
     ...List.generate(resume.certifications.length, (index) {

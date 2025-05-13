@@ -187,7 +187,7 @@ class Resume extends Equatable {
           const ResumeSection(type: ResumeSectionType.objective, title: 'Objetivo'),
           const ResumeSection(type: ResumeSectionType.experience, title: 'Experiência Profissional'),
           const ResumeSection(type: ResumeSectionType.education, title: 'Formação'),
-          const ResumeSection(type: ResumeSectionType.skills, title: 'Conhecimentos'),
+          const ResumeSection(type: ResumeSectionType.skills, title: 'Conhecimentos', hasLayout: true),
           const ResumeSection(type: ResumeSectionType.languages, title: 'Idiomas'),
           const ResumeSection(type: ResumeSectionType.certifications, title: 'Certificações'),
           // ResumeSection(type: ResumeSectionType.projects, title: 'Projetos'),

@@ -37,7 +37,7 @@ List<Widget> buildContact({required Resume resume, required TemplateConfig confi
 
   return [
     if (!sectionConfig.hideTitle) ...[
-      SectionTitle(text: sectionConfig.title, config: config),
+      SectionTitle(text: sectionConfig.title, config: config, hideDivider: sectionConfig.hideDivider),
       SizedBox(height: config.titleSpace),
     ],
     PersonalInfo(text: birthdayText, icon: 'cake', marginTop: 0, config: config),

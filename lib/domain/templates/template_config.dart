@@ -55,6 +55,7 @@ class TemplateConfig {
         bodyLargeTextStyle: TextStyle(font: fonts.regular, fontSize: 14, color: leftColors.textColor.toColor()),
         bodyMediumTextStyle: TextStyle(font: fonts.regular, fontSize: 12, color: leftColors.textColor.toColor()),
         bodySmallTextStyle: TextStyle(font: fonts.regular, fontSize: 10, color: leftColors.textColor.toColor()),
+        bodyXSmallTextStyle: TextStyle(font: fonts.regular, fontSize: 8, color: leftColors.textColor.toColor()),
         paragraphTextStyle:
             TextStyle(font: fonts.regular, fontSize: 10, lineSpacing: 3, color: leftColors.textColor.toColor()),
       ),
@@ -66,6 +67,7 @@ class TemplateConfig {
         bodyLargeTextStyle: TextStyle(font: fonts.regular, fontSize: 14, color: rightColors.textColor.toColor()),
         bodyMediumTextStyle: TextStyle(font: fonts.regular, fontSize: 12, color: rightColors.textColor.toColor()),
         bodySmallTextStyle: TextStyle(font: fonts.regular, fontSize: 10, color: rightColors.textColor.toColor()),
+        bodyXSmallTextStyle: TextStyle(font: fonts.regular, fontSize: 8, color: rightColors.textColor.toColor()),
         paragraphTextStyle:
             TextStyle(font: fonts.regular, fontSize: 10, lineSpacing: 3, color: rightColors.textColor.toColor()),
       ),
@@ -87,6 +89,7 @@ class TemplateTextTheme {
   final TextStyle bodyLargeTextStyle;
   final TextStyle bodyMediumTextStyle;
   final TextStyle bodySmallTextStyle;
+  final TextStyle bodyXSmallTextStyle;
   final TextStyle paragraphTextStyle;
 
   TemplateTextTheme({
@@ -97,6 +100,7 @@ class TemplateTextTheme {
     required this.bodyLargeTextStyle,
     required this.bodyMediumTextStyle,
     required this.bodySmallTextStyle,
+    required this.bodyXSmallTextStyle,
     required this.paragraphTextStyle,
   });
 }

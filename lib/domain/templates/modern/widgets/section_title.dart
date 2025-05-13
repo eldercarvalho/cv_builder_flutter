@@ -10,10 +10,12 @@ class SectionTitle extends StatelessWidget {
     required this.text,
     required this.config,
     required this.column,
+    this.hideDivider = false,
   });
 
   final String text;
   final TemplateConfig config;
+  final bool hideDivider;
   final TemplateColumn column;
 
   @override
@@ -31,11 +33,11 @@ class SectionTitle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(text, style: textTheme.titleMediumTextStyle),
           SizedBox(height: 2),
-          Container(height: 1, color: PdfColor.fromHex(colors.dividerColor)),
+          if (!hideDivider) Container(height: 1, color: PdfColor.fromHex(colors.dividerColor)),
         ],
       ),
     );

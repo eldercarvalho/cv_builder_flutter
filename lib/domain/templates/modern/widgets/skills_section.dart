@@ -30,7 +30,7 @@ List<Widget> buildSkills({
 
   return [
     if (!sectionConfig.hideTitle) ...[
-      SectionTitle(text: sectionConfig.title, config: config, column: column),
+      SectionTitle(text: sectionConfig.title, config: config, column: column, hideDivider: sectionConfig.hideDivider),
       SizedBox(height: config.titleSpace),
     ],
     ...List.generate(

@@ -18,7 +18,7 @@ List<Widget> buildEducation({required Resume resume, required TemplateConfig con
 
   return [
     if (!sectionConfig.hideTitle) ...[
-      SectionTitle(text: sectionConfig.title, config: config),
+      SectionTitle(text: sectionConfig.title, config: config, hideDivider: sectionConfig.hideDivider),
       SizedBox(height: config.titleSpace),
     ],
     ...List.generate(resume.education.length, (index) {

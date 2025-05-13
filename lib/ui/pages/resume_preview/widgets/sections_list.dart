@@ -3,13 +3,14 @@ import 'package:cv_builder/ui/shared/widgets/cb_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
+import '../../../../domain/models/resume.dart';
 import '../../../../domain/models/resume_section.dart';
 import 'section_settings.dart';
 
 class SectionsList extends StatefulWidget {
-  const SectionsList({super.key, required this.sections});
+  const SectionsList({super.key, required this.resume});
 
-  final List<ResumeSection> sections;
+  final Resume resume;
 
   @override
   State<SectionsList> createState() => _SectionsListState();
@@ -20,7 +21,7 @@ class _SectionsListState extends State<SectionsList> {
 
   @override
   void initState() {
-    _sections = List.from(widget.sections);
+    _sections = List.from(widget.resume.sections);
     super.initState();
   }
 
@@ -85,9 +86,9 @@ class _SectionsListState extends State<SectionsList> {
 
   void _onSectionTap(ResumeSection section) async {
     final result = await Navigator.push(
-      context,
+      context,  
       MaterialPageRoute(
-        builder: (context) => SectionSettings(section: section),
+        builder: (context) => SectionSettings(section: section, resume: widget.resume),
       ),
     );
 

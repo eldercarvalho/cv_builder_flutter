@@ -21,7 +21,7 @@ List<Widget> buildExperience({required Resume resume, required TemplateConfig co
 
   return [
     if (!sectionConfig.hideTitle) ...[
-      SectionTitle(text: sectionConfig.title, config: config),
+      SectionTitle(text: sectionConfig.title, config: config, hideDivider: sectionConfig.hideDivider),
       SizedBox(height: config.titleSpace),
     ],
     ...List.generate(
