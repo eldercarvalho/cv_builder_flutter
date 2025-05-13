@@ -8,12 +8,17 @@ class ResumeSectionModel extends Equatable {
   final String title;
   final bool hideTitle;
   final bool forcePageBreak;
-
+  final String layout;
+  final bool hideDivider;
+  final bool hasLayout;
   const ResumeSectionModel({
     required this.type,
     required this.title,
     this.hideTitle = false,
     this.forcePageBreak = false,
+    this.layout = 'list',
+    this.hideDivider = false,
+    this.hasLayout = false,
   });
 
   factory ResumeSectionModel.fromJson(Map<String, dynamic> json) {
@@ -22,6 +27,9 @@ class ResumeSectionModel extends Equatable {
       title: json['title'],
       hideTitle: json['hideTitle'],
       forcePageBreak: json['forcePageBreak'],
+      layout: json['layout'] ?? 'list',
+      hideDivider: json['hideDivider'] ?? false,
+      hasLayout: json['hasLayout'] ?? false,
     );
   }
 
@@ -31,6 +39,9 @@ class ResumeSectionModel extends Equatable {
       'title': title,
       'hideTitle': hideTitle,
       'forcePageBreak': forcePageBreak,
+      'layout': layout,
+      'hideDivider': hideDivider,
+      'hasLayout': hasLayout,
     };
   }
 
@@ -40,6 +51,9 @@ class ResumeSectionModel extends Equatable {
       title: section.title,
       hideTitle: section.hideTitle,
       forcePageBreak: section.forcePageBreak,
+      layout: section.layout.name,
+      hideDivider: section.hideDivider,
+      hasLayout: section.hasLayout,
     );
   }
 
@@ -49,6 +63,9 @@ class ResumeSectionModel extends Equatable {
       title: title,
       hideTitle: hideTitle,
       forcePageBreak: forcePageBreak,
+      layout: ResumeSectionLayout.values.firstWhere((e) => e.name == layout),
+      hideDivider: hideDivider,
+      hasLayout: hasLayout,
     );
   }
 
@@ -59,5 +76,5 @@ class ResumeSectionModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [title, hideTitle, forcePageBreak];
+  List<Object?> get props => [title, hideTitle, forcePageBreak, layout, hideDivider];
 }

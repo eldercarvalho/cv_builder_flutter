@@ -14,20 +14,29 @@ List<Widget> buildLanguages({required Resume resume, required TemplateConfig con
 
   return [
     if (!sectionConfig.hideTitle) ...[
-      SectionTitle(text: sectionConfig.title, config: config),
+      SectionTitle(text: sectionConfig.title, config: config, hideDivider: sectionConfig.hideDivider),
       SizedBox(height: config.titleSpace),
     ],
-    ...List.generate(resume.languages.length, (index) {
-      final language = resume.languages[index];
-      return Padding(
-          padding: EdgeInsets.only(bottom: index < resume.languages.length - 1 ? 1.8 : 0),
-          child: Row(
-            children: [
-              Text(language.name, style: config.leftTextTheme.titleXSmallTextStyle),
-              if (language.fluency != null && language.fluency!.isNotEmpty)
-                Text(' - ${language.fluency}', style: config.leftTextTheme.bodyMediumTextStyle),
-            ],
-          ));
-    }),
+    if (sectionConfig.layout == ResumeSectionLayout.list)
+      ...List.generate(resume.languages.length, (index) {
+        final language = resume.languages[index];
+        return Padding(
+            padding: EdgeInsets.only(bottom: index < resume.languages.length - 1 ? 1.8 : 0),
+            child: Row(
+              children: [
+                Text(language.name, style: config.leftTextTheme.titleXSmallTextStyle),
+                if (language.fluency != null && language.fluency!.isNotEmpty)
+                  Text(' - ${language.fluency}', style: config.leftTextTheme.bodyMediumTextStyle),
+              ],
+            ));
+      }),
+    if (sectionConfig.layout == ResumeSectionLayout.grid) ...[
+      ...List.generate(resume.languages.length, (index) {
+        final language = resume.languages[index];
+        return Text(
+          language.name + (language.fluency != null && language.fluency!.isNotEmpty ? ' - ${language.fluency}' : ''),
+        );
+      }),
+    ],
   ];
 }

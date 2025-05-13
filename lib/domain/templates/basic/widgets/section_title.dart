@@ -5,10 +5,11 @@ import 'package:pdf/widgets.dart';
 import '../../template_config.dart';
 
 class SectionTitle extends StatelessWidget {
-  SectionTitle({required this.text, required this.config});
+  SectionTitle({required this.text, required this.config, this.hideDivider = false});
 
   final String text;
   final TemplateConfig config;
+  final bool hideDivider;
 
   @override
   Widget build(Context context) {
@@ -18,7 +19,7 @@ class SectionTitle extends StatelessWidget {
       children: [
         Text(text, style: config.leftTextTheme.titleSmallTextStyle),
         SizedBox(height: 2),
-        Container(height: 1, color: PdfColor.fromHex(colors.dividerColor)),
+        if (!hideDivider) Container(height: 1, color: PdfColor.fromHex(colors.dividerColor)),
       ],
     );
   }

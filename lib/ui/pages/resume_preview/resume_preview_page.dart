@@ -1,4 +1,5 @@
 import 'package:cv_builder/ui/shared/extensions/context.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:printing/printing.dart';
@@ -87,6 +88,11 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
             },
           ),
           actions: [
+            if (kDebugMode)
+              IconButton(
+                onPressed: () => _viewModel.reloadResume.execute(),
+                icon: const Icon(FeatherIcons.refreshCw),
+              ),
             ListenableBuilder(
               listenable: Listenable.merge([
                 _viewModel.updateResume,
@@ -268,7 +274,7 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
   void _onSectionSettings() async {
     final result = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => SectionsList(sections: _viewModel.resume!.sections),
+        builder: (context) => SectionsList(resume: _viewModel.resume!),
       ),
     );
 
@@ -276,4 +282,8 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
       _viewModel.updateSections.execute(result);
     }
   }
+}
+
+String disemvowel(String str) {  
+  return str.replaceAll(RegExp(r'[aeiou]', caseSensitive: false), '');
 }

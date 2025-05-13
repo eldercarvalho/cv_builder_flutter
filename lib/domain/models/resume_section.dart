@@ -21,17 +21,28 @@ enum ResumeSectionType {
   }
 }
 
+enum ResumeSectionLayout {
+  list,
+  grid,
+}
+
 class ResumeSection extends Equatable {
   final ResumeSectionType type;
   final String title;
   final bool hideTitle;
   final bool forcePageBreak;
+  final ResumeSectionLayout layout;
+  final bool hasLayout;
+  final bool hideDivider;
 
   const ResumeSection({
     required this.type,
     required this.title,
     this.hideTitle = false,
     this.forcePageBreak = false,
+    this.layout = ResumeSectionLayout.list,
+    this.hasLayout = false,
+    this.hideDivider = false,
   });
 
   ResumeSection copyWith({
@@ -39,17 +50,23 @@ class ResumeSection extends Equatable {
     String? title,
     bool? hideTitle,
     bool? forcePageBreak,
+    ResumeSectionLayout? layout,
+    bool? hideDivider,
+    bool? hasLayout,
   }) {
     return ResumeSection(
       type: type ?? this.type,
       title: title ?? this.title,
       hideTitle: hideTitle ?? this.hideTitle,
       forcePageBreak: forcePageBreak ?? this.forcePageBreak,
+      layout: layout ?? this.layout,
+      hasLayout: hasLayout ?? this.hasLayout,
+      hideDivider: hideDivider ?? this.hideDivider,
     );
   }
 
   @override
-  List<Object?> get props => [title, hideTitle, forcePageBreak];
+  List<Object?> get props => [title, hideTitle, forcePageBreak, layout, hideDivider];
 }
 
 extension ResumeSectionExtension on List<ResumeSection> {
