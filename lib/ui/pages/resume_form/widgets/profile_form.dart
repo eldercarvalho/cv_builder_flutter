@@ -120,7 +120,7 @@ class _ProfileFormState extends State<ProfileForm> {
                 controller: _documentController,
                 label: context.l10n.document,
                 validator: MultiValidator([
-                  MaxLengthValidator(max: 30, errorText: context.l10n.maxLenghtError(100)),
+                  MaxLengthValidator(max: 100, errorText: context.l10n.maxLenghtError(100)),
                 ]).call,
               ),
             ],
