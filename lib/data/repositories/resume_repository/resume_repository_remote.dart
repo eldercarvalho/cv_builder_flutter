@@ -107,4 +107,11 @@ class ResumeRepositoryRemote extends ResumeRepository {
         .onSuccess((_) => notifyListeners())
         .pure(unit);
   }
+
+  @override
+  AsyncResult<File> exportJson({required String userId, required String resumeId}) async {
+    return _remoteService
+        .getResume(userId, resumeId)
+        .flatMap((resumeModel) => _fileService.generateJson(resumeModel.toJson()));
+  }
 }

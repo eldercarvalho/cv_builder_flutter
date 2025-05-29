@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:cv_builder/data/models/resume.dart';
 import 'package:flutter/material.dart';
 import 'package:result_dart/result_dart.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../data/repositories/auth_repository/auth_repository.dart';
 import '../../../../data/repositories/resume_repository/resume_respository.dart';
@@ -74,6 +76,13 @@ class ResumeFormViewModel extends ChangeNotifier {
       template: _resume.template,
       sections: _resume.sections,
     );
+    notifyListeners();
+  }
+
+  void importJson(Map<String, dynamic> json) {
+    _resume = ResumeModel.fromJson(json).toDomain().copyWith(
+          id: const Uuid().v4(),
+        );
     notifyListeners();
   }
 }

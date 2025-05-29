@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../config/di.dart';
 import '../../../domain/models/resume.dart';
@@ -37,6 +41,7 @@ class _HomePageState extends State<HomePage> {
     _viewModel.addListener(_onAuthListener);
     _viewModel.getResumes.execute();
     _viewModel.deleteResume.addListener(_onDeleteResumeListener);
+    _viewModel.exportJson.addListener(_onExportJsonListener);
     super.initState();
   }
 
@@ -44,6 +49,7 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     _viewModel.removeListener(_onAuthListener);
     _viewModel.deleteResume.removeListener(_onDeleteResumeListener);
+    _viewModel.exportJson.removeListener(_onExportJsonListener);
     _viewModel.dispose();
     super.dispose();
   }
@@ -194,6 +200,9 @@ class _HomePageState extends State<HomePage> {
         final bytes = await resume.toPdf();
         Printing.sharePdf(bytes: bytes, filename: '${resume.resumeName}.pdf');
         break;
+      case 'export':
+        await _viewModel.exportJson.execute(resume);
+        break;
       case 'delete':
         _viewModel.deleteResume.execute(resume);
         break;
@@ -205,4 +214,26 @@ class _HomePageState extends State<HomePage> {
       context.showErrorSnackBar(context.l10n.homeGenericError);
     }
   }
+
+  void _onExportJsonListener() async {
+    if (_viewModel.exportJson.error) {
+      context.showErrorSnackBar(context.l10n.exportError);
+    }
+
+    if (_viewModel.exportJson.completed) {
+      final file = _viewModel.exportJson.result?.getOrNull() as File?;
+
+      if (file != null) {
+        SharePlus.instance.share(
+          ShareParams(
+            subject: file.path.split('/').last,
+            text: context.l10n.exportSuccess,
+            files: [XFile(file.path)],
+          ),
+        );
+      }
+      context.showSuccessSnackBar(context.l10n.exportSuccess);
+    }
+  }
+
 }

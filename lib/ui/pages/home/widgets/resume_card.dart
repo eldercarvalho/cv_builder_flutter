@@ -110,6 +110,16 @@ class _ResumeCardState extends State<ResumeCard> with SingleTickerProviderStateM
                                 ),
                               ),
                               PopupMenuItem(
+                                value: 'export',
+                                child: Row(
+                                  children: [
+                                    Icon(FeatherIcons.upload, size: 20, color: context.colors.primary),
+                                    const SizedBox(width: 8),
+                                    Text(context.l10n.export),
+                                  ],
+                                ),
+                              ),
+                              PopupMenuItem(
                                 value: 'delete',
                                 child: Row(
                                   children: [

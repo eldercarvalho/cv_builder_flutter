@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -57,5 +58,23 @@ class FileService {
     final dir = await getTemporaryDirectory();
     final file = File('${dir.path}/$name.png');
     return file;
+  }
+
+  AsyncResult<File> generateJson(Map<String, dynamic> json) async {
+    try {
+      final dir = await getDownloadsDirectory();
+
+      if (dir == null) {
+        return Failure(Exception('Downloads directory not found'));
+      }
+
+      final filename = json['resumeName'].toLowerCase().replaceAll(' ', '_');
+      final file = File('${dir.path}/$filename.json');
+      final jsonString = jsonEncode(json);
+      await file.writeAsString(jsonString);
+      return Success(file);
+    } on Exception catch (e) {
+      return Failure(e);
+    }
   }
 }

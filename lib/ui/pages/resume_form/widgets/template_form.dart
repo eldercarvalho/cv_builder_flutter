@@ -35,10 +35,12 @@ class TemplateFormState extends State<TemplateForm> {
     super.initState();
     _viewModel = context.read();
     _templateIndex = _viewModel.resume.template.index;
+    _viewModel.addListener(_onResumeListener);
   }
 
   @override
   void dispose() {
+    _viewModel.removeListener(_onResumeListener);
     super.dispose();
   }
 
@@ -166,5 +168,11 @@ class TemplateFormState extends State<TemplateForm> {
         ),
       ),
     );
+  }
+
+  void _onResumeListener() {
+    setState(() {
+      _templateIndex = _viewModel.resume.template.index;
+    });
   }
 }

@@ -13,4 +13,5 @@ abstract class ResumeRepository extends ChangeNotifier {
   AsyncResult<Unit> deleteResume({required String userId, required Resume resume});
   AsyncResult<Unit> deleteResumes({required String userId});
   AsyncResult<File> savePdf({required String resumeId, required Uint8List bytes});
+  AsyncResult<File> exportJson({required String userId, required String resumeId});
 }
