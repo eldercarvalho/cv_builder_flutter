@@ -1,5 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/di.dart';
@@ -54,6 +59,7 @@ class ResumeFormPage extends StatefulWidget {
 class _ResumeFormPageState extends State<ResumeFormPage> {
   final _viewModel = getIt<ResumeFormViewModel>();
   late final PageController _pageController;
+  int _currentPage = 0;
 
   bool get _isEditing => widget.params != null;
 
@@ -95,9 +101,14 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
           appBar: AppBar(
             title: Text(title),
             actions: [
+              if (!_isEditing && _currentPage == 0)
+                IconButton(
+                  onPressed: () => _showImportJsonDialog(),
+                  icon: const Icon(FeatherIcons.download),
+                ),
               if (kDebugMode)
                 IconButton(
-                  icon: const Icon(Icons.download),
+                  icon: const Icon(FeatherIcons.plus),
                   onPressed: () => _viewModel.resume = createFakeResume(),
                 ),
             ],
@@ -105,6 +116,7 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
           body: PageView(
             physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
+            onPageChanged: (page) => setState(() => _currentPage = page),
             children: [
               TemplateForm(onSubmit: _onNextPage, isEditing: _isEditing, onPrevious: _pop),
               ResumeInfoForm(isEditing: _isEditing, onSubmit: _onNextPage, onPrevious: _onPreviousPage),
@@ -205,6 +217,39 @@ class _ResumeFormPageState extends State<ResumeFormPage> {
 
     if (_viewModel.generatePdf.error) {
       context.showErrorSnackBar('Ocorreu um erro ao tentar gerar a visualização');
+    }
+  }
+
+  void _showImportJsonDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.l10n.importJsonTitle, style: context.textTheme.titleMedium),
+        content: Text(context.l10n.importJsonContent),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(context.l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () => _importJson(),
+            child: Text(context.l10n.select),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _importJson() async {
+    Navigator.of(context).pop();
+    final resultFile = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['json']);
+    if (resultFile != null) {
+      final file = File(resultFile.files.first.path!);
+      final json = jsonDecode(await file.readAsString());
+      _viewModel.importJson(json);
+      if (mounted) {
+        context.showSuccessSnackBar(context.l10n.importSuccess);
+      }
     }
   }
 }

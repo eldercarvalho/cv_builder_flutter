@@ -41,11 +41,11 @@ List<Widget> buildContact({required Resume resume, required TemplateConfig confi
       SizedBox(height: config.titleSpace),
     ],
     PersonalInfo(text: birthdayText, icon: 'cake', marginTop: 0, config: config),
-    PersonalInfo(text: resume.document, icon: 'document', config: config),
     PersonalInfo(text: resume.formattedAddress, icon: 'mapmarker', config: config),
     PersonalInfo(text: phoneNumberText, icon: 'phone', config: config),
     PersonalInfo(text: resume.email, icon: 'email', config: config),
     PersonalInfo(text: resume.website, icon: 'website', config: config),
+    PersonalInfo(text: resume.document, icon: 'document', config: config),
 
     // Redes Sociais
     if (resume.socialNetworks.isNotEmpty)

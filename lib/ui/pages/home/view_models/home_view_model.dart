@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:result_dart/result_dart.dart';
@@ -18,6 +19,7 @@ class HomeViewModel extends ChangeNotifier {
     _resumeRepository = resumeRepository;
     getResumes = Command0(_getResumes);
     deleteResume = Command1(_deleteResume);
+    exportJson = Command1(_exportJson);
     _authSubscription = authRepository.authStateChanges.listen((user) {
       _isUserAuthenticated = user != null;
       notifyListeners();
@@ -31,6 +33,7 @@ class HomeViewModel extends ChangeNotifier {
 
   late final Command0 getResumes;
   late final Command1<Unit, Resume> deleteResume;
+  late final Command1<File, Resume> exportJson;
 
   List<Resume> _resumes = [];
   List<Resume> get resumes => _resumes;
@@ -79,6 +82,13 @@ class HomeViewModel extends ChangeNotifier {
   void _setResumes() {
     _resumes = _resumeRepository.resumes;
     notifyListeners();
+  }
+
+  AsyncResult<File> _exportJson(Resume resume) async {
+    return _authRepository
+        .getCurrentUser()
+        .flatMap((user) => _resumeRepository.exportJson(userId: user.id, resumeId: resume.id))
+        .fold((file) => Success(file), (error) => Failure(error));
   }
 
   @override

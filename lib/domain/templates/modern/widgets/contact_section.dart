@@ -49,11 +49,11 @@ List<Widget> buildContact({
     Box(
       child: Column(children: [
         PersonalInfo(text: birthdayText, icon: 'cake', marginTop: 0, config: config, column: column),
-        PersonalInfo(text: resume.document, icon: 'document', config: config, column: column),
         PersonalInfo(text: resume.formattedAddress, icon: 'mapmarker', config: config, column: column),
         PersonalInfo(text: phoneNumberText, icon: 'phone', config: config, column: column),
         PersonalInfo(text: resume.email, icon: 'email', config: config, column: column),
         PersonalInfo(text: resume.website, icon: 'website', config: config, column: column),
+        PersonalInfo(text: resume.document, icon: 'document', config: config, column: column),
       ]),
     ),
     if (resume.socialNetworks.isNotEmpty) ...[
