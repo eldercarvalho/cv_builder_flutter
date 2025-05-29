@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
@@ -235,5 +234,4 @@ class _HomePageState extends State<HomePage> {
       context.showSuccessSnackBar(context.l10n.exportSuccess);
     }
   }
-
 }
