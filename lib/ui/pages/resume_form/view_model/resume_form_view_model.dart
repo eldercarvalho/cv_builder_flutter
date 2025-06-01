@@ -82,6 +82,7 @@ class ResumeFormViewModel extends ChangeNotifier {
   void importJson(Map<String, dynamic> json) {
     _resume = ResumeModel.fromJson(json).toDomain().copyWith(
           id: const Uuid().v4(),
+          copyId: json['id'] as String?,
         );
     notifyListeners();
   }

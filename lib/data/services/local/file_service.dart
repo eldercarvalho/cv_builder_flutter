@@ -62,15 +62,11 @@ class FileService {
 
   AsyncResult<File> generateJson(Map<String, dynamic> json) async {
     try {
-      final dir = await getDownloadsDirectory();
-
-      if (dir == null) {
-        return Failure(Exception('Downloads directory not found'));
-      }
+      final dir = await getTemporaryDirectory();
 
       final filename = json['resumeName'].toLowerCase().replaceAll(' ', '_');
       final file = File('${dir.path}/$filename.json');
-      final jsonString = jsonEncode(json);
+      final jsonString = const JsonEncoder.withIndent('  ').convert(json);
       await file.writeAsString(jsonString);
       return Success(file);
     } on Exception catch (e) {
