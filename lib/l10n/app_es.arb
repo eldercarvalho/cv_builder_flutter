@@ -92,7 +92,7 @@
   "importSuccess": "Currículo importado con éxito",
   "exportError": "Ocurrió un error al intentar exportar el currículum",
   "importError": "Ocurrió un error al intentar importar el currículum",
-  "importJsonTitle": "Importar JSON",
+  "importJsonTitle": "Importar Currículum",
   "importJsonContent": "Seleccione el archivo JSON para importar",
   "loginTitle": "Inicia sesión en tu cuenta",
   "loginForgotPassword": "¿Olvidaste la contraseña?",

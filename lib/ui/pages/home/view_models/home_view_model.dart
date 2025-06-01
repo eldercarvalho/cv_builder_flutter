@@ -85,10 +85,7 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   AsyncResult<File> _exportJson(Resume resume) async {
-    return _authRepository
-        .getCurrentUser()
-        .flatMap((user) => _resumeRepository.exportJson(userId: user.id, resumeId: resume.id))
-        .fold((file) => Success(file), (error) => Failure(error));
+    return _resumeRepository.exportResume(resume: resume);
   }
 
   @override
