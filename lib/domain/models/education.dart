@@ -5,7 +5,7 @@ class Education extends Equatable {
   final String institution;
   final String fieldOfStudy;
   final String? typeOfDegree;
-  final DateTime startDate;
+  final DateTime? startDate;
   final DateTime? endDate;
   final String? summary;
 
@@ -20,10 +20,13 @@ class Education extends Equatable {
   });
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         institution,
         fieldOfStudy,
         startDate,
+        endDate,
+        summary,
+        typeOfDegree,
       ];
 }

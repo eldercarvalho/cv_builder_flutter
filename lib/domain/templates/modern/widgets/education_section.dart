@@ -49,13 +49,14 @@ List<Widget> buildEducation({
               SizedBox(height: config.lineSpace),
               Text(education.institution, style: textTheme.bodyMediumTextStyle),
               SizedBox(height: config.lineSpace),
-              Row(children: [
-                Text(education.startDate.toShortDate(locale: resumeLanguage), style: textTheme.bodyMediumTextStyle),
-                if (education.endDate != null)
-                  Text('- ${education.endDate!.toShortDate(locale: resumeLanguage)}',
-                      style: textTheme.bodyMediumTextStyle),
-                if (education.endDate == null) Text('- ${texts.current}', style: textTheme.bodyMediumTextStyle),
-              ]),
+              if (education.startDate != null)
+                Row(children: [
+                  Text(education.startDate!.toShortDate(locale: resumeLanguage), style: textTheme.bodyMediumTextStyle),
+                  if (education.endDate != null)
+                    Text(' - ${education.endDate!.toShortDate(locale: resumeLanguage)}',
+                        style: textTheme.bodyMediumTextStyle),
+                  if (education.endDate == null) Text('- ${texts.current}', style: textTheme.bodyMediumTextStyle),
+                ]),
               if (education.summary != null) ...[
                 SizedBox(height: config.lineSpace),
                 Text(education.summary!, style: textTheme.bodyMediumTextStyle),

@@ -7,7 +7,7 @@ class EducationModel extends Equatable {
   final String institution;
   final String fieldOfStudy;
   final String? typeOfDegree;
-  final String startDate;
+  final String? startDate;
   final String? endDate;
   final String? summary;
 
@@ -16,7 +16,7 @@ class EducationModel extends Equatable {
     required this.institution,
     required this.fieldOfStudy,
     this.typeOfDegree,
-    required this.startDate,
+    this.startDate,
     this.endDate,
     this.summary,
   });
@@ -27,7 +27,7 @@ class EducationModel extends Equatable {
       institution: json['institution'] as String,
       fieldOfStudy: json['fieldOfStudy'] as String,
       typeOfDegree: json['typeOfDegree'] as String?,
-      startDate: json['startDate'] as String,
+      startDate: json['startDate'] as String?,
       endDate: json['endDate'] as String?,
       summary: json['summary'] as String?,
     );
@@ -52,7 +52,7 @@ class EducationModel extends Equatable {
       institution: institution,
       fieldOfStudy: fieldOfStudy,
       typeOfDegree: typeOfDegree,
-      startDate: DateTime.parse(startDate),
+      startDate: startDate != null ? DateTime.parse(startDate!) : null,
       endDate: endDate != null ? DateTime.parse(endDate!) : null,
       summary: summary,
     );
@@ -64,17 +64,20 @@ class EducationModel extends Equatable {
       institution: education.institution,
       fieldOfStudy: education.fieldOfStudy,
       typeOfDegree: education.typeOfDegree,
-      startDate: education.startDate.toIso8601String(),
+      startDate: education.startDate?.toIso8601String(),
       endDate: education.endDate?.toIso8601String(),
       summary: education.summary,
     );
   }
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         id,
         institution,
         fieldOfStudy,
         startDate,
+        endDate,
+        summary,
+        typeOfDegree,
       ];
 }

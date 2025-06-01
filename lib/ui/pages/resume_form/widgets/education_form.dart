@@ -184,7 +184,8 @@ class _CreateItemModalState extends State<_CreateItemModal> {
       _institutionController.text = widget.education!.institution;
       _fieldOfStudyController.text = widget.education!.fieldOfStudy;
       _typeOfDegreeController.text = widget.education!.typeOfDegree ?? '';
-      _startDateController.text = DateFormat('dd/MM/yyyy').format(widget.education!.startDate);
+      _startDateController.text =
+          widget.education!.startDate != null ? DateFormat('dd/MM/yyyy').format(widget.education!.startDate!) : '';
       _endDateController.text =
           widget.education!.endDate != null ? DateFormat('dd/MM/yyyy').format(widget.education!.endDate!) : '';
       _summaryController.text = widget.education!.summary ?? '';
@@ -239,10 +240,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
             CbDatePicker(
               controller: _startDateController,
               label: context.l10n.startDate,
-              required: true,
-              validator: MultiValidator([
-                RequiredValidator(errorText: context.l10n.requiredField),
-              ]).call,
+              required: false,
             ),
             CbDatePicker(
               controller: _endDateController,
@@ -267,7 +265,7 @@ class _CreateItemModalState extends State<_CreateItemModal> {
                   institution: _institutionController.text.trim(),
                   fieldOfStudy: _fieldOfStudyController.text.trim(),
                   typeOfDegree: _typeOfDegreeController.text.trim(),
-                  startDate: format.parse(_startDateController.text),
+                  startDate: _startDateController.text.isNotEmpty ? format.parse(_startDateController.text) : null,
                   endDate: _endDateController.text.isNotEmpty ? format.parse(_endDateController.text) : null,
                   summary: _summaryController.text.trim(),
                 );
