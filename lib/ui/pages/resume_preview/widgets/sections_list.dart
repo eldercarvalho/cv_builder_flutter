@@ -49,7 +49,7 @@ class _SectionsListState extends State<SectionsList> {
                   key: ValueKey(section.type),
                   children: [
                     ListTile(
-                      leading: Text((index + 1).toString(), style: context.textTheme.labelLarge),
+                      leading: const Icon(Icons.drag_handle_outlined),
                       title: Text(section.title),
                       trailing: Icon(FeatherIcons.edit, color: context.colors.primary),
                       onTap: () => _onSectionTap(section),
@@ -86,7 +86,7 @@ class _SectionsListState extends State<SectionsList> {
 
   void _onSectionTap(ResumeSection section) async {
     final result = await Navigator.push(
-      context,  
+      context,
       MaterialPageRoute(
         builder: (context) => SectionSettings(section: section, resume: widget.resume),
       ),

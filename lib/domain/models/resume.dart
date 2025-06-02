@@ -183,7 +183,7 @@ class Resume extends Equatable {
     switch (template) {
       case ResumeTemplate.basic:
         return [
-          const ResumeSection(type: ResumeSectionType.contact, title: 'Contato'),
+          const ResumeSection(type: ResumeSectionType.contact, title: 'Contato', hideTitle: true),
           const ResumeSection(type: ResumeSectionType.objective, title: 'Objetivo'),
           const ResumeSection(type: ResumeSectionType.experience, title: 'Experiência Profissional'),
           const ResumeSection(type: ResumeSectionType.education, title: 'Formação'),
