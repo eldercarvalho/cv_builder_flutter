@@ -47,7 +47,7 @@ TemplateTexts getTexts(ResumeLanguage language) {
         references: 'Referências',
         hobbies: 'Interesses',
         responsibilities: 'Atividades:',
-        current: 'Atual',
+        current: 'Presente',
       ),
     ResumeLanguage.en => TemplateTexts(
         years: 'years',
