@@ -30,16 +30,28 @@ List<Widget> buildEducation({required Resume resume, required TemplateConfig con
           SizedBox(height: config.lineSpace),
           Text(education.institution, style: config.leftTextTheme.bodyMediumTextStyle),
           SizedBox(height: config.lineSpace),
-          if (education.startDate != null)
-            Row(children: [
-              Text(education.startDate!.toShortDate(locale: resumeLanguage),
-                  style: config.leftTextTheme.bodyMediumTextStyle),
-              if (education.endDate != null)
-                Text(' - ${education.endDate!.toShortDate(locale: resumeLanguage)}',
-                    style: config.leftTextTheme.bodyMediumTextStyle),
-              if (education.endDate == null)
-                Text(' - ${texts.current}', style: config.leftTextTheme.bodyMediumTextStyle),
-            ]),
+          Row(children: [
+            if (education.startDate != null)
+              Text(
+                education.startDate!.toShortDate(locale: resumeLanguage),
+                style: config.leftTextTheme.bodyMediumTextStyle,
+              ),
+            if (education.startDate == null && education.endDate != null)
+              Text(
+                education.endDate!.toShortDate(locale: resumeLanguage),
+                style: config.leftTextTheme.bodyMediumTextStyle,
+              ),
+            if (education.startDate != null && education.endDate != null)
+              Text(
+                ' - ${education.endDate!.toShortDate(locale: resumeLanguage)}',
+                style: config.leftTextTheme.bodyMediumTextStyle,
+              ),
+            if (education.startDate != null && education.endDate == null)
+              Text(
+                ' - ${texts.current}',
+                style: config.leftTextTheme.bodyMediumTextStyle,
+              ),
+          ]),
           if (education.summary != null) ...[
             SizedBox(height: config.lineSpace),
             Text(education.summary!, style: config.leftTextTheme.bodyMediumTextStyle),

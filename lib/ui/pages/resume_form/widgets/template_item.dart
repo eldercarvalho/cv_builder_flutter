@@ -22,75 +22,53 @@ class TemplateItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => onChanged(!value),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        decoration: BoxDecoration(
-          color: context.colors.surfaceBright,
-          borderRadius: BorderRadius.circular(8),
-          border: value ? Border.all(color: context.colors.primary, width: 2) : null,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2),
-              blurRadius: 8,
-              spreadRadius: 2,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: IgnorePointer(
-                      ignoring: true,
-                      child: Checkbox(
-                        value: value,
-                        onChanged: (value) {},
-                        activeColor: context.colors.primary,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(name, style: context.textTheme.titleMedium),
-                ],
-              ),
-            ),
-            Stack(
+            Row(
               children: [
-                Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                    color: Colors.black12,
-                    image: DecorationImage(
-                      image: AssetImage(imagePath),
-                      fit: BoxFit.fitWidth,
-                      alignment: Alignment.topCenter,
-                    ),
-                    border: Border.all(color: Colors.grey.shade300),
+                SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: Checkbox(
+                    value: value,
+                    onChanged: (value) => onChanged(value ?? false),
+                    activeColor: context.colors.primary,
                   ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(child: Text(name, style: context.textTheme.titleMedium)),
+                GestureDetector(
+                  onTap: onViewPressed,
+                  child: Icon(FeatherIcons.maximize2, color: context.colors.primary),
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-              child: TextButton(
-                onPressed: onViewPressed,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(FeatherIcons.eye, color: context.colors.primary),
-                    const SizedBox(width: 8),
-                    const Text('Visualizar'),
-                  ],
-                ),
+            const SizedBox(height: 12),
+            Container(
+              decoration: BoxDecoration(
+                color: context.colors.surfaceBright,
+                borderRadius: BorderRadius.circular(8),
+                // border: value ? Border.all(color: context.colors.primary, width: 2) : null,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 8,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Hero(
+                tag: 'resume_preview_$name',
+                child: Image.asset(imagePath),
               ),
             ),
+            // IconButton(
+            //         onPressed: onViewPressed,
+            //         icon: Icon(FeatherIcons.maximize2, color: context.colors.primary),
+            //       ),
           ],
         ),
       ),

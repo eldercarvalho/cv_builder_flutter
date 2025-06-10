@@ -1,5 +1,6 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,6 +26,7 @@ class CbTextFormField extends StatefulWidget {
     this.keyboardType,
     this.showClearButton = true,
     this.onClear,
+    this.inputFormatters,
   });
 
   final TextEditingController? controller;
@@ -46,6 +48,7 @@ class CbTextFormField extends StatefulWidget {
   final Function()? onTap;
   final Function()? onClear;
   final bool showClearButton;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   State<CbTextFormField> createState() => _CbTextFormFieldState();
@@ -98,6 +101,7 @@ class _CbTextFormFieldState extends State<CbTextFormField> {
           validator: widget.validator,
           obscureText: _isObscured,
           keyboardType: widget.keyboardType,
+          inputFormatters: widget.inputFormatters,
           // onEditingComplete: ,
           decoration: InputDecoration(
             label: widget.label != null
