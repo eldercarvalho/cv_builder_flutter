@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:provider/provider.dart';
@@ -29,12 +30,14 @@ class TemplateForm extends StatefulWidget {
 class TemplateFormState extends State<TemplateForm> {
   late final ResumeFormViewModel _viewModel;
   int _templateIndex = 0;
+  int _selectedTemplateIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _viewModel = context.read();
     _templateIndex = _viewModel.resume.template.index;
+    _selectedTemplateIndex = _templateIndex;
     _viewModel.addListener(_onResumeListener);
   }
 
@@ -55,44 +58,52 @@ class TemplateFormState extends State<TemplateForm> {
       children: [
         SectionTitleTextField(text: context.l10n.chooseTemplate, icon: FeatherIcons.fileText),
         Expanded(
-          // child: CarouselSlider(
-          //   items: templates
-          //       .map(
-          //         (template) => TemplateItem(
-          //           name: template.name,
-          //           imagePath: template.imagePath,
-          //           value: _templateIndex == templates.indexOf(template),
-          //           onChanged: (value) => setState(() => _templateIndex = templates.indexOf(template)),
-          //           onViewPressed: () => _onPreview(template),
-          //         ),
-          //       )
-          //       .toList(),
-          //   options: CarouselOptions(
-          //     scrollDirection: Axis.vertical,
-          //     // height: 400,
-          //     enableInfiniteScroll: false,
-          //     enlargeCenterPage: true,
-          //     viewportFraction: 0.8,
-          //     initialPage: _templateIndex,
-          //     onPageChanged: (index, reason) => setState(() => _templateIndex = index),
-          //   ),
-          // ),
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(top: 12, bottom: 24),
-            itemCount: templates.length,
-            itemBuilder: (context, index) {
-              final template = templates[index];
-              return TemplateItem(
-                name: template.name,
-                imagePath: template.imagePath,
-                value: index == _templateIndex,
-                onChanged: (value) => setState(() => _templateIndex = index),
-                onViewPressed: () => _onPreview(template),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return CarouselSlider(
+                items: templates
+                    .map(
+                      (template) => TemplateItem(
+                        name: template.name,
+                        imagePath: template.imagePath,
+                        value: _selectedTemplateIndex == templates.indexOf(template),
+                        onChanged: (value) => setState(() => _selectedTemplateIndex = templates.indexOf(template)),
+                        onViewPressed: () => _onPreview(template),
+                      ),
+                    )
+                    .toList(),
+                options: CarouselOptions(
+                  // scrollDirection: Axis.vertical,
+                  height: constraints.maxHeight,
+                  enableInfiniteScroll: false,
+                  enlargeCenterPage: true,
+                  viewportFraction: 0.8,
+
+                  // aspectRatio: 0.8,
+                  initialPage: _templateIndex,
+                  onPageChanged: (index, reason) => setState(() => _templateIndex = index),
+                ),
               );
             },
-            separatorBuilder: (context, index) => const SizedBox(height: 16),
           ),
         ),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < templates.length; i++)
+              Container(
+                width: 8,
+                height: 8,
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: _templateIndex == i ? context.colors.primary : Colors.grey,
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(height: 20),
         ListenableBuilder(
           listenable: _viewModel.saveResume,
           builder: (context, _) {
@@ -114,7 +125,7 @@ class TemplateFormState extends State<TemplateForm> {
   }
 
   void _onSubmit() {
-    final template = ResumeTemplate.fromIndex(_templateIndex);
+    final template = ResumeTemplate.fromIndex(_selectedTemplateIndex);
     final changedTemplate = template.name != _viewModel.resume.template.name;
 
     _viewModel.resume = _viewModel.resume.copyWith(
@@ -136,14 +147,21 @@ class TemplateFormState extends State<TemplateForm> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.transparent,
           body: SafeArea(
             child: Stack(
               children: [
                 Center(
-                  child: Image.asset(
-                    width: double.infinity,
-                    template.imagePath,
+                  child: Hero(
+                    tag: 'resume_preview_${template.name}',
+                    child: InteractiveViewer(
+                      minScale: 1.0,
+                      maxScale: 4.0,
+                      child: Image.asset(
+                        width: double.infinity,
+                        template.imagePath,
+                      ),
+                    ),
                   ),
                 ),
                 Positioned(
