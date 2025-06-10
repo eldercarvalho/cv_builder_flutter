@@ -1,3 +1,4 @@
+import 'package:cv_builder/ui/shared/formtatters/mask_fomatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -74,12 +75,18 @@ class _ContactFormState extends State<ContactForm> {
                 label: context.l10n.phone1,
                 textCapitalization: TextCapitalization.none,
                 keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  MaskFormatter(masks: ['(##) #####-####']),
+                ],
               ),
               CbTextFormField(
                 controller: _phone2Controller,
                 label: context.l10n.phone2,
                 textCapitalization: TextCapitalization.none,
                 keyboardType: TextInputType.phone,
+                inputFormatters: [
+                  MaskFormatter(masks: ['(##) #####-####']),
+                ],
               ),
               CbTextFormField(
                 controller: _emailController,
