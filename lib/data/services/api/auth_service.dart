@@ -19,6 +19,8 @@ class AuthService {
             id: user.uid,
             name: user.displayName ?? '',
             email: user.email ?? '',
+            createdAt: user.metadata.creationTime ?? DateTime.now().subtract(const Duration(days: 60)),
+            updatedAt: user.metadata.lastSignInTime ?? DateTime.now().subtract(const Duration(days: 60)),
           );
         }
         return null;
@@ -31,6 +33,8 @@ class AuthService {
         id: user.uid,
         name: user.displayName ?? '',
         email: user.email ?? '',
+        createdAt: user.metadata.creationTime ?? DateTime.now().subtract(const Duration(days: 60)),
+        updatedAt: user.metadata.lastSignInTime ?? DateTime.now().subtract(const Duration(days: 60)),
       );
     }
     return null;
@@ -73,10 +77,19 @@ class AuthService {
       // Autentica o usuário no Firebase
       final UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
 
+      final user = await _firestore.collection('users').doc(userCredential.user!.uid).get();
+
+      if (user.exists) {
+        return Success(userCredential.user!);
+      }
+
       // Cria um documento para o usuário no Firestore
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'name': googleUser.displayName,
         'email': googleUser.email,
+        'pro': false,
+        'createdAt': DateTime.now().toIso8601String(),
+        'updatedAt': DateTime.now().toIso8601String(),
       });
 
       return Success(userCredential.user!);
@@ -100,6 +113,9 @@ class AuthService {
       await _firestore.collection('users').doc(userCredential.user!.uid).set({
         'name': data.name,
         'email': data.email,
+        'pro': false,
+        'createdAt': DateTime.now().toIso8601String(),
+        'updatedAt': DateTime.now().toIso8601String(),
       });
 
       return Success(userCredential.user!);
@@ -137,6 +153,8 @@ class AuthService {
           id: user.uid,
           name: user.displayName ?? '',
           email: user.email ?? '',
+          createdAt: user.metadata.creationTime ?? DateTime.now().subtract(const Duration(days: 60)),
+          updatedAt: user.metadata.lastSignInTime ?? DateTime.now().subtract(const Duration(days: 60)),
         );
         return Success(userModel);
       }
@@ -154,6 +172,7 @@ class AuthService {
         await _firestore.collection('users').doc(firebaseUser.uid).update({
           'name': user.name,
           'email': user.email,
+          'updatedAt': DateTime.now().toIso8601String(),
         });
         await firebaseUser.updateDisplayName(user.name);
         // await firebaseUser.verifyBeforeUpdateEmail(user.email);
