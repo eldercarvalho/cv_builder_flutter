@@ -39,7 +39,7 @@ class TemplateItem extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(child: Text(name, style: context.textTheme.titleMedium)),
-                GestureDetector(
+                InkWell(
                   onTap: onViewPressed,
                   child: Icon(FeatherIcons.maximize2, color: context.colors.primary),
                 ),

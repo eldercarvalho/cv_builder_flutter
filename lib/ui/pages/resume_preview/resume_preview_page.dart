@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
+import 'package:super_tooltip/super_tooltip.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../config/di.dart';
@@ -52,6 +53,8 @@ class ResumePreviewPage extends StatefulWidget {
 class _ResumePreviewPageState extends State<ResumePreviewPage> {
   final _viewModel = getIt<ResumePreviewViewModel>();
   final _pdfViewerController = PdfViewerController();
+  final _tooltipKey = GlobalKey<TooltipState>();
+  final _tooltipController = SuperTooltipController();
   late ResumeTheme _oldTheme;
   bool _isExpanded = false;
 
@@ -64,6 +67,10 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
     _viewModel.getResume.addListener(_onGetResume);
     _viewModel.deleteResume.addListener(_onDeleteResume);
     _viewModel.updateSections.addListener(_onUpdateSections);
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Future.delayed(const Duration(seconds: 1), () => _tooltipController.showTooltip());
+    });
   }
 
   @override
@@ -71,6 +78,7 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
     _viewModel.getResume.removeListener(_onGetResume);
     _viewModel.deleteResume.removeListener(_onDeleteResume);
     _viewModel.updateSections.removeListener(_onUpdateSections);
+    _tooltipController.dispose();
     super.dispose();
   }
 
@@ -110,9 +118,25 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
                 return const SizedBox.shrink();
               },
             ),
-            IconButton(
-              onPressed: _onShareTap,
-              icon: const Icon(FeatherIcons.share2),
+            SuperTooltip(
+              controller: _tooltipController,
+              key: _tooltipKey,
+              content: Text(context.l10n.finishedFormShare,
+                  style: context.textTheme.labelMedium?.copyWith(color: Colors.white)),
+              elevation: 0,
+              showBarrier: false,
+              arrowLength: 10,
+              hasShadow: false,
+              borderColor: context.colors.primary,
+              backgroundColor: context.colors.primary,
+              arrowTipDistance: 16,
+              borderRadius: 10,
+              bubbleDimensions: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              hideTooltipOnTap: true,
+              child: IconButton(
+                onPressed: _onShareTap,
+                icon: const Icon(FeatherIcons.share2),
+              ),
             ),
             Builder(builder: (context) {
               return IconButton(
@@ -229,6 +253,7 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
   }
 
   void _onShareTap() {
+    _tooltipController.hideTooltip();
     Printing.sharePdf(
       bytes: _viewModel.resumePdf!.readAsBytesSync(),
       filename: '${_viewModel.resume!.resumeName}.pdf',
@@ -284,6 +309,6 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
   }
 }
 
-String disemvowel(String str) {  
+String disemvowel(String str) {
   return str.replaceAll(RegExp(r'[aeiou]', caseSensitive: false), '');
 }

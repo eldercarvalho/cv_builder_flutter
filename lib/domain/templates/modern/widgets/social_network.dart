@@ -42,7 +42,7 @@ class SocialNetworkInfo extends StatelessWidget {
           SizedBox(width: 8),
           // Text(socialNetwork.name, style: config.bodySmallTextStyle2),
           if (socialNetwork.username != null && socialNetwork.username!.isNotEmpty)
-            Text('@${socialNetwork.username}', style: textTheme.bodySmallTextStyle),
+            Text('${socialNetwork.username}', style: textTheme.bodySmallTextStyle),
           if (socialNetwork.url != null && socialNetwork.url!.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(left: 8),

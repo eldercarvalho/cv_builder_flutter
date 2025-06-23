@@ -1,6 +1,5 @@
 import 'package:cv_builder/domain/models/resume.dart';
 import 'package:cv_builder/domain/templates/texts.dart';
-import 'package:cv_builder/ui/shared/extensions/datetime.dart';
 import 'package:pdf/widgets.dart';
 
 import '../../../models/resume_section.dart';
@@ -20,7 +19,7 @@ List<Widget> buildContact({
   final texts = getTexts(resume.resumeLanguage!);
 
   final birthdayText =
-      resume.birthDate != null ? '${resume.birthDate?.toSimpleDate()} - ${resume.age} ${texts.years}' : null;
+      resume.birthDate != null ? '${resume.age} ${texts.years}' : null;
 
   if (resume.birthDate == null &&
       (resume.document == null || resume.document!.isEmpty) &&
