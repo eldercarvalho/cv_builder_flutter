@@ -70,6 +70,7 @@ class _ResumePreviewPageState extends State<ResumePreviewPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Future.delayed(const Duration(seconds: 1), () => _tooltipController.showTooltip());
+      Future.delayed(const Duration(seconds: 5), () => _tooltipController.hideTooltip());
     });
   }
 

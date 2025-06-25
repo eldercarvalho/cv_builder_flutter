@@ -147,19 +147,30 @@ class TemplateFormState extends State<TemplateForm> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => Scaffold(
-          backgroundColor: Colors.transparent,
           body: SafeArea(
             child: Stack(
               children: [
                 Center(
-                  child: Hero(
-                    tag: 'resume_preview_${template.name}',
-                    child: InteractiveViewer(
-                      minScale: 1.0,
-                      maxScale: 4.0,
-                      child: Image.asset(
-                        width: double.infinity,
-                        template.imagePath,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.grey.shade300),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          blurRadius: 6,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: Hero(
+                      tag: 'resume_preview_${template.name}',
+                      child: InteractiveViewer(
+                        minScale: 1.0,
+                        maxScale: 4.0,
+                        child: Image.asset(
+                          width: double.infinity,
+                          template.imagePath,
+                        ),
                       ),
                     ),
                   ),
