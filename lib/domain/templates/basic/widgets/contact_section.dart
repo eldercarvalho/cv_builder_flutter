@@ -34,6 +34,7 @@ List<Widget> buildContact({required Resume resume, required TemplateConfig confi
   }
 
   return [
+    if (sectionConfig.forcePageBreak) NewPage(),
     if (!sectionConfig.hideTitle) ...[
       SectionTitle(text: sectionConfig.title, config: config, hideDivider: sectionConfig.hideDivider),
       SizedBox(height: config.titleSpace),

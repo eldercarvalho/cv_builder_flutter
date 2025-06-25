@@ -63,6 +63,14 @@ class _SectionSettingsState extends State<SectionSettings> {
                       ]).call,
                     ),
                     const SizedBox(height: 16),
+                    if (widget.resume.theme.singleLayout)
+                      CheckboxListTile(
+                        controlAffinity: ListTileControlAffinity.leading,
+                        value: _forcePageBreak,
+                        onChanged: (value) => setState(() => _forcePageBreak = value!),
+                        title: Text(context.l10n.previewForcePageBreak),
+                        contentPadding: EdgeInsets.zero,
+                      ),
                     CheckboxListTile(
                       controlAffinity: ListTileControlAffinity.leading,
                       value: _hideTitle,
@@ -71,7 +79,6 @@ class _SectionSettingsState extends State<SectionSettings> {
                       contentPadding: EdgeInsets.zero,
                       // dense: true,
                     ),
-                    const SizedBox(height: 16),
                     CheckboxListTile(
                       controlAffinity: ListTileControlAffinity.leading,
                       value: _hideDivider,

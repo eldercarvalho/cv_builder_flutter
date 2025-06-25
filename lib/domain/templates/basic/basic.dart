@@ -14,7 +14,7 @@ class BasicTemplate {
     // try {
     final pdf = Document();
     final config = await TemplateConfig.getInstance(theme: resume.theme);
-    final colors = resume.theme.primaryColors;
+    // final colors = resume.theme.primaryColors;
 
     final photo = resume.hasPhoto
         ? resume.isNetworkPhoto
@@ -114,22 +114,10 @@ class BasicTemplate {
 
     pdf.addPage(
       MultiPage(
-        build: (context) => [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: config.horizontalMargin, vertical: config.verticalMargin),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: children,
-            ),
-          )
-        ],
+        build: (context) => children,
         pageTheme: PageTheme(
           pageFormat: PdfPageFormat.a4,
-          margin: EdgeInsets.zero,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
-          buildBackground: (context) => Container(
-            color: PdfColor.fromHex(colors.backgroundColor),
-          ),
+          margin: EdgeInsets.symmetric(horizontal: config.horizontalMargin, vertical: config.verticalMargin),
         ),
       ),
     );

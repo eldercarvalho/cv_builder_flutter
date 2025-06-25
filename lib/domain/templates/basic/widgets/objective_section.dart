@@ -13,6 +13,7 @@ List<Widget> buildObjective({required Resume resume, required TemplateConfig con
   }
 
   return [
+    if (sectionConfig.forcePageBreak) NewPage(),
     if (!sectionConfig.hideTitle) ...[
       SectionTitle(text: sectionConfig.title, config: config, hideDivider: sectionConfig.hideDivider),
       SizedBox(height: config.titleSpace),
