@@ -1,4 +1,5 @@
 import 'package:cv_builder/ui/shared/extensions/extensions.dart';
+import 'package:cv_builder/ui/shared/formtatters/mask_fomatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -62,6 +63,9 @@ class _AddressFormState extends State<AddressForm> {
             CbTextFormField(
               controller: _zipCodeController,
               label: context.l10n.zipCode,
+              inputFormatters: [
+                MaskFormatter(masks: ['#####-###']),
+              ],
             ),
           ],
           bottom: ListenableBuilder(

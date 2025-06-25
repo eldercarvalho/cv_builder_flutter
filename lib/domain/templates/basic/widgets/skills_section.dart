@@ -14,6 +14,7 @@ List<Widget> buildSkills({required Resume resume, required TemplateConfig config
   }
 
   return [
+    if (sectionConfig.forcePageBreak) NewPage(),
     if (!sectionConfig.hideTitle) ...[
       SectionTitle(text: sectionConfig.title, config: config, hideDivider: sectionConfig.hideDivider),
       SizedBox(height: config.titleSpace),

@@ -22,6 +22,9 @@ class CustomBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.watch<ResumePreviewViewModel>();
     final theme = viewModel.resume!.theme;
+    // Melhorar a lógica de cores para tirar o background da lista de cores no tema singleLayout
+    final colorsWithoutBackground =
+        theme.primaryColors.where((color) => color.type != ResumeColorType.background).toList();
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -44,9 +47,9 @@ class CustomBottomSheet extends StatelessWidget {
                           spacing: 16,
                           runSpacing: 16,
                           children: List.generate(
-                            theme.primaryColors.length,
+                            colorsWithoutBackground.length,
                             (index) {
-                              final resumeColor = theme.primaryColors[index];
+                              final resumeColor = colorsWithoutBackground[index];
                               final defaultColor =
                                   ResumeTheme.getByTemplate(viewModel.resume!.template).primaryColors[index];
                               return ColorOption(

@@ -137,6 +137,7 @@
   "previewSectionLayout": "Section layout",
   "previewSectionLayoutList": "List",
   "previewSectionLayoutGrid": "Grid",
+  "previewForcePageBreak": "Force page break",
   "cropImageTitle": "Crop Image",
   "outOf": "of",
   "account": "Account",
