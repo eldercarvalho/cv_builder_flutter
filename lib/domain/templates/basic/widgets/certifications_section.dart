@@ -33,6 +33,7 @@ List<Widget> buildCertifications({required Resume resume, required TemplateConfi
             SizedBox(height: config.lineSpace),
             Text(certification.summary!, style: config.leftTextTheme.paragraphTextStyle),
           ],
+          if (index < resume.certifications.length - 1) SizedBox(height: config.sectionSpace),
         ],
       );
     }),
