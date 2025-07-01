@@ -111,7 +111,7 @@ class TemplateFormState extends State<TemplateForm> {
               showIcons: true,
               isEditing: widget.isEditing,
               showSaveButton: widget.isEditing,
-              nextText: context.l10n.resumeAbout,
+              nextText: context.l10n.next,
               previousText: context.l10n.goBack,
               onPreviousPressed: widget.onPrevious,
               onNextPressed: _onSubmit,

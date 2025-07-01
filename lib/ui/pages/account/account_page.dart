@@ -173,20 +173,23 @@ class _AccountPageState extends State<AccountPage> {
               ),
             ),
             if (!isKeyboardVisible)
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ListenableBuilder(
-                  listenable: _viewModel.deleteAccount,
-                  builder: (context, child) {
-                    return CbButton(
-                      onPressed: _shouldDeleteAccountDialog,
-                      text: context.l10n.deleteAccount,
-                      type: CbButtonType.outlined,
-                      prefixIcon: FeatherIcons.trash2,
-                      themeColor: context.colors.error,
-                      isLoading: _viewModel.deleteAccount.running,
-                    );
-                  },
+              SafeArea(
+                top: false,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListenableBuilder(
+                    listenable: _viewModel.deleteAccount,
+                    builder: (context, child) {
+                      return CbButton(
+                        onPressed: _shouldDeleteAccountDialog,
+                        text: context.l10n.deleteAccount,
+                        type: CbButtonType.outlined,
+                        prefixIcon: FeatherIcons.trash2,
+                        themeColor: context.colors.error,
+                        isLoading: _viewModel.deleteAccount.running,
+                      );
+                    },
+                  ),
                 ),
               ),
           ],

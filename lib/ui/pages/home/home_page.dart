@@ -120,28 +120,30 @@ class _HomePageState extends State<HomePage> {
                 );
               }
 
-              return RefreshIndicator(
-                onRefresh: () async {
-                  await _viewModel.getResumes.execute();
-                },
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: _viewModel.resumes.length,
-                  itemBuilder: (context, index) {
-                    final resume = _viewModel.resumes[index];
-
-                    return ListenableBuilder(
-                      listenable: _viewModel.deleteResume,
-                      builder: (context, child) {
-                        return ResumeCard(
-                          resume: resume,
-                          isLoading: _viewModel.deleteResume.argument?.id == resume.id,
-                          onTap: () => _navToPreview(resume),
-                          onMenuSelected: (action) => _onMenuSelected(action, resume),
-                        );
-                      },
-                    );
+              return SafeArea(
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await _viewModel.getResumes.execute();
                   },
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: _viewModel.resumes.length,
+                    itemBuilder: (context, index) {
+                      final resume = _viewModel.resumes[index];
+
+                      return ListenableBuilder(
+                        listenable: _viewModel.deleteResume,
+                        builder: (context, child) {
+                          return ResumeCard(
+                            resume: resume,
+                            isLoading: _viewModel.deleteResume.argument?.id == resume.id,
+                            onTap: () => _navToPreview(resume),
+                            onMenuSelected: (action) => _onMenuSelected(action, resume),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               );
             }
